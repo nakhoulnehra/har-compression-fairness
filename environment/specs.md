@@ -1,6 +1,6 @@
 # Device Specs
 
-The machine all experiments and timings in this repo are run on. Recorded 2026-11-15.
+The machine all experiments and timings in this repo are run on. Recorded 2026-11-15. Per-command timings: [time.md](time.md).
 
 | Component | Spec |
 |---|---|

@@ -3,3 +3,9 @@ data/raw/
 
 __pycache__/
 *.pyc
+
+# Local virtual environment - recreate with pip, never commit
+.venv/
+
+# Tool caches
+.pytest_cache/
