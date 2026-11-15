@@ -1,0 +1,5 @@
+# Raw datasets are downloaded by data/download.py - never commit them
+data/raw/
+
+__pycache__/
+*.pyc
