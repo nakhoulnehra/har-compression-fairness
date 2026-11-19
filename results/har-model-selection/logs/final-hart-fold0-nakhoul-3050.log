@@ -1,0 +1,44 @@
+=== final hart fold 0 | machine nakhoul-3050 | device cuda NVIDIA GeForce RTX 3050 Ti Laptop GPU | torch 2.7.1+cu118 | started 2026-11-19T23:05:41+02:00
+    train subjects ['S006', 'S009', 'S012', 'S013', 'S014', 'S015', 'S016', 'S017', 'S018', 'S023', 'S024', 'S026', 'S027', 'S028', 'S029']
+    validation subjects ['S010', 'S020', 'S021']
+    test subjects ['S008', 'S019', 'S022', 'S025']
+    windows: train 51451, validation 7709, test 8702
+    hart: 355,379 parameters; architecture {'d': 96, 'depth': 6, 'heads': 3, 'patch': 16, 'stride': 16, 'ff_mult': 2, 'head_units': 512, 'dropout': 0.3, 'drop_path': 0.1, 'conv_kernels': [3, 5, 7, 7, 7, 7], 'width': 0.5}
+    epoch  1/30  loss 0.7555  val F1 0.5694  acc 0.7103  *best*  11.3s  (max ETA 5.5 min)
+    epoch  2/30  loss 0.4613  val F1 0.6267  acc 0.7989  *best*  10.0s  (max ETA 4.7 min)
+    epoch  3/30  loss 0.3782  val F1 0.7191  acc 0.8794  *best*  9.1s  (max ETA 4.1 min)
+    epoch  4/30  loss 0.3310  val F1 0.6596  acc 0.8412  8.9s  (max ETA 3.8 min)
+    epoch  5/30  loss 0.3171  val F1 0.7173  acc 0.8615  9.5s  (max ETA 4.0 min)
+    epoch  6/30  loss 0.2915  val F1 0.7222  acc 0.8803  *best*  9.2s  (max ETA 3.7 min)
+    epoch  7/30  loss 0.2829  val F1 0.7059  acc 0.8664  10.0s  (max ETA 3.8 min)
+    epoch  8/30  loss 0.2756  val F1 0.7257  acc 0.8647  *best*  9.8s  (max ETA 3.6 min)
+    epoch  9/30  loss 0.2636  val F1 0.7217  acc 0.8711  8.6s  (max ETA 3.0 min)
+    epoch 10/30  loss 0.2493  val F1 0.7259  acc 0.8717  *best*  9.4s  (max ETA 3.1 min)
+    epoch 11/30  loss 0.2484  val F1 0.7227  acc 0.8779  8.6s  (max ETA 2.7 min)
+    epoch 12/30  loss 0.2350  val F1 0.7383  acc 0.8842  *best*  9.2s  (max ETA 2.8 min)
+    epoch 13/30  loss 0.2305  val F1 0.7385  acc 0.8816  *best*  9.5s  (max ETA 2.7 min)
+    epoch 14/30  loss 0.2236  val F1 0.7254  acc 0.8769  9.3s  (max ETA 2.5 min)
+    epoch 15/30  loss 0.2137  val F1 0.7197  acc 0.8565  10.0s  (max ETA 2.5 min)
+    epoch 16/30  loss 0.2133  val F1 0.7141  acc 0.8739  13.6s  (max ETA 3.2 min)
+    epoch 17/30  loss 0.2107  val F1 0.7252  acc 0.8656  8.5s  (max ETA 1.8 min)
+    epoch 18/30  loss 0.2040  val F1 0.7394  acc 0.8814  *best*  8.3s  (max ETA 1.7 min)
+    epoch 19/30  loss 0.1966  val F1 0.7138  acc 0.8691  8.7s  (max ETA 1.6 min)
+    epoch 20/30  loss 0.1946  val F1 0.7314  acc 0.8783  8.2s  (max ETA 1.4 min)
+    epoch 21/30  loss 0.1956  val F1 0.7305  acc 0.8805  9.8s  (max ETA 1.5 min)
+    epoch 22/30  loss 0.1859  val F1 0.7340  acc 0.8760  8.8s  (max ETA 1.2 min)
+    epoch 23/30  loss 0.1816  val F1 0.7431  acc 0.8823  *best*  8.7s  (max ETA 1.0 min)
+    epoch 24/30  loss 0.1807  val F1 0.7310  acc 0.8760  8.7s  (max ETA 0.9 min)
+    epoch 25/30  loss 0.1783  val F1 0.7257  acc 0.8717  8.4s  (max ETA 0.7 min)
+    epoch 26/30  loss 0.1764  val F1 0.7351  acc 0.8804  8.6s  (max ETA 0.6 min)
+    epoch 27/30  loss 0.1758  val F1 0.7319  acc 0.8769  8.9s  (max ETA 0.4 min)
+    epoch 28/30  loss 0.1735  val F1 0.7298  acc 0.8755  8.7s  (max ETA 0.3 min)
+    early stop: no improvement for 5 epochs
+    TEST (held-out HARTH): macro-F1 pooled 0.8450, accuracy 0.9157, non-stair F1 per subject 0.8221, stairs F1 pooled 0.8331
+    done in 261.4s; val F1 0.7431 (best epoch 23)
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-hart-fold0-nakhoul-3050.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-hart-fold0-nakhoul-3050-config.json
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-hart-fold0-nakhoul-3050-history.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-hart-fold0-nakhoul-3050-per-subject.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-hart-fold0-nakhoul-3050-confusion.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-hart-fold0-nakhoul-3050.pt
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\logs\final-hart-fold0-nakhoul-3050.log

@@ -1,0 +1,23 @@
+=== tune hart lr1e-3-width1 fold 0 | machine nakhoul-3050 | device cuda NVIDIA GeForce RTX 3050 Ti Laptop GPU | torch 2.7.1+cu118 | started 2026-11-19T22:40:05+02:00
+    train subjects ['S006', 'S009', 'S012', 'S013', 'S014', 'S015', 'S016', 'S017', 'S018', 'S023', 'S024', 'S026', 'S027', 'S028', 'S029']
+    validation subjects ['S010', 'S020', 'S021']
+    test subjects: none (tuning)
+    windows: train 51451, validation 7709
+    hart: 1,389,555 parameters; architecture {'d': 192, 'depth': 6, 'heads': 3, 'patch': 16, 'stride': 16, 'ff_mult': 2, 'head_units': 1024, 'dropout': 0.3, 'drop_path': 0.1, 'conv_kernels': [3, 5, 7, 7, 7, 7], 'width': 1.0}
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\autograd\graph.py:824: UserWarning: Memory Efficient attention defaults to a non-deterministic algorithm. To explicitly enable determinism call torch.use_deterministic_algorithms(True, warn_only=False). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\transformers\cuda\attention_backward.cu:754.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+    epoch  1/30  loss 0.6785  val F1 0.5998  acc 0.7799  *best*  9.3s  (max ETA 4.5 min)
+    epoch  2/30  loss 0.4034  val F1 0.6423  acc 0.8024  *best*  9.0s  (max ETA 4.2 min)
+    epoch  3/30  loss 0.3404  val F1 0.7379  acc 0.8834  *best*  9.0s  (max ETA 4.0 min)
+    epoch  4/30  loss 0.2969  val F1 0.6992  acc 0.8818  9.0s  (max ETA 3.9 min)
+    epoch  5/30  loss 0.2923  val F1 0.7263  acc 0.8790  9.1s  (max ETA 3.8 min)
+    epoch  6/30  loss 0.2719  val F1 0.7344  acc 0.8825  9.5s  (max ETA 3.8 min)
+    epoch  7/30  loss 0.2623  val F1 0.7307  acc 0.8897  9.4s  (max ETA 3.6 min)
+    epoch  8/30  loss 0.2555  val F1 0.7242  acc 0.8751  9.5s  (max ETA 3.5 min)
+    early stop: no improvement for 5 epochs
+    done in 77.5s; val F1 0.7379 (best epoch 3)
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\tuning\har-tune-hart-lr1e-3-width1-fold0-nakhoul-3050.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\tuning\har-tune-hart-lr1e-3-width1-fold0-nakhoul-3050-config.json
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\tuning\har-tune-hart-lr1e-3-width1-fold0-nakhoul-3050-history.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-tune-hart-lr1e-3-width1-fold0-nakhoul-3050.pt
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\logs\tune-hart-lr1e-3-width1-fold0-nakhoul-3050.log

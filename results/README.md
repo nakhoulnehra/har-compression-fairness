@@ -148,25 +148,42 @@ HAR data pipeline (plan/HAR_IMPLEMENTATION.md Steps 1–2): HARTH and HAR70+ cut
 - Key numbers: per fold, 120 or 150 general + 540 older = 660 or 690 test explain windows, plus 90 validation explain windows (for the gate and τ) and 100 background windows.
 
 ## har-model-selection/
-Real model choice (plan Step 4), HARTH only. **So far: CNN1D and TinyHAR only**, run with `python -m har.run_model_selection --stage all --device cuda --models cnn1d tinyhar --machine-name nakhoul-3050` on Nakhoul's RTX 3050 Ti (torch 2.7.1+cu118, git 473b75d, clean tree), 2026-11-19, 21.6 min. HART, DeepConvLSTM, XGBoost, the CPU timing and `select_model` are still to come, so no model is chosen yet. There are 93 files, listed by pattern.
+Real model choice (plan Step 4), HARTH only. **Training of all 5 candidates is done; the CPU timing and `select_model` are still to come, so no model is chosen yet.** Three sessions, each `python -m har.run_model_selection --stage all` (tuning + folds 0–4) for its own models, torch 2.7.1, clean trees:
+- CNN1D + TinyHAR: Nakhoul's RTX 3050 Ti (`--device cuda`, git 473b75d), 2026-11-19, 21.6 min.
+- XGBoost: Aya's laptop (`--device cpu`, git 473b75d), 2026-11-19, 8.7 min.
+- HART + DeepConvLSTM: Nakhoul's RTX 3050 Ti (`--device cuda`, git 2c64f45), 2026-11-19/20, 83.2 min.
 
-### tuning/har-tune-&lt;model&gt;-&lt;setting&gt;-fold0-nakhoul-3050.csv (+ `-config.json`, `-history.csv`)
-- What: one row per setting, lr {1e-3, 3e-4} × width {1.0, 0.5}, trained on fold 0's 15 training subjects (51,451 windows) and scored on validation subjects S010, S020, S021 (7,709 windows). Training is capped at 30 epochs with early stopping (patience 5).
-- Key numbers (validation pooled 7-class macro-F1): TinyHAR **0.818** (lr 1e-3, width 1.0, 54,273 parameters), then 0.751 (1e-3, 0.5), 0.743 (3e-4, 1.0), 0.740 (3e-4, 0.5). CNN1D **0.761** (lr 3e-4, width 0.5, 316,167 parameters), then 0.736 (1e-3, 1.0), 0.724 (1e-3, 0.5), 0.707 (3e-4, 1.0). Validation accuracy is 0.84–0.89 for all eight; stairs F1 separates them (0.49–0.82).
+There are 233 files (60 tuning, 125 final, 48 logs), listed by pattern. File names end in the machine name (`nakhoul-3050` or `aya-laptop`).
 
-### final/har-final-&lt;model&gt;-fold&lt;k&gt;-nakhoul-3050.csv (+ `-config.json`, `-history.csv`, `-per-subject.csv`, `-confusion.csv`), k = 0–4
+### tuning/har-tune-&lt;model&gt;-&lt;setting&gt;-fold0-&lt;machine&gt;.csv (+ `-config.json`, `-history.csv`)
+- What: one row per setting, trained on fold 0's 15 training subjects (51,451 windows) and scored on validation subjects S010, S020, S021 (7,709 windows). The neural nets try lr {1e-3, 3e-4} × width {1.0, 0.5}, capped at 30 epochs with early stopping (patience 5). XGBoost tries depth {3, 6} × eta {0.1, 0.5}.
+- Key numbers (validation pooled 7-class macro-F1, best first):
+  - XGBoost: **0.832** (depth 3, eta 0.1), then 0.814, 0.808, 0.805.
+  - TinyHAR: **0.818** (lr 1e-3, width 1.0, 54,273 parameters), then 0.751 (1e-3, 0.5), 0.743 (3e-4, 1.0), 0.740 (3e-4, 0.5).
+  - DeepConvLSTM: **0.768** (lr 3e-4, width 1.0, 458,183 parameters), then 0.766 (3e-4, 0.5; 115,431 parameters), 0.736 (1e-3, 0.5), 0.690 (1e-3, 1.0).
+  - CNN1D: **0.761** (lr 3e-4, width 0.5, 316,167 parameters), then 0.736 (1e-3, 1.0), 0.724 (1e-3, 0.5), 0.707 (3e-4, 1.0).
+  - HART: **0.743** (lr 1e-3, width 0.5, 355,379 parameters), then 0.743 (3e-4, 1.0), 0.739 (3e-4, 0.5), 0.738 (1e-3, 1.0). All four are within 0.5 pt.
+- Validation accuracy is 0.84–0.93 for all 20 settings; stairs F1 separates them (0.41–0.82).
+
+### final/har-final-&lt;model&gt;-fold&lt;k&gt;-&lt;machine&gt;.csv (+ `-config.json`, `-history.csv`, `-per-subject.csv`, `-confusion.csv`), k = 0–4
 - What: the best tuning setting per model, trained on each of the 5 HARTH folds and tested on that fold's held-out subjects (8,209–8,702 test windows per fold). Includes per-subject metrics and the 7×7 confusion matrix.
 - Key numbers (test, mean ± SD over the 5 folds):
 
-| Model | Macro-F1 (7 classes, pooled) | Accuracy (pooled) | Stairs F1 (mean of up and down) | Non-stair macro-F1 (subject mean) | Per fold, macro-F1 for folds 0–4 |
-|---|---|---|---|---|---|
-| TinyHAR | **0.824 ± 0.042** | 0.919 ± 0.025 | 0.766 ± 0.126 | 0.824 ± 0.036 | 0.855, 0.878, 0.805, 0.776, 0.803 |
-| CNN1D | 0.797 ± 0.052 | 0.908 ± 0.032 | 0.745 ± 0.110 | 0.789 ± 0.052 | 0.840, 0.859, 0.789, 0.736, 0.763 |
+| Model | Parameters | Macro-F1 (7 classes, pooled) | Accuracy (pooled) | Stairs F1 (mean of up and down) | Non-stair macro-F1 (subject mean) | Per fold, macro-F1 for folds 0–4 |
+|---|---|---|---|---|---|---|
+| XGBoost (reference, not compressed) | 253–569 trees | **0.826 ± 0.029** | 0.933 ± 0.020 | 0.745 ± 0.046 | 0.840 ± 0.028 | 0.857, 0.849, 0.805, 0.832, 0.788 |
+| TinyHAR | 54,273 | **0.824 ± 0.042** | 0.919 ± 0.025 | 0.765 ± 0.126 | 0.824 ± 0.036 | 0.855, 0.878, 0.805, 0.776, 0.803 |
+| CNN1D | 316,167 | 0.797 ± 0.052 | 0.908 ± 0.032 | 0.745 ± 0.110 | 0.789 ± 0.052 | 0.840, 0.859, 0.789, 0.736, 0.763 |
+| HART | 355,379 | 0.796 ± 0.045 | 0.911 ± 0.023 | 0.702 ± 0.123 | 0.798 ± 0.049 | 0.845, 0.808, 0.814, 0.723, 0.791 |
+| DeepConvLSTM | 458,183 | 0.770 ± 0.053 | 0.903 ± 0.034 | 0.637 ± 0.152 | 0.793 ± 0.043 | 0.761, 0.859, 0.725, 0.735, 0.769 |
 
-- TinyHAR is ahead in every fold (by 1.6–4.0 pt). Fold 3 (S013, S020, S021, S023) is the hardest for both models, mainly through stairs F1 (0.55 and 0.57). TinyHAR's best epoch comes early (epochs 2–9).
+- The selection rule's F1 is pooled over all 22 HARTH test subjects (the 5 folds' confusion matrices summed, 42,248 windows): XGBoost 0.829, TinyHAR **0.820**, CNN1D 0.795, HART 0.792, DeepConvLSTM 0.772. Pooled accuracy: 0.933, 0.919, 0.908, 0.911, 0.903.
+- TinyHAR is the best neural net, 0.9 pt below XGBoost on the pooled F1. It is 2.5–2.8 pt ahead of CNN1D and HART and 4.8 pt ahead of DeepConvLSTM, and it is also the smallest model. Only TinyHAR is within the 2-pt band of the selection rule (plan Section 2.9); `select_model` has not been run yet, because it needs the CPU SHAP times.
+- TinyHAR beats every other neural net in every fold except fold 1, where DeepConvLSTM (0.859) and CNN1D (0.859) are within 2 pt of it (0.878).
+- Fold 3 (S013, S020, S021, S023) is the hardest fold for every neural net, mainly through stairs F1 (0.47–0.57). DeepConvLSTM has the weakest and most variable stairs F1 (0.47–0.81 per fold).
 
 ### logs/
-- What: the terminal output of each of the 18 units and of the session (`session-all-nakhoul-3050-20261119-215942.log`).
+- What: the terminal output of every unit (20 tuning + 25 final) and of the three sessions (`session-all-nakhoul-3050-20261119-215942.log`, `session-all-aya-laptop-20261119-215550.log`, `session-all-nakhoul-3050-20261119-224004.log`).
 
 ## har-model-selection-smoke/
 **Git-ignored, local only: a pipeline check, not results.** The `--smoke` runs of `har.run_model_selection`, `har.time_model_selection_cpu` and `har.select_model` write here (fold 0, 1 epoch, 300 / 200 / 200 windows), with the same layout as `har-model-selection/`. The folder is rebuilt in under a minute, and its numbers say nothing about the candidates. The smoke runs on each machine passed (2026-11-19: Aya CPU 36.4 s, Nakhoul CUDA 36.7 s; see `environment/time.md`).

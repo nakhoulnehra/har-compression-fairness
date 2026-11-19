@@ -1,0 +1,24 @@
+=== tune deepconvlstm lr3e-4-width1 fold 0 | machine nakhoul-3050 | device cuda NVIDIA GeForce RTX 3050 Ti Laptop GPU | torch 2.7.1+cu118 | started 2026-11-19T22:56:29+02:00
+    train subjects ['S006', 'S009', 'S012', 'S013', 'S014', 'S015', 'S016', 'S017', 'S018', 'S023', 'S024', 'S026', 'S027', 'S028', 'S029']
+    validation subjects ['S010', 'S020', 'S021']
+    test subjects: none (tuning)
+    windows: train 51451, validation 7709
+    deepconvlstm: 458,183 parameters; architecture {'filters': 64, 'kernel': 5, 'n_conv': 4, 'lstm_hidden': 128, 'lstm_layers': 2, 'dropout': 0.5, 'width': 1.0}
+    epoch  1/30  loss 1.0155  val F1 0.5141  acc 0.6928  *best*  27.5s  (max ETA 13.3 min)
+    epoch  2/30  loss 0.5945  val F1 0.6066  acc 0.7565  *best*  27.5s  (max ETA 12.8 min)
+    epoch  3/30  loss 0.4825  val F1 0.6997  acc 0.8818  *best*  27.5s  (max ETA 12.4 min)
+    epoch  4/30  loss 0.4278  val F1 0.6347  acc 0.8155  27.5s  (max ETA 11.9 min)
+    epoch  5/30  loss 0.3917  val F1 0.6995  acc 0.8499  27.5s  (max ETA 11.5 min)
+    epoch  6/30  loss 0.3459  val F1 0.7681  acc 0.8912  *best*  27.5s  (max ETA 11.0 min)
+    epoch  7/30  loss 0.3266  val F1 0.7362  acc 0.8853  27.5s  (max ETA 10.6 min)
+    epoch  8/30  loss 0.3123  val F1 0.7157  acc 0.8685  27.5s  (max ETA 10.1 min)
+    epoch  9/30  loss 0.3117  val F1 0.7464  acc 0.8647  27.5s  (max ETA 9.6 min)
+    epoch 10/30  loss 0.2991  val F1 0.6624  acc 0.8136  28.5s  (max ETA 9.5 min)
+    epoch 11/30  loss 0.2995  val F1 0.7058  acc 0.8655  28.3s  (max ETA 9.0 min)
+    early stop: no improvement for 5 epochs
+    done in 306.2s; val F1 0.7681 (best epoch 6)
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\tuning\har-tune-deepconvlstm-lr3e-4-width1-fold0-nakhoul-3050.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\tuning\har-tune-deepconvlstm-lr3e-4-width1-fold0-nakhoul-3050-config.json
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\tuning\har-tune-deepconvlstm-lr3e-4-width1-fold0-nakhoul-3050-history.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-tune-deepconvlstm-lr3e-4-width1-fold0-nakhoul-3050.pt
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\logs\tune-deepconvlstm-lr3e-4-width1-fold0-nakhoul-3050.log

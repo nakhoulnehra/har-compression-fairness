@@ -1,0 +1,5 @@
+machine_name,model,fold,subject,n_windows,accuracy,non_stair_macro_f1,n_non_stair_classes_present
+nakhoul-3050,deepconvlstm,1,S015,3142,0.9503500954805856,0.8281906834163463,5
+nakhoul-3050,deepconvlstm,1,S016,2631,0.9627518053971874,0.9020465808235099,5
+nakhoul-3050,deepconvlstm,1,S028,1284,0.9735202492211839,0.8182023309508398,5
+nakhoul-3050,deepconvlstm,1,S029,1152,0.9401041666666666,0.8524068977603629,5

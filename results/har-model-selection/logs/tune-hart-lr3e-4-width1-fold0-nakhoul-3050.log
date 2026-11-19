@@ -1,0 +1,24 @@
+=== tune hart lr3e-4-width1 fold 0 | machine nakhoul-3050 | device cuda NVIDIA GeForce RTX 3050 Ti Laptop GPU | torch 2.7.1+cu118 | started 2026-11-19T22:45:29+02:00
+    train subjects ['S006', 'S009', 'S012', 'S013', 'S014', 'S015', 'S016', 'S017', 'S018', 'S023', 'S024', 'S026', 'S027', 'S028', 'S029']
+    validation subjects ['S010', 'S020', 'S021']
+    test subjects: none (tuning)
+    windows: train 51451, validation 7709
+    hart: 1,389,555 parameters; architecture {'d': 192, 'depth': 6, 'heads': 3, 'patch': 16, 'stride': 16, 'ff_mult': 2, 'head_units': 1024, 'dropout': 0.3, 'drop_path': 0.1, 'conv_kernels': [3, 5, 7, 7, 7, 7], 'width': 1.0}
+    epoch  1/30  loss 0.7343  val F1 0.5961  acc 0.7381  *best*  10.4s  (max ETA 5.0 min)
+    epoch  2/30  loss 0.3937  val F1 0.6954  acc 0.8542  *best*  11.7s  (max ETA 5.5 min)
+    epoch  3/30  loss 0.3366  val F1 0.7340  acc 0.8865  *best*  10.7s  (max ETA 4.8 min)
+    epoch  4/30  loss 0.3033  val F1 0.7297  acc 0.8906  10.8s  (max ETA 4.7 min)
+    epoch  5/30  loss 0.2914  val F1 0.7185  acc 0.8672  10.7s  (max ETA 4.5 min)
+    epoch  6/30  loss 0.2766  val F1 0.7425  acc 0.8973  *best*  10.7s  (max ETA 4.3 min)
+    epoch  7/30  loss 0.2600  val F1 0.7132  acc 0.8727  10.8s  (max ETA 4.1 min)
+    epoch  8/30  loss 0.2488  val F1 0.7342  acc 0.8860  10.8s  (max ETA 4.0 min)
+    epoch  9/30  loss 0.2433  val F1 0.7424  acc 0.8785  10.8s  (max ETA 3.8 min)
+    epoch 10/30  loss 0.2445  val F1 0.7224  acc 0.8786  10.8s  (max ETA 3.6 min)
+    epoch 11/30  loss 0.2272  val F1 0.7094  acc 0.8678  10.9s  (max ETA 3.4 min)
+    early stop: no improvement for 5 epochs
+    done in 119.9s; val F1 0.7425 (best epoch 6)
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\tuning\har-tune-hart-lr3e-4-width1-fold0-nakhoul-3050.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\tuning\har-tune-hart-lr3e-4-width1-fold0-nakhoul-3050-config.json
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\tuning\har-tune-hart-lr3e-4-width1-fold0-nakhoul-3050-history.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-tune-hart-lr3e-4-width1-fold0-nakhoul-3050.pt
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\logs\tune-hart-lr3e-4-width1-fold0-nakhoul-3050.log

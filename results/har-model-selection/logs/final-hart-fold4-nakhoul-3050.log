@@ -1,0 +1,28 @@
+=== final hart fold 4 | machine nakhoul-3050 | device cuda NVIDIA GeForce RTX 3050 Ti Laptop GPU | torch 2.7.1+cu118 | started 2026-11-19T23:17:01+02:00
+    train subjects ['S006', 'S008', 'S010', 'S013', 'S015', 'S019', 'S020', 'S021', 'S022', 'S023', 'S025', 'S027', 'S028', 'S029']
+    validation subjects ['S012', 'S016', 'S024']
+    test subjects ['S009', 'S014', 'S017', 'S018', 'S026']
+    windows: train 54355, validation 6682, test 8295
+    hart: 355,379 parameters; architecture {'d': 96, 'depth': 6, 'heads': 3, 'patch': 16, 'stride': 16, 'ff_mult': 2, 'head_units': 512, 'dropout': 0.3, 'drop_path': 0.1, 'conv_kernels': [3, 5, 7, 7, 7, 7], 'width': 0.5}
+    epoch  1/30  loss 0.6917  val F1 0.6885  acc 0.8982  *best*  9.0s  (max ETA 4.4 min)
+    epoch  2/30  loss 0.3881  val F1 0.7448  acc 0.9029  *best*  9.0s  (max ETA 4.2 min)
+    epoch  3/30  loss 0.3093  val F1 0.7733  acc 0.9116  *best*  9.2s  (max ETA 4.2 min)
+    epoch  4/30  loss 0.2752  val F1 0.7604  acc 0.9288  9.0s  (max ETA 3.9 min)
+    epoch  5/30  loss 0.2633  val F1 0.8063  acc 0.9451  *best*  9.1s  (max ETA 3.8 min)
+    epoch  6/30  loss 0.2426  val F1 0.8118  acc 0.9490  *best*  9.0s  (max ETA 3.6 min)
+    epoch  7/30  loss 0.2344  val F1 0.8429  acc 0.9455  *best*  9.2s  (max ETA 3.5 min)
+    epoch  8/30  loss 0.2190  val F1 0.7925  acc 0.9247  9.0s  (max ETA 3.3 min)
+    epoch  9/30  loss 0.2144  val F1 0.7632  acc 0.9250  9.0s  (max ETA 3.2 min)
+    epoch 10/30  loss 0.2027  val F1 0.7721  acc 0.9204  8.9s  (max ETA 3.0 min)
+    epoch 11/30  loss 0.2028  val F1 0.8151  acc 0.9342  9.1s  (max ETA 2.9 min)
+    epoch 12/30  loss 0.1887  val F1 0.7868  acc 0.9193  9.1s  (max ETA 2.7 min)
+    early stop: no improvement for 5 epochs
+    TEST (held-out HARTH): macro-F1 pooled 0.7908, accuracy 0.9048, non-stair F1 per subject 0.7526, stairs F1 pooled 0.7763
+    done in 109.8s; val F1 0.8429 (best epoch 7)
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-hart-fold4-nakhoul-3050.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-hart-fold4-nakhoul-3050-config.json
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-hart-fold4-nakhoul-3050-history.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-hart-fold4-nakhoul-3050-per-subject.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-hart-fold4-nakhoul-3050-confusion.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-hart-fold4-nakhoul-3050.pt
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\logs\final-hart-fold4-nakhoul-3050.log

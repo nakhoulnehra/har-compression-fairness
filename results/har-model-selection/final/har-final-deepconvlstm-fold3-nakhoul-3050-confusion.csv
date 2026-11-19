@@ -1,0 +1,8 @@
+true\pred,walking,shuffling,stairs_up,stairs_down,standing,sitting,lying
+walking,976,158,195,107,2,0,0
+shuffling,21,321,3,3,16,5,0
+stairs_up,11,1,85,12,0,0,0
+stairs_down,10,1,2,69,0,0,0
+standing,7,219,2,0,669,34,1
+sitting,0,4,0,0,0,4994,1
+lying,0,0,0,1,0,0,749

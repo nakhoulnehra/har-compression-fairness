@@ -1,0 +1,29 @@
+=== tune hart lr3e-4-width0.5 fold 0 | machine nakhoul-3050 | device cuda NVIDIA GeForce RTX 3050 Ti Laptop GPU | torch 2.7.1+cu118 | started 2026-11-19T22:47:29+02:00
+    train subjects ['S006', 'S009', 'S012', 'S013', 'S014', 'S015', 'S016', 'S017', 'S018', 'S023', 'S024', 'S026', 'S027', 'S028', 'S029']
+    validation subjects ['S010', 'S020', 'S021']
+    test subjects: none (tuning)
+    windows: train 51451, validation 7709
+    hart: 355,379 parameters; architecture {'d': 96, 'depth': 6, 'heads': 3, 'patch': 16, 'stride': 16, 'ff_mult': 2, 'head_units': 512, 'dropout': 0.3, 'drop_path': 0.1, 'conv_kernels': [3, 5, 7, 7, 7, 7], 'width': 0.5}
+    epoch  1/30  loss 0.8778  val F1 0.5024  acc 0.7011  *best*  8.5s  (max ETA 4.1 min)
+    epoch  2/30  loss 0.5478  val F1 0.5835  acc 0.7456  *best*  8.5s  (max ETA 4.0 min)
+    epoch  3/30  loss 0.4338  val F1 0.6813  acc 0.8486  *best*  8.5s  (max ETA 3.8 min)
+    epoch  4/30  loss 0.3727  val F1 0.6392  acc 0.8172  8.6s  (max ETA 3.7 min)
+    epoch  5/30  loss 0.3424  val F1 0.7100  acc 0.8559  *best*  8.5s  (max ETA 3.6 min)
+    epoch  6/30  loss 0.3196  val F1 0.6862  acc 0.8469  8.8s  (max ETA 3.5 min)
+    epoch  7/30  loss 0.3025  val F1 0.7237  acc 0.8629  *best*  8.8s  (max ETA 3.4 min)
+    epoch  8/30  loss 0.2933  val F1 0.7090  acc 0.8700  8.6s  (max ETA 3.2 min)
+    epoch  9/30  loss 0.2825  val F1 0.7210  acc 0.8613  8.5s  (max ETA 3.0 min)
+    epoch 10/30  loss 0.2732  val F1 0.7143  acc 0.8633  9.0s  (max ETA 3.0 min)
+    epoch 11/30  loss 0.2668  val F1 0.7390  acc 0.8775  *best*  8.6s  (max ETA 2.7 min)
+    epoch 12/30  loss 0.2625  val F1 0.7314  acc 0.8724  8.6s  (max ETA 2.6 min)
+    epoch 13/30  loss 0.2583  val F1 0.7258  acc 0.8648  8.9s  (max ETA 2.5 min)
+    epoch 14/30  loss 0.2535  val F1 0.6927  acc 0.8574  8.9s  (max ETA 2.4 min)
+    epoch 15/30  loss 0.2425  val F1 0.7168  acc 0.8532  8.6s  (max ETA 2.2 min)
+    epoch 16/30  loss 0.2464  val F1 0.7177  acc 0.8692  8.4s  (max ETA 2.0 min)
+    early stop: no improvement for 5 epochs
+    done in 139.0s; val F1 0.7390 (best epoch 11)
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\tuning\har-tune-hart-lr3e-4-width0.5-fold0-nakhoul-3050.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\tuning\har-tune-hart-lr3e-4-width0.5-fold0-nakhoul-3050-config.json
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\tuning\har-tune-hart-lr3e-4-width0.5-fold0-nakhoul-3050-history.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-tune-hart-lr3e-4-width0.5-fold0-nakhoul-3050.pt
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\logs\tune-hart-lr3e-4-width0.5-fold0-nakhoul-3050.log

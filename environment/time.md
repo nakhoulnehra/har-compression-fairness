@@ -104,6 +104,7 @@ commands ran / time taken to finish:
 - `python -m pytest har/tests lci/tests`: 30.5 s (119/119 passed)
 - `python -m har.run_model_selection --stage all --device cpu --smoke`: 36.4 s; `python -m har.time_model_selection_cpu --smoke`: 12.1 s; `python -m har.select_model --smoke`: 6.3 s
 - `python -m lci.run_lci_phishing --seeds 0 1 2 3 4 --shap_seed 0`: **489.4 s** (8 min 9 s); per seed 97.0 ± 8.9 s (110.9, 100.3, 89.8, 92.3, 91.6). It took 817 s with torch 2.15.0 on Nakhoul's machine (above), so the two numbers differ in both machine and torch version.
+- `python -m har.run_model_selection --stage all --device cpu --models xgboost --machine-name aya-laptop` (git 473b75d, 10 threads): **8.7 min wall clock** (21:55:52–22:04:33; 9 units). Tuning, fold 0 (4 settings): 227 s (40–76 s per setting). Final folds 0–4: 292 s (50–68 s per fold, mean 58 s; 253–569 trees after early stopping).
 
 ## Nakhoul's machine, GPU (RTX 3050 Ti Laptop, 4 GB), torch 2.7.1+cu118
 
@@ -127,4 +128,16 @@ commands ran / time taken to finish:
 
 On this GPU, TinyHAR at width 1.0 takes about 2.5× less time per epoch than CNN1D at width 1.0 (CPU benchmark above: 10×). Plan Section 5's CPU upper bounds for the model choice on Nakhoul's machine (CNN1D 0.4 h, TinyHAR 2.1 h) were not needed.
 
-The full model choice is meant to run on GPU machines; record its times here per machine and GPU (the result rows hold `run_seconds`, `device` and `gpu_name`). CPU estimates for it are in [plan/HAR_IMPLEMENTATION.md](../plan/HAR_IMPLEMENTATION.md) Section 5. The CPU timing command (`python -m har.time_model_selection_cpu`, full protocol) is meant to run on Aya's machine and has not been run yet.
+- `python -m har.run_model_selection --stage all --device cuda --models hart deepconvlstm --machine-name nakhoul-3050` (2026-11-19/20, git 2c64f45, clean tree, NVIDIA driver 591.59): **83.2 min wall clock** (22:40:04–00:03:14; 18 units, 30-epoch cap, early stopping with patience 5). Exit 0. The first try with the system Python (not `.venv`) failed at once with `No module named 'numpy'`.
+
+| Part | HART | DeepConvLSTM |
+|---|---|---|
+| Tuning, fold 0 (4 settings each) | 582 s (77–246 s per setting) | 952 s (93–308 s) |
+| Final folds 0–4 (chosen setting) | 789 s (103–261 s per fold, mean 158 s) | 2,660 s (306–737 s, mean 532 s) |
+| Seconds per epoch (51–56k training windows) | width 1.0: 9–11.7 s; width 0.5: 7.7–10.5 s | width 1.0: 25–32 s; width 0.5: 11.5–12.7 s |
+| Epochs run per final fold | 11–28 | 11–25 |
+| Total | 22.9 min | 60.2 min |
+
+DeepConvLSTM at width 1.0 is the slowest candidate on this GPU: about 3× HART and 3× CNN1D per epoch. Its LSTM runs step by step over the 128 time steps, so the GPU helps it least. Plan Section 5's CPU upper bounds (DeepConvLSTM 5.4 h, HART 2.0 h on Nakhoul's machine) were not needed.
+
+All five candidates' training is done (GPU, Nakhoul: 105 min for CNN1D, TinyHAR, HART, DeepConvLSTM; CPU, Aya: 8.7 min for XGBoost). The result rows hold `run_seconds`, `device` and `gpu_name`. CPU estimates are in [plan/HAR_IMPLEMENTATION.md](../plan/HAR_IMPLEMENTATION.md) Section 5. The CPU timing command (`python -m har.time_model_selection_cpu`, full protocol) is meant to run on Aya's machine and has not been run yet.

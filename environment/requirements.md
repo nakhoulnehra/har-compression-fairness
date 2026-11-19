@@ -120,6 +120,9 @@ python -m har.build_windows                # results/har-setup/ identical in con
 python -m pytest har/tests lci/tests       # 119/119 passed
 python -m har.run_model_selection --stage all --device cuda --smoke --machine-name nakhoul-3050   # GPU check -> results/har-model-selection-smoke/
 python -m har.run_model_selection --stage all --device cuda --models cnn1d tinyhar --machine-name nakhoul-3050   # real run -> results/har-model-selection/
+git pull                                   # at 2c64f45 (XGBoost results from Aya's machine merged)
+.venv/Scripts/activate                     # needed: the system Python has no numpy, so a run outside the venv fails at once
+python -m har.run_model_selection --stage all --device cuda --models hart deepconvlstm --machine-name nakhoul-3050   # 2026-11-19/20, real run, 83.2 min -> results/har-model-selection/
 ```
 
 Aya's machine (setup, 2026-11-18):
@@ -166,6 +169,7 @@ python -m har.run_model_selection --stage all --device cpu --smoke   # smoke out
 python -m har.time_model_selection_cpu --smoke
 python -m har.select_model --smoke
 python -m lci.run_lci_phishing --seeds 0 1 2 3 4 --shap_seed 0       # Phishing LCI reproduction regenerated with torch 2.7.1
+python -m har.run_model_selection --stage all --device cpu --models xgboost --machine-name aya-laptop   # real run, 8.7 min -> results/har-model-selection/
 ```
 
 The full model choice (tuning + 5 folds) is run on GPU machines; its exact commands are in [../plan/HAR_IMPLEMENTATION.md](../plan/HAR_IMPLEMENTATION.md) Step 4.
