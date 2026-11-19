@@ -1,0 +1,6 @@
+fold,n_explain_general_test,n_explain_older_test,n_explain_total_test,n_explain_validation,n_background,n_background_subjects,background_subjects,n_background_walking,n_background_shuffling,n_background_stairs_up,n_background_stairs_down,n_background_standing,n_background_sitting,n_background_lying,background_mixed_label
+0,120,540,660,90,100,14,S006;S012;S013;S014;S015;S016;S017;S018;S023;S024;S026;S027;S028;S029,15,15,14,14,14,14,14,34
+1,120,540,660,90,100,14,S006;S008;S010;S012;S013;S017;S019;S020;S021;S022;S023;S025;S026;S027,15,15,14,14,14,14,14,25
+2,150,540,690,90,100,13,S008;S014;S015;S016;S017;S018;S020;S021;S023;S025;S026;S028;S029,15,15,14,14,14,14,14,26
+3,120,540,660,90,100,13,S008;S010;S012;S014;S015;S016;S018;S019;S025;S026;S027;S028;S029,15,15,14,14,14,14,14,22
+4,150,540,690,90,100,14,S006;S008;S010;S013;S015;S019;S020;S021;S022;S023;S025;S027;S028;S029,15,15,14,14,14,14,14,33

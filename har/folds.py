@@ -6,15 +6,19 @@ Every fold: HARTH subjects split into train / validation (3 subjects held out fr
 
 from __future__ import annotations
 
+import zlib
 from dataclasses import dataclass
 from typing import Sequence
 
 import numpy as np
 
-from .data import CHANNELS, Windows, require_harth
+from .data import CHANNELS, CLASS_NAMES, Windows, require_harth
 
 N_FOLDS, N_VAL, SEED = 5, 3, 42
 MIN_VAL_WINDOWS = 1000  # validation subjects need >= 1,000 non-overlapping windows
+N_EXPLAIN_PER_SUBJECT = 30
+N_BACKGROUND = 100
+TEST_SPLITS = ("harth_test", "har70plus_test")  # non-overlapping windows; the only explain sources
 
 
 @dataclass(frozen=True)
@@ -99,6 +103,56 @@ def tuning_sets(fold: FoldSplit) -> dict[str, tuple[str, ...]]:
     """Model-selection tuning (plan 2.9, Q6): train on the fold's training subjects, score on its 3
     validation subjects only. Its test subjects are returned so callers can assert they are unused."""
     return {"tuning_train": fold.train, "tuning_validation": fold.val, "never_used": fold.test_general}
+
+
+def stratified_pick(classes: np.ndarray, n: int, rng: np.random.Generator) -> np.ndarray:
+    """Class-stratified sample of positions: shuffle each class's positions with `rng` (classes in
+    index order), then take one per class per round, round-robin over the classes present (in index
+    order), until n are chosen or every class is used up. Exhausted classes simply drop out."""
+    perms = [rng.permutation(np.flatnonzero(classes == c)) for c in range(len(CLASS_NAMES))]
+    out, r = [], 0
+    while len(out) < n and any(r < len(p) for p in perms):
+        for p in perms:
+            if r < len(p):
+                out.append(int(p[r]))
+                if len(out) == n:
+                    break
+        r += 1
+    return np.array(out, dtype=np.int64)
+
+
+def select_explain_windows(w: Windows, split: str, per_subject: int = N_EXPLAIN_PER_SUBJECT,
+                           seed: int = SEED) -> np.ndarray:
+    """Indices into a test split (`harth_test` or `har70plus_test`, non-overlapping windows): up to
+    `per_subject` windows per subject, stratified by class with `stratified_pick`. Each subject has
+    its own generator, seeded with (seed, crc32(subject)), so a subject's choice does not depend on
+    which other subjects are present. Order: subjects sorted by ID, then pick order."""
+    if split not in TEST_SPLITS:
+        raise ValueError(f"explain windows come from test splits only {TEST_SPLITS}, got {split!r}")
+    out = []
+    for s in w.subjects:
+        pos = np.flatnonzero(w.subject == s)
+        rng = np.random.default_rng([seed, zlib.crc32(s.encode())])
+        out.append(pos[stratified_pick(w.y[pos], per_subject, rng)])
+    return np.concatenate(out) if out else np.zeros(0, np.int64)
+
+
+def select_background(w: Windows, split: str, fold: FoldSplit, n: int = N_BACKGROUND,
+                      seed: int = SEED) -> np.ndarray:
+    """Indices into `harth_train` of the fold's SHAP background: n windows from the fold's TRAINING
+    subjects only (validation, test and HAR70+ excluded), class-stratified with `stratified_pick`
+    over the pooled training windows, generator seeded with (seed, fold)."""
+    require_harth(w)
+    if split != "harth_train":
+        raise ValueError(f"backgrounds come from harth_train windows, got {split!r}")
+    pos = np.flatnonzero(np.isin(w.subject, fold.train))
+    bad = set(w.subject[pos].tolist()) - set(fold.train)
+    assert not bad, bad
+    rng = np.random.default_rng([seed, fold.fold])
+    idx = pos[stratified_pick(w.y[pos], n, rng)]
+    if len(idx) < n:
+        raise ValueError(f"fold {fold.fold}: only {len(idx)} training windows for a background of {n}")
+    return idx
 
 
 def channel_stats(w: Windows, fold: FoldSplit, subjects: Sequence[str] | None = None

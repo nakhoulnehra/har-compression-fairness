@@ -106,6 +106,23 @@ class Windows:
                        start_time=np.zeros(0, "datetime64[ms]"), start_row=np.zeros(0, np.int64))
 
 
+def window_ids(w: Windows, split: str) -> np.ndarray:
+    """Stable window IDs "<split>:<subject>:<start_row>", e.g. "harth_test:S006:1408". They stay valid
+    as long as PIPELINE_VERSION (the windowing rules) is unchanged."""
+    if split not in SPLITS or SPLITS[split][0] != w.dataset:
+        raise ValueError(f"split {split!r} does not match dataset {w.dataset!r}")
+    return np.char.add(np.char.add(f"{split}:", np.char.add(w.subject, ":")), w.start_row.astype(str))
+
+
+def find_windows(w: Windows, split: str, ids: Sequence[str]) -> np.ndarray:
+    """Indices into `w` of the given window IDs, in the given order; raises if any is missing."""
+    pos = {k: i for i, k in enumerate(window_ids(w, split).tolist())}
+    missing = [i for i in ids if i not in pos]
+    if missing:
+        raise KeyError(f"{len(missing)} window IDs not found, e.g. {missing[:3]}")
+    return np.array([pos[i] for i in ids], dtype=np.int64)
+
+
 def require_harth(*ws: Windows) -> None:
     """Leakage guard: training-side code must only ever see HARTH windows."""
     for w in ws:

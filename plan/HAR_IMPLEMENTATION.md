@@ -140,14 +140,19 @@ def inner_val_subjects(train_subjects: list[str], window_counts: dict[str, int],
 def make_folds(harth_test_counts: dict[str, int], older_subjects) -> list[FoldSplit]
     # FoldSplit(fold, train, val, test_general, test_older); FoldSplit.check() raises on any overlap
     # or if a HAR70+ subject is in train/val. Implemented in har/folds.py.
-def select_explain_windows(w: Windows, per_subject: int = 30, seed: int = 42) -> np.ndarray
-    # Indices into a *_test Windows. Per subject: up to 30 windows, stratified by class:
-    # round-robin over the classes present (one window per class per round, random within class)
-    # until 30 are chosen or the subject runs out. Subjects with < 30 windows contribute all.
-def select_background(w: Windows, subjects: list[str], n: int = 100, seed: int = 42) -> np.ndarray
-    # 100 windows from the fold's TRAINING subjects (harth_train, inner-val excluded),
-    # stratified by class the same way. One fixed background per fold.
+def select_explain_windows(w: Windows, split: str, per_subject: int = 30, seed: int = 42) -> np.ndarray
+    # Indices into a test split ("harth_test" or "har70plus_test"; raises for any other split).
+    # Per subject: up to 30 windows, stratified by class: round-robin over the classes present
+    # (one window per class per round, in class-index order; random within class) until 30 are
+    # chosen or the subject runs out. Generator per subject: default_rng([seed, crc32(subject)]).
+def select_background(w: Windows, split: str, fold: FoldSplit, n: int = 100, seed: int = 42) -> np.ndarray
+    # 100 harth_train windows from fold.train only (raises for HAR70+ windows or another split),
+    # stratified by class the same way over the pooled training windows; default_rng([seed, fold]).
+def window_ids(w: Windows, split: str) -> np.ndarray      # in har/data.py: "<split>:<subject>:<start_row>"
+def find_windows(w: Windows, split: str, ids) -> np.ndarray  # IDs -> indices; raises if one is missing
 ```
+
+*As built (2026-11-19):* every subject has ≥ 30 test windows, so there are 1,200 explain windows (660 general, 540 older). Every fold's background has 100 windows, 14 or 15 per class, from 13–14 training subjects. Stratifying by class oversamples transition-heavy classes, so 29% of explain windows and 22–34% of background windows have mixed labels (10% of all windows do). The single-label robustness check in Step 11 covers this. When a subject is a fold's validation subject, the gate and τ use that subject's explain windows.
 
 - The fold assignment, inner-validation subjects, explain windows and backgrounds are written once in Step 2 to `results/har-setup/` and read from there by every later step. Nothing re-samples them.
 - **Explain windows are the same for every model.** Each HARTH subject is tested in exactly one fold, so its 30 windows are fixed. The 18 × ≤30 HAR70+ windows are the same in every fold. About 670 windows are explained per model per fold (≈ 130 general + ≈ 540 older).
@@ -488,7 +493,7 @@ Each step ends with an acceptance check. If a check fails, stop, fix the code (n
 0. **Environment.** Add `xgboost` to the environment (pin the installed version in `environment/requirements.md` and `environment/requirements.txt`) and `data/processed/` to `.gitignore`. Use the same `requirements.txt` on both machines.
    *Acceptance:* `python data/verify_checksums.py` prints 44/44 on both machines; `pip freeze` is identical on both.
 
-1. **Build the windows** (`python -m har.build_windows`). *Status 2026-11-19: done, together with Step 2's folds, validation subjects and normalisation statistics; Step 2's explain windows and SHAP backgrounds are still to do.*
+1. **Build the windows** (`python -m har.build_windows`). *Status 2026-11-19: done, together with all of Step 2 (folds, validation subjects, normalisation statistics, explain windows and SHAP backgrounds).*
    *Why:* every later step reads the same cached windows, so windowing cannot differ between machines or runs.
    *Acceptance:* `har/tests/test_data.py` passes; S006 resampled to 50 Hz; 22 + 18 subjects; only class indices 0–6; window counts per subject written to `results/har-setup/har-window-counts-per-subject.csv` and within ±5% of Section 1's estimates (larger differences are explained in the report); the walking-aid (inferred) subjects have zero stairs windows.
 
@@ -572,7 +577,7 @@ Results (names follow CLAUDE.md; every file gets an entry in `results/README.md`
 
 | Folder | Files |
 |---|---|
-| `results/har-setup/` | `har-window-counts-per-subject.csv` (single-label / mixed-kept / mixed-dropped per subject and split), `har-fold-assignment.csv`, `har-inner-validation-subjects.csv`, `har-explain-windows.csv`, `har-shap-background-windows.csv` |
+| `results/har-setup/` | `har-window-counts-per-subject.csv` (single-label / mixed-kept / mixed-dropped per subject and split), `har-window-counts-per-group-and-class.csv`, `har-dropped-data-summary.csv`, `har-fold-assignment.csv`, `har-inner-validation-subjects.csv`, `har-normalisation-stats-per-fold.csv`, `har-explain-windows.csv`, `har-explain-windows-per-subject-class-and-group.csv`, `har-shap-background-windows.csv`, `har-explain-and-background-windows-per-fold.csv` |
 | `results/har-model-selection/` | `har-model-selection-tuning.csv`, `har-model-selection-per-subject-metrics.csv`, `har-model-selection-summary.csv` (F1, params, inference ms, SHAP s/window), `har-frozen-model-config.json`, `har-walking-aid-inferred-sanity-check.csv` |
 | `results/har-noise-floor/` | `har-noise-floor-per-subject-lci.csv`, `har-noise-floor-tau-per-fold.csv` |
 | `results/har-compression-grid/` | per fold k: `har-grid-fold{k}-per-subject-metrics.csv` (fold, method, level, subject, group, accuracy, macro-F1, LCI48, LCI768, shap_corr, jaccard, n_skipped, mprf, AOPC, drop_k5, random AOPC), `har-grid-fold{k}-models.csv` (n_params, n_nonzero, nominal sparsity, actual total sparsity incl. head, per-layer sparsity, sizes, inference time, tuning choice, gate value and branch, machine), `har-grid-fold{k}-shap-48-segments.npz` + `-configs.json`; `har-grid-fold3-cross-machine-comparison.csv` (Step 9b) |

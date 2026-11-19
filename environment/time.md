@@ -64,3 +64,11 @@ time taken to finish: 4.3 s
 machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00)
 commands ran: python -m pytest har/tests lci/tests
 time taken to finish: 17.6 s wall clock (49/49 passed; pytest reports 16.6 s, mostly the real-data tests that re-derive every window of 6 subjects from the raw CSVs)
+
+machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00)
+commands ran: python -m har.build_windows (2026-11-19, from the window cache, now including explain windows and SHAP backgrounds)
+time taken to finish: 4.2 s wall clock (selecting the 1,200 explain windows and 5 × 100 background windows takes well under 1 s)
+
+machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00)
+commands ran: python -m pytest har/tests lci/tests
+time taken to finish: 8.7 s wall clock (61/61 passed; pytest reports 8.1 s, with the raw CSVs already in the OS file cache)

@@ -53,7 +53,7 @@ LCI reproduction of Tulla et al. (2026) on Phishing / ResidualMLP, seeds 0–4, 
 - Key numbers: 40 entries.
 
 ## har-setup/
-HAR data pipeline (plan/HAR_IMPLEMENTATION.md Steps 1–2): HARTH and HAR70+ cut into 128-sample (2.56 s) windows of 6 axes (back + thigh), 7 shared classes, plus subject-wise folds and normalisation statistics. Written by `python -m har.build_windows`.
+HAR data pipeline (plan/HAR_IMPLEMENTATION.md Steps 1–2): HARTH and HAR70+ cut into 128-sample (2.56 s) windows of 6 axes (back + thigh), 7 shared classes, plus subject-wise folds, normalisation statistics, the fixed explain windows and the SHAP backgrounds. Written by `python -m har.build_windows`; all choices are seeded (42) and made from the data alone, before any model exists.
 - Rules: windows lie inside gap-free runs of shared-label rows; 50% overlap for HARTH training, none for testing; a window is kept only if one label covers > 50% of it (≥ 65 of 128 rows).
 - Walking-aid status is **inferred**: 503, 505, 513, 514, 515 are the only HAR70+ subjects with no stairs rows.
 
@@ -111,3 +111,34 @@ HAR data pipeline (plan/HAR_IMPLEMENTATION.md Steps 1–2): HARTH and HAR70+ cut
 - Key numbers:
   - Mean ranges over the folds: back_x −0.90 to −0.87, thigh_x −0.58 to −0.51, thigh_z 0.39 to 0.48.
   - Std ranges over the folds: 0.21–0.25 (back_y) to 0.62–0.70 (thigh_z).
+
+### [har-explain-windows.csv](har-setup/har-explain-windows.csv)
+- What: the fixed explain windows, the same for every model and method. One row per window: ID (`<split>:<subject>:<start_row>`), subject, group, walking-aid status (inferred), class, pick order, start row and time, majority share, and the HARTH subject's test fold.
+- How they were chosen: from the non-overlapping test windows only, before any model existed. Up to 30 per subject, stratified by class: round-robin over the classes present, random within class. The generator for each subject is seeded with (42, crc32(subject)).
+- Key numbers:
+  - 1,200 windows: 30 for each of the 40 subjects (22 HARTH = 660, 18 HAR70+ = 540). IDs are unique.
+  - 349 (29%) have mixed labels, against 10% of all windows, because transition-heavy classes are oversampled.
+
+### [har-explain-windows-per-subject-class-and-group.csv](har-setup/har-explain-windows-per-subject-class-and-group.csv)
+- What: explain-window counts per subject (with available windows and classes present) and per group, by class.
+- Key numbers (walking / shuffling / stairs up / stairs down / standing / sitting / lying):
+
+  | Group | Subjects | Windows | Per class |
+  |---|---|---|---|
+  | general | 22 | 660 | 117 / 106 / 84 / 90 / 101 / 89 / 73 |
+  | older | 18 | 540 | 107 / 92 / 28 / 33 / 98 / 94 / 88 |
+  | older, walking-aid (inferred) | 5 | 150 | 32 / 24 / 0 / 0 / 32 / 31 / 31 |
+  | older, no walking-aid (inferred) | 13 | 390 | 75 / 68 / 28 / 33 / 66 / 63 / 57 |
+
+  - Stairs per subject: 0–5 up and 0–5 down. HAR70+ subjects other than the walking-aid five have 1–9 stairs windows in total, except 502 (stairs down only, 2).
+
+### [har-shap-background-windows.csv](har-setup/har-shap-background-windows.csv)
+- What: the SHAP background of each fold: 100 `harth_train` windows from that fold's training subjects only (never validation, test or HAR70+). Stratified by class like the explain windows, generator seeded with (42, fold). Same columns as the explain file, plus fold.
+- Key numbers:
+  - 5 × 100 windows, 14 or 15 per class (walking and shuffling 15, the others 14).
+  - 13–14 training subjects per fold, at most 18 windows from any one subject.
+  - 22–34 mixed-label windows per fold, mostly stairs and shuffling.
+
+### [har-explain-and-background-windows-per-fold.csv](har-setup/har-explain-and-background-windows-per-fold.csv)
+- What: per fold, the explain windows of its test subjects (general and older), of its validation subjects, and the background's class mix and subjects.
+- Key numbers: per fold, 120 or 150 general + 540 older = 660 or 690 test explain windows, plus 90 validation explain windows (for the gate and τ) and 100 background windows.

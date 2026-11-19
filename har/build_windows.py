@@ -12,6 +12,10 @@ Writes (paths in har/paths.py):
     har-fold-assignment.csv                  each fold's train / validation / test subjects
     har-inner-validation-subjects.csv        the 3 validation subjects of each fold
     har-normalisation-stats-per-fold.csv     channel mean / std from each fold's training subjects
+    har-explain-windows.csv                  the fixed explain windows (IDs), up to 30 per subject
+    har-explain-windows-per-subject-class-and-group.csv   their counts per subject, class and group
+    har-shap-background-windows.csv          the 100 SHAP background windows (IDs) of each fold
+    har-explain-and-background-windows-per-fold.csv       explain / background counts per fold
 """
 
 from __future__ import annotations
@@ -22,10 +26,12 @@ import time
 import numpy as np
 import pandas as pd
 
-from .data import (CLASS_NAMES, CHANNELS, LABEL_NAMES, SHARED_LABELS, STAIRS, WA_NA, WA_NO, WA_YES,
-                   WALKING_AID_INFERRED, build_all, build_report)
-from .folds import channel_stats, make_folds
-from .paths import (DROPPED_DATA_CSV, FOLD_ASSIGNMENT_CSV, HAR_SETUP_DIR, INNER_VALIDATION_CSV,
+from .data import (CLASS_NAMES, CHANNELS, LABEL_NAMES, PIPELINE_VERSION, SHARED_LABELS, STAIRS, WA_NA, WA_NO,
+                   WA_YES, WALKING_AID_INFERRED, build_all, build_report, window_ids)
+from .folds import (N_BACKGROUND, N_EXPLAIN_PER_SUBJECT, SEED, TEST_SPLITS, channel_stats, make_folds,
+                    select_background, select_explain_windows)
+from .paths import (BACKGROUND_CSV, DROPPED_DATA_CSV, EXPLAIN_BACKGROUND_PER_FOLD_CSV, EXPLAIN_COUNTS_CSV,
+                    EXPLAIN_WINDOWS_CSV, FOLD_ASSIGNMENT_CSV, HAR_SETUP_DIR, INNER_VALIDATION_CSV,
                     NORMALISATION_STATS_CSV, WINDOW_COUNTS_PER_GROUP_CLASS_CSV, WINDOW_COUNTS_PER_SUBJECT_CSV)
 
 SPLIT_LABEL = {"harth_train": "train_50pct_overlap", "harth_test": "test_no_overlap",
@@ -123,6 +129,84 @@ def fold_tables(folds, windows):
     return pd.DataFrame(rows), pd.DataFrame(vrows)
 
 
+def window_rows(w, split, idx, extra=None) -> pd.DataFrame:
+    ids = window_ids(w, split)
+    df = pd.DataFrame({"window_id": ids[idx], "split": split, "dataset": w.dataset, "subject": w.subject[idx],
+                       "group": w.group[idx], "walking_aid": w.walking_aid[idx], "class_index": w.y[idx],
+                       "class_name": np.array(CLASS_NAMES)[w.y[idx]], "start_row": w.start_row[idx],
+                       "start_time": pd.to_datetime(w.start_time[idx]).strftime("%Y-%m-%d %H:%M:%S.%f").str[:-3],
+                       "majority_share": np.round(w.majority_share[idx], 4)})
+    if extra:
+        for k, v in extra.items():
+            df.insert(0, k, v)
+    return df
+
+
+def explain_and_background(windows, folds):
+    """The fixed explain windows (plan 2.2) and each fold's SHAP background, as ID tables."""
+    test_fold = {s: f.fold for f in folds for s in f.test_general}
+    parts = []
+    for split in TEST_SPLITS:
+        w = windows[split]
+        idx = select_explain_windows(w, split)
+        df = window_rows(w, split, idx)
+        df.insert(0, "pick_order", df.groupby("subject").cumcount())
+        df.insert(0, "harth_test_fold", [str(test_fold[s]) if split == "harth_test" else "all" for s in df.subject])
+        parts.append(df)
+    explain = pd.concat(parts, ignore_index=True)
+    explain.insert(0, "pipeline_version", PIPELINE_VERSION)
+    bg = []
+    for f in folds:
+        idx = select_background(windows["harth_train"], "harth_train", f)
+        df = window_rows(windows["harth_train"], "harth_train", idx)
+        df.insert(0, "pick_order", np.arange(len(df)))
+        df.insert(0, "fold", f.fold)
+        bg.append(df)
+    background = pd.concat(bg, ignore_index=True)
+    background.insert(0, "pipeline_version", PIPELINE_VERSION)
+    return explain, background
+
+
+def explain_count_table(explain: pd.DataFrame, windows) -> pd.DataFrame:
+    rows = []
+    avail = {s: w for s, w in ((sp, windows[sp]) for sp in TEST_SPLITS)}
+    def counts(df):
+        c = df.class_index.value_counts()
+        return {f"n_{n}": int(c.get(i, 0)) for i, n in enumerate(CLASS_NAMES)}
+    for (split, s), g in explain.groupby(["split", "subject"], sort=True):
+        w = avail[split]
+        rows.append({"level": "subject", "split": split, "subject": s, "group": g.group.iloc[0],
+                     "walking_aid": g.walking_aid.iloc[0], "n_subjects": 1, "n_explain": len(g),
+                     "n_available_windows": int((w.subject == s).sum()),
+                     "n_classes_present": int(len(np.unique(w.y[w.subject == s]))), **counts(g)})
+    for name, m in [("general", explain.group == "general"), ("older", explain.group == "older"),
+                    ("older_inferred_walking_aid", explain.walking_aid == WA_YES),
+                    ("older_inferred_no_walking_aid", explain.walking_aid == WA_NO), ("all", explain.group.notna())]:
+        g = explain[m]
+        rows.append({"level": "group", "split": ";".join(sorted(g.split.unique())), "subject": "", "group": name,
+                     "walking_aid": "", "n_subjects": g.subject.nunique(), "n_explain": len(g),
+                     "n_available_windows": "", "n_classes_present": "", **counts(g)})
+    return pd.DataFrame(rows)
+
+
+def per_fold_table(explain: pd.DataFrame, background: pd.DataFrame, folds) -> pd.DataFrame:
+    rows = []
+    for f in folds:
+        e = explain
+        b = background[background.fold == f.fold]
+        c = b.class_index.value_counts()
+        rows.append({"fold": f.fold,
+                     "n_explain_general_test": int(e.subject.isin(f.test_general).sum()),
+                     "n_explain_older_test": int(e.subject.isin(f.test_older).sum()),
+                     "n_explain_total_test": int(e.subject.isin(f.test_general + f.test_older).sum()),
+                     "n_explain_validation": int(e.subject.isin(f.val).sum()),
+                     "n_background": len(b), "n_background_subjects": b.subject.nunique(),
+                     "background_subjects": ";".join(sorted(b.subject.unique())),
+                     **{f"n_background_{n}": int(c.get(i, 0)) for i, n in enumerate(CLASS_NAMES)},
+                     "background_mixed_label": int((b.majority_share < 1).sum())})
+    return pd.DataFrame(rows)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--force", action="store_true", help="rebuild the window cache from data/raw/")
@@ -154,6 +238,13 @@ def main() -> None:
     fold_df.to_csv(FOLD_ASSIGNMENT_CSV, index=False)
     val_df.to_csv(INNER_VALIDATION_CSV, index=False)
     pd.DataFrame(norm).to_csv(NORMALISATION_STATS_CSV, index=False, float_format="%.6f")
+    explain, background = explain_and_background(windows, folds)
+    explain.to_csv(EXPLAIN_WINDOWS_CSV, index=False)
+    background.to_csv(BACKGROUND_CSV, index=False)
+    ecounts = explain_count_table(explain, windows)
+    ecounts.to_csv(EXPLAIN_COUNTS_CSV, index=False)
+    perfold = per_fold_table(explain, background, folds)
+    perfold.to_csv(EXPLAIN_BACKGROUND_PER_FOLD_CSV, index=False)
 
     # ---- console summary and acceptance checks (plan Steps 1-2)
     print(f"build/load: {t_build:.1f} s")
@@ -169,6 +260,11 @@ def main() -> None:
         cls_test = np.unique(windows["harth_test"].y[np.isin(windows["harth_test"].subject, f.test_general)])
         print(f"fold {f.fold}: train {len(f.train)} {list(f.train)}\n        val {list(f.val)}  test {list(f.test_general)} "
               f"(classes in HARTH test: {len(cls_test)}/7, windows {sum(test_counts[s] for s in f.test_general)})")
+    print(f"explain windows: {len(explain)} ({N_EXPLAIN_PER_SUBJECT} max per subject, seed {SEED})")
+    print(ecounts[ecounts.level == "group"].drop(columns=["level", "subject", "walking_aid", "n_available_windows",
+                                                          "n_classes_present"]).to_string(index=False))
+    print(f"backgrounds: {N_BACKGROUND} windows per fold from training subjects")
+    print(perfold.drop(columns=["background_subjects"]).to_string(index=False))
     print(f"total time {time.perf_counter() - t0:.1f} s")
 
 

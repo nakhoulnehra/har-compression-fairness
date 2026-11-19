@@ -1,6 +1,6 @@
 # Requirements
 
-Technical requirements for the project so far: data download and verification, the LCI reproduction on Phishing ([../plan/LCI_IMPLEMENTATION.md](../plan/LCI_IMPLEMENTATION.md)), and the HAR data pipeline (windows, folds, normalisation; [../plan/HAR_IMPLEMENTATION.md](../plan/HAR_IMPLEMENTATION.md) Steps 1–2). No new packages were needed for the HAR pipeline.
+Technical requirements for the project so far: data download and verification, the LCI reproduction on Phishing ([../plan/LCI_IMPLEMENTATION.md](../plan/LCI_IMPLEMENTATION.md)), and the HAR data pipeline (windows, folds, normalisation, explain windows, SHAP backgrounds; [../plan/HAR_IMPLEMENTATION.md](../plan/HAR_IMPLEMENTATION.md) Steps 1–2). No new packages were needed for the HAR pipeline.
 
 ## Python and packages
 - Python 3.11 (runs used 3.11.9, on both machines in [specs.md](specs.md)).
@@ -86,4 +86,6 @@ python -m lci.time_lci_phishing_components --seed 0   # 2026-11-19, machine spee
 python -m har.build_windows --force        # 2026-11-19, HAR windows, folds, normalisation -> data/processed/har/ (cache) + results/har-setup/
 python -m har.build_windows                # same, from the cache
 python -m pytest har/tests lci/tests       # 49/49 passed (37 HAR data-pipeline tests + 12 LCI tests)
+python -m har.build_windows                # 2026-11-19, + explain windows and SHAP backgrounds -> results/har-setup/
+python -m pytest har/tests lci/tests       # 61/61 passed (49 HAR tests incl. 12 explain/background tests + 12 LCI tests)
 ```
