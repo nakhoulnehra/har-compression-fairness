@@ -147,24 +147,26 @@ HAR data pipeline (plan/HAR_IMPLEMENTATION.md Steps 1–2): HARTH and HAR70+ cut
 - What: per fold, the explain windows of its test subjects (general and older), of its validation subjects, and the background's class mix and subjects.
 - Key numbers: per fold, 120 or 150 general + 540 older = 660 or 690 test explain windows, plus 90 validation explain windows (for the gate and τ) and 100 background windows.
 
-## har-model-selection-smoke/
-**Pipeline check only, not results.** `python -m har.run_model_selection --stage all --device cpu --smoke` (fold 0, 1 epoch, 300 / 200 / 200 windows), then `python -m har.time_model_selection_cpu --smoke` and `python -m har.select_model --smoke`, on Aya's laptop (CPU), 2026-11-19. Its accuracies and its "frozen" model say nothing about the candidates. The real model choice goes to `results/har-model-selection/` (same layout). There are 120 files, so the entries below are by file pattern.
+## har-model-selection/
+Real model choice (plan Step 4), HARTH only. **So far: CNN1D and TinyHAR only**, run with `python -m har.run_model_selection --stage all --device cuda --models cnn1d tinyhar --machine-name nakhoul-3050` on Nakhoul's RTX 3050 Ti (torch 2.7.1+cu118, git 473b75d, clean tree), 2026-11-19, 21.6 min. HART, DeepConvLSTM, XGBoost, the CPU timing and `select_model` are still to come, so no model is chosen yet. There are 93 files, listed by pattern.
 
-### tuning/har-tune-&lt;model&gt;-&lt;setting&gt;-fold0-Aya.csv (+ `-config.json`, `-history.csv`)
-- What: one row per tried setting (4 per model, 20 in total): fold-0 validation scores, settings hash, seed, device, GPU, machine, git commit, code hash and run time. The `-config.json` holds the exact settings and command line; `-history.csv` the per-epoch curve.
-- Key numbers: 20/20 settings done; the validation subjects are exactly fold 0's S010, S020, S021; no test subjects (the `test_subjects` column is empty).
+### tuning/har-tune-&lt;model&gt;-&lt;setting&gt;-fold0-nakhoul-3050.csv (+ `-config.json`, `-history.csv`)
+- What: one row per setting, lr {1e-3, 3e-4} × width {1.0, 0.5}, trained on fold 0's 15 training subjects (51,451 windows) and scored on validation subjects S010, S020, S021 (7,709 windows). Training is capped at 30 epochs with early stopping (patience 5).
+- Key numbers (validation pooled 7-class macro-F1): TinyHAR **0.818** (lr 1e-3, width 1.0, 54,273 parameters), then 0.751 (1e-3, 0.5), 0.743 (3e-4, 1.0), 0.740 (3e-4, 0.5). CNN1D **0.761** (lr 3e-4, width 0.5, 316,167 parameters), then 0.736 (1e-3, 1.0), 0.724 (1e-3, 0.5), 0.707 (3e-4, 1.0). Validation accuracy is 0.84–0.89 for all eight; stairs F1 separates them (0.49–0.82).
 
-### final/har-final-&lt;model&gt;-fold0-Aya.csv (+ `-config.json`, `-history.csv`, `-per-subject.csv`, `-confusion.csv`)
-- What: the best tuning setting per model, trained on fold 0 and evaluated on its held-out HARTH test subjects (S008, S019, S022, S025): one row of metrics, per-subject metrics and the 7×7 confusion matrix.
-- Key numbers (smoke, 1 epoch; regenerated 2026-11-19 with torch 2.7.1, the source-checked models and the 20 Hz low-passed windows): pooled 7-class macro-F1 CNN1D 0.322, TinyHAR 0.193, DeepConvLSTM 0.108, HART 0.301, XGBoost 0.792. The earlier version gave reproducible values on two identical runs.
+### final/har-final-&lt;model&gt;-fold&lt;k&gt;-nakhoul-3050.csv (+ `-config.json`, `-history.csv`, `-per-subject.csv`, `-confusion.csv`), k = 0–4
+- What: the best tuning setting per model, trained on each of the 5 HARTH folds and tested on that fold's held-out subjects (8,209–8,702 test windows per fold). Includes per-subject metrics and the 7×7 confusion matrix.
+- Key numbers (test, mean ± SD over the 5 folds):
 
-### timing/har-cpu-inference-and-shap-time-Aya.csv (+ `-config.json`)
-- What: CPU latency (batch 1, 1 thread), batched throughput and single-output SHAP time per window, smoke protocol (20 calls, 4 SHAP windows, nsamples 20).
-- Key numbers: not meaningful at this protocol; the full protocol is 1,000 calls, 100 windows and nsamples 200.
+| Model | Macro-F1 (7 classes, pooled) | Accuracy (pooled) | Stairs F1 (mean of up and down) | Non-stair macro-F1 (subject mean) | Per fold, macro-F1 for folds 0–4 |
+|---|---|---|---|---|---|
+| TinyHAR | **0.824 ± 0.042** | 0.919 ± 0.025 | 0.766 ± 0.126 | 0.824 ± 0.036 | 0.855, 0.878, 0.805, 0.776, 0.803 |
+| CNN1D | 0.797 ± 0.052 | 0.908 ± 0.032 | 0.745 ± 0.110 | 0.789 ± 0.052 | 0.840, 0.859, 0.789, 0.736, 0.763 |
 
-### har-model-selection-tuning.csv, -final-per-fold.csv, -per-subject-metrics.csv, -summary.csv, har-frozen-model-config.json
-- What: the merged tables, the per-model summary and the rule's decision written by `har.select_model --smoke`.
-- Key numbers: the cost-based rule ran end to end. Only CNN1D was within 2 pt of the best 1-epoch F1, so the smoke "choice" is CNN1D; it means nothing.
+- TinyHAR is ahead in every fold (by 1.6–4.0 pt). Fold 3 (S013, S020, S021, S023) is the hardest for both models, mainly through stairs F1 (0.55 and 0.57). TinyHAR's best epoch comes early (epochs 2–9).
 
 ### logs/
-- What: the full terminal output of every unit (`tune-…`, `final-…`), every session (`session-all-Aya-<time>.log`), the timing run and the selection.
+- What: the terminal output of each of the 18 units and of the session (`session-all-nakhoul-3050-20261119-215942.log`).
+
+## har-model-selection-smoke/
+**Git-ignored, local only: a pipeline check, not results.** The `--smoke` runs of `har.run_model_selection`, `har.time_model_selection_cpu` and `har.select_model` write here (fold 0, 1 epoch, 300 / 200 / 200 windows), with the same layout as `har-model-selection/`. The folder is rebuilt in under a minute, and its numbers say nothing about the candidates. The smoke runs on each machine passed (2026-11-19: Aya CPU 36.4 s, Nakhoul CUDA 36.7 s; see `environment/time.md`).

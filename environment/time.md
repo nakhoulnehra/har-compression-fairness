@@ -1,6 +1,6 @@
 # Time
 
-Wall-clock time of the important commands, run from the repo root. Each entry names the machine it ran on; the machines are described in [specs.md](specs.md). All runs are CPU only.
+Wall-clock time of the important commands, run from the repo root. Each entry names the machine it ran on; the machines are described in [specs.md](specs.md). All runs are CPU only, except the model-choice training marked "GPU" below.
 
 ## Nakhoul's machine (Acer Swift X, Ryzen 7 5800U)
 
@@ -104,5 +104,27 @@ commands ran / time taken to finish:
 - `python -m pytest har/tests lci/tests`: 30.5 s (119/119 passed)
 - `python -m har.run_model_selection --stage all --device cpu --smoke`: 36.4 s; `python -m har.time_model_selection_cpu --smoke`: 12.1 s; `python -m har.select_model --smoke`: 6.3 s
 - `python -m lci.run_lci_phishing --seeds 0 1 2 3 4 --shap_seed 0`: **489.4 s** (8 min 9 s); per seed 97.0 ± 8.9 s (110.9, 100.3, 89.8, 92.3, 91.6). It took 817 s with torch 2.15.0 on Nakhoul's machine (above), so the two numbers differ in both machine and torch version.
+
+## Nakhoul's machine, GPU (RTX 3050 Ti Laptop, 4 GB), torch 2.7.1+cu118
+
+Measured 2026-11-19, machine name `nakhoul-3050`, git 473b75d.
+
+machine model: Acer Swift X (SFX14-41G), NVIDIA GeForce RTX 3050 Ti Laptop GPU
+commands ran / time taken to finish:
+- `pip install torch==2.7.1 --index-url https://download.pytorch.org/whl/cu118`: about 3 min (2.8 GB wheel at about 30 MB/s, then install); the other packages under 2 min (xgboost 102 MB at 1.3 MB/s)
+- `python data/verify_checksums.py`: under 2 s (44/44 files OK)
+- `python -m har.build_windows` (from the window cache): 30.9 s wall clock (the script reports 20.2 s)
+- `python -m pytest har/tests lci/tests`: 54.1 s (119/119 passed)
+- `python -m har.run_model_selection --stage all --device cuda --smoke --machine-name nakhoul-3050`: 36.7 s
+- `python -m har.run_model_selection --stage all --device cuda --models cnn1d tinyhar --machine-name nakhoul-3050`: **21.6 min wall clock** (21:59:37–22:21:15; 18 units, 30-epoch cap, early stopping with patience 5)
+
+| Part | CNN1D | TinyHAR |
+|---|---|---|
+| Tuning, fold 0 (4 settings each) | 400 s (59–145 s per setting) | 187 s (28–59 s) |
+| Final folds 0–4 (chosen setting) | 474 s (63–141 s per fold, mean 95 s) | 226 s (32–63 s, mean 45 s) |
+| Seconds per epoch (51k training windows) | width 1.0: 9.3–11 s; width 0.5: 4–5.5 s | width 1.0: about 4.2 s; width 0.5: about 3 s |
+| Total | 14.6 min | 6.9 min |
+
+On this GPU, TinyHAR at width 1.0 takes about 2.5× less time per epoch than CNN1D at width 1.0 (CPU benchmark above: 10×). Plan Section 5's CPU upper bounds for the model choice on Nakhoul's machine (CNN1D 0.4 h, TinyHAR 2.1 h) were not needed.
 
 The full model choice is meant to run on GPU machines; record its times here per machine and GPU (the result rows hold `run_seconds`, `device` and `gpu_name`). CPU estimates for it are in [plan/HAR_IMPLEMENTATION.md](../plan/HAR_IMPLEMENTATION.md) Section 5. The CPU timing command (`python -m har.time_model_selection_cpu`, full protocol) is meant to run on Aya's machine and has not been run yet.

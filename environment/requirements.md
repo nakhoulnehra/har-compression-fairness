@@ -108,6 +108,20 @@ python -m lci.run_lci_phishing --seeds 0 1 2 3 4 --shap_seed 0   # LCI grid -> r
 python -m lci.time_lci_phishing_components --seed 0              # per-stage timing (prints only)
 ```
 
+Nakhoul's machine, GPU setup and model choice (2026-11-19, RTX 3050 Ti Laptop, machine name `nakhoul-3050`). The venv had `torch 2.15.0+cpu` before this; it was replaced by the CUDA build of 2.7.1:
+
+```bash
+git pull                                   # at 473b75d
+pip install torch==2.7.1 --index-url https://download.pytorch.org/whl/cu118   # replaces 2.15.0+cpu
+pip install numpy==2.4.6 pandas==3.1.1 scikit-learn==1.9.1 scipy==1.17.1 shap==0.51.0 ucimlrepo==0.0.7 certifi==2026.10.23 pytest==9.2.0 xgboost==3.2.0
+python -c "import torch; print(torch.__version__, torch.cuda.is_available(), torch.cuda.get_device_name(0))"   # 2.7.1+cu118 True NVIDIA GeForce RTX 3050 Ti Laptop GPU
+python data/verify_checksums.py            # 44/44 files OK
+python -m har.build_windows                # results/har-setup/ identical in content; git shows it as modified only because pandas writes CRLF on Windows (git diff --ignore-cr-at-eol is empty), so it was restored with git restore
+python -m pytest har/tests lci/tests       # 119/119 passed
+python -m har.run_model_selection --stage all --device cuda --smoke --machine-name nakhoul-3050   # GPU check -> results/har-model-selection-smoke/
+python -m har.run_model_selection --stage all --device cuda --models cnn1d tinyhar --machine-name nakhoul-3050   # real run -> results/har-model-selection/
+```
+
 Aya's machine (setup, 2026-11-18):
 
 ```bash

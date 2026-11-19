@@ -1,0 +1,30 @@
+=== final cnn1d fold 3 | machine nakhoul-3050 | device cuda NVIDIA GeForce RTX 3050 Ti Laptop GPU | torch 2.7.1+cu118 | started 2026-11-19T22:15:09+02:00
+    train subjects ['S006', 'S008', 'S009', 'S010', 'S012', 'S014', 'S015', 'S016', 'S018', 'S019', 'S025', 'S026', 'S027', 'S028', 'S029']
+    validation subjects ['S017', 'S022', 'S024']
+    test subjects ['S013', 'S020', 'S021', 'S023']
+    windows: train 54392, validation 6274, test 8679
+    cnn1d: 316,167 parameters; architecture {'filters': 64, 'kernels': [6, 12, 12, 32], 'fc_units': 256, 'n_fc': 2, 'dropout': 0.4, 'width': 0.5}
+    epoch  1/30  loss 1.0589  val F1 0.5865  acc 0.8218  *best*  5.2s  (max ETA 2.5 min)
+    epoch  2/30  loss 0.6373  val F1 0.5921  acc 0.7960  *best*  4.9s  (max ETA 2.3 min)
+    epoch  3/30  loss 0.4700  val F1 0.6503  acc 0.8256  *best*  5.4s  (max ETA 2.4 min)
+    epoch  4/30  loss 0.3921  val F1 0.6695  acc 0.8338  *best*  5.4s  (max ETA 2.4 min)
+    epoch  5/30  loss 0.3613  val F1 0.7018  acc 0.8601  *best*  4.6s  (max ETA 1.9 min)
+    epoch  6/30  loss 0.3272  val F1 0.7129  acc 0.8393  *best*  5.2s  (max ETA 2.1 min)
+    epoch  7/30  loss 0.3062  val F1 0.6412  acc 0.8092  5.5s  (max ETA 2.1 min)
+    epoch  8/30  loss 0.2956  val F1 0.6892  acc 0.8538  5.5s  (max ETA 2.0 min)
+    epoch  9/30  loss 0.2847  val F1 0.7656  acc 0.9061  *best*  5.1s  (max ETA 1.8 min)
+    epoch 10/30  loss 0.2791  val F1 0.6833  acc 0.8475  4.6s  (max ETA 1.5 min)
+    epoch 11/30  loss 0.2637  val F1 0.6537  acc 0.8143  5.2s  (max ETA 1.6 min)
+    epoch 12/30  loss 0.2596  val F1 0.6688  acc 0.8371  5.5s  (max ETA 1.6 min)
+    epoch 13/30  loss 0.2549  val F1 0.7141  acc 0.8538  5.4s  (max ETA 1.5 min)
+    epoch 14/30  loss 0.2441  val F1 0.7239  acc 0.8650  5.4s  (max ETA 1.4 min)
+    early stop: no improvement for 5 epochs
+    TEST (held-out HARTH): macro-F1 pooled 0.7363, accuracy 0.8992, non-stair F1 per subject 0.7766, stairs F1 pooled 0.5549
+    done in 73.8s; val F1 0.7656 (best epoch 9)
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-cnn1d-fold3-nakhoul-3050.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-cnn1d-fold3-nakhoul-3050-config.json
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-cnn1d-fold3-nakhoul-3050-history.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-cnn1d-fold3-nakhoul-3050-per-subject.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-cnn1d-fold3-nakhoul-3050-confusion.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-cnn1d-fold3-nakhoul-3050.pt
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\logs\final-cnn1d-fold3-nakhoul-3050.log

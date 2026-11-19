@@ -525,7 +525,7 @@ Each step ends with an acceptance check. If a check fails, stop, fix the code (n
 
 4. **Model selection** (`python -m har.run_model_selection`, `python -m har.time_model_selection_cpu`, `python -m har.select_model`).
    *Why:* one fixed architecture for the whole grid, chosen on HARTH alone, cheap enough to explain on CPU.
-   *Status 2026-11-19: implemented and smoke-tested on CPU; the full run is to be done on GPU machines.*
+   *Status 2026-11-19: implemented and smoke-tested on CPU; the full run is to be done on GPU machines. CNN1D and TinyHAR are done: `--stage all` (tuning + folds 0–4) on Nakhoul's RTX 3050 Ti, 21.6 min, in `results/har-model-selection/`. Each machine runs `--stage all` for its own models, instead of the fold split in Commands below.*
    - **Code:** `har/models.py`, `har/features.py`, `har/train.py`, `har/attributions.py` (single-output SHAP), `har/runlog.py`, plus the three runners.
    - **HAR70+ is never loaded:** `data.load_harth_windows` reads only the HARTH arrays of the cache, and the folds come from `har-fold-assignment.csv`.
    - **Training** may run on GPU (`--device cuda`). CPU inference and SHAP time are measured separately, always on CPU (`time_model_selection_cpu`, on Aya's machine for all models).
