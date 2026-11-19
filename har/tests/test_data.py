@@ -105,6 +105,38 @@ def test_to_50hz_keeps_50hz_and_rejects_other_rates():
         D.to_50hz(make_df([6] * 200, period_s=0.04))
 
 
+# ----------------------------------------------------------------------------- 20 Hz low-pass
+
+def test_lowpass_keeps_slow_signals_and_removes_fast_ones():
+    t = np.arange(2000) * 0.02
+    slow, fast = np.sin(2 * np.pi * 2.0 * t), np.sin(2 * np.pi * 24.0 * t)    # 2 Hz and 24 Hz (Nyquist 25)
+    out = D.lowpass_20hz(make_df([7] * 2000, values=np.tile((slow + fast)[:, None], (1, 6))))
+    inner = slice(100, -100)
+    assert np.max(np.abs(out["thigh_z"].to_numpy()[inner] - slow[inner])) < 0.05   # 2 Hz passes, 24 Hz gone
+    assert len(out) == 2000 and (out["label"] == 7).all()
+    assert out["timestamp"].equals(make_df([7] * 2000)["timestamp"])
+
+
+def test_lowpass_is_applied_per_gap_free_segment():
+    a, b = np.zeros(300), np.full(300, 5.0)
+    df = make_df([6] * 600, gaps=[300], values=np.tile(np.r_[a, b][:, None], (1, 6)))
+    out = D.lowpass_20hz(df)
+    assert np.allclose(out["back_x"].to_numpy()[:300], 0.0, atol=1e-9)    # nothing leaks across the gap
+    assert np.allclose(out["back_x"].to_numpy()[300:], 5.0, atol=1e-9)
+    filtered_once = D.lowpass_20hz(make_df([6] * 300, values=np.tile(np.sin(np.arange(300.0))[:, None], (1, 6))))
+    together = D.lowpass_20hz(make_df([6] * 600, gaps=[300],
+                                      values=np.tile(np.r_[np.sin(np.arange(300.0)), b][:, None], (1, 6))))
+    assert np.allclose(together["back_x"].to_numpy()[:300], filtered_once["back_x"].to_numpy())
+
+
+def test_lowpass_leaves_tiny_segments_and_rejects_100hz():
+    df = make_df([6] * 10 + [6] * 300, gaps=[10], values=np.tile(np.arange(310.0)[:, None] % 2, (1, 6)))
+    out = D.lowpass_20hz(df)
+    assert np.array_equal(out["back_x"].to_numpy()[:10], df["back_x"].to_numpy()[:10])   # 10 rows: unfiltered
+    with pytest.raises(ValueError, match="50 Hz"):
+        D.lowpass_20hz(make_df([6] * 400, period_s=0.01))
+
+
 # ----------------------------------------------------------------------------------- windowing
 
 def rows_of(w, i):
@@ -221,7 +253,7 @@ def test_real_walking_aid_subjects_are_exactly_those_without_stairs(windows):
 def test_real_windows_match_raw_rows_and_never_cross_gaps(windows, dataset, subject):
     """Re-derive every window of a subject from its raw file: same values, no step > 40 ms inside,
     only shared labels, and the stored label is the > 50% majority."""
-    df = D.to_50hz(D.load_recording(dataset, subject))
+    df = D.preprocess(D.load_recording(dataset, subject))     # 50 Hz + 20 Hz low-pass, as in build_all
     ns = df["timestamp"].to_numpy().astype("datetime64[ns]").astype(np.int64)
     steps = np.diff(ns) / 1e9
     vals = df[list(D.CHANNELS)].to_numpy(np.float32)

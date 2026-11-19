@@ -27,3 +27,10 @@ EXPLAIN_WINDOWS_CSV = HAR_SETUP_DIR / "har-explain-windows.csv"
 EXPLAIN_COUNTS_CSV = HAR_SETUP_DIR / "har-explain-windows-per-subject-class-and-group.csv"
 BACKGROUND_CSV = HAR_SETUP_DIR / "har-shap-background-windows.csv"
 EXPLAIN_BACKGROUND_PER_FOLD_CSV = HAR_SETUP_DIR / "har-explain-and-background-windows-per-fold.csv"
+
+# Model choice (plan Step 4): har/run_model_selection.py, har/time_model_selection_cpu.py, har/select_model.py
+MODEL_SELECTION_DIR = RESULTS_DIR / "har-model-selection"
+MODEL_SELECTION_SMOKE_DIR = RESULTS_DIR / "har-model-selection-smoke"
+CHECKPOINT_DIR = PROCESSED_DIR / "checkpoints"            # git-ignored (data/processed/)
+MODEL_SELECTION_CKPT_DIR = CHECKPOINT_DIR / "har-model-selection"
+MODEL_SELECTION_SMOKE_CKPT_DIR = CHECKPOINT_DIR / "har-model-selection-smoke"

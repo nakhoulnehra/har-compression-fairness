@@ -3,6 +3,7 @@
 Pipeline per recording:
     load_recording  -> drop extra index columns, parse timestamps, sanity asserts
     to_50hz         -> S006 is recorded at 100 Hz: FIR anti-alias + decimate by 2 per gap-free segment
+    lowpass_20hz    -> HARTH's 4th-order 20 Hz Butterworth low-pass, per gap-free segment (both datasets)
     make_windows    -> 128-sample windows inside runs of gap-free, shared-label rows
                        (step 64 for training, 128 for testing); window label = majority label,
                        kept only if it covers > 50% of the window (>= 65 of 128 rows)
@@ -20,7 +21,7 @@ from typing import Sequence
 import numpy as np
 import pandas as pd
 from numpy.lib.stride_tricks import sliding_window_view
-from scipy.signal import decimate
+from scipy.signal import butter, decimate, sosfiltfilt
 
 from .paths import (MANIFEST, PROCESSED_DIR, RAW_DIR, RECORDING_STATS_CSV, WINDOW_CACHE_META,
                     WINDOW_CACHE_NPZ, WINDOW_STATS_CSV)
@@ -35,6 +36,13 @@ PERIOD_S = 1.0 / FS
 MAX_GAP_S = 2 * PERIOD_S               # a step longer than 40 ms splits the recording
 TRAIN_STEP, TEST_STEP = WIN // 2, WIN  # 50% overlap for training, none for testing
 MIN_MAJORITY = WIN // 2 + 1            # 65 of 128 rows: strictly more than 50%
+# HARTH's "20 Hz low-pass fourth-order Butterworth filter" [Logacjov et al. 2021, Sec 3.3, p10],
+# applied to both datasets (decided 2026-11-19). Zero-phase filtering (sosfiltfilt) is our choice:
+# the paper does not say causal or zero-phase; zero phase keeps signals aligned with the labels.
+LOWPASS_HZ, LOWPASS_ORDER = 20.0, 4
+_SOS_LOWPASS = butter(LOWPASS_ORDER, LOWPASS_HZ, btype="low", fs=FS, output="sos")
+_LOWPASS_PADLEN = 3 * (2 * len(_SOS_LOWPASS) + 1
+                       - min(int((_SOS_LOWPASS[:, 2] == 0).sum()), int((_SOS_LOWPASS[:, 5] == 0).sum())))
 NON_STAIR = (0, 1, 4, 5, 6)
 STAIRS = (2, 3)
 
@@ -209,6 +217,28 @@ def to_50hz(df: pd.DataFrame) -> pd.DataFrame:
     raise ValueError(f"unsupported sampling period {p * 1000:.2f} ms (expected 20 ms or 10 ms)")
 
 
+def lowpass_20hz(df: pd.DataFrame) -> pd.DataFrame:
+    """4th-order 20 Hz Butterworth low-pass on the 6 channels of a 50 Hz recording, applied to each
+    gap-free segment separately (like the resampling), so no gap is filtered across. Segments of
+    <= 15 rows (too short for the filter's edge padding) are left unfiltered; they are far shorter
+    than a window, so no window contains them. Labels and timestamps are unchanged."""
+    if abs(sampling_period(df) - PERIOD_S) > 1e-3:
+        raise ValueError("lowpass_20hz expects a 50 Hz recording (call to_50hz first)")
+    vals = df[list(CHANNELS)].to_numpy(np.float64).copy()
+    for s in contiguous_segments(df):
+        if s.stop - s.start > _LOWPASS_PADLEN:
+            vals[s] = sosfiltfilt(_SOS_LOWPASS, vals[s], axis=0)
+    out = df.copy()
+    out[list(CHANNELS)] = vals
+    out.attrs = dict(df.attrs)
+    return out
+
+
+def preprocess(raw: pd.DataFrame) -> pd.DataFrame:
+    """The full signal pipeline before windowing: to_50hz, then lowpass_20hz."""
+    return lowpass_20hz(to_50hz(raw))
+
+
 # ------------------------------------------------------------------------------------- windowing
 
 def _class_index(labels: np.ndarray) -> np.ndarray:
@@ -287,7 +317,8 @@ def _cache_key() -> str:
     lines = [l for l in MANIFEST.read_text(encoding="utf-8").splitlines()
              if l.strip() and not l.startswith("#") and l.split()[-1].split("/")[0] in DATASET_DIRS.values()]
     cfg = {"version": PIPELINE_VERSION, "win": WIN, "steps": SPLITS, "min_majority": MIN_MAJORITY,
-           "max_gap_s": MAX_GAP_S, "shared": SHARED_LABELS, "walking_aid": WALKING_AID_INFERRED}
+           "max_gap_s": MAX_GAP_S, "shared": SHARED_LABELS, "walking_aid": WALKING_AID_INFERRED,
+           "lowpass": [LOWPASS_HZ, LOWPASS_ORDER, "butterworth", "sosfiltfilt per gap-free segment"]}
     return hashlib.sha256((json.dumps(cfg, sort_keys=True) + "\n".join(sorted(lines))).encode()).hexdigest()
 
 
@@ -297,7 +328,7 @@ def _build(raw_dir: Path) -> tuple[dict[str, Windows], pd.DataFrame, pd.DataFram
     for dataset in DATASET_DIRS:
         for subject in list_subjects(dataset, raw_dir):
             raw = load_recording(dataset, subject, raw_dir)
-            df = to_50hz(raw)
+            df = preprocess(raw)
             labels = raw["label"].to_numpy()
             r = {"dataset": dataset, "subject": subject, "group": GROUP[dataset],
                  "walking_aid": walking_aid_status(dataset, subject),
@@ -338,10 +369,29 @@ def build_all(force: bool = False, raw_dir: Path = RAW_DIR) -> dict[str, Windows
     return windows
 
 
-def _load_cache() -> dict[str, Windows]:
-    with np.load(WINDOW_CACHE_NPZ) as z:
-        return {k: Windows(dataset=ds, **{a: z[f"{k}__{a}"] for a in Windows.ARRAYS})
-                for k, (ds, _) in SPLITS.items()}
+def _load_cache(splits: Sequence[str] = tuple(SPLITS)) -> dict[str, Windows]:
+    with np.load(WINDOW_CACHE_NPZ) as z:   # NpzFile reads only the arrays that are accessed
+        return {k: Windows(dataset=SPLITS[k][0], **{a: z[f"{k}__{a}"] for a in Windows.ARRAYS}) for k in splits}
+
+
+HARTH_SPLITS = ("harth_train", "harth_test")
+
+
+def load_harth_windows() -> dict[str, Windows]:
+    """Only the HARTH splits of the window cache, for training-side steps (model choice). HAR70+
+    arrays are never read and no raw CSV is opened. Raises if the cache is missing or out of date:
+    build it first with `python -m har.build_windows`."""
+    if not (WINDOW_CACHE_NPZ.exists() and WINDOW_CACHE_META.exists()):
+        raise FileNotFoundError(f"window cache {WINDOW_CACHE_NPZ} missing; run `python -m har.build_windows`")
+    meta = json.loads(WINDOW_CACHE_META.read_text(encoding="utf-8"))
+    if meta.get("key") != _cache_key():
+        raise RuntimeError("window cache is out of date (raw checksums or windowing config changed); "
+                           "run `python -m har.build_windows --force`")
+    return _load_cache(HARTH_SPLITS)
+
+
+def cache_key() -> str:
+    return _cache_key()
 
 
 def build_report() -> tuple[pd.DataFrame, pd.DataFrame]:

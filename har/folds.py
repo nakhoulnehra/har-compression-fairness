@@ -99,6 +99,36 @@ def make_folds(harth_test_counts: dict[str, int], older_subjects: Sequence[str],
     return folds
 
 
+def load_folds(path=None, harth_test_counts: dict[str, int] | None = None) -> list[FoldSplit]:
+    """Folds from results/har-setup/har-fold-assignment.csv (written by `python -m har.build_windows`).
+    HAR70+ appears there only as subject IDs, so no HAR70+ data is read. If harth_test_counts is
+    given, the file is checked against a fresh make_folds() on those counts."""
+    import pandas as pd
+
+    from .paths import FOLD_ASSIGNMENT_CSV
+
+    path = FOLD_ASSIGNMENT_CSV if path is None else path
+    if not path.exists():
+        raise FileNotFoundError(f"{path} missing; run `python -m har.build_windows`")
+    df = pd.read_csv(path, dtype={"subject": str})
+    folds = []
+    for k in sorted(df.fold.unique()):
+        g = df[df.fold == k]
+        pick = lambda role, ds: tuple(sorted(g[(g.role == role) & (g.dataset == ds)].subject))
+        folds.append(FoldSplit(int(k), pick("train", "harth"), pick("validation", "harth"), pick("test", "harth"),
+                               pick("test", "har70plus")))
+    harth = sorted(df[df.dataset == "harth"].subject.unique())
+    older = sorted(df[df.dataset == "har70plus"].subject.unique())
+    for f in folds:
+        f.check(harth, older)
+    if harth_test_counts is not None:
+        fresh = make_folds(harth_test_counts, older)
+        if fresh != folds:
+            raise RuntimeError(f"{path.name} does not match the folds recomputed from the window cache; "
+                               "rerun `python -m har.build_windows`")
+    return folds
+
+
 def tuning_sets(fold: FoldSplit) -> dict[str, tuple[str, ...]]:
     """Model-selection tuning (plan 2.9, Q6): train on the fold's training subjects, score on its 3
     validation subjects only. Its test subjects are returned so callers can assert they are unused."""

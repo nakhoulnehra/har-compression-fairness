@@ -10,11 +10,13 @@ Key numbers from every file in `results/`, grouped by run folder. One entry per 
 -->
 
 ## lci-phishing-reproduction/
-LCI reproduction of Tulla et al. (2026) on Phishing / ResidualMLP, seeds 0–4, shap_seed 0. Written by `python -m lci.run_lci_phishing`.
+LCI reproduction of Tulla et al. (2026) on Phishing / ResidualMLP, seeds 0–4, shap_seed 0. Written by `python -m lci.run_lci_phishing`. All files were **regenerated on 2026-11-19 with torch 2.7.1+cpu** on Aya's machine (489 s); the torch 2.15.0 numbers are in the report's version history.
 
 ### [lci-phishing-report.md](lci-phishing-reproduction/lci-phishing-report.md)
-- What: LCI reproduction report (Phishing / ResidualMLP, seeds 0–4) covering the comparison with the paper, the acceptance criteria, the noise floor and the deviations from the spec.
-- Key numbers: 5/6 acceptance criteria pass. The 2-std check flags PTQ-8bit (0.9995 vs 0.999, std ≈ 0) and KD (0.816 vs paper 0.499, gap expected per spec). The retraining-noise LCI (0.882) sits just above τ = 0.85.
+- What: LCI reproduction report (Phishing / ResidualMLP, seeds 0–4) covering the comparison with the paper, the acceptance criteria, the noise floor, the version history and the deviations from the spec. Written by hand from the CSVs.
+- Key numbers:
+  - 5/6 acceptance criteria pass. The 2-std check flags PTQ-8bit (0.9995 vs 0.999, std ≈ 0) and KD (0.833 vs paper 0.499, gap expected per spec).
+  - The retraining-noise LCI (0.840, min 0.783) sits around τ = 0.85; one retrained teacher pair falls below it.
 
 ### [lci-phishing-summary-vs-paper.csv](lci-phishing-reproduction/lci-phishing-summary-vs-paper.csv)
 - What: mean ± std over 5 seeds per method (accuracy, macro-F1, ρ̄, J₁₀, LCI, number collapsed), next to the paper's LCI and accuracy.
@@ -22,38 +24,39 @@ LCI reproduction of Tulla et al. (2026) on Phishing / ResidualMLP, seeds 0–4, 
 
   | Method | LCI ours | LCI paper | Acc ours | Acc paper |
   |---|---|---|---|---|
-  | Teacher | 1.000 | 1.000 | 0.969 | 0.964 |
+  | Teacher | 1.000 | 1.000 | 0.970 | 0.964 |
   | PTQ-8bit | 0.9995 | 0.999 | 0.970 | 0.964 |
-  | PTQ-4bit | 0.698 ± 0.053 | 0.619 | 0.890 | 0.839 |
-  | Prune-30% | 0.922 ± 0.073 | 0.897 | 0.964 | 0.937 |
-  | Prune-50% | 0.817 ± 0.065 | 0.781 | 0.937 | 0.936 |
-  | Prune-70% | 0.703 ± 0.051 | 0.710 | 0.896 | 0.925 |
-  | KD | 0.816 ± 0.042 | 0.499 | 0.930 | 0.986 |
+  | PTQ-4bit | 0.661 ± 0.066 | 0.619 | 0.889 | 0.839 |
+  | Prune-30% | 0.904 ± 0.059 | 0.897 | 0.965 | 0.937 |
+  | Prune-50% | 0.833 ± 0.093 | 0.781 | 0.938 | 0.936 |
+  | Prune-70% | 0.733 ± 0.033 | 0.710 | 0.897 | 0.925 |
+  | KD | 0.833 ± 0.075 | 0.499 | 0.930 | 0.986 |
 
 ### [lci-phishing-runs-per-seed-method.csv](lci-phishing-reproduction/lci-phishing-runs-per-seed-method.csv)
 - What: 35 rows (5 seeds × Teacher + 6 compressed models). Columns: accuracy, macro-F1, shap_corr, jaccard, LCI, collapsed, n_skipped, MPRF feature and shift, n_params, n_nonzero, eff_size_bytes.
 - Key numbers:
   - Seeds collapsed (LCI < 0.85): PTQ-8bit 0/5, PTQ-4bit 5/5, Prune-30% 1/5, Prune-50% 3/5, Prune-70% 5/5, KD 4/5.
   - n_skipped = 0 everywhere.
-  - Teacher has 71,298 params. KD student has 1,554. PTQ-4bit leaves 14,690 non-zero.
+  - Teacher has 71,298 params. KD student has 1,554. PTQ-4bit leaves 14,601 non-zero (mean over seeds).
 
 ### [lci-phishing-noise-floor.csv](lci-phishing-reproduction/lci-phishing-noise-floor.csv)
 - What: LCI noise floor. 5 SHAP-noise rows (same teacher, shap_seed 0 vs 1) and 4 retraining-noise rows (teacher seed s vs s+1).
 - Key numbers:
-  - SHAP noise: LCI 0.9929 ± 0.0004 (ρ̄ 0.986, J 1.000).
-  - Retraining noise: LCI 0.882 ± 0.048, min 0.857 (ρ̄ 0.900, J 0.864).
-  - Seeds preserved (LCI ≥ 0.882): PTQ-8bit 5/5, Prune-30% 4/5, Prune-50% 1/5, Prune-70% 0/5, PTQ-4bit 0/5, KD 0/5.
+  - SHAP noise: LCI 0.9929 ± 0.0003 (ρ̄ 0.986, J 1.000).
+  - Retraining noise: LCI 0.840 ± 0.038, min 0.783, max 0.862 (ρ̄ 0.899, J 0.780).
+  - Seeds preserved (LCI ≥ 0.840): PTQ-8bit 5/5, Prune-30% 4/5, Prune-50% 2/5, Prune-70% 0/5, PTQ-4bit 0/5, KD 2/5.
 
 ### [lci-phishing-shap-attributions.npz](lci-phishing-reproduction/lci-phishing-shap-attributions.npz)
 - What: cache of the GradientExplainer class-1 attributions, 40 arrays of shape (300, 30) float32. Keys are `seed{s}_{method}_shapseed{k}`, covering 5 seeds × (teacher at shap_seed 0 and 1, plus 6 compressed models).
 - Key numbers: 300 explained test rows, 50 background rows, nsamples = 200. Used to recompute LCI without re-running SHAP.
 
 ### [lci-phishing-shap-attributions-configs.json](lci-phishing-reproduction/lci-phishing-shap-attributions-configs.json)
-- What: config of each array in the `.npz`: seed, method, SHAP settings, shap 0.51.0 / torch 2.15.0, and a SHA-256 of the model weights. A cached array is reused only if its config matches exactly.
+- What: config of each array in the `.npz`: seed, method, SHAP settings, shap 0.51.0 / torch 2.7.1+cpu, and a SHA-256 of the model weights. A cached array is reused only if its config matches exactly.
 - Key numbers: 40 entries.
 
 ## har-setup/
 HAR data pipeline (plan/HAR_IMPLEMENTATION.md Steps 1–2): HARTH and HAR70+ cut into 128-sample (2.56 s) windows of 6 axes (back + thigh), 7 shared classes, plus subject-wise folds, normalisation statistics, the fixed explain windows and the SHAP backgrounds. Written by `python -m har.build_windows`; all choices are seeded (42) and made from the data alone, before any model exists.
+- Signals: resampled to 50 Hz where needed (S006), then HARTH's 4th-order 20 Hz Butterworth low-pass per gap-free stretch, on both datasets.
 - Rules: windows lie inside gap-free runs of shared-label rows; 50% overlap for HARTH training, none for testing; a window is kept only if one label covers > 50% of it (≥ 65 of 128 rows).
 - Walking-aid status is **inferred**: 503, 505, 513, 514, 515 are the only HAR70+ subjects with no stairs rows.
 
@@ -110,7 +113,8 @@ HAR data pipeline (plan/HAR_IMPLEMENTATION.md Steps 1–2): HARTH and HAR70+ cut
 - What: per fold and channel, the mean and std (in g) over every sample of the fold's HARTH training-subject windows. Validation, test and HAR70+ are never used; `channel_stats` raises if they are passed in.
 - Key numbers:
   - Mean ranges over the folds: back_x −0.90 to −0.87, thigh_x −0.58 to −0.51, thigh_z 0.39 to 0.48.
-  - Std ranges over the folds: 0.21–0.25 (back_y) to 0.62–0.70 (thigh_z).
+  - Std ranges over the folds: 0.21–0.25 (back_y) to 0.62–0.69 (thigh_z).
+  - Regenerated 2026-11-19 after the 20 Hz low-pass was added to the windows: the means are unchanged to 6 decimals and the stds are 0.1–1.1% lower. All other `har-setup/` files are byte-identical.
 
 ### [har-explain-windows.csv](har-setup/har-explain-windows.csv)
 - What: the fixed explain windows, the same for every model and method. One row per window: ID (`<split>:<subject>:<start_row>`), subject, group, walking-aid status (inferred), class, pick order, start row and time, majority share, and the HARTH subject's test fold.
@@ -142,3 +146,25 @@ HAR data pipeline (plan/HAR_IMPLEMENTATION.md Steps 1–2): HARTH and HAR70+ cut
 ### [har-explain-and-background-windows-per-fold.csv](har-setup/har-explain-and-background-windows-per-fold.csv)
 - What: per fold, the explain windows of its test subjects (general and older), of its validation subjects, and the background's class mix and subjects.
 - Key numbers: per fold, 120 or 150 general + 540 older = 660 or 690 test explain windows, plus 90 validation explain windows (for the gate and τ) and 100 background windows.
+
+## har-model-selection-smoke/
+**Pipeline check only, not results.** `python -m har.run_model_selection --stage all --device cpu --smoke` (fold 0, 1 epoch, 300 / 200 / 200 windows), then `python -m har.time_model_selection_cpu --smoke` and `python -m har.select_model --smoke`, on Aya's laptop (CPU), 2026-11-19. Its accuracies and its "frozen" model say nothing about the candidates. The real model choice goes to `results/har-model-selection/` (same layout). There are 120 files, so the entries below are by file pattern.
+
+### tuning/har-tune-&lt;model&gt;-&lt;setting&gt;-fold0-Aya.csv (+ `-config.json`, `-history.csv`)
+- What: one row per tried setting (4 per model, 20 in total): fold-0 validation scores, settings hash, seed, device, GPU, machine, git commit, code hash and run time. The `-config.json` holds the exact settings and command line; `-history.csv` the per-epoch curve.
+- Key numbers: 20/20 settings done; the validation subjects are exactly fold 0's S010, S020, S021; no test subjects (the `test_subjects` column is empty).
+
+### final/har-final-&lt;model&gt;-fold0-Aya.csv (+ `-config.json`, `-history.csv`, `-per-subject.csv`, `-confusion.csv`)
+- What: the best tuning setting per model, trained on fold 0 and evaluated on its held-out HARTH test subjects (S008, S019, S022, S025): one row of metrics, per-subject metrics and the 7×7 confusion matrix.
+- Key numbers (smoke, 1 epoch; regenerated 2026-11-19 with torch 2.7.1, the source-checked models and the 20 Hz low-passed windows): pooled 7-class macro-F1 CNN1D 0.322, TinyHAR 0.193, DeepConvLSTM 0.108, HART 0.301, XGBoost 0.792. The earlier version gave reproducible values on two identical runs.
+
+### timing/har-cpu-inference-and-shap-time-Aya.csv (+ `-config.json`)
+- What: CPU latency (batch 1, 1 thread), batched throughput and single-output SHAP time per window, smoke protocol (20 calls, 4 SHAP windows, nsamples 20).
+- Key numbers: not meaningful at this protocol; the full protocol is 1,000 calls, 100 windows and nsamples 200.
+
+### har-model-selection-tuning.csv, -final-per-fold.csv, -per-subject-metrics.csv, -summary.csv, har-frozen-model-config.json
+- What: the merged tables, the per-model summary and the rule's decision written by `har.select_model --smoke`.
+- Key numbers: the cost-based rule ran end to end. Only CNN1D was within 2 pt of the best 1-epoch F1, so the smoke "choice" is CNN1D; it means nothing.
+
+### logs/
+- What: the full terminal output of every unit (`tune-…`, `final-…`), every session (`session-all-Aya-<time>.log`), the timing run and the selection.

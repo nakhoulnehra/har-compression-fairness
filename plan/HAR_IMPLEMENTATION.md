@@ -102,6 +102,10 @@ def to_50hz(df: pd.DataFrame) -> pd.DataFrame
     # Median step 20 ms -> unchanged. 10 ms -> per contiguous segment, scipy.signal.decimate(q=2,
     # ftype="fir", zero_phase=True) on each channel, labels and timestamps take every 2nd row.
     # Any other rate -> raise.
+def lowpass_20hz(df: pd.DataFrame) -> pd.DataFrame
+    # HARTH's 4th-order 20 Hz Butterworth low-pass [HARTH Sec 3.3] on the 6 channels, zero-phase
+    # (sosfiltfilt), per gap-free segment, both datasets (decided 2026-11-19). Labels, timestamps,
+    # rows unchanged. preprocess(raw) = lowpass_20hz(to_50hz(raw)) is what build_all() windows.
 def contiguous_segments(df: pd.DataFrame, max_gap_s: float = 0.04) -> list[slice]
     # Splits where the step exceeds 2x the 20 ms period.
 def make_windows(df: pd.DataFrame, dataset: str, subject: str, step: int) -> Windows
@@ -164,10 +168,12 @@ Every model takes `(B, 6, 128)` raw-g input, applies its stored per-channel norm
 
 | Candidate | Source | Notes |
 |---|---|---|
-| `cnn1d` | Logacjov et al. (2021) | 1D convolutions over time, all 6 channels as input channels. Layer sizes as published in the paper (Q9). |
-| `deepconvlstm` | Ordóñez & Roggen (2016) | 4 conv layers (64 filters, kernel 5) + 2-layer LSTM (128) + linear head. |
-| `tinyhar` | Zhou et al. (2022) | Port the authors' PyTorch reference implementation if its licence allows; otherwise re-implement from the paper (Q9). |
-| `hart` | Ek et al. (2022/2023) | Re-implemented in PyTorch with the defaults (patch size, depth, width) from the paper and the authors' TensorFlow code; check the code's licence before porting, otherwise re-implement from the paper (Q9). Its two sensor branches (accelerometer, gyroscope in the original) become **back** (ch. 0–2) and **thigh** (ch. 3–5). |
+| `cnn1d` | Logacjov et al. (2021) [HARTH Sec 4.1] | 4 conv layers × 128 kernels, kernel sizes [6, 12, 12, 32], ReLU, dropout 0.4 after each layer, two 512-unit ReLU dense layers, output layer. Our choices: axes as input channels, 'same' padding, global average pooling. 1,254,919 parameters. |
+| `deepconvlstm` | Ordóñez & Roggen (2016) [DCL Sec 3.1, 3.3, Table 1] | C(64)×4 with kernel 5 along time per channel, no padding, R(128)×2, dropout 0.5 on dense inputs, orthogonal initialisation, last time step. 458,183 parameters. |
+| `tinyhar` | Zhou et al. (2022) [TINY Sec 3.2] | 4 individual conv layers (5×1, stride 2, BN, ReLU), 1 transformer block across channels, FC fusion to 2F, 1 LSTM, temporal attention + γ. F = 28 [TINY Sec 4.2]. 54,273 parameters. Written from the paper; no code ported. |
+| `hart` | Ek, Portet & Lalanda [HART Sec 3.2, 4.1–4.2, Table 7] | Re-implemented in PyTorch from the paper only (no code ported): d = 192, 6 blocks, 3 heads, sensor-wise MSA on d/4 + d/4 and LightConv on d/2, Swish, dropout 0.3, GAP. Its two sensor branches (accelerometer, gyroscope in the original) become **back** (ch. 0–2) and **thigh** (ch. 3–5). 1,389,555 parameters (paper: 1,445,918). |
+
+Every value is cited, or marked "our choice", in `har/models.py` and in Appendix A.
 | `xgboost` | reference only | `features.window_features(X) -> (n, F)`: per channel and per sensor magnitude: mean, std, min, max, median, IQR, skewness, kurtosis, energy, dominant frequency, spectral entropy, plus the 3 axis correlations per sensor. Never compressed or explained; never eligible as the frozen model. |
 
 ```python
@@ -206,6 +212,8 @@ def pooled_macro_f1(y, pred, classes: Sequence[int] = tuple(range(7))) -> float
     # Macro-F1 over all windows of a set of subjects pooled together.
 def train_xgboost(train: Windows, val: Windows, params: dict, seed: int) -> object
 ```
+
+**One shared training recipe (deliberate deviation, decided 2026-11-19).** Every candidate uses the `TrainConfig` above and the same tuning budget, not the recipe of its own paper (SGD for the HARTH CNN, RMSProp for DeepConvLSTM, Adam with each paper's lr, epochs and batch size for TinyHAR and HART). The comparison then measures architectures, not training effort. This is stated in the report (Appendix A.7).
 
 **Leakage guard.** `train_model`, `finetune`, every tuning loop, every pruning-score function and the gate call `require_harth()` on all data they receive. A test checks that passing HAR70+ windows raises.
 
@@ -269,7 +277,13 @@ def eg_attributions(model, X: torch.Tensor, target: torch.Tensor, baselines: tor
 
 Both attribution losses compare 48-segment attributions (Section 2.6), with target = the original model's predicted class (Section 2.6).
 
-**(a) Park et al. (2020), adapted.** They match normalized attribution maps between the compressed and the original network during fine-tuning. Here: `L_AM = mean_i ‖ â_S(x_i) − â_T(x_i) ‖²₂`, where `â` is the 48-segment EG attribution (m = 4) scaled to unit L2 norm per window, and the original model's attributions are precomputed and fixed. The original work matches maps at intermediate layers of image CNNs; here the matching is on the input attribution of a time series, the only level that is comparable across architectures. Record this deviation in the report.
+**(a) Park et al. (2020), adapted** (checked against papers/2010.15054v1.pdf; Appendix A).
+- **The paper's loss:** supervised loss plus β times the **unsquared** ℓ2 distance between the L2-normalised attribution maps of the compressed and the original network, summed over the matched layers [Park Sec 3.2, Eq. 2, p5].
+  - The paper matches at the **last convolutional layer** with sensitivity-weighted Grad-CAM maps (SWA, Eq. 4–5).
+  - It matches only the map of the **full network's top-1 prediction** [Park Sec 4, p6].
+  - It uses β = 50 for SWA [Park App. C.2, p15].
+- **Here:** `L_AM = mean_i ‖ â_S(x_i) − â_T(x_i) ‖₂`, unsquared as in Eq. 2. `â` is the 48-segment EG attribution (m = 4) of the original model's top-1 class, scaled to unit L2 norm per window; the original model's attributions are precomputed and fixed.
+- **Deviation (our choice):** matching on the input attribution of a time series, instead of a Grad-CAM map at the last convolutional layer. It is the only level that is comparable across the four architectures. Record this in the report.
 
 **(b) Explanation-guided pruning (ours). Uses HARTH data only.**
 - Keep-score per weight: `score(w) = (1 − β) · |w| / mean_layer|w| + β · I(w) / mean_layer I(w)`.
@@ -278,7 +292,7 @@ Both attribution losses compare 48-segment attributions (Section 2.6), with targ
 - **Gate.** After pruning and before fine-tuning, compute the gate metric with real SHAP (GradientExplainer, nsamples 200) on the inner-validation explain windows. If gate < τ, fine-tune with `CE + γ · L_cons`; otherwise fine-tune with CE only. Both branches use `E_ft` epochs. Record the gate value and the branch taken for every (fold, level).
 - **Gate metric = LCI_val** (decided 2026-11-19): per-subject LCI(original, pruned) averaged over the fold's 3 inner-validation HARTH subjects, compared with `τ_k` from the same subjects (Section 2.7). FA-LCI is not the gate because it needs HAR70+, which would put test data into a training decision. The gate is evaluated once per (fold, level), after pruning and before fine-tuning.
 
-**Tuning (HARTH inner validation only, equal budget).** Park's γ_P ∈ {0.1, 1.0}, and ours (β, γ) ∈ {0.3, 0.7} × {0.1, 1.0}. Ours gets 4 configurations, Park 2; to equalise the budget, Park also gets 2 learning-rate variants {1e-4, 3e-4}. Tuning runs at 70% sparsity per fold. The chosen configuration maximizes inner-val LCI_val among those whose inner-val macro-F1 is within 1 pt of the L1 baseline's, and is then used at every sparsity in that fold. Results are logged to the grid's per-fold model file.
+**Tuning (HARTH inner validation only, equal budget).** Park's γ_P ∈ {1, 50} (50 = the paper's SWA strength [Park App. C.2]; 1 = our choice, because unit-norm input attributions put the matching term on a different scale from the paper's), and ours (β, γ) ∈ {0.3, 0.7} × {0.1, 1.0}. Ours gets 4 configurations, Park 2; to equalise the budget, Park also gets 2 learning-rate variants {1e-4, 3e-4}. Tuning runs at 70% sparsity per fold. The chosen configuration maximizes inner-val LCI_val among those whose inner-val macro-F1 is within 1 pt of the L1 baseline's, and is then used at every sparsity in that fold. Results are logged to the grid's per-fold model file.
 
 ### 2.6 SHAP and the window version of LCI (`har/attributions.py`, `lci/metric.py`)
 
@@ -403,7 +417,7 @@ def safe_rate(lci_values, tau) -> float     # share of settings with LCI >= tau
 ### 2.9 Model choice (once, then frozen)
 
 - Same windows, classes, folds, class weights, normalization and `TrainConfig` for all candidates.
-- **Equal tuning budget (decided, Q6):** 4 configurations per candidate (lr ∈ {1e-3, 3e-4} × width ∈ {paper default, half}; for XGBoost: depth ∈ {4, 6} × learning rate ∈ {0.1, 0.3}). The best one is then trained on all 5 folds (seed 0), so there are 4 + 5 = 9 trainings per candidate.
+- **Equal tuning budget (decided, Q6):** 4 configurations per candidate (lr ∈ {1e-3, 3e-4} × width ∈ {paper default, half}; for XGBoost: depth ∈ {3, 6} × learning rate ∈ {0.1, 0.5}, where depth 3 / 0.1 is HARTH's [HARTH Sec 4.1] and depth 3 / 0.5 Ustad's [Ustad Sec 2.3.3], both with 1,024 trees, λ = 1, α = 0). The best one is then trained on all 5 folds (seed 0), so there are 4 + 5 = 9 trainings per candidate.
   - Tuning uses fold 0 only. Each configuration is trained on fold 0's training subjects minus its 3 inner-validation subjects, and scored on **those 3 inner-validation subjects only**.
   - **Fold 0's test subjects are never used in tuning**: not for training, early stopping, scoring or selection.
   - `run_model_selection` enforces this. It builds the tuning sets from `results/har-setup/har-inner-validation-subjects.csv` and `har-fold-assignment.csv`, asserts that the tuning-train, tuning-validation and fold-0 test subject sets are pairwise disjoint and that no HAR70+ subject is present, and logs the subject IDs of each set in `har-model-selection-tuning.csv`.
@@ -414,16 +428,20 @@ def safe_rate(lci_values, tau) -> float     # share of settings with LCI >= tau
   - CPU inference time per window (Section 2.7);
   - SHAP time per window (single target output, nsamples 200, background 100, measured on 100 windows on Aya's machine).
   - HAR70+ is not evaluated at this step.
-- **Rule** (F1 = the ranking metric above; HART condition decided 2026-11-19, DeepConvLSTM condition and the 2 pt margin decided as Q7 and Q8):
-  - **Costly candidates** are HART and DeepConvLSTM: on the stand-ins, about 11 h and 30 h per fold on Aya's machine (Section 5). **Cheap candidates** are CNN1D and TinyHAR.
-  1. **HART** is chosen only if F_HART > F_next + 2 pt, where F_next is the best F1 among CNN1D, DeepConvLSTM and TinyHAR.
-  2. Otherwise, **DeepConvLSTM** is chosen only if F_DCL > F_cheap + 2 pt, where F_cheap is the best F1 among CNN1D and TinyHAR.
-  3. Otherwise, choose among the cheap candidates: eligible = F1 ≥ F_cheap − 2 pt. Choose the eligible candidate with the fewest parameters. If two are within 10% in parameters, choose the one with the lower SHAP time per window, then the lower inference time.
-  - **Edge case:** HART and DeepConvLSTM both beat the cheap candidates by more than 2 pt but are within 2 pt of each other. Step 1 then fails for HART and step 2 picks DeepConvLSTM, the costlier of the two. In that case only, choose HART instead (similar F1, lower cost), and note it in the report.
-  - There is no 1 pt cross-check (Q7).
+- **Rule: cost-based** (decided 2026-11-19 after the source check, A.6.1; it replaces the earlier HART/DeepConvLSTM conditions and the cheap/costly grouping, whose costs came from stand-in models). F1 is the ranking metric above; the candidates are the four deep models.
+  1. F\* = the best F1.
+  2. Eligible = every candidate with F1 ≥ F\* − 2 pt.
+  3. Choose the eligible candidate with the **lowest CPU SHAP time per window** (`har.time_model_selection_cpu`, one machine). An exact tie is broken by the smaller parameter count.
+  - Implemented in `select_model.apply_rule`; the full trace is written into the frozen config.
 - XGBoost is reported as the accuracy reference only.
 - **Freezing:** write the architecture, configuration and training recipe to `results/har-model-selection/har-frozen-model-config.json`. Nothing about the model changes after this, whatever later steps show.
-- **Sanity check after freezing** (uses HAR70+, so it comes after the freeze and cannot change it): frozen model, 5 folds, accuracy on non-stair classes for walking-aid (inferred) vs other older subjects. Ustad et al. (2023) report 87% vs 92%. That was a model trained on HAR70+ itself, so compare the **direction and rough size** of the gap, not the absolute values.
+- **Sanity check after freezing** (uses HAR70+, so it comes after the freeze and cannot change it). Frozen model, 5 folds, walking-aid (inferred) vs other older subjects, reporting accuracy on two class sets:
+  - Ustad's four classes (walking, standing, sitting, lying), for direct comparison;
+  - the plan's non-stair classes (adding shuffling).
+- **The Ustad figures** (corrected after reading the paper): Ustad et al. (2023) report 87% (walking aids, n = 5) vs 92% (no walking aids, n = 13) overall accuracy for the **HARTH model**. That is an XGBoost trained on HARTH only and tested on HAR70+, the same direction of transfer as here [Ustad Abstract; Sec 3.2, p7–8].
+  - It was scored on those four classes, with 5-s windows and 161 features [Ustad Sec 2.3.2].
+  - Their HAR70+-trained model gives 93% vs 95%.
+- Compare the **direction and rough size** of the gap. The absolute values differ because the windows, features and models differ.
 
 ### 2.10 Tests (must pass before the step that uses the code)
 
@@ -505,19 +523,32 @@ Each step ends with an acceptance check. If a check fails, stop, fix the code (n
    *Why:* as in the LCI plan, the metric is pinned down before any model exists, so later surprises point at models, not the metric.
    *Acceptance:* the 12 old tests and all new metric tests pass.
 
-4. **Model selection** (`python -m har.run_model_selection --candidates ... --folds 0 1 2 3 4`, then `python -m har.select_model`).
+4. **Model selection** (`python -m har.run_model_selection`, `python -m har.time_model_selection_cpu`, `python -m har.select_model`).
    *Why:* one fixed architecture for the whole grid, chosen on HARTH alone, cheap enough to explain on CPU.
+   *Status 2026-11-19: implemented and smoke-tested on CPU; the full run is to be done on GPU machines.*
+   - **Code:** `har/models.py`, `har/features.py`, `har/train.py`, `har/attributions.py` (single-output SHAP), `har/runlog.py`, plus the three runners.
+   - **HAR70+ is never loaded:** `data.load_harth_windows` reads only the HARTH arrays of the cache, and the folds come from `har-fold-assignment.csv`.
+   - **Training** may run on GPU (`--device cuda`). CPU inference and SHAP time are measured separately, always on CPU (`time_model_selection_cpu`, on Aya's machine for all models).
+   - **Early stopping and tuning** use the pooled 7-class macro-F1 on the validation subjects' non-overlapping windows.
+   - **Sources:**
+     - All four candidates and the XGBoost reference were checked against the PDFs in `papers/` on 2026-11-19 (Appendix A). Every value in `har/models.py` and `har/features.py` is cited or marked "our choice".
+     - This changed the CNN (now HARTH's 4 × 128-kernel CNN, 1.25M parameters), TinyHAR (stride 2 in every layer, F = 28, 1 head), DeepConvLSTM (orthogonal initialisation) and the XGBoost features and grid (HARTH's feature set and settings).
+   - **Commands** (each machine first follows the GPU setup in `environment/requirements.md`):
+     1. Tuning (fold 0, 20 units), split by model: A `--stage tune --device cuda --models hart deepconvlstm`; B `--stage tune --device cuda --models cnn1d tinyhar` and `--stage tune --device cpu --models xgboost`. Exchange `results/har-model-selection/tuning/` (commit and pull).
+     2. Final folds: A `--stage final --device cuda --folds 0 1 2 --models cnn1d tinyhar deepconvlstm hart` and B the same with `--folds 3 4`. XGBoost runs on CPU with `--device cpu --models xgboost --folds …`.
+     3. Merge: commit and pull both machines' `results/har-model-selection/` (file names carry the machine name, so they never collide). Copy the fold-0 checkpoints `data/processed/har/checkpoints/har-model-selection/har-final-*-fold0-*` to Aya's laptop.
+     4. On Aya's laptop: `python -m har.time_model_selection_cpu`, `python -m har.select_model --merge-only` (completeness check), then `python -m har.select_model` (rule + freeze).
    *Acceptance:*
    - all candidates trained with the same budget;
    - **tuning check:** `har-model-selection-tuning.csv` lists, per configuration, the tuning-train and tuning-validation subject IDs. The tuning-validation IDs are exactly fold 0's 3 inner-validation subjects. Neither set contains any of fold 0's test subjects or any HAR70+ subject. The run aborts otherwise;
    - the summary table is complete;
-   - the rule in Section 2.9 is applied (HART only if > 2 pt over the next-best, DeepConvLSTM only if > 2 pt over the best cheap candidate, otherwise the smallest cheap candidate within 2 pt), and each branch taken is logged;
+   - the cost-based rule in Section 2.9 is applied (lowest CPU SHAP time per window among the candidates within 2 pt of the best pooled macro-F1; parameter count breaks exact ties), and its trace is logged;
    - the frozen config is written;
    - the chosen model's held-out HARTH macro-F1 is within 2 pt of XGBoost's, or the gap is reported.
 
 5. **Sanity check: walking-aid (inferred) vs other older** (`python -m har.run_sanity_walking_aid`).
    *Why:* if the frozen model does not show the known gap direction, the subgroup or the data handling is suspect.
-   *Acceptance:* the gap (other older − walking-aid) is positive. Report its size and bootstrap CI next to Ustad et al.'s 5 pt. If it is not positive, re-check the subject IDs and the class filter. The model is not changed.
+   *Acceptance:* the gap (other older − walking-aid) is positive. Report its size and bootstrap CI, on Ustad's four classes, next to Ustad et al.'s 5 pt for their HARTH-trained model (87% vs 92%). If it is not positive, re-check the subject IDs and the class filter. The model is not changed.
 
 6. **Timing benchmark of the frozen model on both machines** (`python -m har.time_har_components --fold 0`).
    *Why:* the run-time table in Section 5 uses stand-in models; the real per-epoch and per-window SHAP costs decide the fold split.
@@ -592,7 +623,7 @@ Git-ignored, rebuildable: `data/processed/har/` (window cache, raw 768-value SHA
 ## 5. Estimated CPU run time and the machine split
 
 **How the estimates were made.**
-- **Per-window costs** were measured on Aya's machine on 2026-11-19 with rough stand-ins of the four candidates (not the final architectures) on random `(6, 128)` windows, 10 threads, shap 0.51.0, torch 2.15.0+cpu.
+- **Per-window costs** were measured on Aya's machine on 2026-11-19 with rough stand-ins of the four candidates (not the final architectures) on random `(6, 128)` windows, 10 threads, shap 0.51.0, torch 2.15.0+cpu. *These planning estimates predate the source check and the switch to torch 2.7.1; measured costs of the real models are in Appendix A.6 and `environment/time.md`, and Step 6 re-measures before the grid.*
 - **Nakhoul's machine** is scaled from the same Phishing pipeline (`python -m lci.time_lci_phishing_components --seed 0`) run on both machines: teacher training 17.1 s vs 8.1 s (**2.1×**), SHAP 174.1 s vs 131.4 s (**1.32×**), total 194.6 s vs 141.6 s.
 - **Uncertainty is about ±50%.** The final architectures will differ in size, the CPU ratio was measured on an MLP and not on convolutions or LSTMs, and early stopping will cut the model-selection times below these upper bounds. Step 6 replaces these numbers with measured ones.
 
@@ -673,11 +704,11 @@ There are no open questions. Every point below is decided and already applied in
 | Q5 | k for 48 features | k = 10 main; k = 16 as a sensitivity check from the cached SHAP. | 2.6, Step 11 |
 | Q6 | Model-selection tuning | Fold 0 only, scored on **fold 0's 3 inner-validation subjects only, never its test subjects**. An acceptance check verifies the subject sets. | 2.9, 2.10, Step 4 |
 | Q7 | F1 margin | 2 pt; no 1 pt cross-check. | 2.9 |
-| Q8 | DeepConvLSTM | Chosen only if it beats the best of CNN1D and TinyHAR by more than 2 pt (same principle as HART). | 2.9 |
-| Q9 | Architecture details | Layer sizes and defaults from the papers (Logacjov et al. 2021; Ek et al.) and authors' code; check licences before porting HART or TinyHAR code, otherwise re-implement from the paper. | 2.3 |
+| Q8 | DeepConvLSTM | *Superseded on 2026-11-19 (A.6.1)* by the cost-based rule: no model-specific conditions. | 2.9 |
+| Q9 | Architecture details | Layer sizes and defaults from the papers. Done 2026-11-19: all re-implemented from the PDFs in `papers/`, no code ported, so licences do not apply. Every value is cited in Appendix A. | 2.3, App. A |
 | Q10 | Preprocessing | Per-channel z-score and inverse-frequency class weights. **Normalization statistics come from the fold's HARTH training subjects only** and are applied unchanged to validation, test and HAR70+. | 2.1, 2.4, 2.10 |
 | Q11 | F1 definitions | Per-subject macro-F1 over the 5 non-stair classes in both groups; stairs F1 pooled per group; model choice ranks by 7-class macro-F1 pooled over the 22 held-out HARTH subjects. | 2.7, 2.9 |
-| Q12 | Walking-aid IDs | Check Ustad et al. (2023) and its supplement for subject IDs; until confirmed, "inferred" everywhere. | 1, ground rules |
+| Q12 | Walking-aid IDs | Checked 2026-11-19: Ustad et al. (2023) give no subject IDs. They state 5 walking-aid users (4 walker, 1 walking sticks outdoors) [Sec 2.1, p2] and 13 participants with at least one stair bout [Sec 3.1, p7]. That is consistent with our inference, but not proof, so "inferred" stays everywhere. | 1, ground rules |
 | Q13 | Mixed-label windows | Strict majority (> 50%), plus the single-label-window robustness check. | 2.1, Step 11 |
 | Q14 | KD | Not in the main grid; optional, only if time is left, reported descriptively. | 2.5, Step 10 |
 | Q15 | Cross-machine | Record the machine per fold, **plus Step 9b: fold 3 is run on both machines and the results are compared**. If it fails, the folds are rerun on one machine. | Steps 7, 9b; 5 |
@@ -685,6 +716,200 @@ There are no open questions. Every point below is decided and already applied in
 | Q17 | Gate timing | Checked once per (fold, level), after pruning and before fine-tuning. | 2.5 |
 
 Action items that are not decisions:
-- confirm the walking-aid IDs in Ustad et al. (2023) (Q12);
-- check the HART and TinyHAR code licences (Q9);
-- pin the xgboost version (Step 0).
+- ~~confirm the walking-aid IDs in Ustad et al. (2023) (Q12)~~: done, the paper lists none;
+- ~~check the HART and TinyHAR code licences (Q9)~~: not needed, nothing was ported;
+- decide the open points raised by the source check (Appendix A.6);
+- ~~pin the xgboost version (Step 0)~~: done, xgboost 3.2.0.
+
+---
+
+## Appendix A. Source check (2026-11-19)
+
+Every architecture and method value in `har/models.py`, `har/features.py`, `har/train.py` and this plan was checked against the PDFs in `papers/`. That folder is git-ignored because it holds copyrighted PDFs; copy it from the shared folder.
+
+**Status labels:**
+- **paper**: as stated in the source.
+- **fixed**: was wrong in the code or plan, corrected on 2026-11-19.
+- **our choice**: the source does not state it.
+- **plan**: a decision that deliberately differs from the source, made so all candidates share the same windows, classes, normalisation and training budget.
+
+### A.0 Sources
+
+| Key | Paper | File in `papers/` |
+|---|---|---|
+| HARTH | Logacjov, Bach, Kongsvold, Bårdstu, Mork (2021), HARTH: A Human Activity Recognition Dataset for Machine Learning, *Sensors* 21:7853 | `sensors-21-07853 (1).pdf` |
+| Ustad | Ustad et al. (2023), Validation of an Activity Type Recognition Model Classifying Daily Physical Behavior in Older Adults: The HAR70+ Model, *Sensors* 23:2368 | `sensors-23-02368-v2 (1).pdf` |
+| DCL | Ordóñez & Roggen (2016), Deep Convolutional and LSTM Recurrent Neural Networks for Multimodal Wearable Activity Recognition, *Sensors* 16:115 | `sensors-16-00115.pdf` |
+| TINY | Zhou et al. (2022), TinyHAR: A Lightweight Deep Learning Model Designed for HAR, ISWC '22 | `2022_ISWC____TinyHAR__…(2).pdf` |
+| HART | Ek, Portet & Lalanda, Transformer-based Models to Deal with Heterogeneous Environments in HAR, arXiv 2209.11750v2 | `2209.11750v2.pdf` |
+| SNIP | Lee, Ajanthan & Torr (2019), SNIP: Single-shot Network Pruning based on Connection Sensitivity, ICLR | `1810.02340v2.pdf` |
+| Park | Park et al. (2020), Attribution Preservation in Network Compression for Reliable Network Interpretation, NeurIPS | `2010.15054v1.pdf` |
+| Tulla | Tulla et al. (2026), Silent corruption: Logic collapse and attribution fidelity failure in compressed IDS, *Inf. Sci.* 757 | `5- Silent-Corruption-IDS.pdf` |
+| RP | CSC689 research plan (ours) | `CSC689 Research Plan …pdf` |
+
+### A.1 Data and windows
+
+| Item | Ours | Source | Status |
+|---|---|---|---|
+| HARTH sensors, range | back + thigh, 3 axes, ±8 g | [HARTH Sec 3.1, p6] | paper |
+| HARTH sampling | 50 Hz; S006 at 100 Hz decimated to 50 Hz | first session recorded at 100 Hz "which we later downsampled to 50 Hz" [HARTH Sec 3.1, p6] | paper (S006 is shipped at 100 Hz in v1.2) |
+| HAR70+ sampling, sensors | 50 Hz, back + thigh AX3, ±8 g | [Ustad Sec 2.2.1, p3] | paper |
+| 20 Hz low-pass | 4th-order 20 Hz Butterworth low-pass on **both datasets**, per gap-free segment after resampling, before windowing (`data.lowpass_20hz`) | HARTH: "20 Hz low-pass fourth-order Butterworth filter" [HARTH Sec 3.3, p10]. Ustad uses a 4th-order Butterworth band-pass [Ustad Sec 2.3.2, p5] (band not stated; not used) | paper (decided 2026-11-19, A.6.2); zero-phase (sosfiltfilt) = our choice |
+| Window length | 128 samples = 2.56 s, 50% overlap train / none test | HART uses 128 (2.56 s) [HART Sec 2.2, p4]; HARTH uses 1 s non-overlapping [HARTH Sec 3.3]; Ustad 5 s non-overlapping [Ustad Sec 2.3.2] | plan (RP) |
+| Window label | majority, kept if > 50% | majority voting [HARTH Sec 3.3, Fig. 5]; "dominant activity type" [Ustad Sec 2.3.2]; last sample [DCL Sec 4.2] | majority = paper (HARTH/Ustad); > 50% cut = our choice |
+| Normalisation | per-channel z-score from training subjects | channel-wise z-normalisation [HART Sec 2.2, p4]; HARTH min-max-scales features only [HARTH Sec 3.3] | paper (HART) / plan |
+| Shared classes | walking, shuffling, stairs up/down, standing, sitting, lying | HAR70+ labels [Ustad Sec 2.3.1, p4]; HARTH's 12 labels [HARTH Sec 3.3] | paper |
+| Evaluation pooling | summed confusion matrices over held-out subjects → macro-F1 | "We sum up the resulting 22 matrices … to compute the recall, precision, and F1-score" [HARTH Sec 4.2, p12] | paper (our ranking metric follows it) |
+| Walking-aid subgroup | 503, 505, 513, 514, 515 (inferred) | 5 users (4 walker, 1 sticks) [Ustad Sec 2.1, p2]; 13 participants with ≥ 1 stair bout [Ustad Sec 3.1, p7]; no subject IDs given | inferred (consistent, not confirmed) |
+
+### A.2 Candidate models
+
+**CNN1D: HARTH's CNN** [HARTH Sec 3.2.6 p9; Sec 4.1 p11–12]
+
+| Value | Ours | Source | Status |
+|---|---|---|---|
+| Conv layers / kernels per layer | 4 / 128 | "number of layers (best: 4)", "number of kernels … (best: 128)" [Sec 4.1] | **fixed** (was 3 × 64) |
+| Kernel sizes | 6, 12, 12, 32 | "kernel shape/size in each layer (best: [6, 12, 12, 32])" [Sec 4.1] | **fixed** (was 5) |
+| Conv type | Conv1d over time, axes as input channels | "1D convolutional kernels … to enable a single kernel to learn to extract useful information of each axis" [Sec 4.1] | our choice (reading; per-axis shared kernels are the alternative, A.6.4) |
+| Activation | ReLU | [Sec 3.2.6] (general description) | paper |
+| Dropout | 0.4 after each layer | [Sec 4.1, p12] | **fixed** (was 0.5 once) |
+| Dense layers | 2 × 512, ReLU, then output | "last two hidden layers … fully connected 512-dimensional layers with ReLU" [Sec 4.1, p12] | **fixed** (was none) |
+| Padding | 'same' | not stated (implied: valid convs 6+12+12+32 cannot fit their 50-sample windows) | our choice |
+| Normalisation layers | none | none stated | our choice (was BatchNorm) |
+| Conv → dense | global average pooling over time | not stated (flattening 128 × 128 → 512 would add 8.4M parameters) | our choice |
+| Training | plan recipe | SGD, lr 0.001, 80 epochs, no early stopping [Sec 4.1] | plan |
+| Parameters | 1,254,919 | not reported | — |
+
+**DeepConvLSTM** [DCL]
+
+| Value | Ours | Source | Status |
+|---|---|---|---|
+| Layers | C(64)–C(64)–C(64)–C(64)–R(128)–R(128)–Sm | [Sec 3.1, p8] | paper |
+| Convolution | along time only, channels separate, kernel 5, no padding, no pooling | [Sec 3.1]; P = 5 and "only computed where the input and the kernel fully overlap" [Sec 3, Eq. 10, p7–8]; no pooling [Sec 3] | paper; parameters per conv layer 384 / 20,544 as [Table 1] |
+| Activations | ReLU (conv), tanh (LSTM, PyTorch default) | [Sec 3.1] | paper |
+| Dropout | 0.5 on the inputs of every dense layer | [Sec 3.3, p9] | paper |
+| Initialisation | orthogonal | "Weights are randomly orthogonally initialized" [Sec 3.3] | **fixed** (was PyTorch default) |
+| Output | last time step | [Sec 4.2, p12] | paper |
+| Training | plan recipe | RMSProp, lr 1e-3, ρ 0.9, batch 100 [Sec 3.3] | plan |
+| Width 0.5 | half filters and LSTM cells | width multiplier α for DeepConvLSTM [TINY Sec 4.1, p3] | paper (as a method) |
+
+**TinyHAR** [TINY Sec 3.2 p2–3, Sec 4 p3–4]
+
+| Value | Ours | Source | Status |
+|---|---|---|---|
+| Individual conv subnet | 4 layers, 5 × 1 kernels along time, per channel, BN + ReLU, same F | [3.2.1] | paper |
+| Stride | 2 in **every** layer (T* = 8) | "the stride in each layer is set to 2" [3.2.1] | **fixed** (was every second layer) |
+| Filters F | 28 | F is set per dataset; the only stated value is 28 (Opportunity) [Sec 4.2, p4] | **fixed** (was 20); paper value for another dataset |
+| Cross-channel interaction | 1 transformer encoder block across channels at each time step | [3.2.2] | paper |
+| Attention heads | 1 | "a scaled dot-product self-attention layer" [3.2.2]; no head count | our choice (was 2) |
+| FF size, dropout | 2F, 0.2 | not stated | our choice |
+| Cross-channel fusion | FC on flattened C × F → F* = 2F | [3.2.3] | paper; ReLU after it = our choice |
+| Temporal | 1 LSTM, hidden F* | [3.2.4] | paper |
+| Temporal attention | weighted sum of hidden states added to the last one, trainable γ | [3.2.5] | paper; linear scores + softmax, γ init 0 = our choice |
+| Training | plan recipe (batch 256 matches) | Adam lr 1e-4, decay to 10% on 5-epoch plateau, ≤ 150 epochs, batch 256 [Sec 4.1, p4] | plan |
+| Parameters | 54,273 | not comparable (depends on channels) | — |
+
+**HART** [HART]
+
+| Value | Ours | Source | Status |
+|---|---|---|---|
+| Input | W = 128, two 3-axis sensors | [Sec 3.2, p7] | paper |
+| Embedding | one conv per sensor, d/S = 96 filters, non-overlapping frames, concatenated, + learnable position embedding, no class token | [Sec 3.2, p7] | paper |
+| Frame length / stride | 16 / 16 (8 tokens) | not stated | our choice |
+| d | 192 | [Sec 3.2, p7; Sec 4.2, p10] (one sentence says 196 [Sec 4.2, p11]) | paper |
+| Blocks / heads | 6 / 3 per block | [Sec 4.2, p10] | paper; 3 heads in each sensor-wise MSA = our reading |
+| Block | LN; MSA on half of each sensor's embedding (d/4 each), LightConv on the remaining d/2; concat in original positions + residual; LN; FF + residual | [Sec 3.2, p8] | paper |
+| LightConv internals, kernel sizes | Wu et al. (2019) LightConv (GLU, softmax-normalised shared depthwise kernels); kernels 3, 5, 7, 7, 7, 7 | cited to Wu et al., not described [Sec 3.2, p8] | our choice |
+| Activation, dropout | Swish, 0.3 | [Sec 4.1, p10] | paper |
+| DropPath | before every residual, rate 0.1 (linear in depth) | DropPath stated, rate not [Sec 4.1] | paper / rate = our choice |
+| FF hidden, head | 2d; GAP → FF 1,024 (Swish) → classifier | GAP → "a feed-forward layer" → head [Sec 3.2, p8]; sizes not stated | our choice |
+| Parameters | 1,389,555 | 1,445,918 [Table 7, p13] | −3.9% |
+| Training | plan recipe (class weights match) | Adam 5e-4, batch 32, 200 epochs, label smoothing 0.1, class-weighted [Sec 4.1] | plan |
+
+### A.3 XGBoost reference and features [HARTH Sec 3.3, 4.1; Ustad Sec 2.3.2–2.3.3]
+
+| Value | Ours | Source | Status |
+|---|---|---|---|
+| Features | 155: 8 signals (6 axes + 2 magnitudes) × (8 gravity + 9 movement) + 15 axis correlations + 1 magnitude correlation + 3 two-sensor gravity means | the 161-feature set [HARTH Sec 3.3, p10–11]; Ustad uses "the same 161 features" [Ustad Sec 2.3.2] | **fixed** (was 94 generic features); 6 of 161 not identifiable = our choice to omit |
+| Pre-filter, gravity split | 4th-order 20 Hz low-pass; 4th-order 1 Hz low-pass = gravity, rest = movement | [HARTH Sec 3.3] | paper; filtering per window = our choice |
+| Trees, depth, learning rate | 1,024; grid depth {3, 6} × η {0.1, 0.5} | 1,024 / 3 / 0.1 [HARTH Sec 4.1, p12]; 1,024 / 3 / 0.5 [Ustad Sec 2.3.3, p6] | **fixed** (grid now contains both paper settings); depth 6 = our choice |
+| λ, α, subsampling | 1, 0, none | [HARTH Sec 4.1] | **fixed** (α added) |
+| Loss / stopping | multi-class error rate; early stopping 30 rounds | error rate [HARTH Sec 4.1]; early stopping not used there | paper / our choice |
+| Class weights | inverse frequency | not stated | plan |
+
+### A.4 Compression methods
+
+| Method / value | Ours | Source | Status |
+|---|---|---|---|
+| PTQ bit widths | 8, 4 | "8-bit and 4-bit integer quantization" [Tulla Sec 4, p6] | paper |
+| PTQ quantizer | per-tensor symmetric (primary); fixed grid "Tulla-style" (secondary) | Tulla gives no quantizer details; the fixed grid is from the authors' code (see LCI_IMPLEMENTATION.md) | plan (Q1) |
+| L1 unstructured levels | 30, 50, 70, 90% | 30, 50, 70% [Tulla Sec 4, p6] | paper + 90% = plan |
+| SNIP saliency | \|w · ∂L/∂w\| | ∂L/∂c_j at c = 1 [SNIP Eq. 5, p4]; normalised \|g_j\| [Eq. 6] | paper (normalisation does not change a per-layer ranking) |
+| SNIP when / scope | trained model; per-layer sparsity; 10 mini-batches | at initialisation, single shot, global top-κ [SNIP Alg. 1, Eq. 7, Sec 4.2]; "can accumulate the saliency measure over multiple batches" [Sec 4.2, p5] | plan (Q2, Q3); batches = paper option |
+| Park loss | CE + γ_P · mean ‖â_S − â_T‖₂, unit-norm maps, unsquared | Eq. 2 [Park Sec 3.2, p5] | **fixed** (plan had the square) |
+| Park map and target | 48-segment input EG attribution of the original model's top-1 class | Grad-CAM SWA at the last conv layer, top-1 of the full network [Park Sec 4, p6] | our choice (level) / paper (target) |
+| Park strength | γ_P ∈ {1, 50} | β = 50 for SWA [Park App. C.2, p15] | **fixed** (was {0.1, 1}); 1 = our choice |
+| Park pruning schedule | one-shot L1, then E_ft = 10 epochs | iterative magnitude pruning, ρ_w = 0.2 × 16 iterations, 30 epochs each, SGD lr 1e-3 [Park Sec 4.2, App. C.2] | plan (same budget for all methods) |
+| KD | optional, T = 3, α = 0.7 | T = 3, 15 epochs [Tulla Sec 4, p6]; α not stated (authors' code) | paper / our choice |
+| Explanation-guided pruning, gate | ours | not in any source (RP) | ours |
+
+### A.5 Explanations, metrics, statistics
+
+| Item | Ours | Source | Status |
+|---|---|---|---|
+| Explainer | shap GradientExplainer | [Tulla Sec 4, p6] | paper |
+| Explained samples / background | ≤ 30 windows per subject; 100 background windows | 300 samples, 50 background passes [Tulla Sec 4, p6] | plan (RP) |
+| LCI | ω · mean per-sample Pearson + (1 − ω) · Jaccard of top-k | Def. 3.1 [Tulla p4] | paper |
+| k, ω | 10, 0.5 | [Tulla Sec 4, p6] | paper |
+| τ | data-driven (retrain noise) and 0.85 | 0.85, from the bimodal LCI distribution [Tulla Def. 3.2, p4] | plan + paper |
+| Safe explanation rate | share of settings with LCI ≥ τ | Fig. 1(b) [Tulla p4] | paper (as a concept) |
+| 48 segments, FA-LCI (λ = 0.5), deletion faithfulness, statistics | as in Sections 2.6–2.8 | RP. The RP PDF still writes λ = 1 [RP p4]; λ = 0.5 was decided on 2026-11-19 | ours (update the RP) |
+
+### A.6 Points the source check raised (all decided 2026-11-19)
+
+1. **Selection rule → cost-based** (Section 2.9).
+   - The old cheap/costly grouping came from stand-ins, where CNN1D had 44K parameters. With the papers' sizes (Aya's laptop, CPU, 10 threads, torch 2.7.1; torch 2.15.0 values in `environment/time.md`), CNN1D is the second most expensive candidate:
+
+     | Model | Parameters | Training, ms per window | SHAP (1 output, nsamples 200), s per window |
+     |---|---|---|---|
+     | DeepConvLSTM | 458K | 4.00 | 0.70 |
+     | CNN1D (HARTH) | 1.25M | 3.44 | 0.45 |
+     | HART | 1.39M | 1.16 | 0.22 |
+     | TinyHAR | 54K | 0.34 | 0.08 |
+
+   - **Decision:** take the best pooled 7-class macro-F1; among all candidates within 2 pt of it, choose the lowest CPU SHAP time per window; parameter count breaks ties. Implemented in `har/select_model.py` and tested in `har/tests/test_model_selection.py`.
+   - Section 5's CPU estimates are from stand-ins with torch 2.15. The real models differ (HART SHAP 0.22 s vs the stand-in's 0.15 s; DeepConvLSTM 0.70 s vs 0.49 s), so Step 6 re-measures before the grid.
+2. **Pre-filtering → HARTH's 20 Hz low-pass on both datasets** (Section 2.1, `data.lowpass_20hz`).
+   - 4th-order Butterworth [HARTH Sec 3.3], zero-phase, per gap-free segment after resampling, before windowing. Our choice: segments ≤ 15 rows stay unfiltered; they are far shorter than a window.
+   - The cache was rebuilt on 2026-11-19. Window counts, window IDs, explain windows, backgrounds, folds and validation subjects are **unchanged**: 9 of the 10 `results/har-setup/` files are byte-identical, because filtering changes values but never rows, labels or timestamps.
+   - Only `har-normalisation-stats-per-fold.csv` changed: the means are identical to 6 decimals, and the standard deviations are 0.1–1.1% lower (power above 20 Hz removed).
+   - The XGBoost features no longer low-pass again per window.
+3. **Training recipes → one shared recipe for all candidates, kept as a deliberate deviation** (Section 2.4 and A.7).
+4. **CNN1D convolution type → axes as input channels**, marked "our choice" (`har/models.py`, A.2).
+5. **The research plan PDF** still says λ = 1 for FA-LCI; the decided value is 0.5 (update the PDF; nothing to change in the code).
+
+### A.7 Report notes: deviations to state in the final report
+
+These go into `results/har-analysis/har-report.md` (Step 12), under "Deviations from the source papers".
+
+1. **One shared training recipe** (deliberate). Every candidate is trained with the same recipe, so the comparison measures architectures, not training effort:
+   - Adam, lr ∈ {1e-3, 3e-4}, weight decay 1e-4, batch 256, cosine schedule, ≤ 30 epochs with early stopping (patience 5) on validation pooled macro-F1;
+   - class-weighted cross-entropy without label smoothing;
+   - the same 4-setting tuning budget.
+
+   The papers' own recipes are not used:
+
+   | Model | Paper's recipe |
+   |---|---|
+   | HARTH CNN | SGD, lr 0.001, 80 epochs, no early stopping [HARTH Sec 4.1] |
+   | DeepConvLSTM | RMSProp, lr 1e-3, ρ 0.9, batch 100 [DCL Sec 3.3] |
+   | TinyHAR | Adam, lr 1e-4, decay to 10% on plateau, ≤ 150 epochs, batch 256 [TINY Sec 4.1] |
+   | HART | Adam, lr 5e-4, batch 32, 200 epochs, label smoothing 0.1, class-weighted [HART Sec 4.1] |
+
+   Absolute accuracies can therefore differ from the papers'.
+2. **Windows:** 2.56 s (as HART), not HARTH's 1 s or Ustad's 5 s; majority label with a > 50% cut.
+3. **CNN1D:** axes as input channels, 'same' padding and global average pooling are our choices (A.2).
+4. **HART, TinyHAR:** the sizes the papers do not state are our choices (A.2).
+5. **XGBoost:** 155 of HARTH's 161 features (6 not identifiable from the text); gravity filter per window.
+6. **Compression:** SNIP's score used on the trained model with per-layer sparsity; Park's matching on input attributions with one-shot pruning; per-tensor symmetric PTQ as primary (A.4).
+7. **Filtering:** HARTH's 20 Hz low-pass applied to HAR70+ too. Ustad's band-pass is not used.

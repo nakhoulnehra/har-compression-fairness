@@ -1,6 +1,9 @@
 # Raw datasets are downloaded by data/download.py - never commit them
 data/raw/
 
+# Source papers (copyrighted PDFs, local reference only) - never commit
+papers/
+
 # Rebuildable caches (HAR window cache, later SHAP arrays and model weights) - never commit
 data/processed/
 
