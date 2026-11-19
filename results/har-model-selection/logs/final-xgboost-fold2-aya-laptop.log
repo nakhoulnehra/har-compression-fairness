@@ -1,0 +1,15 @@
+=== final xgboost fold 2 | machine aya-laptop | device cpu  | torch 2.7.1+cpu | started 2026-11-19T22:01:38+02:00
+    train subjects ['S008', 'S009', 'S014', 'S015', 'S016', 'S017', 'S018', 'S020', 'S021', 'S023', 'S025', 'S026', 'S028', 'S029']
+    validation subjects ['S013', 'S019', 'S022']
+    test subjects ['S006', 'S010', 'S012', 'S024', 'S027']
+    windows: train 52771, validation 7389, test 8363
+    xgboost: 476 trees (early stopping), val F1 0.8493, 61.7s
+    TEST (held-out HARTH): macro-F1 pooled 0.8048, accuracy 0.9180, non-stair F1 per subject 0.8203, stairs F1 pooled 0.6911
+    done in 66.5s; val F1 0.8493 (best epoch 476)
+    saved C:\har-compression-fairness\results\har-model-selection\final\har-final-xgboost-fold2-aya-laptop.csv
+    saved C:\har-compression-fairness\results\har-model-selection\final\har-final-xgboost-fold2-aya-laptop-config.json
+    saved C:\har-compression-fairness\results\har-model-selection\final\har-final-xgboost-fold2-aya-laptop-history.csv
+    saved C:\har-compression-fairness\results\har-model-selection\final\har-final-xgboost-fold2-aya-laptop-per-subject.csv
+    saved C:\har-compression-fairness\results\har-model-selection\final\har-final-xgboost-fold2-aya-laptop-confusion.csv
+    saved C:\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-xgboost-fold2-aya-laptop.ubj
+    saved C:\har-compression-fairness\results\har-model-selection\logs\final-xgboost-fold2-aya-laptop.log

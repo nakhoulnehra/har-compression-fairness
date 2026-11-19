@@ -1,0 +1,12 @@
+=== tune xgboost depth3-eta0.1 fold 0 | machine aya-laptop | device cpu  | torch 2.7.1+cpu | started 2026-11-19T21:55:52+02:00
+    train subjects ['S006', 'S009', 'S012', 'S013', 'S014', 'S015', 'S016', 'S017', 'S018', 'S023', 'S024', 'S026', 'S027', 'S028', 'S029']
+    validation subjects ['S010', 'S020', 'S021']
+    test subjects: none (tuning)
+    windows: train 51451, validation 7709
+    xgboost: 569 trees (early stopping), val F1 0.8321, 72.5s
+    done in 75.6s; val F1 0.8321 (best epoch 569)
+    saved C:\har-compression-fairness\results\har-model-selection\tuning\har-tune-xgboost-depth3-eta0.1-fold0-aya-laptop.csv
+    saved C:\har-compression-fairness\results\har-model-selection\tuning\har-tune-xgboost-depth3-eta0.1-fold0-aya-laptop-config.json
+    saved C:\har-compression-fairness\results\har-model-selection\tuning\har-tune-xgboost-depth3-eta0.1-fold0-aya-laptop-history.csv
+    saved C:\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-tune-xgboost-depth3-eta0.1-fold0-aya-laptop.ubj
+    saved C:\har-compression-fairness\results\har-model-selection\logs\tune-xgboost-depth3-eta0.1-fold0-aya-laptop.log

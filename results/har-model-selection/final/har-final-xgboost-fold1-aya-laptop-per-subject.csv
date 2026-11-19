@@ -1,0 +1,5 @@
+machine_name,model,fold,subject,n_windows,accuracy,non_stair_macro_f1,n_non_stair_classes_present
+aya-laptop,xgboost,1,S015,3142,0.9452577975811585,0.8086075246307723,5
+aya-laptop,xgboost,1,S016,2631,0.9703534777651083,0.920971274633359,5
+aya-laptop,xgboost,1,S028,1284,0.9626168224299065,0.8822451885682376,5
+aya-laptop,xgboost,1,S029,1152,0.9557291666666666,0.882661138647437,5
