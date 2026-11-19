@@ -6,6 +6,7 @@
 |---|---|
 | [data/](data/) | Download and checksum scripts; raw data lands in `data/raw/` (git-ignored). |
 | [lci/](lci/) | Everything LCI: code, experiment runner and tests. |
+| [har/](har/) | HAR study. So far the data pipeline: HARTH/HAR70+ loading, 50 Hz resampling, windowing, group tags, subject-wise folds and normalisation statistics (`python -m har.build_windows`), with tests in `har/tests/`. Window cache in `data/processed/har/` (git-ignored). |
 | [results/](results/) | Every result file, one subfolder per group of related runs. [results/README.md](results/README.md) summarizes the key numbers of each file. |
 | [environment/](environment/) | [specs.md](environment/specs.md) (machines), [requirements.md](environment/requirements.md) (setup, packages, commands run), [requirements.txt](environment/requirements.txt) (full pinned `pip freeze`), [time.md](environment/time.md) (per-command timings, per machine). |
 | [plan/](plan/) | [LCI_IMPLEMENTATION.md](plan/LCI_IMPLEMENTATION.md): spec for the LCI implementation and validation. [HAR_IMPLEMENTATION.md](plan/HAR_IMPLEMENTATION.md): plan for the HAR part (HARTH → HAR70+, compression grid, FA-LCI). |

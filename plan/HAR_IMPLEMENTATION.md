@@ -89,8 +89,11 @@ class Windows:
     y: np.ndarray               # (n,) int64 class index 0..6
     subject: np.ndarray         # (n,) str, e.g. "S006" or "501"
     dataset: str                # "harth" or "har70plus"
+    group: np.ndarray           # (n,) str, "general" (HARTH) or "older" (HAR70+)
+    walking_aid: np.ndarray     # (n,) str, inferred_walking_aid / inferred_no_walking_aid / not_applicable
     majority_share: np.ndarray  # (n,) float32, share of the 128 rows with the window label
     start_time: np.ndarray      # (n,) datetime64[ms], first timestamp of the window
+    start_row: np.ndarray       # (n,) int64, first row in the subject's 50 Hz recording (for audits)
 
 def load_recording(dataset: str, subject: str) -> pd.DataFrame
     # Reads one CSV; keeps timestamp, the 6 channels and label; drops `index` / unnamed columns.
@@ -108,16 +111,18 @@ def build_all(force: bool = False) -> dict[str, Windows]
 ```
 
 Windowing rules:
-1. Windows never cross a segment boundary (a gap) and never contain a row whose label is not shared (2, 13, 14, 130, 140). Such windows are dropped, not relabelled.
-2. **Training (HARTH):** 50% overlap (step 64). **Testing (HARTH held-out and HAR70+):** no overlap (step 128). Both start at the first row of each segment.
+1. Windows never cross a gap and never contain a row whose label is not shared (2, 13, 14, 130, 140). *As implemented:* windows are cut inside **runs**, the maximal stretches of rows that are gap-free and carry only shared labels. Non-shared rows are dropped before windowing (never relabelled), and the window grid restarts after them.
+2. **Training (HARTH):** 50% overlap (step 64). **Testing (HARTH held-out and HAR70+):** no overlap (step 128). Both start at the first row of each run; rows in runs shorter than 128 and run tails shorter than one step are dropped and counted.
 3. **Window label = majority label** (the mode over the 128 rows).
 4. **Mixed-label windows:** a window is kept if its majority label covers **more than 50%** of its rows (at least 65 of 128) and dropped otherwise (ties such as 64/64, or no label above 50%). Kept mixed windows carry their `majority_share`. Step 1 reports, per subject and dataset, the number of single-label windows, kept mixed windows and dropped mixed windows. *Why:* transitions are part of real use, so test windows at transitions are kept; windows with no clear label have no ground truth and are dropped. A robustness check in Step 11 repeats the main LCI result on single-label windows only.
 5. **Normalization (decided, Q10).** No normalization is stored in the cache. Models normalize per channel with mean and std computed on the `harth_train` windows of the **current fold's HARTH training subjects only**: the 3 inner-validation subjects, the fold's test subjects and all of HAR70+ are excluded. These statistics are stored with the model and applied **unchanged** to inner-validation, HARTH test and HAR70+ windows; they are never recomputed on those sets. Because the normalization is part of the model, SHAP, the background and deletion all work in raw g. Class weights (Section 2.4) come from the same training windows.
 
 ```python
-def channel_stats(w: Windows, train_subjects: list[str]) -> tuple[np.ndarray, np.ndarray]
-    # (mean (6,), std (6,)) over the windows of `train_subjects` only; calls require_harth(w)
-    # and raises if any inner-validation or test subject of the fold is in train_subjects.
+# in har/folds.py (it needs the fold definition):
+def channel_stats(w: Windows, fold: FoldSplit, subjects: Sequence[str] | None = None) -> tuple[np.ndarray, np.ndarray]
+    # (mean (6,), std (6,)), population std over every sample of the windows of `subjects`
+    # (default: fold.train). Calls require_harth(w); raises if any requested subject is not one of
+    # the fold's training subjects (validation, test, HAR70+ or unknown IDs).
 ```
 
 ### 2.2 Folds, inner validation, explain windows and background (`har/folds.py`)
@@ -128,9 +133,13 @@ def assign_folds(window_counts: dict[str, int], n_folds: int = 5) -> dict[str, i
     # put each in the fold with the fewest windows that has < 5 subjects (ties -> lowest fold).
     # Gives folds of 5, 5, 4, 4, 4 subjects with similar window counts.
 def inner_val_subjects(train_subjects: list[str], window_counts: dict[str, int],
-                       n: int = 3, seed: int = 42) -> list[str]
-    # 3 of the fold's training subjects with >= 1,000 windows, chosen with the seed.
+                       n: int = 3, seed: int = 42, fold: int = 0) -> list[str]
+    # 3 of the fold's non-test subjects with >= 1,000 non-overlapping windows, drawn with seed + fold
+    # (a single seed for all folds made the same few subjects the validation set of most folds).
     # Used for early stopping, tuning, the pruning-rule choice, the gate and tau. Never for testing.
+def make_folds(harth_test_counts: dict[str, int], older_subjects) -> list[FoldSplit]
+    # FoldSplit(fold, train, val, test_general, test_older); FoldSplit.check() raises on any overlap
+    # or if a HAR70+ subject is in train/val. Implemented in har/folds.py.
 def select_explain_windows(w: Windows, per_subject: int = 30, seed: int = 42) -> np.ndarray
     # Indices into a *_test Windows. Per subject: up to 30 windows, stratified by class:
     # round-robin over the classes present (one window per class per round, random within class)
@@ -429,7 +438,8 @@ def safe_rate(lci_values, tau) -> float     # share of settings with LCI >= tau
   - windows containing a non-shared label are dropped;
   - the majority rule: 65/128 kept, 64/64 dropped;
   - training step 64 and test step 128;
-  - on the real data: 22 + 18 subjects, 7 classes, zero stairs windows for exactly the 5 walking-aid (inferred) subjects.
+  - on the real data: 22 + 18 subjects, 7 classes; the HAR70+ subjects with no stairs rows are exactly the 5 walking-aid (inferred) subjects, and they have no stairs windows;
+  - on the real data, every window of S006, S010, S015, S023, S026 and 507 re-derived from the raw file: identical values, no step > 40 ms inside, only shared labels, majority label > 50%.
 - **`har/tests/test_folds.py`:**
   - every HARTH subject is in exactly one test fold;
   - fold sizes are 5, 5, 4, 4, 4;
@@ -478,7 +488,7 @@ Each step ends with an acceptance check. If a check fails, stop, fix the code (n
 0. **Environment.** Add `xgboost` to the environment (pin the installed version in `environment/requirements.md` and `environment/requirements.txt`) and `data/processed/` to `.gitignore`. Use the same `requirements.txt` on both machines.
    *Acceptance:* `python data/verify_checksums.py` prints 44/44 on both machines; `pip freeze` is identical on both.
 
-1. **Build the windows** (`python -m har.build_windows`).
+1. **Build the windows** (`python -m har.build_windows`). *Status 2026-11-19: done, together with Step 2's folds, validation subjects and normalisation statistics; Step 2's explain windows and SHAP backgrounds are still to do.*
    *Why:* every later step reads the same cached windows, so windowing cannot differ between machines or runs.
    *Acceptance:* `har/tests/test_data.py` passes; S006 resampled to 50 Hz; 22 + 18 subjects; only class indices 0–6; window counts per subject written to `results/har-setup/har-window-counts-per-subject.csv` and within ±5% of Section 1's estimates (larger differences are explained in the report); the walking-aid (inferred) subjects have zero stairs windows.
 

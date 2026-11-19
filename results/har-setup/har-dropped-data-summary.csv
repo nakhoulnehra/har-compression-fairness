@@ -1,0 +1,261 @@
+dataset,subject,stage,reason,n_rows,n_windows,detail
+harth,S006,resample,recorded at 100 Hz; FIR anti-alias filter and decimated to 50 Hz,204349,0,408709 rows at 10.0 ms -> 204360 rows at 20 ms
+harth,S006,labels,label not shared by HARTH and HAR70+,12521,0,label 13 (cycling_sit)
+harth,S006,labels,label not shared by HARTH and HAR70+,1565,0,label 14 (cycling_stand)
+harth,S006,labels,label not shared by HARTH and HAR70+,5644,0,label 130 (cycling_sit_inactive)
+harth,S008,labels,label not shared by HARTH and HAR70+,7548,0,label 13 (cycling_sit)
+harth,S008,labels,label not shared by HARTH and HAR70+,748,0,label 14 (cycling_stand)
+harth,S008,labels,label not shared by HARTH and HAR70+,170,0,label 130 (cycling_sit_inactive)
+harth,S008,labels,label not shared by HARTH and HAR70+,750,0,label 140 (cycling_stand_inactive)
+harth,S009,labels,label not shared by HARTH and HAR70+,120101,0,label 13 (cycling_sit)
+harth,S009,labels,label not shared by HARTH and HAR70+,10926,0,label 14 (cycling_stand)
+harth,S009,labels,label not shared by HARTH and HAR70+,10375,0,label 130 (cycling_sit_inactive)
+harth,S009,labels,label not shared by HARTH and HAR70+,120,0,label 140 (cycling_stand_inactive)
+harth,S012,labels,label not shared by HARTH and HAR70+,2198,0,label 2 (running)
+harth,S013,labels,label not shared by HARTH and HAR70+,3494,0,label 2 (running)
+harth,S013,labels,label not shared by HARTH and HAR70+,2764,0,label 13 (cycling_sit)
+harth,S013,labels,label not shared by HARTH and HAR70+,100,0,label 130 (cycling_sit_inactive)
+harth,S014,labels,label not shared by HARTH and HAR70+,2490,0,label 2 (running)
+harth,S014,labels,label not shared by HARTH and HAR70+,5570,0,label 13 (cycling_sit)
+harth,S015,load,extra index column dropped,0,0,index
+harth,S015,labels,label not shared by HARTH and HAR70+,2946,0,label 2 (running)
+harth,S015,labels,label not shared by HARTH and HAR70+,7268,0,label 13 (cycling_sit)
+harth,S015,labels,label not shared by HARTH and HAR70+,1790,0,label 14 (cycling_stand)
+harth,S016,labels,label not shared by HARTH and HAR70+,2806,0,label 2 (running)
+harth,S016,labels,label not shared by HARTH and HAR70+,10474,0,label 13 (cycling_sit)
+harth,S016,labels,label not shared by HARTH and HAR70+,288,0,label 14 (cycling_stand)
+harth,S016,labels,label not shared by HARTH and HAR70+,250,0,label 130 (cycling_sit_inactive)
+harth,S017,labels,label not shared by HARTH and HAR70+,5138,0,label 2 (running)
+harth,S017,labels,label not shared by HARTH and HAR70+,4672,0,label 13 (cycling_sit)
+harth,S017,labels,label not shared by HARTH and HAR70+,3101,0,label 14 (cycling_stand)
+harth,S017,labels,label not shared by HARTH and HAR70+,1060,0,label 130 (cycling_sit_inactive)
+harth,S017,labels,label not shared by HARTH and HAR70+,160,0,label 140 (cycling_stand_inactive)
+harth,S018,labels,label not shared by HARTH and HAR70+,13782,0,label 2 (running)
+harth,S018,labels,label not shared by HARTH and HAR70+,6036,0,label 13 (cycling_sit)
+harth,S018,labels,label not shared by HARTH and HAR70+,1456,0,label 14 (cycling_stand)
+harth,S018,labels,label not shared by HARTH and HAR70+,150,0,label 130 (cycling_sit_inactive)
+harth,S019,labels,label not shared by HARTH and HAR70+,4748,0,label 2 (running)
+harth,S019,labels,label not shared by HARTH and HAR70+,13715,0,label 13 (cycling_sit)
+harth,S019,labels,label not shared by HARTH and HAR70+,39,0,label 14 (cycling_stand)
+harth,S019,labels,label not shared by HARTH and HAR70+,300,0,label 130 (cycling_sit_inactive)
+harth,S020,labels,label not shared by HARTH and HAR70+,3740,0,label 2 (running)
+harth,S020,labels,label not shared by HARTH and HAR70+,14550,0,label 13 (cycling_sit)
+harth,S020,labels,label not shared by HARTH and HAR70+,570,0,label 14 (cycling_stand)
+harth,S020,labels,label not shared by HARTH and HAR70+,670,0,label 130 (cycling_sit_inactive)
+harth,S021,load,extra index column dropped,0,0,index
+harth,S021,labels,label not shared by HARTH and HAR70+,3760,0,label 2 (running)
+harth,S021,labels,label not shared by HARTH and HAR70+,2372,0,label 13 (cycling_sit)
+harth,S021,labels,label not shared by HARTH and HAR70+,522,0,label 14 (cycling_stand)
+harth,S022,labels,label not shared by HARTH and HAR70+,2334,0,label 2 (running)
+harth,S022,labels,label not shared by HARTH and HAR70+,13217,0,label 13 (cycling_sit)
+harth,S022,labels,label not shared by HARTH and HAR70+,1735,0,label 130 (cycling_sit_inactive)
+harth,S022,labels,label not shared by HARTH and HAR70+,500,0,label 140 (cycling_stand_inactive)
+harth,S023,load,extra index column dropped,0,0,Unnamed: 0
+harth,S023,labels,label not shared by HARTH and HAR70+,22391,0,label 2 (running)
+harth,S024,labels,label not shared by HARTH and HAR70+,26732,0,label 2 (running)
+harth,S025,labels,label not shared by HARTH and HAR70+,34212,0,label 2 (running)
+harth,S025,labels,label not shared by HARTH and HAR70+,52593,0,label 13 (cycling_sit)
+harth,S025,labels,label not shared by HARTH and HAR70+,12946,0,label 14 (cycling_stand)
+harth,S025,labels,label not shared by HARTH and HAR70+,4460,0,label 130 (cycling_sit_inactive)
+harth,S025,labels,label not shared by HARTH and HAR70+,3520,0,label 140 (cycling_stand_inactive)
+harth,S026,labels,label not shared by HARTH and HAR70+,11504,0,label 2 (running)
+harth,S026,labels,label not shared by HARTH and HAR70+,97600,0,label 13 (cycling_sit)
+harth,S026,labels,label not shared by HARTH and HAR70+,20298,0,label 14 (cycling_stand)
+harth,S026,labels,label not shared by HARTH and HAR70+,9635,0,label 130 (cycling_sit_inactive)
+harth,S026,labels,label not shared by HARTH and HAR70+,2815,0,label 140 (cycling_stand_inactive)
+harth,S027,labels,label not shared by HARTH and HAR70+,131307,0,label 2 (running)
+harth,S029,labels,label not shared by HARTH and HAR70+,17774,0,label 2 (running)
+harth,S029,labels,label not shared by HARTH and HAR70+,10443,0,label 13 (cycling_sit)
+harth,S029,labels,label not shared by HARTH and HAR70+,1590,0,label 130 (cycling_sit_inactive)
+harth,S006,windows_harth_train,run tail shorter than one window step,989,0,step 64
+harth,S006,windows_harth_train,no label covers > 50% of the window,0,49,step 64
+harth,S006,segments,recording gap > 40 ms (windows never cross it),0,0,38 gaps
+harth,S006,segments,gap-free shared-label run shorter than 128 samples,473,0,
+harth,S006,windows_harth_test,run tail shorter than one window step,2013,0,step 128
+harth,S006,windows_harth_test,no label covers > 50% of the window,0,29,step 128
+harth,S008,windows_harth_train,run tail shorter than one window step,1325,0,step 64
+harth,S008,windows_harth_train,no label covers > 50% of the window,0,43,step 64
+harth,S008,segments,recording gap > 40 ms (windows never cross it),0,0,38 gaps
+harth,S008,windows_harth_test,run tail shorter than one window step,2349,0,step 128
+harth,S008,windows_harth_test,no label covers > 50% of the window,0,22,step 128
+harth,S009,windows_harth_train,run tail shorter than one window step,160,0,step 64
+harth,S009,windows_harth_train,no label covers > 50% of the window,0,1,step 64
+harth,S009,segments,recording gap > 40 ms (windows never cross it),0,0,6 gaps
+harth,S009,segments,gap-free shared-label run shorter than 128 samples,174,0,
+harth,S009,windows_harth_test,run tail shorter than one window step,224,0,step 128
+harth,S009,windows_harth_test,no label covers > 50% of the window,0,1,step 128
+harth,S010,windows_harth_train,run tail shorter than one window step,481,0,step 64
+harth,S010,windows_harth_train,no label covers > 50% of the window,0,41,step 64
+harth,S010,segments,recording gap > 40 ms (windows never cross it),0,0,13 gaps
+harth,S010,windows_harth_test,run tail shorter than one window step,801,0,step 128
+harth,S010,windows_harth_test,no label covers > 50% of the window,0,25,step 128
+harth,S012,windows_harth_train,run tail shorter than one window step,970,0,step 64
+harth,S012,windows_harth_train,no label covers > 50% of the window,0,10,step 64
+harth,S012,segments,recording gap > 40 ms (windows never cross it),0,0,32 gaps
+harth,S012,segments,gap-free shared-label run shorter than 128 samples,110,0,
+harth,S012,windows_harth_test,run tail shorter than one window step,1994,0,step 128
+harth,S012,windows_harth_test,no label covers > 50% of the window,0,7,step 128
+harth,S013,windows_harth_train,run tail shorter than one window step,1489,0,step 64
+harth,S013,windows_harth_train,no label covers > 50% of the window,0,25,step 64
+harth,S013,segments,recording gap > 40 ms (windows never cross it),0,0,54 gaps
+harth,S013,segments,gap-free shared-label run shorter than 128 samples,462,0,
+harth,S013,windows_harth_test,run tail shorter than one window step,3217,0,step 128
+harth,S013,windows_harth_test,no label covers > 50% of the window,0,10,step 128
+harth,S014,windows_harth_train,run tail shorter than one window step,1897,0,step 64
+harth,S014,windows_harth_train,no label covers > 50% of the window,0,50,step 64
+harth,S014,segments,recording gap > 40 ms (windows never cross it),0,0,69 gaps
+harth,S014,segments,gap-free shared-label run shorter than 128 samples,1138,0,
+harth,S014,windows_harth_test,run tail shorter than one window step,3241,0,step 128
+harth,S014,windows_harth_test,no label covers > 50% of the window,0,25,step 128
+harth,S015,windows_harth_train,run tail shorter than one window step,1326,0,step 64
+harth,S015,windows_harth_train,no label covers > 50% of the window,0,30,step 64
+harth,S015,segments,recording gap > 40 ms (windows never cross it),0,0,36 gaps
+harth,S015,segments,gap-free shared-label run shorter than 128 samples,70,0,
+harth,S015,windows_harth_test,run tail shorter than one window step,2350,0,step 128
+harth,S015,windows_harth_test,no label covers > 50% of the window,0,14,step 128
+harth,S016,windows_harth_train,run tail shorter than one window step,1048,0,step 64
+harth,S016,windows_harth_train,no label covers > 50% of the window,0,33,step 64
+harth,S016,segments,recording gap > 40 ms (windows never cross it),0,0,35 gaps
+harth,S016,segments,gap-free shared-label run shorter than 128 samples,8,0,
+harth,S016,windows_harth_test,run tail shorter than one window step,2264,0,step 128
+harth,S016,windows_harth_test,no label covers > 50% of the window,0,20,step 128
+harth,S017,windows_harth_train,run tail shorter than one window step,1032,0,step 64
+harth,S017,windows_harth_train,no label covers > 50% of the window,0,11,step 64
+harth,S017,segments,recording gap > 40 ms (windows never cross it),0,0,38 gaps
+harth,S017,segments,gap-free shared-label run shorter than 128 samples,86,0,
+harth,S017,windows_harth_test,run tail shorter than one window step,2056,0,step 128
+harth,S017,windows_harth_test,no label covers > 50% of the window,0,5,step 128
+harth,S018,windows_harth_train,run tail shorter than one window step,1385,0,step 64
+harth,S018,windows_harth_train,no label covers > 50% of the window,0,28,step 64
+harth,S018,segments,recording gap > 40 ms (windows never cross it),0,0,44 gaps
+harth,S018,segments,gap-free shared-label run shorter than 128 samples,198,0,
+harth,S018,windows_harth_test,run tail shorter than one window step,2665,0,step 128
+harth,S018,windows_harth_test,no label covers > 50% of the window,0,10,step 128
+harth,S019,windows_harth_train,run tail shorter than one window step,855,0,step 64
+harth,S019,windows_harth_train,no label covers > 50% of the window,0,18,step 64
+harth,S019,segments,recording gap > 40 ms (windows never cross it),0,0,27 gaps
+harth,S019,segments,gap-free shared-label run shorter than 128 samples,336,0,
+harth,S019,windows_harth_test,run tail shorter than one window step,1943,0,step 128
+harth,S019,windows_harth_test,no label covers > 50% of the window,0,7,step 128
+harth,S020,windows_harth_train,run tail shorter than one window step,1230,0,step 64
+harth,S020,windows_harth_train,no label covers > 50% of the window,0,21,step 64
+harth,S020,segments,recording gap > 40 ms (windows never cross it),0,0,33 gaps
+harth,S020,segments,gap-free shared-label run shorter than 128 samples,144,0,
+harth,S020,windows_harth_test,run tail shorter than one window step,2254,0,step 128
+harth,S020,windows_harth_test,no label covers > 50% of the window,0,11,step 128
+harth,S021,windows_harth_train,run tail shorter than one window step,1049,0,step 64
+harth,S021,windows_harth_train,no label covers > 50% of the window,0,26,step 64
+harth,S021,segments,recording gap > 40 ms (windows never cross it),0,0,41 gaps
+harth,S021,segments,gap-free shared-label run shorter than 128 samples,144,0,
+harth,S021,windows_harth_test,run tail shorter than one window step,2713,0,step 128
+harth,S021,windows_harth_test,no label covers > 50% of the window,0,14,step 128
+harth,S022,windows_harth_train,run tail shorter than one window step,1886,0,step 64
+harth,S022,windows_harth_train,no label covers > 50% of the window,0,51,step 64
+harth,S022,segments,recording gap > 40 ms (windows never cross it),0,0,63 gaps
+harth,S022,segments,gap-free shared-label run shorter than 128 samples,298,0,
+harth,S022,windows_harth_test,run tail shorter than one window step,3870,0,step 128
+harth,S022,windows_harth_test,no label covers > 50% of the window,0,28,step 128
+harth,S023,windows_harth_train,run tail shorter than one window step,194,0,step 64
+harth,S023,windows_harth_train,no label covers > 50% of the window,0,11,step 64
+harth,S023,segments,recording gap > 40 ms (windows never cross it),0,0,5 gaps
+harth,S023,segments,gap-free shared-label run shorter than 128 samples,53,0,
+harth,S023,windows_harth_test,run tail shorter than one window step,386,0,step 128
+harth,S023,windows_harth_test,no label covers > 50% of the window,0,6,step 128
+harth,S024,windows_harth_train,run tail shorter than one window step,553,0,step 64
+harth,S024,windows_harth_train,no label covers > 50% of the window,0,14,step 64
+harth,S024,segments,recording gap > 40 ms (windows never cross it),0,0,13 gaps
+harth,S024,segments,gap-free shared-label run shorter than 128 samples,337,0,
+harth,S024,windows_harth_test,run tail shorter than one window step,1001,0,step 128
+harth,S024,windows_harth_test,no label covers > 50% of the window,0,9,step 128
+harth,S025,windows_harth_train,run tail shorter than one window step,805,0,step 64
+harth,S025,windows_harth_train,no label covers > 50% of the window,0,10,step 64
+harth,S025,segments,recording gap > 40 ms (windows never cross it),0,0,22 gaps
+harth,S025,segments,gap-free shared-label run shorter than 128 samples,441,0,
+harth,S025,windows_harth_test,run tail shorter than one window step,1573,0,step 128
+harth,S025,windows_harth_test,no label covers > 50% of the window,0,6,step 128
+harth,S026,windows_harth_train,run tail shorter than one window step,320,0,step 64
+harth,S026,windows_harth_train,no label covers > 50% of the window,0,9,step 64
+harth,S026,segments,recording gap > 40 ms (windows never cross it),0,0,7 gaps
+harth,S026,segments,gap-free shared-label run shorter than 128 samples,72,0,
+harth,S026,windows_harth_test,run tail shorter than one window step,768,0,step 128
+harth,S026,windows_harth_test,no label covers > 50% of the window,0,3,step 128
+harth,S027,windows_harth_train,run tail shorter than one window step,413,0,step 64
+harth,S027,windows_harth_train,no label covers > 50% of the window,0,3,step 64
+harth,S027,segments,recording gap > 40 ms (windows never cross it),0,0,14 gaps
+harth,S027,segments,gap-free shared-label run shorter than 128 samples,432,0,
+harth,S027,windows_harth_test,run tail shorter than one window step,861,0,step 128
+harth,S027,windows_harth_test,no label covers > 50% of the window,0,1,step 128
+harth,S028,windows_harth_train,run tail shorter than one window step,378,0,step 64
+harth,S028,windows_harth_train,no label covers > 50% of the window,0,3,step 64
+harth,S028,segments,recording gap > 40 ms (windows never cross it),0,0,9 gaps
+harth,S028,windows_harth_test,run tail shorter than one window step,698,0,step 128
+harth,S028,windows_harth_test,no label covers > 50% of the window,0,1,step 128
+harth,S029,windows_harth_train,run tail shorter than one window step,301,0,step 64
+harth,S029,windows_harth_train,no label covers > 50% of the window,0,11,step 64
+harth,S029,segments,recording gap > 40 ms (windows never cross it),0,0,7 gaps
+harth,S029,windows_harth_test,run tail shorter than one window step,685,0,step 128
+harth,S029,windows_harth_test,no label covers > 50% of the window,0,6,step 128
+har70plus,501,segments,recording gap > 40 ms (windows never cross it),0,0,10 gaps
+har70plus,501,windows_har70plus_test,run tail shorter than one window step,436,0,step 128
+har70plus,501,windows_har70plus_test,no label covers > 50% of the window,0,3,step 128
+har70plus,502,segments,recording gap > 40 ms (windows never cross it),0,0,12 gaps
+har70plus,502,segments,gap-free shared-label run shorter than 128 samples,66,0,
+har70plus,502,windows_har70plus_test,run tail shorter than one window step,741,0,step 128
+har70plus,502,windows_har70plus_test,no label covers > 50% of the window,0,5,step 128
+har70plus,503,segments,recording gap > 40 ms (windows never cross it),0,0,14 gaps
+har70plus,503,segments,gap-free shared-label run shorter than 128 samples,4,0,
+har70plus,503,windows_har70plus_test,run tail shorter than one window step,1081,0,step 128
+har70plus,503,windows_har70plus_test,no label covers > 50% of the window,0,2,step 128
+har70plus,504,segments,recording gap > 40 ms (windows never cross it),0,0,16 gaps
+har70plus,504,segments,gap-free shared-label run shorter than 128 samples,20,0,
+har70plus,504,windows_har70plus_test,run tail shorter than one window step,850,0,step 128
+har70plus,504,windows_har70plus_test,no label covers > 50% of the window,0,5,step 128
+har70plus,505,segments,recording gap > 40 ms (windows never cross it),0,0,7 gaps
+har70plus,505,segments,gap-free shared-label run shorter than 128 samples,74,0,
+har70plus,505,windows_har70plus_test,run tail shorter than one window step,404,0,step 128
+har70plus,505,windows_har70plus_test,no label covers > 50% of the window,0,2,step 128
+har70plus,506,segments,recording gap > 40 ms (windows never cross it),0,0,18 gaps
+har70plus,506,segments,gap-free shared-label run shorter than 128 samples,320,0,
+har70plus,506,windows_har70plus_test,run tail shorter than one window step,922,0,step 128
+har70plus,506,windows_har70plus_test,no label covers > 50% of the window,0,3,step 128
+har70plus,507,segments,recording gap > 40 ms (windows never cross it),0,0,15 gaps
+har70plus,507,segments,gap-free shared-label run shorter than 128 samples,18,0,
+har70plus,507,windows_har70plus_test,run tail shorter than one window step,939,0,step 128
+har70plus,507,windows_har70plus_test,no label covers > 50% of the window,0,8,step 128
+har70plus,508,segments,recording gap > 40 ms (windows never cross it),0,0,13 gaps
+har70plus,508,windows_har70plus_test,run tail shorter than one window step,830,0,step 128
+har70plus,508,windows_har70plus_test,no label covers > 50% of the window,0,11,step 128
+har70plus,509,segments,recording gap > 40 ms (windows never cross it),0,0,19 gaps
+har70plus,509,segments,gap-free shared-label run shorter than 128 samples,86,0,
+har70plus,509,windows_har70plus_test,run tail shorter than one window step,1101,0,step 128
+har70plus,509,windows_har70plus_test,no label covers > 50% of the window,0,7,step 128
+har70plus,510,segments,recording gap > 40 ms (windows never cross it),0,0,14 gaps
+har70plus,510,segments,gap-free shared-label run shorter than 128 samples,88,0,
+har70plus,510,windows_har70plus_test,run tail shorter than one window step,885,0,step 128
+har70plus,510,windows_har70plus_test,no label covers > 50% of the window,0,7,step 128
+har70plus,511,segments,recording gap > 40 ms (windows never cross it),0,0,12 gaps
+har70plus,511,windows_har70plus_test,run tail shorter than one window step,703,0,step 128
+har70plus,511,windows_har70plus_test,no label covers > 50% of the window,0,5,step 128
+har70plus,512,segments,recording gap > 40 ms (windows never cross it),0,0,11 gaps
+har70plus,512,windows_har70plus_test,run tail shorter than one window step,910,0,step 128
+har70plus,512,windows_har70plus_test,no label covers > 50% of the window,0,14,step 128
+har70plus,513,segments,recording gap > 40 ms (windows never cross it),0,0,20 gaps
+har70plus,513,windows_har70plus_test,run tail shorter than one window step,1359,0,step 128
+har70plus,513,windows_har70plus_test,no label covers > 50% of the window,0,14,step 128
+har70plus,514,segments,recording gap > 40 ms (windows never cross it),0,0,14 gaps
+har70plus,514,windows_har70plus_test,run tail shorter than one window step,1030,0,step 128
+har70plus,514,windows_har70plus_test,no label covers > 50% of the window,0,4,step 128
+har70plus,515,segments,recording gap > 40 ms (windows never cross it),0,0,16 gaps
+har70plus,515,segments,gap-free shared-label run shorter than 128 samples,82,0,
+har70plus,515,windows_har70plus_test,run tail shorter than one window step,1115,0,step 128
+har70plus,515,windows_har70plus_test,no label covers > 50% of the window,0,6,step 128
+har70plus,516,segments,recording gap > 40 ms (windows never cross it),0,0,16 gaps
+har70plus,516,windows_har70plus_test,run tail shorter than one window step,1190,0,step 128
+har70plus,516,windows_har70plus_test,no label covers > 50% of the window,0,7,step 128
+har70plus,517,segments,recording gap > 40 ms (windows never cross it),0,0,20 gaps
+har70plus,517,segments,gap-free shared-label run shorter than 128 samples,58,0,
+har70plus,517,windows_har70plus_test,run tail shorter than one window step,1195,0,step 128
+har70plus,517,windows_har70plus_test,no label covers > 50% of the window,0,9,step 128
+har70plus,518,segments,recording gap > 40 ms (windows never cross it),0,0,8 gaps
+har70plus,518,windows_har70plus_test,run tail shorter than one window step,658,0,step 128
+har70plus,518,windows_har70plus_test,no label covers > 50% of the window,0,4,step 128

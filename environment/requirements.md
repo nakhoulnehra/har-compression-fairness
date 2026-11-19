@@ -1,6 +1,6 @@
 # Requirements
 
-Technical requirements for the project so far: data download and verification, and the LCI reproduction on Phishing ([../plan/LCI_IMPLEMENTATION.md](../plan/LCI_IMPLEMENTATION.md)).
+Technical requirements for the project so far: data download and verification, the LCI reproduction on Phishing ([../plan/LCI_IMPLEMENTATION.md](../plan/LCI_IMPLEMENTATION.md)), and the HAR data pipeline (windows, folds, normalisation; [../plan/HAR_IMPLEMENTATION.md](../plan/HAR_IMPLEMENTATION.md) Steps 1–2). No new packages were needed for the HAR pipeline.
 
 ## Python and packages
 - Python 3.11 (runs used 3.11.9, on both machines in [specs.md](specs.md)).
@@ -12,12 +12,12 @@ Technical requirements for the project so far: data download and verification, a
 | torch | 2.15.0 (CPU) | `lci/` (model, training, compression) |
 | shap | 0.51.0 | `lci/explain.py` (GradientExplainer) |
 | numpy | 2.4.6 | everything |
-| pandas | 3.1.1 | `lci/`, Phishing fetch in `data/download.py` |
+| pandas | 3.1.1 | `lci/`, `har/` (CSV loading, summaries), Phishing fetch in `data/download.py` |
 | scikit-learn | 1.9.1 | `lci/data.py` (scaling, split), metrics |
-| scipy | 1.17.1 | dependency of scikit-learn / shap |
+| scipy | 1.17.1 | `har/data.py` (`scipy.signal.decimate` for S006's 100 → 50 Hz); dependency of scikit-learn / shap |
 | ucimlrepo | 0.0.7 | Phishing fetch in `data/download.py` |
 | certifi | 2026.10.23 | CA-bundle fallback for the Phishing fetch in `data/download.py` (installed as a dependency of ucimlrepo) |
-| pytest | 9.2.0 | `lci/tests/` |
+| pytest | 9.2.0 | `lci/tests/`, `har/tests/` |
 
 The HARTH / HAR70+ part of `data/download.py` and `data/verify_checksums.py` use the standard library only.
 
@@ -52,6 +52,7 @@ pip install numpy==2.4.6 pandas==3.1.1 scikit-learn==1.9.1 scipy==1.17.1 shap==0
 ## Disk
 - About 1.4 GB free for `data/raw/` (355 MB of zip archives plus the extracted CSVs, plus 0.8 MB for Phishing).
 - About 1.1 GB for `.venv/` (CPU PyTorch and the packages above).
+- About 0.45 GB for `data/processed/har/` (git-ignored window cache written by `python -m har.build_windows`: 143,820 windows × 6 × 128 float32), and about 1 GB of RAM while it is built or loaded.
 
 ## Data integrity
 - All 44 files must match the SHA-256 hashes pinned in `data/checksums.sha256`: 2 archives, 40 subject CSVs (22 HARTH, 18 HAR70+) and the 2 Phishing CSVs (`phishing/features.csv`, `phishing/targets.csv`).
@@ -82,4 +83,7 @@ python data/download.py                    # 44/44 files OK (curl and certifi TL
 python data/verify_checksums.py            # 44/44 files OK
 python -m pytest lci/tests/test_lci.py     # 12/12 passed
 python -m lci.time_lci_phishing_components --seed 0   # 2026-11-19, machine speed comparison (prints only)
+python -m har.build_windows --force        # 2026-11-19, HAR windows, folds, normalisation -> data/processed/har/ (cache) + results/har-setup/
+python -m har.build_windows                # same, from the cache
+python -m pytest har/tests lci/tests       # 49/49 passed (37 HAR data-pipeline tests + 12 LCI tests)
 ```

@@ -52,3 +52,15 @@ time taken to finish: 194.6 s summed over stages (214.8 s wall clock incl. impor
 | Total | 194.6 s | 141.6 s | 1.37× |
 
 Nakhoul's machine is about 2× faster at training and 1.3× faster at SHAP on this workload. [plan/HAR_IMPLEMENTATION.md](../plan/HAR_IMPLEMENTATION.md) Section 5 uses these ratios to estimate HAR run times and to split folds between the machines.
+
+machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00)
+commands ran: python -m har.build_windows --force (2026-11-19, HAR data pipeline, plan Steps 1–2)
+time taken to finish: 28.6 s wall clock. Of that, 20.7 s is loading 40 CSVs (8.7M rows), resampling S006 and cutting 143,820 windows, and about 4 s is folds, normalisation statistics and the summary CSVs; the rest is imports.
+
+machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00)
+commands ran: python -m har.build_windows (from the window cache)
+time taken to finish: 4.3 s
+
+machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00)
+commands ran: python -m pytest har/tests lci/tests
+time taken to finish: 17.6 s wall clock (49/49 passed; pytest reports 16.6 s, mostly the real-data tests that re-derive every window of 6 subjects from the raw CSVs)

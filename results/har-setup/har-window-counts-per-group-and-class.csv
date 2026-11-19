@@ -1,0 +1,6 @@
+split,windowing,group,n_subjects,n_windows,n_mixed_kept,n_walking,n_shuffling,n_stairs_up,n_stairs_down,n_standing,n_sitting,n_lying
+harth_train,train_50pct_overlap,general,22,84169,8079,18213,3093,1243,1125,10855,43187,6453
+harth_test,test_no_overlap,general,22,42248,4061,9148,1563,623,562,5472,21629,3251
+har70plus_test,test_no_overlap,older,18,17403,2083,8401,381,38,39,3228,3739,1577
+har70plus_test,test_no_overlap,older_inferred_walking_aid,5,4479,515,1895,61,0,0,852,1145,526
+har70plus_test,test_no_overlap,older_inferred_no_walking_aid,13,12924,1568,6506,320,38,39,2376,2594,1051
