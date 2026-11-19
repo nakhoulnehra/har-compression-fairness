@@ -1,0 +1,25 @@
+=== final tinyhar fold 3 | machine nakhoul-3050 | device cuda NVIDIA GeForce RTX 3050 Ti Laptop GPU | torch 2.7.1+cu118 | started 2026-11-19T22:20:02+02:00
+    train subjects ['S006', 'S008', 'S009', 'S010', 'S012', 'S014', 'S015', 'S016', 'S018', 'S019', 'S025', 'S026', 'S027', 'S028', 'S029']
+    validation subjects ['S017', 'S022', 'S024']
+    test subjects ['S013', 'S020', 'S021', 'S023']
+    windows: train 54392, validation 6274, test 8679
+    tinyhar: 54,273 parameters; architecture {'filters': 28, 'n_conv': 4, 'kernel': 5, 'stride': 2, 'heads': 1, 'ff_mult': 2, 'dropout': 0.2, 'width': 1.0}
+    epoch  1/30  loss 0.6403  val F1 0.7801  acc 0.9111  *best*  4.1s  (max ETA 2.0 min)
+    epoch  2/30  loss 0.3103  val F1 0.7337  acc 0.8856  4.1s  (max ETA 1.9 min)
+    epoch  3/30  loss 0.2658  val F1 0.8102  acc 0.9251  *best*  4.0s  (max ETA 1.8 min)
+    epoch  4/30  loss 0.2457  val F1 0.8305  acc 0.9347  *best*  4.1s  (max ETA 1.8 min)
+    epoch  5/30  loss 0.2253  val F1 0.8186  acc 0.9267  4.1s  (max ETA 1.7 min)
+    epoch  6/30  loss 0.2159  val F1 0.8234  acc 0.9297  4.1s  (max ETA 1.6 min)
+    epoch  7/30  loss 0.2087  val F1 0.8262  acc 0.9342  4.7s  (max ETA 1.8 min)
+    epoch  8/30  loss 0.1985  val F1 0.8199  acc 0.9313  4.7s  (max ETA 1.7 min)
+    epoch  9/30  loss 0.1902  val F1 0.8121  acc 0.9278  4.6s  (max ETA 1.6 min)
+    early stop: no improvement for 5 epochs
+    TEST (held-out HARTH): macro-F1 pooled 0.7758, accuracy 0.9168, non-stair F1 per subject 0.8256, stairs F1 pooled 0.5684
+    done in 39.2s; val F1 0.8305 (best epoch 4)
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-tinyhar-fold3-nakhoul-3050.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-tinyhar-fold3-nakhoul-3050-config.json
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-tinyhar-fold3-nakhoul-3050-history.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-tinyhar-fold3-nakhoul-3050-per-subject.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\final\har-final-tinyhar-fold3-nakhoul-3050-confusion.csv
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-tinyhar-fold3-nakhoul-3050.pt
+    saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-model-selection\logs\final-tinyhar-fold3-nakhoul-3050.log

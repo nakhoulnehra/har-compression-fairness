@@ -10,6 +10,9 @@ data/processed/
 __pycache__/
 *.pyc
 
+# Smoke-run outputs (pipeline checks only, rebuilt in under a minute) - never commit
+results/har-model-selection-smoke/
+
 # Local virtual environment - recreate with pip, never commit
 .venv/
 

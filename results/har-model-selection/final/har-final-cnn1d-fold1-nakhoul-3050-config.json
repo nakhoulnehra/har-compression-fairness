@@ -1,0 +1,97 @@
+{
+ "settings": {
+  "stage": "final",
+  "model": "cnn1d",
+  "setting_id": null,
+  "hyperparameters": {
+   "lr": 0.0003,
+   "width": 0.5
+  },
+  "architecture": {
+   "filters": 64,
+   "kernels": [
+    6,
+    12,
+    12,
+    32
+   ],
+   "fc_units": 256,
+   "n_fc": 2,
+   "dropout": 0.4,
+   "width": 0.5
+  },
+  "train_config": {
+   "lr": 0.0003,
+   "weight_decay": 0.0001,
+   "batch_size": 256,
+   "max_epochs": 30,
+   "patience": 5,
+   "label_smoothing": 0.0
+  },
+  "seed": 0,
+  "fold": 1,
+  "smoke": false,
+  "smoke_sizes": null,
+  "train_subjects": [
+   "S006",
+   "S008",
+   "S009",
+   "S010",
+   "S012",
+   "S013",
+   "S017",
+   "S019",
+   "S020",
+   "S021",
+   "S022",
+   "S023",
+   "S025",
+   "S026",
+   "S027"
+  ],
+  "validation_subjects": [
+   "S014",
+   "S018",
+   "S024"
+  ],
+  "test_subjects": [
+   "S015",
+   "S016",
+   "S028",
+   "S029"
+  ],
+  "train_windows": "harth_train (50% overlap)",
+  "validation_windows": "harth_test (no overlap)",
+  "test_windows": "harth_test (no overlap)",
+  "window_cache_key": "1a6f4c14de9a7d67969a2afdb74bb3045e1e8899555b1d623926e6e6a7588139",
+  "selected_from_tuning_f1": 0.7609250652221433
+ },
+ "settings_hash": "8c3bdd54410c8f40",
+ "command_line": [
+  "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\har\\run_model_selection.py",
+  "--stage",
+  "all",
+  "--device",
+  "cuda",
+  "--models",
+  "cnn1d",
+  "tinyhar",
+  "--machine-name",
+  "nakhoul-3050"
+ ],
+ "machine_name": "nakhoul-3050",
+ "device": {
+  "device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "cuda_version": "11.8",
+  "torch_version": "2.7.1+cu118",
+  "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+  "torch_threads": 8,
+  "python": "3.11.9",
+  "os": "Windows 10"
+ },
+ "git_commit": "473b75d4d242cec2326d77e2bd3bbd998d2005aa",
+ "git_dirty": false,
+ "code_sha256": "64b39ffc8d315647a042b698b28e1c58f361555eb425fbb919ab7bae5a6f48a9",
+ "started_at": "2026-11-19T22:10:49+02:00"
+}
