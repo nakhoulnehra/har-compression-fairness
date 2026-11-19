@@ -1,6 +1,10 @@
 # Device Specs
 
-The machine all experiments and timings in this repo are run on. Recorded 2026-11-15. Per-command timings: [time.md](time.md).
+The machines the experiments and timings in this repo are run on. Every entry in [time.md](time.md) names the machine it was measured on. All runs are CPU only; neither machine's GPU is used.
+
+## Nakhoul's machine
+
+Recorded 2026-11-15. Ran the LCI Phishing reproduction in `results/lci-phishing-reproduction/`.
 
 | Component | Spec |
 |---|---|
@@ -11,3 +15,17 @@ The machine all experiments and timings in this repo are run on. Recorded 2026-1
 | GPU (integrated) | AMD Radeon Graphics |
 | Storage | 512 GB NVMe SSD (WD PC SN530) |
 | OS | Windows 11 Home, 64-bit, build 26200 |
+
+## Aya's machine
+
+Recorded 2026-11-18.
+
+| Component | Spec |
+|---|---|
+| Model | Lenovo ThinkPad E14 Gen 5 (21JLS20R00) laptop |
+| CPU | Intel Core i7-1355U (13th gen), 10 cores (2 P + 8 E) / 12 threads, 1.7 GHz base |
+| RAM | 16 GB (15.7 GB usable) |
+| GPU (discrete) | NVIDIA GeForce MX550, 2 GB VRAM, driver 595.95, CUDA 13.2 (not used) |
+| GPU (integrated) | Intel Iris Xe Graphics |
+| Storage | 512 GB NVMe SSD (WD PC SN740) |
+| OS | Windows 11 Home Single Language, 64-bit, build 26200 |

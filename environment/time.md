@@ -1,8 +1,8 @@
 # Time
 
-Wall-clock time of each command, run from the repo root on the machine in [specs.md](specs.md).
+Wall-clock time of the important commands, run from the repo root. Each entry names the machine it ran on; the machines are described in [specs.md](specs.md). All runs are CPU only.
 
-This should only include the important time analysis that could be needed for paper submission.
+## Nakhoul's machine (Acer Swift X, Ryzen 7 5800U)
 
 machine model: Acer Swift X (SFX14-41G)
 commands ran: python -m lci.run_lci_phishing --seeds 0 1 2 3 4 --shap_seed 0
@@ -23,3 +23,32 @@ Per-stage breakdown from that command (one seed, CPU only, SHAP cache bypassed):
 | LCI computation, 6 comparisons | 0.2 s | 0.1% |
 
 The full run makes 8 SHAP calls per seed (7 here, plus the SHAP-noise call), so SHAP accounts for about 150 of the 162 s per seed.
+
+## Aya's machine (Lenovo ThinkPad E14 Gen 5, Core i7-1355U)
+
+Measured 2026-11-18, fresh setup (empty `data/raw/`).
+
+machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00)
+commands ran: python data/download.py
+time taken to finish: 158.1 s (2 min 38 s), from scratch: HARTH zip 296 MB in about 126 s and HAR70+ zip 42 MB in about 19 s (both through the curl fallback), plus the Phishing fetch, extraction and verification. Download time depends mostly on the network, not on the machine.
+
+machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00)
+commands ran: python data/verify_checksums.py
+time taken to finish: 1.4 s (44/44 files OK)
+
+machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00)
+commands ran: python -m pytest lci/tests/test_lci.py
+time taken to finish: 0.9 s (12/12 passed; pytest reports 0.19 s for the tests themselves)
+
+machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00)
+commands ran: python -m lci.time_lci_phishing_components --seed 0 (2026-11-19, run to compare the two machines)
+time taken to finish: 194.6 s summed over stages (214.8 s wall clock incl. imports)
+
+| Stage | Aya's machine | Nakhoul's machine | Ratio |
+|---|---|---|---|
+| Teacher training (30 epochs) | 17.1 s | 8.1 s | 2.1× |
+| Compression, all 6 methods | 3.1 s | 1.9 s | 1.6× |
+| SHAP GradientExplainer, 7 models | 174.1 s (10.1–30.5 s each) | 131.4 s | 1.32× |
+| Total | 194.6 s | 141.6 s | 1.37× |
+
+Nakhoul's machine is about 2× faster at training and 1.3× faster at SHAP on this workload. [plan/HAR_IMPLEMENTATION.md](../plan/HAR_IMPLEMENTATION.md) Section 5 uses these ratios to estimate HAR run times and to split folds between the machines.

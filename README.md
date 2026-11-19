@@ -7,8 +7,8 @@
 | [data/](data/) | Download and checksum scripts; raw data lands in `data/raw/` (git-ignored). |
 | [lci/](lci/) | Everything LCI: code, experiment runner and tests. |
 | [results/](results/) | Every result file, one subfolder per group of related runs. [results/README.md](results/README.md) summarizes the key numbers of each file. |
-| [environment/](environment/) | [specs.md](environment/specs.md) (machine), [requirements.md](environment/requirements.md) (setup, packages, commands run), [time.md](environment/time.md) (per-command timings). |
-| [plan/](plan/) | [LCI_IMPLEMENTATION.md](plan/LCI_IMPLEMENTATION.md): spec for the LCI implementation and validation. |
+| [environment/](environment/) | [specs.md](environment/specs.md) (machines), [requirements.md](environment/requirements.md) (setup, packages, commands run), [requirements.txt](environment/requirements.txt) (full pinned `pip freeze`), [time.md](environment/time.md) (per-command timings, per machine). |
+| [plan/](plan/) | [LCI_IMPLEMENTATION.md](plan/LCI_IMPLEMENTATION.md): spec for the LCI implementation and validation. [HAR_IMPLEMENTATION.md](plan/HAR_IMPLEMENTATION.md): plan for the HAR part (HARTH → HAR70+, compression grid, FA-LCI). |
 
 Setup (Python 3.11, CPU-only PyTorch, pinned packages): see [environment/requirements.md](environment/requirements.md).
 
