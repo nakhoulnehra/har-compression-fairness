@@ -112,6 +112,8 @@ commands ran / time taken to finish:
 - `python -m har.run_sanity_walking_aid --smoke`: 3.5 s
 - `python -m har.run_sanity_walking_aid` (Step 5, evaluation only): **30.0 s** wall clock; 28.6 s for the rerun with the merged Ustad 4-class scoring (5 class sets) and `har/tests/test_stats.py` 7/7 in 12.3 s. The 5 frozen TinyHAR fold models predict 42,248 HARTH test windows (each subject once) and 5 × 17,403 HAR70+ windows on CPU; the rest is metrics and 24 bootstraps of 10,000 resamples.
 - Step 6 code (2026-11-20, baseline parts of `har/compression.py` + `har/time_har_components.py`): `python -m pytest har/tests lci/tests` **76.7 s** wall clock (139/139 passed; 13 new in `test_compression.py` and `test_attributions.py`); `python -m har.time_har_components --fold 0 --smoke --machine-name Aya`: **28.5 s** wall clock (19.6 s inside the script). Smoke sizes only, so no timing numbers from it.
+- After the two GPU fixes (cuDNN off in the attribution gradients, no `CUDA_VISIBLE_DEVICES` change at import): `python -m pytest har/tests lci/tests` **101.9 s** wall clock (141/141 passed; 2 new in `test_time_har_components.py`, each a fresh interpreter); `--smoke` again **51.8 s** wall clock (31.0 s inside the script), run straight after the test suite. The smoke components were 1.4–2.6× slower than in the first smoke run; tiny sizes and machine load, not a code effect (cuDNN flags do nothing on CPU).
+- After the third GPU fix (cuDNN off in `snip_scores_from_batches` too): `python -m pytest har/tests lci/tests` **169.9 s** wall clock (141/141 passed); `--smoke` **42.1 s** wall clock (25.7 s inside the script).
 
 ### Step 6 timing benchmark (GPU runs done: nakhoul-3050, uni-2080; CPU runs pending)
 

@@ -1,5 +1,9 @@
 # Status
-Current step: 6: timing benchmark of the frozen model on both machines. Code written and smoke-tested on Aya's CPU; the real runs are not done.
+Current step: 7: implement XGP + noise floor (Step 8) + fold-0 pilot
+Done: 6: component timing on both GPUs (fold 0): nakhoul-3050 3.2 h/fold, uni-2080 3.7 h/fold (ours estimated = Park's cost)
+Fold split for Steps 8–9: nakhoul-3050 folds 0, 1, 3; uni-2080 folds 2, 3, 4 (fold 3 on both = cross-machine check)
+GPU notes: attribution/SHAP/SNIP gradients run with cuDNN off and math attention (LSTM backward in eval mode)
+Next: after the pilot passes on validation, run noise floor + compression grid on both GPUs
 
 Done: 1 setup, 2 plan, 3 data pipeline + explain windows + backgrounds; 4e Nakhoul GPU smoke run; 4f all 5 candidates trained (tuning + folds 0–4) in results/har-model-selection/: CNN1D + TinyHAR (Nakhoul GPU, 21.6 min), XGBoost (Aya CPU, 8.7 min), HART + DeepConvLSTM (Nakhoul GPU, 83.2 min)
 4: TinyHAR frozen (81.98 macro-F1, 54K params, 0.17 s SHAP/window).
@@ -22,7 +26,7 @@ Then: times into environment/time.md and results/README.md. If the projected Ste
 - Step 6: Nakhoul's machine is timed on both CPU and GPU, because whether Steps 8–9 run on its GPU is still open (it changes the fold split, and Steps 7/9b then compare CPU with GPU).
 - Step 6: our method (keep-score, L_cons, gate) is NOT implemented yet; it will be designed and reviewed separately before Step 9. In the timing, its cost is "estimated = Park's cost".
 - Step 6: `eg_attributions` runs attention on PyTorch's math SDPA kernel (the fused kernels have no double backward; Park's loss failed on TinyHAR without it). In Park's fine-tuning step, CE uses train mode and the EG term eval mode (BN running stats not updated by interpolated inputs); Step 9's finetune must use the same convention.
-- Step 6 GPU fixes: (1) `har/run_sanity_walking_aid.py` no longer sets `CUDA_VISIBLE_DEVICES=""` at import (it hid the GPU from `time_har_components`); `har/tests/test_time_har_components.py` checks the import leaves it unchanged. (2) `eg_attributions` and `shap_target_class` run with `torch.backends.cudnn.flags(enabled=False)`: cuDNN's RNN backward only runs in training mode, so gradients through TinyHAR's LSTM in eval mode failed on CUDA. **Our method's loss (keep-score I(w), L_cons) must do the same** (go through `eg_attributions`, or wrap its own gradients in both `sdpa_kernel(SDPBackend.MATH)` and `cudnn.flags(enabled=False)`). No effect on CPU.
+- Step 6 GPU fixes: (1) `har/run_sanity_walking_aid.py` no longer sets `CUDA_VISIBLE_DEVICES=""` at import (it hid the GPU from `time_har_components`); `har/tests/test_time_har_components.py` checks the import leaves it unchanged. (2) `eg_attributions`, `shap_target_class` and `snip_scores_from_batches` (every gradient taken with the model in eval mode) run with `torch.backends.cudnn.flags(enabled=False)`: cuDNN's RNN backward only runs in training mode, so gradients through TinyHAR's LSTM in eval mode failed on CUDA. **Our method's loss (keep-score I(w), L_cons) must do the same** (go through `eg_attributions`, or wrap its own gradients in both `sdpa_kernel(SDPBackend.MATH)` and `cudnn.flags(enabled=False)`). No effect on CPU.
 
 ## Open issues
 - On Windows, pandas writes CRLF line endings, so after `har.build_windows` git shows results/har-setup/ as modified even though the content is identical (`git diff --ignore-cr-at-eol` is empty). Restore with `git restore results/har-setup/`, or fix it with `lineterminator="\n"` or a `.gitattributes`.
