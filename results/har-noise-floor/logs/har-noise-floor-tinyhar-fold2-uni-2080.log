@@ -1,0 +1,95 @@
+=== noise floor fold 2 | machine uni-2080 | device cuda GeForce RTX 2080 | torch 2.7.1+cu118 | started 2026-11-20T23:29:58+02:00 | C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\har\run_noise_floor.py --folds 2 4 --device cuda --machine-name uni-2080
+  train 52771 windows (14 subjects), inner val 7389 (['S013', 'S019', 'S022']), test general ['S006', 'S010', 'S012', 'S024', 'S027'] + 18 HAR70+
+  seed 0: C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-tinyhar-fold2-nakhoul-3050.pt
+  seed 1: training (<= 30 epochs, patience 5)
+    epoch  1/30  loss 0.6874  val F1 0.6475  acc 0.8372  *best*  3.3s  (max ETA 1.6 min)
+    epoch  2/30  loss 0.3625  val F1 0.8168  acc 0.9078  *best*  1.8s  (max ETA 0.8 min)
+    epoch  3/30  loss 0.3061  val F1 0.8137  acc 0.9122  1.8s  (max ETA 0.8 min)
+    epoch  4/30  loss 0.2799  val F1 0.8248  acc 0.9092  *best*  1.8s  (max ETA 0.8 min)
+    epoch  5/30  loss 0.2683  val F1 0.8520  acc 0.9168  *best*  1.8s  (max ETA 0.7 min)
+    epoch  6/30  loss 0.2680  val F1 0.8748  acc 0.9268  *best*  1.7s  (max ETA 0.7 min)
+    epoch  7/30  loss 0.2356  val F1 0.8653  acc 0.9235  1.8s  (max ETA 0.7 min)
+    epoch  8/30  loss 0.2255  val F1 0.8755  acc 0.9337  *best*  1.8s  (max ETA 0.6 min)
+    epoch  9/30  loss 0.2150  val F1 0.8833  acc 0.9319  *best*  1.8s  (max ETA 0.6 min)
+    epoch 10/30  loss 0.2099  val F1 0.8732  acc 0.9338  1.8s  (max ETA 0.6 min)
+    epoch 11/30  loss 0.2016  val F1 0.8713  acc 0.9379  1.8s  (max ETA 0.6 min)
+    epoch 12/30  loss 0.1968  val F1 0.8852  acc 0.9327  *best*  1.8s  (max ETA 0.5 min)
+    epoch 13/30  loss 0.1909  val F1 0.8756  acc 0.9281  1.8s  (max ETA 0.5 min)
+    epoch 14/30  loss 0.1849  val F1 0.8868  acc 0.9353  *best*  1.8s  (max ETA 0.5 min)
+    epoch 15/30  loss 0.1727  val F1 0.8825  acc 0.9375  1.8s  (max ETA 0.4 min)
+    epoch 16/30  loss 0.1814  val F1 0.8873  acc 0.9409  *best*  1.8s  (max ETA 0.4 min)
+    epoch 17/30  loss 0.1674  val F1 0.8649  acc 0.9291  1.8s  (max ETA 0.4 min)
+    epoch 18/30  loss 0.1613  val F1 0.8863  acc 0.9383  1.7s  (max ETA 0.3 min)
+    epoch 19/30  loss 0.1525  val F1 0.8723  acc 0.9364  1.8s  (max ETA 0.3 min)
+    epoch 20/30  loss 0.1478  val F1 0.8739  acc 0.9356  1.8s  (max ETA 0.3 min)
+    epoch 21/30  loss 0.1452  val F1 0.8758  acc 0.9391  1.8s  (max ETA 0.3 min)
+    early stop: no improvement for 5 epochs
+  seed 2: training (<= 30 epochs, patience 5)
+    epoch  1/30  loss 0.6939  val F1 0.7744  acc 0.9031  *best*  1.8s  (max ETA 0.9 min)
+    epoch  2/30  loss 0.3694  val F1 0.8556  acc 0.9123  *best*  1.8s  (max ETA 0.8 min)
+    epoch  3/30  loss 0.3076  val F1 0.8422  acc 0.9235  1.8s  (max ETA 0.8 min)
+    epoch  4/30  loss 0.2753  val F1 0.8395  acc 0.9227  1.8s  (max ETA 0.8 min)
+    epoch  5/30  loss 0.2649  val F1 0.8607  acc 0.9264  *best*  1.8s  (max ETA 0.7 min)
+    epoch  6/30  loss 0.2523  val F1 0.8819  acc 0.9284  *best*  1.8s  (max ETA 0.7 min)
+    epoch  7/30  loss 0.2376  val F1 0.8783  acc 0.9367  1.8s  (max ETA 0.7 min)
+    epoch  8/30  loss 0.2316  val F1 0.8605  acc 0.9260  1.8s  (max ETA 0.6 min)
+    epoch  9/30  loss 0.2220  val F1 0.8566  acc 0.9325  1.8s  (max ETA 0.6 min)
+    epoch 10/30  loss 0.2082  val F1 0.8884  acc 0.9375  *best*  1.8s  (max ETA 0.6 min)
+    epoch 11/30  loss 0.1957  val F1 0.8789  acc 0.9327  1.8s  (max ETA 0.6 min)
+    epoch 12/30  loss 0.1886  val F1 0.8575  acc 0.9271  1.8s  (max ETA 0.5 min)
+    epoch 13/30  loss 0.1877  val F1 0.8535  acc 0.9271  1.8s  (max ETA 0.5 min)
+    epoch 14/30  loss 0.1806  val F1 0.8721  acc 0.9318  1.8s  (max ETA 0.5 min)
+    epoch 15/30  loss 0.1761  val F1 0.8745  acc 0.9379  1.8s  (max ETA 0.4 min)
+    early stop: no improvement for 5 epochs
+  seed 3: training (<= 30 epochs, patience 5)
+    epoch  1/30  loss 0.6872  val F1 0.7728  acc 0.9040  *best*  1.8s  (max ETA 0.9 min)
+    epoch  2/30  loss 0.3620  val F1 0.7579  acc 0.8873  1.8s  (max ETA 0.8 min)
+    epoch  3/30  loss 0.3123  val F1 0.8224  acc 0.9234  *best*  1.8s  (max ETA 0.8 min)
+    epoch  4/30  loss 0.2839  val F1 0.8437  acc 0.9202  *best*  1.8s  (max ETA 0.8 min)
+    epoch  5/30  loss 0.2676  val F1 0.8712  acc 0.9314  *best*  1.8s  (max ETA 0.7 min)
+    epoch  6/30  loss 0.2527  val F1 0.8731  acc 0.9325  *best*  1.8s  (max ETA 0.7 min)
+    epoch  7/30  loss 0.2456  val F1 0.8716  acc 0.9241  1.8s  (max ETA 0.7 min)
+    epoch  8/30  loss 0.2319  val F1 0.8757  acc 0.9348  *best*  1.8s  (max ETA 0.7 min)
+    epoch  9/30  loss 0.2221  val F1 0.8626  acc 0.9307  1.8s  (max ETA 0.6 min)
+    epoch 10/30  loss 0.2190  val F1 0.8815  acc 0.9303  *best*  1.8s  (max ETA 0.6 min)
+    epoch 11/30  loss 0.2050  val F1 0.9020  acc 0.9442  *best*  1.8s  (max ETA 0.6 min)
+    epoch 12/30  loss 0.2077  val F1 0.8545  acc 0.9281  1.8s  (max ETA 0.5 min)
+    epoch 13/30  loss 0.1960  val F1 0.8850  acc 0.9392  1.8s  (max ETA 0.5 min)
+    epoch 14/30  loss 0.1896  val F1 0.8822  acc 0.9409  1.8s  (max ETA 0.5 min)
+    epoch 15/30  loss 0.1816  val F1 0.8805  acc 0.9318  1.8s  (max ETA 0.4 min)
+    epoch 16/30  loss 0.1727  val F1 0.8723  acc 0.9344  1.8s  (max ETA 0.4 min)
+    early stop: no improvement for 5 epochs
+  SHAP inner_val: model seed 0, SHAP seed 0, 90 windows, nsamples 200
+  SHAP inner_val: model seed 0, SHAP seed 1, 90 windows, nsamples 200
+  SHAP inner_val: model seed 0, SHAP seed 2, 90 windows, nsamples 200
+  SHAP inner_val: model seed 1, SHAP seed 0, 90 windows, nsamples 200
+  SHAP inner_val: model seed 2, SHAP seed 0, 90 windows, nsamples 200
+  SHAP inner_val: model seed 3, SHAP seed 0, 90 windows, nsamples 200
+  SHAP general: model seed 0, SHAP seed 0, 150 windows, nsamples 200
+  SHAP general: model seed 0, SHAP seed 1, 150 windows, nsamples 200
+  SHAP general: model seed 0, SHAP seed 2, 150 windows, nsamples 200
+  SHAP general: model seed 1, SHAP seed 0, 150 windows, nsamples 200
+  SHAP general: model seed 2, SHAP seed 0, 150 windows, nsamples 200
+  SHAP general: model seed 3, SHAP seed 0, 150 windows, nsamples 200
+  SHAP older: model seed 0, SHAP seed 0, 540 windows, nsamples 200
+  SHAP older: model seed 0, SHAP seed 1, 540 windows, nsamples 200
+  SHAP older: model seed 0, SHAP seed 2, 540 windows, nsamples 200
+  SHAP older: model seed 1, SHAP seed 0, 540 windows, nsamples 200
+  SHAP older: model seed 2, SHAP seed 0, 540 windows, nsamples 200
+  SHAP older: model seed 3, SHAP seed 0, 540 windows, nsamples 200
+
+    group   noise               values     mean      min      max  shap_above_retrain
+inner_val retrain 0.6295;0.6479;0.7785 0.685307 0.629536 0.778516                True
+inner_val    shap        0.9447;0.9430 0.943854 0.942997 0.944711                True
+  general retrain 0.6833;0.6325;0.7355 0.683783 0.632499 0.735508                True
+  general    shap        0.9401;0.9017 0.920881 0.901658 0.940103                True
+    older retrain 0.6377;0.6623;0.7596 0.686537 0.637729 0.759609                True
+    older    shap        0.9243;0.9299 0.927084 0.924302 0.929866                True
+
+fold 2: tau_k = 0.6295 (retrain seed 1; Tulla's tau = 0.85); training 96.6 s, SHAP 621.8 s, wall 720.4 s
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-noise-floor\har-noise-floor-tinyhar-fold2-uni-2080-per-subject-lci.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-noise-floor\har-noise-floor-tinyhar-fold2-uni-2080-group-summary.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-noise-floor\har-noise-floor-tinyhar-fold2-uni-2080-tau.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-noise-floor\har-noise-floor-tinyhar-fold2-uni-2080-retrained-models.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-noise-floor\har-noise-floor-tinyhar-fold2-uni-2080-config.json
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-noise-floor\logs\har-noise-floor-tinyhar-fold2-uni-2080.log

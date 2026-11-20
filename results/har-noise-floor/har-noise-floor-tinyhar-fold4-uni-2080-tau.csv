@@ -1,0 +1,2 @@
+fold,tau_k,tau_seed,lci_val_retrain_seed1,lci_val_retrain_seed2,lci_val_retrain_seed3,inner_val_subjects,tulla_tau,tau_k_below_tulla,shap_above_retrain_inner_val,shap_above_retrain_general,shap_above_retrain_older,nsamples,smoke,machine_name,device
+4,0.6125386127035136,3,0.7316938892342071,0.6881216918450176,0.6125386127035136,S012;S016;S024,0.85,True,True,True,True,200,False,uni-2080,cuda
