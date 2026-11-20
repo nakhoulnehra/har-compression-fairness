@@ -1,0 +1,20 @@
+har.time_model_selection_cpu | C:\har-compression-fairness\har\time_model_selection_cpu.py | machine Aya | CPU Intel64 Family 6 Model 186 Stepping 3, GenuineIntel | torch 2.7.1+cpu | threads 10
+
+[cnn1d] setting lr3e-4-width0.5; weights: C:\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-cnn1d-fold0-nakhoul-3050.pt
+  params 316167, latency 1.742 ms, throughput 0.1866 ms/window, SHAP 0.2949955649999902 s/window
+
+[tinyhar] setting lr1e-3-width1; weights: C:\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-tinyhar-fold0-nakhoul-3050.pt
+  params 54273, latency 2.050 ms, throughput 0.1702 ms/window, SHAP 0.1748681879998185 s/window
+
+[deepconvlstm] setting lr3e-4-width1; weights: C:\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-deepconvlstm-fold0-nakhoul-3050.pt
+  params 458183, latency 10.795 ms, throughput 1.6594 ms/window, SHAP 1.196271984000923 s/window
+
+[hart] setting lr1e-3-width0.5; weights: C:\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-hart-fold0-nakhoul-3050.pt
+  params 355379, latency 6.883 ms, throughput 0.1120 ms/window, SHAP 0.3354333139990922 s/window
+
+[xgboost] setting depth3-eta0.1; weights: C:\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-xgboost-fold0-aya-laptop.ubj
+  params None, latency 3.913 ms, throughput 0.3773 ms/window, SHAP None s/window
+
+saved C:\har-compression-fairness\results\har-model-selection\timing\har-cpu-inference-and-shap-time-Aya.csv
+saved C:\har-compression-fairness\results\har-model-selection\timing\har-cpu-inference-and-shap-time-Aya-config.json
+saved C:\har-compression-fairness\results\har-model-selection\logs\timing-cpu-Aya.log

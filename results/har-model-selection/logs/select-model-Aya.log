@@ -1,0 +1,20 @@
+har.select_model | C:\har-compression-fairness\har\select_model.py
+       model      setting_id  macro_f1_pooled7  non_stair_macro_f1_subject_mean  accuracy_pooled  stairs_up_f1_pooled  stairs_down_f1_pooled  n_params  latency_bs1_ms_median  shap_s_per_window
+       cnn1d lr3e-4-width0.5          0.795045                         0.784698         0.907617             0.775837               0.670123  316167.0                1.74205           0.294996
+     tinyhar   lr1e-3-width1          0.819809                         0.821901         0.918884             0.790801               0.699438   54273.0                2.05030           0.174868
+deepconvlstm   lr3e-4-width1          0.772292                         0.789672         0.902670             0.621782               0.645461  458183.0               10.79450           1.196272
+        hart lr1e-3-width0.5          0.792202                         0.795175         0.910978             0.749455               0.597887  355379.0                6.88295           0.335433
+     xgboost   depth3-eta0.1          0.828637                         0.837444         0.932967             0.754775               0.732394       NaN                3.91295                NaN
+saved C:\har-compression-fairness\results\har-model-selection\har-model-selection-tuning.csv
+saved C:\har-compression-fairness\results\har-model-selection\har-model-selection-final-per-fold.csv
+saved C:\har-compression-fairness\results\har-model-selection\har-model-selection-per-subject-metrics.csv
+saved C:\har-compression-fairness\results\har-model-selection\har-model-selection-summary.csv
+
+selection rule:
+  F1 (points): cnn1d 79.50, tinyhar 81.98, deepconvlstm 77.23, hart 79.22
+  step 1: best F1 81.98 (tinyhar)
+  step 2: eligible (F1 >= 79.98): ['tinyhar']
+  step 3: CPU SHAP s/window tinyhar 0.1749 -> lowest: tinyhar
+CHOSEN: tinyhar
+saved C:\har-compression-fairness\results\har-model-selection\har-frozen-model-config.json
+saved C:\har-compression-fairness\results\har-model-selection\logs\select-model-Aya.log
