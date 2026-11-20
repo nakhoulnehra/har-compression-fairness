@@ -381,13 +381,27 @@ def load_harth_windows() -> dict[str, Windows]:
     """Only the HARTH splits of the window cache, for training-side steps (model choice). HAR70+
     arrays are never read and no raw CSV is opened. Raises if the cache is missing or out of date:
     build it first with `python -m har.build_windows`."""
+    _check_cache()
+    return _load_cache(HARTH_SPLITS)
+
+
+TEST_ONLY_SPLITS = ("harth_test", "har70plus_test")
+
+
+def load_test_windows() -> dict[str, Windows]:
+    """The two non-overlapping test splits (HARTH test + HAR70+), for evaluation-only steps after
+    the model freeze (Step 5 onwards). Never pass these to training code (require_harth guards it)."""
+    _check_cache()
+    return _load_cache(TEST_ONLY_SPLITS)
+
+
+def _check_cache() -> None:
     if not (WINDOW_CACHE_NPZ.exists() and WINDOW_CACHE_META.exists()):
         raise FileNotFoundError(f"window cache {WINDOW_CACHE_NPZ} missing; run `python -m har.build_windows`")
     meta = json.loads(WINDOW_CACHE_META.read_text(encoding="utf-8"))
     if meta.get("key") != _cache_key():
         raise RuntimeError("window cache is out of date (raw checksums or windowing config changed); "
                            "run `python -m har.build_windows --force`")
-    return _load_cache(HARTH_SPLITS)
 
 
 def cache_key() -> str:

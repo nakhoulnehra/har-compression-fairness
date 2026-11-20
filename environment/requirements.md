@@ -173,3 +173,15 @@ python -m har.run_model_selection --stage all --device cpu --models xgboost --ma
 ```
 
 The full model choice (tuning + 5 folds) is run on GPU machines; its exact commands are in [../plan/HAR_IMPLEMENTATION.md](../plan/HAR_IMPLEMENTATION.md) Step 4.
+
+Step 5, baseline gap check on HAR70+ (2026-11-20, Aya's laptop, torch 2.7.1+cpu; first use of HAR70+). Needs the 5 TinyHAR final checkpoints `data/processed/har/checkpoints/har-model-selection/har-final-tinyhar-fold{0..4}-nakhoul-3050.pt` (copied from Nakhoul's GPU machine). No new packages: `har/stats.py` uses scipy's `mannwhitneyu`.
+
+```bash
+python -m pytest har/tests                  # 113/113 passed (incl. 6 new tests in har/tests/test_stats.py)
+python -m har.run_sanity_walking_aid --smoke   # 300 windows per split, 200 resamples (output folder deleted afterwards)
+python -m har.run_sanity_walking_aid           # real run, CPU, 30 s -> results/har-baseline-gap/
+# rerun the same day after making Ustad's merged 4-class scoring primary [Ustad Sec 2.4]:
+python -m pytest har/tests/test_stats.py      # 7/7 passed
+python -m har.run_sanity_walking_aid --smoke  # output folder deleted afterwards
+python -m har.run_sanity_walking_aid          # CPU, 28.6 s -> results/har-baseline-gap/ (all files rewritten)
+```

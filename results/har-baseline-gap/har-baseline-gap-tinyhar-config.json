@@ -1,0 +1,150 @@
+{
+ "command_line": [
+  "c:\\har-compression-fairness\\har\\run_sanity_walking_aid.py"
+ ],
+ "smoke": false,
+ "frozen_config": "C:\\har-compression-fairness\\results\\har-model-selection\\har-frozen-model-config.json",
+ "frozen_setting": "lr1e-3-width1",
+ "checkpoints": {
+  "0": "C:\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold0-nakhoul-3050.pt",
+  "1": "C:\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold1-nakhoul-3050.pt",
+  "2": "C:\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold2-nakhoul-3050.pt",
+  "3": "C:\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold3-nakhoul-3050.pt",
+  "4": "C:\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold4-nakhoul-3050.pt"
+ },
+ "class_sets": {
+  "all": {
+   "true_classes_kept": [
+    "walking",
+    "shuffling",
+    "stairs_up",
+    "stairs_down",
+    "standing",
+    "sitting",
+    "lying"
+   ],
+   "f1_classes": [
+    "walking",
+    "shuffling",
+    "standing",
+    "sitting",
+    "lying"
+   ],
+   "argmax_over": null,
+   "merge_labels_and_predictions": null
+  },
+  "non_stair": {
+   "true_classes_kept": [
+    "walking",
+    "shuffling",
+    "standing",
+    "sitting",
+    "lying"
+   ],
+   "f1_classes": [
+    "walking",
+    "shuffling",
+    "standing",
+    "sitting",
+    "lying"
+   ],
+   "argmax_over": null,
+   "merge_labels_and_predictions": null
+  },
+  "ustad4": {
+   "true_classes_kept": [
+    "walking",
+    "shuffling",
+    "stairs_up",
+    "stairs_down",
+    "standing",
+    "sitting",
+    "lying"
+   ],
+   "f1_classes": [
+    "walking",
+    "standing",
+    "sitting",
+    "lying"
+   ],
+   "argmax_over": null,
+   "merge_labels_and_predictions": {
+    "shuffling": "standing",
+    "stairs_up": "walking",
+    "stairs_down": "walking"
+   }
+  },
+  "ustad4_drop_argmax7": {
+   "true_classes_kept": [
+    "walking",
+    "standing",
+    "sitting",
+    "lying"
+   ],
+   "f1_classes": [
+    "walking",
+    "standing",
+    "sitting",
+    "lying"
+   ],
+   "argmax_over": null,
+   "merge_labels_and_predictions": null
+  },
+  "ustad4_drop_argmax4": {
+   "true_classes_kept": [
+    "walking",
+    "standing",
+    "sitting",
+    "lying"
+   ],
+   "f1_classes": [
+    "walking",
+    "standing",
+    "sitting",
+    "lying"
+   ],
+   "argmax_over": [
+    "walking",
+    "standing",
+    "sitting",
+    "lying"
+   ],
+   "merge_labels_and_predictions": null
+  }
+ },
+ "walking_aid_inferred": [
+  "503",
+  "505",
+  "513",
+  "514",
+  "515"
+ ],
+ "walker_inferred": [
+  "505",
+  "513",
+  "514",
+  "515"
+ ],
+ "n_boot": 10000,
+ "boot_seed": 42,
+ "ustad_reference": {
+  "harth_model_walking_aid": 87.0,
+  "harth_model_other": 92.0,
+  "har70_model_walking_aid": 93.0,
+  "har70_model_other": 95.0
+ },
+ "machine_name": "Aya",
+ "device": "cpu",
+ "gpu_name": "",
+ "cuda_version": "",
+ "torch_version": "2.7.1+cpu",
+ "cpu": "Intel64 Family 6 Model 186 Stepping 3, GenuineIntel",
+ "torch_threads": 10,
+ "python": "3.11.9",
+ "os": "Windows 10",
+ "git_commit": "2981eeb28208515492a6a383b9a5f07446d39ddd",
+ "git_dirty": true,
+ "code_sha256": "f10613c36febd92216119bbdb5b33c7d7025eaa95d79cf5c90beec4323dc4406",
+ "finished_at": "2026-11-20T14:05:03+02:00",
+ "elapsed_s": 28.574589999974705
+}

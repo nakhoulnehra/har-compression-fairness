@@ -106,6 +106,12 @@ commands ran / time taken to finish:
 - `python -m lci.run_lci_phishing --seeds 0 1 2 3 4 --shap_seed 0`: **489.4 s** (8 min 9 s); per seed 97.0 ± 8.9 s (110.9, 100.3, 89.8, 92.3, 91.6). It took 817 s with torch 2.15.0 on Nakhoul's machine (above), so the two numbers differ in both machine and torch version.
 - `python -m har.run_model_selection --stage all --device cpu --models xgboost --machine-name aya-laptop` (git 473b75d, 10 threads): **8.7 min wall clock** (21:55:52–22:04:33; 9 units). Tuning, fold 0 (4 settings): 227 s (40–76 s per setting). Final folds 0–4: 292 s (50–68 s per fold, mean 58 s; 253–569 trees after early stopping).
 
+machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00), torch 2.7.1+cpu (2026-11-20)
+commands ran / time taken to finish:
+- `python -m pytest har/tests`: 96.1 s (113/113 passed)
+- `python -m har.run_sanity_walking_aid --smoke`: 3.5 s
+- `python -m har.run_sanity_walking_aid` (Step 5, evaluation only): **30.0 s** wall clock; 28.6 s for the rerun with the merged Ustad 4-class scoring (5 class sets) and `har/tests/test_stats.py` 7/7 in 12.3 s. The 5 frozen TinyHAR fold models predict 42,248 HARTH test windows (each subject once) and 5 × 17,403 HAR70+ windows on CPU; the rest is metrics and 24 bootstraps of 10,000 resamples.
+
 ## Nakhoul's machine, GPU (RTX 3050 Ti Laptop, 4 GB), torch 2.7.1+cu118
 
 Measured 2026-11-19, machine name `nakhoul-3050`, git 473b75d.

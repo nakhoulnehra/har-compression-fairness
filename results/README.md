@@ -148,7 +148,7 @@ HAR data pipeline (plan/HAR_IMPLEMENTATION.md Steps 1–2): HARTH and HAR70+ cut
 - Key numbers: per fold, 120 or 150 general + 540 older = 660 or 690 test explain windows, plus 90 validation explain windows (for the gate and τ) and 100 background windows.
 
 ## har-model-selection/
-Real model choice (plan Step 4), HARTH only. **Training of all 5 candidates is done; the CPU timing and `select_model` are still to come, so no model is chosen yet.** Three sessions, each `python -m har.run_model_selection --stage all` (tuning + folds 0–4) for its own models, torch 2.7.1, clean trees:
+Real model choice (plan Step 4), HARTH only. **Done: TinyHAR is chosen and frozen** (lr 1e-3, width 1.0, 54,273 parameters; 2026-11-20 on Aya's laptop, git eb964e4). Training ran in three sessions, each `python -m har.run_model_selection --stage all` (tuning + folds 0–4) for its own models, torch 2.7.1, clean trees:
 - CNN1D + TinyHAR: Nakhoul's RTX 3050 Ti (`--device cuda`, git 473b75d), 2026-11-19, 21.6 min.
 - XGBoost: Aya's laptop (`--device cpu`, git 473b75d), 2026-11-19, 8.7 min.
 - HART + DeepConvLSTM: Nakhoul's RTX 3050 Ti (`--device cuda`, git 2c64f45), 2026-11-19/20, 83.2 min.
@@ -178,12 +178,85 @@ There are 233 files (60 tuning, 125 final, 48 logs), listed by pattern. File nam
 | DeepConvLSTM | 458,183 | 0.770 ± 0.053 | 0.903 ± 0.034 | 0.637 ± 0.152 | 0.793 ± 0.043 | 0.761, 0.859, 0.725, 0.735, 0.769 |
 
 - The selection rule's F1 is pooled over all 22 HARTH test subjects (the 5 folds' confusion matrices summed, 42,248 windows): XGBoost 0.829, TinyHAR **0.820**, CNN1D 0.795, HART 0.792, DeepConvLSTM 0.772. Pooled accuracy: 0.933, 0.919, 0.908, 0.911, 0.903.
-- TinyHAR is the best neural net, 0.9 pt below XGBoost on the pooled F1. It is 2.5–2.8 pt ahead of CNN1D and HART and 4.8 pt ahead of DeepConvLSTM, and it is also the smallest model. Only TinyHAR is within the 2-pt band of the selection rule (plan Section 2.9); `select_model` has not been run yet, because it needs the CPU SHAP times.
+- TinyHAR is the best neural net, 0.9 pt below XGBoost on the pooled F1. It is 2.5–2.8 pt ahead of CNN1D and HART and 4.8 pt ahead of DeepConvLSTM, and it is also the smallest model. Only TinyHAR is within the 2-pt band of the selection rule (plan Section 2.9), so `select_model` chose it.
 - TinyHAR beats every other neural net in every fold except fold 1, where DeepConvLSTM (0.859) and CNN1D (0.859) are within 2 pt of it (0.878).
 - Fold 3 (S013, S020, S021, S023) is the hardest fold for every neural net, mainly through stairs F1 (0.47–0.57). DeepConvLSTM has the weakest and most variable stairs F1 (0.47–0.81 per fold).
+
+### [har-frozen-model-config.json](har-model-selection/har-frozen-model-config.json)
+- What: the frozen model (architecture, hyperparameters, training recipe, seed), the selection rule and its trace, the per-candidate summary with CPU timing, git commit and code hash. Written by `python -m har.select_model`.
+- Key numbers: **TinyHAR**, setting lr1e-3-width1, 54,273 parameters, pooled 7-class macro-F1 0.820 (best F1 overall among the deep models; eligible band ≥ 0.800 holds only TinyHAR), CPU SHAP 0.175 s/window. Frozen 2026-11-20 13:07 on Aya's laptop, clean tree.
+
+### har-model-selection-tuning.csv, har-model-selection-final-per-fold.csv, har-model-selection-per-subject-metrics.csv, har-model-selection-summary.csv
+- What: merged tables of the per-unit tuning/final files above (all machines): tuning rows, final rows per fold, per-subject test metrics per fold, and one summary row per candidate (pooled over the 22 HARTH test subjects).
+- Key numbers: as in the tuning and final entries above (summary pooled macro-F1: XGBoost 0.829, TinyHAR 0.820, CNN1D 0.795, HART 0.792, DeepConvLSTM 0.772).
+
+### [timing/har-cpu-inference-and-shap-time-Aya.csv](har-model-selection/timing/har-cpu-inference-and-shap-time-Aya.csv) (+ `-config.json`)
+- What: CPU latency (batch 1, 1 thread, median of 1,000), throughput (batch 1,024) and GradientExplainer SHAP time per window (nsamples 200, 100 windows) of each candidate's fold-0 final checkpoint, on Aya's laptop (`python -m har.time_model_selection_cpu`).
+- Key numbers (SHAP s/window | latency ms): TinyHAR 0.175 | 2.05; CNN1D 0.295 | 1.74; HART 0.335 | 6.88; DeepConvLSTM 1.196 | 10.79; XGBoost no SHAP | 3.91 (incl. features).
 
 ### logs/
 - What: the terminal output of every unit (20 tuning + 25 final) and of the three sessions (`session-all-nakhoul-3050-20261119-215942.log`, `session-all-aya-laptop-20261119-215550.log`, `session-all-nakhoul-3050-20261119-224004.log`).
 
 ## har-model-selection-smoke/
 **Git-ignored, local only: a pipeline check, not results.** The `--smoke` runs of `har.run_model_selection`, `har.time_model_selection_cpu` and `har.select_model` write here (fold 0, 1 epoch, 300 / 200 / 200 windows), with the same layout as `har-model-selection/`. The folder is rebuilt in under a minute, and its numbers say nothing about the candidates. The smoke runs on each machine passed (2026-11-19: Aya CPU 36.4 s, Nakhoul CUDA 36.7 s; see `environment/time.md`).
+
+## har-baseline-gap/
+Step 5, baseline gap check on HAR70+ (**first HAR70+ use**), with the frozen TinyHAR (`har-model-selection/har-frozen-model-config.json`, lr 1e-3, width 1.0, 54,273 parameters). Evaluation only, nothing trained or changed: the 5 final fold checkpoints (seed 0, trained on Nakhoul's GPU) run on CPU with their stored normalisation. General = each HARTH subject's test windows from its one held-out fold (22 subjects, 42,248 windows); older = all 18 HAR70+ subjects with every fold model (17,403 windows), averaged over the 5 folds. Written by `python -m har.run_sanity_walking_aid` on Aya's laptop, 2026-11-20, 29 s (rerun with the merged Ustad scoring).
+- Groups: walking aid (inferred) = 503, 505, 513, 514, 515; other older = the other 13; walker (inferred) = the walking-aid group without 503 (the 4 walker users; 503 taken as the walking-sticks user, project decision, not stated in Ustad).
+- Class sets:
+  - `all`: 7 classes; accuracy on all windows, macro-F1 over the non-stair classes.
+  - `non_stair`: windows labelled walking, shuffling, standing, sitting, lying.
+  - **`ustad4` (primary Ustad scoring)**: all windows; labels **and** predictions merged to 4 classes, stairs up/down → walking, shuffling → standing [Ustad Sec 2.4].
+  - `ustad4_drop_argmax7` (secondary): only windows labelled walking/standing/sitting/lying; a shuffling or stairs prediction counts as wrong.
+  - `ustad4_drop_argmax4` (secondary): the same windows, argmax over the 4 classes only.
+- Statistics: per-subject values; bootstrap 95% CI of the gap in group means (10,000 resamples, seed 42, subjects within groups) + two-sided Mann-Whitney U with rank-biserial r. Walking-aid tests are exploratory (n = 5 / 4).
+- **Acceptance (plan Step 5): passed.** Other older − walking aid is positive in every class set and in each of the 5 fold models. On Ustad's merged 4 classes it is **+13.7 pt accuracy (CI +0.2 to +30.8, p = 0.075)**, vs Ustad et al.'s +5 pt (87% vs 92%, HARTH-trained XGBoost); with 503 excluded **+18.9 pt (CI +7.6 to +36.7, p = 0.003)**.
+
+### [har-baseline-gap-tinyhar-group-summary.csv](har-baseline-gap/har-baseline-gap-tinyhar-group-summary.csv)
+- What: 25 rows (5 class sets × 5 groups): n subjects, subject IDs, windows per model, subject mean / SD / median / min / max of accuracy and macro-F1; for `all` also window-pooled accuracy and pooled stairs F1 (older groups: mean over the 5 fold models).
+- Key numbers (subject mean ± SD, %):
+
+| Group | n | Acc `all` | Macro-F1 `all` (non-stair) | **Acc `ustad4`** | **Macro-F1 `ustad4`** | Acc `drop_argmax7` | Acc `drop_argmax4` |
+|---|---|---|---|---|---|---|---|
+| General | 22 | 90.8 ± 6.0 | 82.2 ± 6.4 | 95.5 ± 3.1 | 93.3 ± 3.9 | 91.1 ± 6.7 | 97.3 ± 2.4 |
+| Older | 18 | 76.3 ± 10.9 | 72.4 ± 11.8 | 84.6 ± 12.1 | 84.3 ± 14.6 | 76.6 ± 11.0 | 91.6 ± 9.9 |
+| Walking aid (inferred) | 5 | 69.9 ± 18.2 | 63.9 ± 19.2 | 74.7 ± 19.3 | 72.3 ± 23.6 | 70.0 ± 18.4 | 84.0 ± 17.2 |
+| Other older | 13 | 78.7 ± 5.8 | 75.7 ± 5.6 | 88.4 ± 5.1 | 88.9 ± 5.8 | 79.1 ± 5.9 | 94.6 ± 2.9 |
+| Walker (inferred, no 503) | 4 | 64.8 ± 16.4 | 58.2 ± 16.5 | 69.5 ± 17.9 | 66.3 ± 22.4 | 64.7 ± 16.5 | 80.4 ± 17.5 |
+
+- Secondary macro-F1: `drop_argmax7` general 91.2, older 86.0, walking aid 76.5, other 89.6, walker 71.4; `drop_argmax4` 95.6, 89.8, 80.3, 93.5, 75.7.
+- Window-pooled accuracy (`all`): general 91.9, older 76.7, other older 78.8, walking aid 70.4, walker 65.4. Pooled stairs F1 up / down: general 0.791 / 0.699 (623 / 562 windows); older 0.046 / 0.115 (38 / 39 windows per model).
+- Older accuracy on Ustad's classes depends on the scoring: 84.6 merged, 76.6 with `drop_argmax7`, 91.6 with `drop_argmax4` (general: 95.5, 91.1, 97.3). The merged set also scores the shuffling and stairs windows, so it is not on the same windows as the two `drop` sets.
+
+### [har-baseline-gap-tinyhar-group-tests.csv](har-baseline-gap/har-baseline-gap-tinyhar-group-tests.csv)
+- What: 30 rows (3 comparisons × 5 class sets × 2 metrics): group means, gap (pt), bootstrap 95% CI, Mann-Whitney U / p, rank-biserial r; for the walking-aid comparisons also the gap's min / max over the 5 fold models; Ustad's reference gaps (+5 pt HARTH model, +2 pt HAR70+ model) on the `ustad4` accuracy rows.
+- Key numbers (gap in pt [95% CI], MW p, rank-biserial r):
+
+| Comparison | **Acc `ustad4`** | **Macro-F1 `ustad4`** | Acc `all` | Macro-F1 `all` | Acc `drop_argmax7` | Acc `drop_argmax4` |
+|---|---|---|---|---|---|---|
+| Older − general (18 vs 22) | −10.9 [−17.2, −6.1], p < 0.001, r −0.81 | −9.0 [−16.8, −3.2], p 0.004, r −0.54 | −14.5 [−20.6, −9.4], p < 0.001 | −9.8 [−16.2, −4.2], p 0.001 | −14.6 [−20.7, −9.2], p < 0.001 | −5.6 [−11.0, −2.0], p 0.001 |
+| Other older − walking aid (13 vs 5) | +13.7 [+0.2, +30.8], p 0.075, r 0.57 | +16.6 [+0.4, +38.1], p 0.075, r 0.57 | +8.8 [−4.2, +24.9], p 0.21 | +11.8 [−2.7, +28.4], p 0.12 | +9.1 [−4.1, +25.4], p 0.21 | +10.6 [+0.2, +26.2], p 0.035 |
+| Other older − walker, 503 excluded (13 vs 4) | +18.9 [+7.6, +36.7], p 0.003, r 0.92 | +22.7 [+8.3, +45.0], p 0.003, r 0.92 | +13.9 [+2.9, +30.3], p 0.023 | +17.5 [+5.3, +33.3], p 0.006 | +14.3 [+3.3, +30.8], p 0.023 | +14.2 [+4.3, +31.7], p 0.001 |
+
+- Per fold model (`ustad4` accuracy): other older − walking aid +11.3 to +17.3 pt; other older − walker +16.0 to +23.6 pt.
+- The `non_stair` rows are within 0.4 pt of the `all` rows.
+
+### [har-baseline-gap-tinyhar-per-subject.csv](har-baseline-gap/har-baseline-gap-tinyhar-per-subject.csv)
+- What: 200 rows (40 subjects × 5 class sets): accuracy and macro-F1 pooled over folds (older: mean of 5 fold models, with SD over folds), windows, subgroup.
+- Key numbers (older, `ustad4` accuracy): walking-aid subjects 503 95.5, 505 79.1, 513 75.8, 514 **42.9**, 515 80.3; other older 76.9 (512) to 96.1 (504). 514 is the outlier in every class set; 503 (the assumed walking-sticks user) scores like the other older subjects. `all` accuracy: 514 40.5, 503 90.3; SD over the 5 fold models per older subject 1.3–16.5 pt.
+
+### [har-baseline-gap-tinyhar-per-subject-per-fold.csv](har-baseline-gap/har-baseline-gap-tinyhar-per-subject-per-fold.csv)
+- What: 560 rows (fold × subject × class set; general subjects only in their test fold, older subjects in all 5): windows, correct, accuracy, macro-F1, classes present.
+- Key numbers: the input to the pooled table above; 22 general + 90 older rows per class set.
+
+### [har-baseline-gap-tinyhar-pooled-accuracy-and-stairs-f1-per-fold.csv](har-baseline-gap/har-baseline-gap-tinyhar-pooled-accuracy-and-stairs-f1-per-fold.csv)
+- What: window-pooled 7-class accuracy and pooled stairs up / down F1 per fold model and older subgroup, plus one general row over all 22 subjects (fold `all`).
+- Key numbers: see the group summary (means over folds); walking-aid groups have no true stairs windows; their stairs F1 is 0 because the model predicts stairs on a few of their windows.
+
+### [har-baseline-gap-tinyhar-general-recheck-vs-model-selection.csv](har-baseline-gap/har-baseline-gap-tinyhar-general-recheck-vs-model-selection.csv)
+- What: the CPU-recomputed per-subject accuracy and non-stair macro-F1 of the 22 HARTH test subjects minus the stored GPU values in `har-model-selection/har-model-selection-per-subject-metrics.csv`.
+- Key numbers: max |difference| 0.00000 for both: the checkpoints load and predict identically on CPU.
+
+### har-baseline-gap-tinyhar-config.json, logs/har-baseline-gap-run.log
+- What: command line, checkpoint paths, each class set's kept classes / F1 classes / argmax restriction / merge map, group IDs, bootstrap settings, Ustad reference values, machine, torch, git commit, code hash, elapsed time; the terminal output.
+- Key numbers: git 2981eeb, dirty tree (the Step 5 code is uncommitted), 28.6 s.

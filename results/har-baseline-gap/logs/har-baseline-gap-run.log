@@ -1,0 +1,52 @@
+har.run_sanity_walking_aid | c:\har-compression-fairness\har\run_sanity_walking_aid.py | machine Aya | torch 2.7.1+cpu | frozen tinyhar lr1e-3-width1 (54273 params)
+fold 0: har-final-tinyhar-fold0-nakhoul-3050.pt | general 8702 windows (4 subjects), older 17403 windows
+fold 1: har-final-tinyhar-fold1-nakhoul-3050.pt | general 8209 windows (4 subjects), older 17403 windows
+fold 2: har-final-tinyhar-fold2-nakhoul-3050.pt | general 8363 windows (5 subjects), older 17403 windows
+fold 3: har-final-tinyhar-fold3-nakhoul-3050.pt | general 8679 windows (4 subjects), older 17403 windows
+fold 4: har-final-tinyhar-fold4-nakhoul-3050.pt | general 8295 windows (5 subjects), older 17403 windows
+re-check vs stored model-choice metrics (GPU predictions): max |acc diff| 0.00000, max |F1 diff| 0.00000
+
+Group summary (subject means, %):
+                     accuracy                                                          macro_f1                                                         
+class_set                 all non_stair ustad4 ustad4_drop_argmax4 ustad4_drop_argmax7      all non_stair ustad4 ustad4_drop_argmax4 ustad4_drop_argmax7
+group                                                                                                                                                   
+general                 90.81     90.65  95.49               97.25               91.15    82.19     82.40  93.29               95.60               91.17
+older                   76.27     76.44  84.60               91.63               76.56    72.44     72.50  84.30               89.84               85.96
+walking_aid_inferred    69.92     69.92  74.72               83.99               69.97    63.95     63.95  72.28               80.28               76.52
+other_older             78.71     78.94  88.39               94.57               79.10    75.70     75.79  88.92               93.52               89.59
+walker_inferred         64.83     64.83  69.52               80.39               64.75    58.21     58.21  66.27               75.74               71.43
+
+Gaps (pt) with bootstrap 95% CI and Mann-Whitney p:
+                   comparison           class_set   metric  n_x  n_y  gap_x_minus_y_pt  ci95_low_pt  ci95_high_pt  mw_p  rank_biserial_r
+          older_minus_general                 all accuracy   18   22           -14.540      -20.584        -9.404 0.000           -0.848
+          older_minus_general                 all macro_f1   18   22            -9.753      -16.197        -4.223 0.001           -0.611
+          older_minus_general           non_stair accuracy   18   22           -14.216      -20.277        -8.968 0.000           -0.813
+          older_minus_general           non_stair macro_f1   18   22            -9.904      -16.350        -4.361 0.001           -0.616
+          older_minus_general              ustad4 accuracy   18   22           -10.895      -17.248        -6.082 0.000           -0.808
+          older_minus_general              ustad4 macro_f1   18   22            -8.989      -16.828        -3.236 0.004           -0.540
+          older_minus_general ustad4_drop_argmax7 accuracy   18   22           -14.585      -20.710        -9.209 0.000           -0.818
+          older_minus_general ustad4_drop_argmax7 macro_f1   18   22            -5.213      -12.204         0.372 0.052           -0.364
+          older_minus_general ustad4_drop_argmax4 accuracy   18   22            -5.623      -10.971        -2.016 0.001           -0.631
+          older_minus_general ustad4_drop_argmax4 macro_f1   18   22            -5.754      -12.771        -0.898 0.043           -0.379
+other_older_minus_walking_aid                 all accuracy   13    5             8.794       -4.249        24.929 0.208            0.415
+other_older_minus_walking_aid                 all macro_f1   13    5            11.753       -2.684        28.371 0.117            0.508
+other_older_minus_walking_aid           non_stair accuracy   13    5             9.024       -4.005        25.133 0.208            0.415
+other_older_minus_walking_aid           non_stair macro_f1   13    5            11.838       -2.598        28.446 0.117            0.508
+other_older_minus_walking_aid              ustad4 accuracy   13    5            13.675        0.210        30.835 0.075            0.569
+other_older_minus_walking_aid              ustad4 macro_f1   13    5            16.632        0.352        38.054 0.075            0.569
+other_older_minus_walking_aid ustad4_drop_argmax7 accuracy   13    5             9.124       -4.111        25.366 0.208            0.415
+other_older_minus_walking_aid ustad4_drop_argmax7 macro_f1   13    5            13.070       -1.217        31.254 0.173            0.446
+other_older_minus_walking_aid ustad4_drop_argmax4 accuracy   13    5            10.583        0.200        26.209 0.035            0.662
+other_older_minus_walking_aid ustad4_drop_argmax4 macro_f1   13    5            13.235       -0.404        33.057 0.117            0.508
+     other_older_minus_walker                 all accuracy   13    4            13.884        2.877        30.302 0.023            0.769
+     other_older_minus_walker                 all macro_f1   13    4            17.493        5.315        33.342 0.006            0.885
+     other_older_minus_walker           non_stair accuracy   13    4            14.114        3.162        30.497 0.023            0.769
+     other_older_minus_walker           non_stair macro_f1   13    4            17.578        5.407        33.431 0.006            0.885
+     other_older_minus_walker              ustad4 accuracy   13    4            18.871        7.635        36.679 0.003            0.923
+     other_older_minus_walker              ustad4 macro_f1   13    4            22.651        8.317        44.978 0.003            0.923
+     other_older_minus_walker ustad4_drop_argmax7 accuracy   13    4            14.348        3.306        30.780 0.023            0.769
+     other_older_minus_walker ustad4_drop_argmax7 macro_f1   13    4            18.157        3.895        37.196 0.015            0.808
+     other_older_minus_walker ustad4_drop_argmax4 accuracy   13    4            14.182        4.271        31.679 0.001            1.000
+     other_older_minus_walker ustad4_drop_argmax4 macro_f1   13    4            17.781        3.715        39.768 0.015            0.808
+
+done in 28.6 s -> C:\har-compression-fairness\results\har-baseline-gap
