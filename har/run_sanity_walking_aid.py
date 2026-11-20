@@ -34,8 +34,6 @@ from __future__ import annotations
 
 import os
 
-os.environ["CUDA_VISIBLE_DEVICES"] = ""   # evaluation on CPU
-
 import argparse
 import json
 import sys
