@@ -184,3 +184,108 @@ def test_park_loss_zero_for_teacher_and_differentiable():
     assert loss.item() > 1e-3
     loss.backward()
     assert any(p.grad is not None and p.grad.abs().sum() > 0 for p in student.parameters())
+
+
+# ------------------------------------------------------------------------------ pruning, size, finetune
+# (plan 2.10: matched n_nonzero, head never pruned, nominal sparsity exact, hand-counted sizes,
+#  pruned weights stay zero after finetune)
+
+from har.compression import E_FT, finetune, l1_scores, prune_by_score, size_record  # noqa: E402
+
+LEVELS = (0.3, 0.5, 0.7, 0.9)
+
+
+def test_l1_scores_are_abs_weights_on_prunable_only():
+    m = tinyhar()
+    s = l1_scores(m)
+    assert set(s) == {n for n, _, _ in prunable_tensors(m)}
+    params = dict(m.named_parameters())
+    assert all(torch.equal(s[k], params[k].detach().abs()) for k in s)
+
+
+@pytest.mark.parametrize("level", LEVELS)
+def test_prune_by_score_exact_per_tensor_and_head_untouched(level):
+    m = tinyhar()
+    p = prune_by_score(m, l1_scores(m), level)
+    assert p is not m and all(torch.equal(a, b) for a, b in zip(m.parameters(), tinyhar().parameters()))
+    params = dict(p.named_parameters())
+    for name, _, _ in prunable_tensors(p):
+        w = params[name]
+        assert int((w == 0).sum()) == int(round(level * w.numel())), name
+        assert int(p.prune_masks[name].sum()) == w.numel() - int(round(level * w.numel()))
+        kept = w[p.prune_masks[name]].abs().min()
+        pruned_orig = dict(m.named_parameters())[name].detach().abs()[~p.prune_masks[name]].max()
+        assert kept >= pruned_orig                      # L1: the smallest |w| go first
+    assert torch.equal(p.head.weight, m.head.weight)    # the head is never pruned
+    rec = size_record(p)
+    assert abs(rec["sparsity_prunable"] - level) < 1e-3
+    assert rec["per_layer_sparsity"].keys() == {n for n, _, _ in prunable_tensors(p)}
+
+
+def test_prune_ties_go_to_lowest_flat_index():
+    m = toy()
+    scores = {"fc.weight": torch.ones_like(m.fc.weight)}
+    p = prune_by_score(m, scores, 0.25)
+    k = int(round(0.25 * m.fc.weight.numel()))
+    flat = p.prune_masks["fc.weight"].flatten()
+    assert not flat[:k].any() and flat[k:].all()
+
+
+def test_prune_by_score_rejects_wrong_keys():
+    m = toy()
+    with pytest.raises(ValueError):
+        prune_by_score(m, {"head.weight": m.head.weight.abs()}, 0.5)
+
+
+def test_size_record_hand_count_toy():
+    m = toy()
+    p = prune_by_score(m, l1_scores(m), 0.5)
+    rec = size_record(p)
+    n_fc, n_head = 16 * 768, 7 * 16
+    n_params = n_fc + 16 + 16 + 16 + n_head + 7            # fc w+b, bn w+b, head w+b
+    zeros = n_fc // 2
+    assert rec["n_params"] == n_params
+    assert rec["n_nonzero"] == n_params - zeros
+    assert rec["sparsity_prunable"] == pytest.approx(0.5)
+    assert rec["sparsity_weights_incl_head"] == pytest.approx(zeros / (n_fc + n_head))
+    assert rec["sparsity_all_params"] == pytest.approx(zeros / n_params)
+    assert rec["size_kb_dense"] == pytest.approx(n_params * 4 / 1024)
+    assert rec["size_kb_nominal"] == pytest.approx((n_params - zeros) * 4 / 1024)
+    q, bits = ptq_symmetric(m, 4)
+    rq = size_record(q, bits)
+    assert rq["size_kb_nominal"] == pytest.approx(((n_fc + n_head) * 4 / 8 + (n_params - n_fc - n_head) * 4) / 1024)
+
+
+def test_finetune_keeps_pruned_weights_zero_ce_and_extra_loss():
+    """TinyHAR has Conv, LSTM and attention (out_proj read directly by MHA): pruned weights must stay
+    exactly zero after finetune, with CE only and with an attribution term (double backprop)."""
+    from har.xgp import lcons_loss
+    m = tinyhar()
+    tr, va = fake_windows(48, seed=3), fake_windows(21, seed=4)
+    bg = torch.from_numpy(fake_windows(10, seed=5).X)
+    for extra in (False, True):
+        p = prune_by_score(m, l1_scores(m), 0.7)
+        Xtr = torch.from_numpy(tr.X)
+        with torch.no_grad():
+            tgt = m(Xtr).argmax(1)
+            A0 = torch.randn(len(tr), 48)
+        fn = (lambda net, idx: 0.5 * lcons_loss(net, Xtr[idx], tgt[idx], A0[idx], bg, m=2,
+                                                generator=torch.Generator().manual_seed(0))) if extra else None
+        info = finetune(p, tr, va, epochs=2, batch_size=16, seed=0, extra_loss=fn, log=lambda s: None)
+        assert info["epochs_run"] == 2 and len(info["history"]) == 2
+        params = dict(p.named_parameters())
+        for name, _, _ in prunable_tensors(p):
+            assert torch.all(params[name][~p.prune_masks[name]] == 0), name
+        changed = any(not torch.equal(params[n][p.prune_masks[n]], dict(m.named_parameters())[n][p.prune_masks[n]])
+                      for n, _, _ in prunable_tensors(p))
+        assert changed                                       # the kept weights were trained
+        assert not p.training
+
+
+def test_finetune_default_epochs_and_harth_only():
+    assert E_FT == 10
+    m = prune_by_score(toy(), l1_scores(toy()), 0.5)
+    with pytest.raises(ValueError):
+        finetune(m, fake_windows(16, dataset="har70plus"), fake_windows(8), epochs=1, log=lambda s: None)
+    with pytest.raises(ValueError):
+        finetune(m, fake_windows(16), fake_windows(8, dataset="har70plus"), epochs=1, log=lambda s: None)

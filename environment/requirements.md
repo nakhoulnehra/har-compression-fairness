@@ -197,3 +197,22 @@ python -m har.time_har_components --fold 0 --device cpu  --threads 8  --machine-
 python -m har.time_har_components --fold 0 --device cuda --smoke      --machine-name nakhoul-3050   # Nakhoul GPU smoke, 7.8 s (2026-11-20)
 python -m har.time_har_components --fold 0 --device cuda              --machine-name nakhoul-3050   # Nakhoul GPU, run 2026-11-20, 186.6 s, git 8b770af
 ```
+
+Step 7 code, XGP + noise floor (Step 8) + fold-0 pilot (2026-11-20, Aya's laptop, torch 2.7.1+cpu). No new packages. New code:
+- `har/xgp.py`: keep-score, I(w), L_cons, gate, tuning rule, ablation registry.
+- `har/compression.py`: `l1_scores`, `prune_by_score`, `size_record`, `finetune`, `teacher_segment_attributions`, `attribution_grad_context`.
+- `har/attributions.py`: SHAP cache in `data/processed/har/shap-cache/`, per-subject LCI.
+- `lci/metric.py`: `aggregate_time_segments`, `compute_lci_by_subject`.
+- `har/run_noise_floor.py`, `har/run_xgp_pilot.py`.
+
+Every attribution gradient runs with the math SDPA kernel and cuDNN off (`compression.attribution_grad_context`). Both runners need `data/processed/har/checkpoints/har-model-selection/har-final-tinyhar-fold0-*.pt`.
+
+```bash
+python -m pytest har/tests lci/tests                                        # 176/176 passed (96 s)
+python -m har.run_noise_floor --folds 0 --smoke --machine-name Aya           # -> results/har-noise-floor-smoke/ (git-ignored)
+python -m har.run_xgp_pilot --fold 0 --smoke --machine-name Aya              # -> results/har-xgp-pilot-smoke/ (git-ignored)
+python -m har.run_xgp_pilot --fold 0 --smoke --machine-name Aya --tau 0.99   # same, forces the CE + gamma L_cons branch
+# real runs (not run yet), nakhoul-3050 GPU, one job at a time:
+python -m har.run_noise_floor --folds 0 --device cuda --machine-name nakhoul-3050   # -> results/har-noise-floor/
+python -m har.run_xgp_pilot --fold 0 --device cuda --machine-name nakhoul-3050      # -> results/har-xgp-pilot/ (reads fold 0's tau)
+```

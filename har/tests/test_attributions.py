@@ -68,3 +68,20 @@ def test_eg_create_graph_gives_second_order_gradients():
     g1 = m.fc1.weight.grad
     assert g1 is not None and g1.abs().sum() > 0
     assert m.fc2.weight.grad is not None and m.fc2.weight.grad.abs().sum() > 0
+
+
+def test_shap_cache_hit_and_key(tmp_path):
+    from har.attributions import shap_cached
+    m = Linear7().eval()
+    X, bg = data(4), data(8, seed=1)
+    t = np.array([0, 1, 1, 2])
+    ids = [f"w{i}" for i in range(4)]
+    logs = []
+    a = shap_cached(m, bg, X, t, ids, 0, 10, tmp_path, "t", log=logs.append)
+    b = shap_cached(m, bg, X, t, ids, 0, 10, tmp_path, "t", log=logs.append)
+    assert np.array_equal(a, b) and len(logs) == 1 and "hit" in logs[0]
+    shap_cached(m, bg, X, t, ids, 1, 10, tmp_path, "t", log=logs.append)       # other SHAP seed: new entry
+    with torch.no_grad():
+        m.fc.weight.mul_(2)
+    shap_cached(m, bg, X, t, ids, 0, 10, tmp_path, "t", log=logs.append)       # other weights: new entry
+    assert len(logs) == 1 and len(list(tmp_path.glob("t-*.npz"))) == 3

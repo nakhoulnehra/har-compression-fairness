@@ -251,7 +251,10 @@ def size_record(model, quantized: dict[str, int] | None = None) -> dict
 | **L1** | 30, 50, 70, 90% | `l1_scores(model)`: \|w\| | `E_ft` epochs, CE |
 | **SNIP-score pruning** | same | `snip_scores(model, train, n_batches=10, seed=42)`: the SNIP saliency \|w · ∂L/∂w\| (Lee et al., 2019) on the **trained** model, gradients summed over 10 fixed batches of 256 HARTH training windows (Q2). | `E_ft` epochs, CE |
 | **L1 + attribution matching** (Park et al., 2020, adapted) | same | L1 scores | `E_ft` epochs, CE + γ_P · L_AM |
-| **Explanation-guided (ours)** | same | keep-score (below) | `E_ft` epochs, CE, or CE + γ · L_cons if the gate fails |
+| **XGP, explanation-guided pruning (ours)** | same | keep-score (below) | `E_ft` epochs, CE, or CE + γ · L_cons if the gate fails |
+| **XGP ablations** | 70, 90% only | `xgp_score_only` (keep-score, CE), `l1_plus_lcons` (L1, CE + γ · L_cons always), `xgp_no_gate` (keep-score, CE + γ · L_cons always) | `E_ft` epochs, matched `n_nonzero` |
+
+**Pruning masks (implemented 2026-11-20; deviation from `custom_from_mask` above).** `prune_by_score` stores plain keep-masks in `model.prune_masks` and zeroes the weights in place. `finetune` zeroes the masked gradients before each optimizer step and re-applies the masks after it. *Why:* `torch.nn.utils.prune` recomputes `weight` in a forward pre-hook of the owning module, but `nn.MultiheadAttention` reads `out_proj.weight` without calling `out_proj`'s forward, so that hook never runs and TinyHAR's attention output projection would not be masked. `finetune` runs exactly `E_ft` epochs and keeps the last state (no early stopping). It logs inner-val macro-F1 after every epoch.
 
 **PTQ, primary (decided, Q1).** `ptq_symmetric` quantizes the same weight tensors that pruning touches, **plus the head**. Per tensor:
 - `s = max|W| / (2^(b−1) − 1)`;
@@ -285,14 +288,28 @@ Both attribution losses compare 48-segment attributions (Section 2.6), with targ
 - **Here:** `L_AM = mean_i ‖ â_S(x_i) − â_T(x_i) ‖₂`, unsquared as in Eq. 2. `â` is the 48-segment EG attribution (m = 4) of the original model's top-1 class, scaled to unit L2 norm per window; the original model's attributions are precomputed and fixed.
 - **Deviation (our choice):** matching on the input attribution of a time series, instead of a Grad-CAM map at the last convolutional layer. It is the only level that is comparable across the four architectures. Record this in the report.
 
-**(b) Explanation-guided pruning (ours). Uses HARTH data only.**
-- Keep-score per weight: `score(w) = (1 − β) · |w| / mean_layer|w| + β · I(w) / mean_layer I(w)`.
-- `I(w) = | w · ∂/∂w Σ_i ⟨ A_θ(x_i), sg(A_θ0(x_i)) ⟩ |`. This is a first-order (Taylor) estimate of how much removing `w` changes the alignment of the model's explanation with the original explanation. `A` is the 48-segment EG attribution (m = 8, `create_graph=True`), on 1,000 fixed HARTH training windows stratified by class. `sg` = stop-gradient.
-- Fine-tune penalty: `L_cons = 1 − mean_i PearsonR( A_θ(x_i), sg(A_θ0(x_i)) )` (m = 4). It mirrors the ρ̄ term of LCI; the Jaccard term is not differentiable.
-- **Gate.** After pruning and before fine-tuning, compute the gate metric with real SHAP (GradientExplainer, nsamples 200) on the inner-validation explain windows. If gate < τ, fine-tune with `CE + γ · L_cons`; otherwise fine-tune with CE only. Both branches use `E_ft` epochs. Record the gate value and the branch taken for every (fold, level).
-- **Gate metric = LCI_val** (decided 2026-11-19): per-subject LCI(original, pruned) averaged over the fold's 3 inner-validation HARTH subjects, compared with `τ_k` from the same subjects (Section 2.7). FA-LCI is not the gate because it needs HAR70+, which would put test data into a training decision. The gate is evaluated once per (fold, level), after pruning and before fine-tuning.
+**(b) XGP, explanation-guided pruning (ours)** (`har/xgp.py`, implemented 2026-11-20). **Uses HARTH data only:** every function that takes windows calls `require_harth`, and the pilot never loads HAR70+.
+- **Keep-score** per weight: `score(w) = (1 − β) · |w| / mean_layer|w| + β · I(w) / mean_layer I(w)`. A tensor whose I is all zero keeps only the |w| term. With β = 0 it ranks exactly like L1 (tested).
+- **Importance:** `I(w) = | w · ∂/∂w Σ_i ⟨ A_θ(x_i), sg(A_θ0(x_i)) ⟩ |` at θ0. This is a first-order (Taylor) estimate of how much removing `w` changes the alignment of the model's explanation with the original explanation.
+  - `A` is the 48-segment EG attribution of the original predicted class (m = 8, `create_graph=True`), on **1,000 fixed class-stratified HARTH training windows** (`stratified_pick`, seed 42), in batches of 125. `sg` = stop-gradient.
+  - At θ0, `sg(A_θ0)` is `A` itself with the same EG draws, so one EG pass per batch gives the alignment `Σ_i ⟨A_i, A_i.detach()⟩`.
+  - I is **averaged over 2 EG seeds** (0, 1): mean of the per-seed |w · grad|.
+  - I is computed **once per fold**, because it does not depend on the level or on β.
+  - **Dot product on purpose:** the Pearson and cosine alignments are at their maximum (1) at θ0, so their gradient there is zero, and every weight would get I = 0. A test shows this (`test_pearson_and_cosine_alignment_have_zero_gradient_at_theta0`).
+- **Repair loss:** `L_cons = (1 − mean_i Pearson(A_θ(x_i), sg(A_θ0(x_i)))) + (1 − cos(g_θ, g_θ0))`, EG m = 4.
+  - `g` = mean over the batch of |A| per segment, the 48-dim global importance profile. It targets LCI's top-k / Jaccard term, which is not differentiable itself. The first term mirrors ρ̄.
+  - eps = 1e-12 inside the square roots of Pearson and cosine, so an all-zero row gives r = 0 with finite gradients.
+  - `A_θ0` on every training window (m = 4, EG seed 0) is precomputed once per fold and shared with Park: Park's targets are the same rows scaled to unit norm. During fine-tuning the EG draws come from a generator seeded with 1.
+- **Gate.** After pruning and before fine-tuning, compute LCI_val with real SHAP (GradientExplainer, nsamples 200, SHAP seed 0) on the fold's inner-validation explain windows. If `LCI_val < τ_k`, fine-tune with `CE + γ · L_cons`; otherwise fine-tune with CE only. Both branches use `E_ft = 10` epochs. Log the gate value and the branch taken for every (fold, level), and in tuning for each β.
+- **Gate metric = LCI_val** (decided 2026-11-19): per-subject LCI(original, pruned) averaged over the fold's 3 inner-validation HARTH subjects, compared with `τ_k` from the same subjects (Section 2.7). FA-LCI is not the gate because it needs HAR70+, which would put test data into a training decision.
+- **Every attribution gradient** (I(w), L_cons, Park's L_AM) runs through `eg_attributions` / `attribution_grad_context`: math SDPA kernel and cuDNN off. Following Park's convention, CE is computed in train mode and the attribution term in eval mode.
+- **Ablations** (70% and 90% only; same `E_ft`, same seeds, matched `n_nonzero`): `xgp_score_only` (keep-score, CE), `l1_plus_lcons` (L1 + always-on repair), `xgp_no_gate` (keep-score + always-on repair), `xgp` (full). Each uses the fold's chosen (β, γ). When the gate picks CE, `xgp` equals `xgp_score_only`; when it picks the penalty, `xgp` equals `xgp_no_gate`. Both rows are still reported.
 
-**Tuning (HARTH inner validation only, equal budget).** Park's γ_P ∈ {1, 50} (50 = the paper's SWA strength [Park App. C.2]; 1 = our choice, because unit-norm input attributions put the matching term on a different scale from the paper's), and ours (β, γ) ∈ {0.3, 0.7} × {0.1, 1.0}. Ours gets 4 configurations, Park 2; to equalise the budget, Park also gets 2 learning-rate variants {1e-4, 3e-4}. Tuning runs at 70% sparsity per fold. The chosen configuration maximizes inner-val LCI_val among those whose inner-val macro-F1 is within 1 pt of the L1 baseline's, and is then used at every sparsity in that fold. Results are logged to the grid's per-fold model file.
+**Tuning (HARTH inner validation only, equal budget).** Park's γ_P ∈ {1, 50} (50 = the paper's SWA strength [Park App. C.2]; 1 = our choice, because unit-norm input attributions put the matching term on a different scale from the paper's), and ours (β, γ) ∈ {0.3, 0.7} × {0.1, 1.0}. Ours gets 4 configurations, Park 2; to equalise the budget, Park also gets 2 learning-rate variants {1e-4, 3e-4}. Tuning runs at 70% sparsity per fold.
+- The chosen configuration maximizes inner-val LCI_val among those whose inner-val macro-F1 (pooled 7-class) is ≥ the L1 baseline's − 1 pt. Being better than L1 by more than 1 pt does not disqualify. It is then used at every sparsity in that fold.
+- If no configuration qualifies (our choice; the plan gave no rule), take the highest macro-F1 and flag it as `selection_fallback`.
+- When the gate of a β picks CE, γ has no effect, so its two configurations are one run, recorded for both (`shared_with`).
+- Results are logged to the grid's per-fold model file. The fold-0 pilot (`python -m har.run_xgp_pilot`, `results/har-xgp-pilot/`) runs exactly this tuning for L1, SNIP-score pruning, Park and XGP before Step 9.
 
 ### 2.6 SHAP and the window version of LCI (`har/attributions.py`, `lci/metric.py`)
 
@@ -370,6 +387,11 @@ def random_deletion_curve(model, X, target, bg_mean, ks, n_repeats=5, seed=42) -
 - **τ (data-driven, decided 2026-11-19)** = the lower end (minimum) of the retrain-noise LCI on the **inner-validation HARTH subjects**, per fold (`τ_k`), used by that fold's gate. The reporting threshold is `τ = min_k τ_k`. It is computed without HAR70+, so the gate stays leak-free.
   - The retrain-noise ranges on the general and older test windows are reported for comparison, not used as thresholds.
 - Also report everything against **Tulla's τ = 0.85**.
+- **Implemented 2026-11-20** (`har/run_noise_floor.py --folds k`):
+  - Seeds 1–3 retrain with the frozen setting (Adam lr 1e-3, weight decay 1e-4, ≤ 30 epochs, patience 5) and the fold's normalisation statistics. Seed 0 is the model-selection checkpoint.
+  - `τ_k` = min over the 3 retrain seeds of LCI_val(seed 0, seed s), the same subject mean the gate uses.
+  - Files are per fold and machine (fold 3 runs on both): `har-noise-floor-tinyhar-fold{k}-{machine}-{per-subject-lci, group-summary, tau, retrained-models}.csv`. Step 11 merges them into the two files of Section 4.
+  - Retrained weights and SHAP arrays are cached, so a rerun reuses them.
 
 ### 2.8 Statistics (`har/stats.py`)
 
@@ -446,7 +468,7 @@ def safe_rate(lci_values, tau) -> float     # share of settings with LCI >= tau
 ### 2.10 Tests (must pass before the step that uses the code)
 
 `lci/tests/test_lci.py` (12 existing tests) must keep passing. New test files:
-- **`lci/tests/test_lci_windows.py`:**
+- **`lci/tests/test_lci_windows.py`** (written 2026-11-20 for `aggregate_time_segments` and `compute_lci_by_subject`; the `fa_lci` tests come with Step 11):
   - `aggregate_time_segments` sums correctly and keeps the sign;
   - channel-major index order;
   - raises when T is not divisible by `seg_len`;
@@ -487,8 +509,20 @@ def safe_rate(lci_values, tau) -> float     # share of settings with LCI >= tau
   - `ptq_symmetric`: every quantized tensor has at most 2^b − 1 distinct values, max |W_q| = max |W|, zero maps to zero, biases and normalization parameters are unchanged, and the head is quantized;
   - `ptq_tulla` matches `lci.compression.ptq` exactly;
   - SNIP-score pruning scores equal |w·g| on a 2-layer toy network;
-  - with β = 0 the keep-score ranks like L1;
-  - the gate picks the penalty branch exactly when gate < τ.
+  - `prune_by_score` removes exactly round(s · numel) per tensor, lowest score first, ties at the lowest flat index; it rejects scores that do not cover exactly the prunable tensors;
+  - `finetune` runs exactly `E_ft` epochs, raises on HAR70+ train or val, and keeps pruned weights at zero on TinyHAR (Conv, LSTM, attention) with CE alone and with an attribution term.
+- **`har/tests/test_xgp.py`** (implemented 2026-11-20):
+  - with β = 0 the keep-score ranks like L1 at every level (identical masks); β = 1 ranks like I(w); the formula and the all-zero-I guard on a toy network;
+  - I(w) equals |w · ∂/∂w Σ⟨A, sg(A)⟩| recomputed by hand; it is the mean over EG seeds, reproducible, leaves the model untouched, and covers every prunable tensor of TinyHAR;
+  - the Pearson and cosine alignments have zero gradient at θ0 while the dot product does not (why I(w) uses the dot product);
+  - the reference windows are fixed, class-stratified and HARTH only;
+  - `pearson_rows` matches numpy and stays finite on all-zero rows; the parts of L_cons (affine invariance, sign flip, profile term); L_cons is 0 for the original model and differentiable after a perturbation;
+  - the gate picks the penalty branch exactly when gate < τ (equality → CE);
+  - the tuning selection rule, including the fallback;
+  - at each sparsity, every method and ablation (L1, SNIP-score pruning, Park, `xgp_score_only`, `l1_plus_lcons`, `xgp_no_gate`, `xgp`, both β) gives identical `n_nonzero`;
+  - the pilot's source loads HARTH windows only.
+- **`har/tests/test_noise_floor.py`:** `τ_k` = min over retrain seeds of the inner-val subject mean, unchanged by HAR70+, general or SHAP-noise rows; the per-group summary and the SHAP-above-retrain check.
+- `har/tests/test_attributions.py` also tests the SHAP cache (hit on the same config; new entry for another SHAP seed or other weights).
 - **`har/tests/test_attributions.py`:**
   - single-output SHAP for a linear model satisfies completeness (Σ SHAP ≈ f_c(x) − mean f_c(background), tolerance 1e-3);
   - per-class grouping returns rows in the original order;
@@ -610,7 +644,8 @@ Results (names follow CLAUDE.md; every file gets an entry in `results/README.md`
 |---|---|
 | `results/har-setup/` | `har-window-counts-per-subject.csv` (single-label / mixed-kept / mixed-dropped per subject and split), `har-window-counts-per-group-and-class.csv`, `har-dropped-data-summary.csv`, `har-fold-assignment.csv`, `har-inner-validation-subjects.csv`, `har-normalisation-stats-per-fold.csv`, `har-explain-windows.csv`, `har-explain-windows-per-subject-class-and-group.csv`, `har-shap-background-windows.csv`, `har-explain-and-background-windows-per-fold.csv` |
 | `results/har-model-selection/` | `har-model-selection-tuning.csv`, `har-model-selection-per-subject-metrics.csv`, `har-model-selection-summary.csv` (F1, params, inference ms, SHAP s/window), `har-frozen-model-config.json`, `har-walking-aid-inferred-sanity-check.csv` |
-| `results/har-noise-floor/` | `har-noise-floor-per-subject-lci.csv`, `har-noise-floor-tau-per-fold.csv` |
+| `results/har-noise-floor/` | per fold k and machine: `har-noise-floor-tinyhar-fold{k}-{machine}-per-subject-lci.csv`, `-group-summary.csv`, `-tau.csv`, `-retrained-models.csv`, `-config.json`; merged in Step 11 into `har-noise-floor-per-subject-lci.csv`, `har-noise-floor-tau-per-fold.csv` |
+| `results/har-xgp-pilot/` | `har-xgp-pilot-tinyhar-fold0-70pct-inner-val-{machine}-runs.csv` (one row per run: gate value and branch, pre/post-fine-tuning LCI_val, inner-val F1, n_nonzero, selected), `-per-subject-lci.csv`, `-finetune-history.csv`, `-config.json` |
 | `results/har-compression-grid/` | per fold k: `har-grid-fold{k}-per-subject-metrics.csv` (fold, method, level, subject, group, accuracy, macro-F1, LCI48, LCI768, shap_corr, jaccard, n_skipped, mprf, AOPC, drop_k5, random AOPC), `har-grid-fold{k}-models.csv` (n_params, n_nonzero, nominal sparsity, actual total sparsity incl. head, per-layer sparsity, sizes, inference time, tuning choice, gate value and branch, machine), `har-grid-fold{k}-shap-48-segments.npz` + `-configs.json`; `har-grid-fold3-cross-machine-comparison.csv` (Step 9b) |
 | `results/har-analysis/` | `har-per-subject-pooled-over-folds.csv` (one row per method, level, subject), `har-summary-per-method-level-group.csv`, `har-fa-lci-pooled-bootstrap-ci.csv` (FA-LCI, its parts, worst group, CI and paired differences vs ours), `har-fa-lci-per-fold-method-level.csv`, `har-method-comparisons-wilcoxon-holm.csv` (40-subject primary + per-group secondary), `har-group-gaps-older-vs-general-bootstrap-ci.csv`, `har-stairs-f1-pooled-per-group.csv`, `har-subgroup-walking-aid-inferred.csv`, `har-safe-explanation-rate.csv`, `har-fa-lci-validation.csv`, `har-raw-768-vs-48-segment-lci.csv`, `har-lci-k16-sensitivity.csv`, `har-single-label-windows-robustness.csv`, `har-report.md` |
 
@@ -665,6 +700,31 @@ Deletion faithfulness (≈ 11 forward passes per window per model), statistics a
 | 11 Analysis | ≈ 15 min | ≈ 10 min | ≈ 20 min | ≈ 15 min | 10,000-sample bootstraps |
 
 Model selection (Step 4), upper bound at 30 epochs, A / N: CNN1D 0.85 / 0.4 h, DeepConvLSTM 11.4 / 5.4 h, TinyHAR 4.4 / 2.1 h, HART 4.2 / 2.0 h, XGBoost < 0.5 h (not measured). If DeepConvLSTM or TinyHAR were frozen, Steps 8 + 9 would take 29.5 / 14.8 h (DeepConvLSTM) or 11.6 / 5.9 h (TinyHAR) per fold.
+
+**GPU estimates with XGP and its ablations (2026-11-20).** These are built from the Step 6 measurements on fold 0 (`results/har-component-timing/`):
+
+| Cost | nakhoul-3050 | uni-2080 |
+|---|---|---|
+| CE epoch | 2.5 s | 1.5 s |
+| Attribution epoch (Park's L_AM or L_cons, EG m = 4, double backprop) | 52 s | 66 s |
+| SHAP, per window | 0.14 s | 0.13 s |
+
+- **L_cons cost per epoch = Park's** (same EG pass; Pearson and cosine are negligible). This is still an estimate until the pilot measures it.
+- **I(w):** 2 seeds × 1,000 windows × m = 8, about 8% of one Park epoch's EG work, so ≈ 5 s, once per fold.
+- **Gate:** 90 inner-val windows per gate.
+- **Steps 8 + 9 per fold:** the Step 6 projection (3.20 h / 3.73 h, where ours is charged at Park's cost) plus the ablations (an upper bound, every ablation run separately):
+
+  | Ablation work per fold | nakhoul-3050 | uni-2080 |
+  |---|---|---|
+  | `l1_plus_lcons` + `xgp_no_gate`: 2 × 2 levels × 10 attribution epochs | 35 min | 44 min |
+  | `xgp_score_only`: 2 × 10 CE epochs | 1 min | 0.5 min |
+  | SHAP for the 6 extra models: 6 × 660 windows | 9 min | 9 min |
+  | **Total per fold** | **≈ 3.95 h** | **≈ 4.6 h** |
+
+- **Fold split** (STATUS.md): nakhoul-3050 runs folds 0, 1, 3 (≈ 11.9 h) and uni-2080 runs folds 2, 3, 4 (≈ 13.9 h).
+- **Before Step 9:**
+  - Noise floor, fold 0: ≤ 90 CE epochs + 6 × 750 SHAP windows, ≈ 15 min on nakhoul-3050.
+  - Pilot, fold 0: 4 Park + up to 4 XGP fine-tunings at ≈ 9 min each, + L1, SNIP and ≈ 15 × 90 SHAP windows. About 75 min on nakhoul-3050 (≈ 90 min on uni-2080). It is shorter if the gate picks CE for a β (2 CE runs instead of 4 attribution runs).
 
 **Machine split.** Nakhoul's machine is ≈ 1.9–2× faster on this workload, so it gets about two thirds of the work.
 - **Step 4:** Nakhoul's runs DeepConvLSTM and TinyHAR (≈ 7.5 h); Aya's runs CNN1D, HART and XGBoost (≈ 5.5 h). After training, all candidates' inference and SHAP times are measured on **Aya's machine only**, so the model choice compares like with like.

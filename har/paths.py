@@ -34,3 +34,15 @@ MODEL_SELECTION_SMOKE_DIR = RESULTS_DIR / "har-model-selection-smoke"
 CHECKPOINT_DIR = PROCESSED_DIR / "checkpoints"            # git-ignored (data/processed/)
 MODEL_SELECTION_CKPT_DIR = CHECKPOINT_DIR / "har-model-selection"
 MODEL_SELECTION_SMOKE_CKPT_DIR = CHECKPOINT_DIR / "har-model-selection-smoke"
+
+# SHAP cache (plan 2.6; git-ignored): raw (n, 6, 128) arrays keyed by model weights, windows, background,
+# targets, SHAP seed and nsamples
+SHAP_CACHE_DIR = PROCESSED_DIR / "shap-cache"
+
+# Noise floor (plan Step 8, Section 2.7) and the XGP pilot (fold 0, inner validation only)
+NOISE_FLOOR_DIR = RESULTS_DIR / "har-noise-floor"
+NOISE_FLOOR_SMOKE_DIR = RESULTS_DIR / "har-noise-floor-smoke"
+NOISE_FLOOR_CKPT_DIR = CHECKPOINT_DIR / "har-noise-floor"
+NOISE_FLOOR_SMOKE_CKPT_DIR = CHECKPOINT_DIR / "har-noise-floor-smoke"
+XGP_PILOT_DIR = RESULTS_DIR / "har-xgp-pilot"
+XGP_PILOT_SMOKE_DIR = RESULTS_DIR / "har-xgp-pilot-smoke"

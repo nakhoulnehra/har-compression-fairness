@@ -97,3 +97,30 @@ def compute_lci(A_T, A_S, k: int = 10, omega: float = 0.5) -> dict:
 
 def is_collapsed(lci: float, tau: float = COLLAPSE_TAU) -> bool:
     return lci < tau
+
+
+# ------------------------------------------------------------------ window extensions (HAR plan 2.6)
+
+def aggregate_time_segments(A, seg_len: int = 16) -> np.ndarray:
+    """(N, C, T) -> (N, C * T // seg_len): signed sum per (channel, segment), channel-major order
+    (feature = channel * (T // seg_len) + segment). Raises if T % seg_len != 0."""
+    A = np.asarray(A)
+    if A.ndim != 3:
+        raise ValueError(f"expected (N, C, T), got {A.shape}")
+    N, C, T = A.shape
+    if T % seg_len:
+        raise ValueError(f"T={T} is not divisible by seg_len={seg_len}")
+    return A.reshape(N, C, T // seg_len, seg_len).sum(axis=-1).reshape(N, C * (T // seg_len))
+
+
+def compute_lci_by_subject(A_T, A_S, subjects, k: int = 10, omega: float = 0.5) -> dict[str, dict]:
+    """compute_lci on each subject's rows (subjects in sorted order); same keys plus "subject"."""
+    subjects = np.asarray(subjects)
+    if len(subjects) != len(A_T) or len(A_T) != len(A_S):
+        raise ValueError(f"lengths differ: A_T {len(A_T)}, A_S {len(A_S)}, subjects {len(subjects)}")
+    A_T, A_S = np.asarray(A_T), np.asarray(A_S)
+    out = {}
+    for s in sorted(set(subjects.tolist())):
+        m = subjects == s
+        out[s] = {**compute_lci(A_T[m], A_S[m], k=k, omega=omega), "subject": s}
+    return out

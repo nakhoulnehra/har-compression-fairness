@@ -160,3 +160,16 @@ Step 6 timing benchmark on this GPU (2026-11-20, git 8b770af, clean tree):
 For comparison, uni-2080 (RTX 2080, 2026-11-20, git 52d9f98): 209.1 s wall clock; CE epoch 1.5 s, Park epoch 65.9 s (44.7× CE), SHAP 87.4 s; projected 3.73 h per fold. The 3050 Ti is slower on plain CE but faster on Park's double-backward epochs, so its projection comes out lower.
 
 All five candidates' training is done (GPU, Nakhoul: 105 min for CNN1D, TinyHAR, HART, DeepConvLSTM; CPU, Aya: 8.7 min for XGBoost). The result rows hold `run_seconds`, `device` and `gpu_name`. CPU estimates are in [plan/HAR_IMPLEMENTATION.md](../plan/HAR_IMPLEMENTATION.md) Section 5. The CPU timing command (`python -m har.time_model_selection_cpu`, full protocol) is meant to run on Aya's machine and has not been run yet.
+
+## Step 7 code: XGP + noise floor + pilot (Aya's machine, CPU, 2026-11-20)
+
+machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00), torch 2.7.1+cpu
+commands ran / time taken to finish:
+- `python -m pytest har/tests lci/tests`: **96 s** wall clock (176/176 passed; 35 new).
+- `python -m har.run_noise_floor --folds 0 --smoke --machine-name Aya`: **24.8 s** wall clock (3 one-epoch retrainings 7.0 s, 18 SHAP calls on 30 windows at nsamples 20 8.2 s). Rerun with cached checkpoints and SHAP: under 10 s inside the script.
+- `python -m har.run_xgp_pilot --fold 0 --smoke --machine-name Aya`: **33 s** wall clock (26.0 s inside the script; 8 one-epoch fine-tunings, both β gated to CE). With `--tau 0.99` (every XGP configuration takes CE + γ·L_cons): 49 s. In smoke, one L_cons epoch takes ≈ 3.7 s and one Park epoch ≈ 3.5 s on 600 windows, against ≈ 0.8 s for CE. That is consistent with L_cons costing about as much as Park.
+
+Smoke sizes only, so these are no estimate of the real runs. GPU estimates for the real runs (from Step 6), as in plan Section 5:
+- Noise floor, fold 0: ≈ 15 min on nakhoul-3050.
+- Pilot, fold 0: ≈ 75 min upper bound on nakhoul-3050 (≈ 90 min on uni-2080).
+- Steps 8 + 9 with the XGP ablations: ≈ 3.95 h per fold on nakhoul-3050 and ≈ 4.6 h on uni-2080.

@@ -1,32 +1,47 @@
-"""Compression baselines and the attribution surrogate (plan Section 2.5).
+"""Compression methods and the attribution surrogate (plan Section 2.5).
 
-Written so far (the baseline parts the Step 6 timing needs):
     prunable_tensors      the weight tensors pruning and PTQ act on (head excluded unless asked)
+    l1_scores, prune_by_score, apply_masks, size_record, finetune
+                          uniform per-tensor unstructured pruning and the shared fine-tuning loop
     ptq_symmetric         per-tensor symmetric weight PTQ, the primary PTQ            [plan 2.5, Q1]
     snip_scores           SNIP saliency |w * dL/dw| on the trained model             [Lee et al. 2019; plan Q2]
     eg_attributions       differentiable expected-gradients surrogate of SHAP        [plan 2.5]
+    attribution_grad_context  math SDPA + cuDNN off, for every gradient through attributions
     segment_attributions  (B, 6, 128) -> (B, 48) signed sums, channel-major           [plan 2.6]
+    teacher_segment_attributions  the original model's fixed 48-segment EG attributions
     park_teacher_attributions, park_am_distance, park_am_loss
                           L1 + attribution matching, adapted                         [Park Sec 3.2, Eq. 2]
-Not written yet: L1 scores, prune_by_score, size_record, finetune, ptq_tulla, and our method
-(keep-score, L_cons, gate); our method is designed and reviewed separately before Step 9.
+Our method (XGP: keep-score, L_cons, gate) is in har/xgp.py. Not written yet: ptq_tulla.
+
+Pruning masks (deviation from the plan's torch.nn.utils.prune.custom_from_mask, decided 2026-11-20):
+the masks are a plain dict `model.prune_masks` {tensor name: bool keep-mask}, applied in place to the
+parameters. `prune.custom_from_mask` re-computes `weight` in a forward pre-hook of the owning module,
+and nn.MultiheadAttention reads `out_proj.weight` without calling out_proj's forward, so the hook
+would never refresh it. In-place masks work for every module (LSTM flat weights included);
+`finetune` zeroes the masked gradients before and re-applies the masks after every optimizer step.
 """
 
 from __future__ import annotations
 
+import contextlib
 import copy
-from typing import Iterable
+import time
+from typing import Callable, Iterable
 
 import numpy as np
 import torch
 import torch.nn as nn
+from sklearn.metrics import accuracy_score
 from torch.nn.attention import SDPBackend, sdpa_kernel
 
 from .data import Windows, require_harth
-from .train import class_weights
+from .train import class_weights, pooled_macro_f1, predict_proba, set_seed
 
 PRUNABLE_MODULES = (nn.Conv1d, nn.Conv2d, nn.Linear)   # nn.MultiheadAttention.out_proj is an nn.Linear
 SEG_LEN = 16
+E_FT = 10            # fine-tuning epochs, every pruning method [plan 2.5]
+FT_LR = 1e-4         # Adam [plan 2.5]
+FT_BATCH = 256
 
 
 # ------------------------------------------------------------------------------ scope
@@ -55,6 +70,149 @@ def prunable_tensors(model: nn.Module, include_head: bool = False) -> list[tuple
         elif isinstance(mod, nn.MultiheadAttention) and mod.in_proj_weight is not None:
             out.append((prefix + "in_proj_weight", mod, "in_proj_weight"))
     return out
+
+
+# ------------------------------------------------------------------------------ pruning
+
+def l1_scores(model: nn.Module) -> dict[str, torch.Tensor]:
+    """|w| per prunable tensor (L1 magnitude pruning)."""
+    return {name: getattr(mod, p).detach().abs().clone() for name, mod, p in prunable_tensors(model)}
+
+
+def prune_by_score(model: nn.Module, scores: dict[str, torch.Tensor], sparsity: float) -> nn.Module:
+    """A deepcopy of `model` with, per prunable tensor, the round(sparsity * numel) weights of lowest
+    score set to zero (ties -> lowest flat index first) [plan 2.5]. Uniform per-tensor sparsity, so
+    every method gets the same non-zero count at a level. The keep-masks are stored in
+    `pruned.prune_masks` and re-applied by `finetune`."""
+    names = [n for n, _, _ in prunable_tensors(model)]
+    if set(scores) != set(names):
+        raise ValueError(f"scores must cover exactly the prunable tensors; missing {sorted(set(names) - set(scores))}, "
+                         f"extra {sorted(set(scores) - set(names))}")
+    if not 0.0 <= sparsity < 1.0:
+        raise ValueError(f"sparsity {sparsity} not in [0, 1)")
+    pruned = copy.deepcopy(model)
+    masks = {}
+    with torch.no_grad():
+        for name, mod, p in prunable_tensors(pruned):
+            w = getattr(mod, p)
+            sc = scores[name].detach().to("cpu", torch.float64).flatten()
+            if sc.numel() != w.numel():
+                raise ValueError(f"{name}: score shape {tuple(scores[name].shape)} vs weight {tuple(w.shape)}")
+            k = int(round(sparsity * w.numel()))
+            order = torch.argsort(sc, stable=True)
+            keep = torch.ones(w.numel(), dtype=torch.bool)
+            keep[order[:k]] = False
+            masks[name] = keep.reshape(w.shape)
+            w.mul_(masks[name].to(w.device, w.dtype))
+    pruned.prune_masks = masks
+    pruned.prune_sparsity = sparsity
+    return pruned
+
+
+def _masked_params(model: nn.Module) -> list[tuple[torch.Tensor, torch.Tensor]]:
+    masks = getattr(model, "prune_masks", None) or {}
+    out = []
+    for name, mod, p in prunable_tensors(model):
+        if name in masks:
+            w = getattr(mod, p)
+            out.append((w, masks[name].to(w.device)))
+    return out
+
+
+def apply_masks(model: nn.Module) -> None:
+    """Zero the pruned weights in place (no-op for an unpruned model)."""
+    with torch.no_grad():
+        for w, keep in _masked_params(model):
+            w.mul_(keep.to(w.dtype))
+
+
+def size_record(model: nn.Module, quantized: dict[str, int] | None = None) -> dict:
+    """Sizes and sparsities [plan 2.5]: n_params, n_nonzero (over all parameters), sparsity over the
+    prunable tensors (= the nominal level), over all weight tensors incl. the head, over all
+    parameters, per layer, and dense / nominal size in KB (pruned: n_nonzero x 4 B, index overhead not
+    counted; PTQ: the quantized tensors at `bits` per value + the rest at 4 B)."""
+    params = dict(model.named_parameters())
+    n_params = sum(p.numel() for p in params.values())
+    n_nonzero = int(sum(int((p != 0).sum()) for p in params.values()))
+    prun = [n for n, _, _ in prunable_tensors(model)]
+    with_head = [n for n, _, _ in prunable_tensors(model, include_head=True)]
+    zeros = lambda names: sum(int((params[n] == 0).sum()) for n in names)
+    size = lambda names: sum(params[n].numel() for n in names)
+    if quantized:
+        q_values = sum(params[n].numel() * b / 8 for n, b in quantized.items())
+        nominal = q_values + 4 * (n_params - size(list(quantized)))
+    else:
+        nominal = 4 * n_nonzero
+    return {"n_params": n_params, "n_nonzero": n_nonzero,
+            "sparsity_prunable": zeros(prun) / size(prun),
+            "sparsity_weights_incl_head": zeros(with_head) / size(with_head),
+            "sparsity_all_params": 1 - n_nonzero / n_params,
+            "per_layer_sparsity": {n: zeros([n]) / size([n]) for n in prun},
+            "size_kb_dense": n_params * 4 / 1024, "size_kb_nominal": nominal / 1024}
+
+
+def finetune(model: nn.Module, train: Windows, val: Windows, *, epochs: int = E_FT, lr: float = FT_LR,
+             batch_size: int = FT_BATCH, seed: int = 0, device: str = "cpu",
+             extra_loss: Callable[[nn.Module, torch.Tensor], torch.Tensor] | None = None,
+             log: Callable[[str], None] = print) -> dict:
+    """The fine-tuning loop shared by every pruning method [plan 2.5]: exactly `epochs` epochs (no early
+    stopping; the last state is kept), Adam(lr), class-weighted CE from `train`, batch order from a
+    generator seeded with `seed`. `extra_loss(model, idx)` adds an attribution term for the batch
+    `idx` (indices into the training windows, on `device`); following Park's convention (Step 6), CE
+    is computed in train mode and the extra term in eval mode, so BatchNorm running statistics are not
+    updated by EG's interpolated inputs. Masked gradients are zeroed before each step and the masks
+    re-applied after it, so pruned weights stay exactly zero. Inner-validation pooled 7-class macro-F1
+    is logged after every epoch. The model is left on `device` in eval mode."""
+    require_harth(train, val)
+    dev = torch.device(device)
+    model.to(dev)
+    set_seed(seed)
+    apply_masks(model)
+    masked = _masked_params(model)
+    Xtr, ytr = torch.from_numpy(train.X).to(dev), torch.from_numpy(train.y).to(dev)
+    loss_fn = nn.CrossEntropyLoss(weight=class_weights(train.y).to(dev))
+    opt = torch.optim.Adam(model.parameters(), lr=lr)
+    g = torch.Generator().manual_seed(seed)
+    n, history, t_start = len(train), [], time.perf_counter()
+    for epoch in range(epochs):
+        t0 = time.perf_counter()
+        perm = torch.randperm(n, generator=g).to(dev)
+        tot_ce = tot_extra = 0.0
+        seen = 0
+        for i in range(0, n, batch_size):
+            idx = perm[i:i + batch_size]
+            if len(idx) < 2:          # BatchNorm cannot train on a batch of one
+                continue
+            opt.zero_grad(set_to_none=True)
+            model.train()
+            ce = loss_fn(model(Xtr[idx]), ytr[idx])
+            loss = ce
+            if extra_loss is not None:
+                model.eval()
+                ex = extra_loss(model, idx)
+                loss = ce + ex
+                tot_extra += float(ex.detach()) * len(idx)
+            loss.backward()
+            with torch.no_grad():
+                for w, keep in masked:
+                    if w.grad is not None:
+                        w.grad.mul_(keep.to(w.grad.dtype))
+            opt.step()
+            apply_masks(model)
+            tot_ce += float(ce.detach()) * len(idx)
+            seen += len(idx)
+        pred = predict_proba(model, val.X, device).argmax(axis=1)
+        f1, acc = pooled_macro_f1(val.y, pred), float(accuracy_score(val.y, pred))
+        dt = time.perf_counter() - t0
+        history.append({"epoch": epoch, "train_ce": tot_ce / max(seen, 1),
+                        "train_extra": tot_extra / max(seen, 1) if extra_loss is not None else None,
+                        "val_macro_f1_pooled7": f1, "val_accuracy": acc, "seconds": dt})
+        log(f"    ft epoch {epoch + 1:2d}/{epochs}  CE {tot_ce / max(seen, 1):.4f}"
+            + (f"  extra {tot_extra / max(seen, 1):.4f}" if extra_loss is not None else "")
+            + f"  val F1 {f1:.4f}  acc {acc:.4f}  {dt:.1f}s")
+    model.eval()
+    return {"epochs_run": len(history), "history": history, "seconds": time.perf_counter() - t_start,
+            "val_macro_f1_pooled7": history[-1]["val_macro_f1_pooled7"] if history else None}
 
 
 # ------------------------------------------------------------------------------ PTQ (primary)
@@ -128,8 +286,16 @@ def eg_attributions(model: nn.Module, X: torch.Tensor, target: torch.Tensor, bas
     cuDNN is switched off here: its RNN backward only runs in training mode, so gradients through
     TinyHAR's LSTM in eval mode fail on CUDA ("cudnn RNN backward can only be called in training
     mode"). No effect on CPU."""
-    with sdpa_kernel(SDPBackend.MATH), torch.backends.cudnn.flags(enabled=False):
+    with attribution_grad_context():
         return _eg(model, X, target, baselines, m, create_graph, generator)
+
+
+@contextlib.contextmanager
+def attribution_grad_context():
+    """Math SDPA kernel + cuDNN off: wrap every gradient taken through attributions (EG forward, and the
+    backward of a loss on them when the model is in eval mode). See eg_attributions."""
+    with sdpa_kernel(SDPBackend.MATH), torch.backends.cudnn.flags(enabled=False):
+        yield
 
 
 def _eg(model, X, target, baselines, m, create_graph, generator):
@@ -162,10 +328,12 @@ def unit_norm(a: torch.Tensor, eps: float = 1e-12) -> torch.Tensor:
 
 # ------------------------------------------------------------------------------ Park et al. (2020), adapted
 
-def park_teacher_attributions(teacher: nn.Module, X: torch.Tensor, target: torch.Tensor, baselines: torch.Tensor,
-                              m: int = 4, seed: int = 0, batch_size: int = 256) -> torch.Tensor:
-    """The original model's fixed matching targets [plan 2.5 (a)]: unit-L2-norm 48-segment EG attributions
-    (m draws) of the original model's top-1 class, computed once in eval mode without a graph. (N, 48)."""
+def teacher_segment_attributions(teacher: nn.Module, X: torch.Tensor, target: torch.Tensor,
+                                 baselines: torch.Tensor, m: int = 4, seed: int = 0,
+                                 batch_size: int = 256) -> torch.Tensor:
+    """The original model's fixed 48-segment EG attributions (m draws, seeded generator) of the original
+    model's predicted class, computed once in eval mode without a graph. (N, 48), signed, not normalised.
+    Shared by Park's targets (unit-normalised) and XGP's L_cons reference."""
     was_training = teacher.training
     teacher.eval()
     g = torch.Generator().manual_seed(seed)
@@ -173,9 +341,16 @@ def park_teacher_attributions(teacher: nn.Module, X: torch.Tensor, target: torch
     for i in range(0, len(X), batch_size):
         A = eg_attributions(teacher, X[i:i + batch_size], target[i:i + batch_size], baselines, m,
                             create_graph=False, generator=g)
-        out.append(unit_norm(segment_attributions(A)))
+        out.append(segment_attributions(A))
     teacher.train(was_training)
     return torch.cat(out)
+
+
+def park_teacher_attributions(teacher: nn.Module, X: torch.Tensor, target: torch.Tensor, baselines: torch.Tensor,
+                              m: int = 4, seed: int = 0, batch_size: int = 256) -> torch.Tensor:
+    """The original model's fixed matching targets [plan 2.5 (a)]: unit-L2-norm 48-segment EG attributions
+    (m draws) of the original model's top-1 class, computed once in eval mode without a graph. (N, 48)."""
+    return unit_norm(teacher_segment_attributions(teacher, X, target, baselines, m, seed, batch_size))
 
 
 def park_am_distance(A_S_seg: torch.Tensor, A_T_unit: torch.Tensor) -> torch.Tensor:
