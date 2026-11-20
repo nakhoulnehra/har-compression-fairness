@@ -1,0 +1,69 @@
+{
+ "command_line": [
+  "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\har\\time_har_components.py",
+  "--fold",
+  "0",
+  "--device",
+  "cuda",
+  "--machine-name",
+  "uni-2080"
+ ],
+ "machine_name": "uni-2080",
+ "device": {
+  "device": "cuda",
+  "gpu_name": "GeForce RTX 2080",
+  "cuda_version": "11.8",
+  "torch_version": "2.7.1+cu118",
+  "cpu": "Intel64 Family 6 Model 158 Stepping 13, GenuineIntel",
+  "torch_threads": 8,
+  "python": "3.11.9",
+  "os": "Windows 10"
+ },
+ "git_commit": "52d9f984bdfb4cd1d1d6da68b2f72346ee0aff6d",
+ "git_dirty": false,
+ "code_sha256": "f55e6a6d6b0c5ce9ccd6e9a5f3311478c4d23dca259af5f67636d2eac13ea6dd",
+ "started_at": "2026-11-20T17:40:31+02:00",
+ "finished_at": "2026-11-20T17:44:00+02:00",
+ "wall_seconds": 209.05792100005783,
+ "fold": 0,
+ "weights": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold0-nakhoul-3050.pt",
+ "frozen_setting": "lr1e-3-width1",
+ "protocol": {
+  "ce_epochs": 2,
+  "park_epochs": 1,
+  "nsamples": 200,
+  "n_train": null,
+  "n_val": null,
+  "n_explain": null,
+  "n_test": null
+ },
+ "finetune": {
+  "lr": 0.0001,
+  "batch_size": 256,
+  "m_park": 4,
+  "gamma_p": 50.0,
+  "snip_batches": 10
+ },
+ "work_per_fold": {
+  "noise_floor_epochs": 120,
+  "ce_ft_epochs": 80,
+  "park_ft_epochs": 80,
+  "ours_ft_epochs": 80,
+  "snip_calls": 4,
+  "ptq_calls": 2,
+  "shap_ex_models": 26,
+  "shap_val_models": 16,
+  "eval_models": 32,
+  "lci_pairs": 38
+ },
+ "plan_estimate_h": {
+  "aya": 11.6,
+  "nakhoul": 5.9
+ },
+ "n_train": 51451,
+ "n_val": 7709,
+ "n_test": 26105,
+ "n_ex": 660,
+ "n_val_explain": 90,
+ "smoke_scale_to_full_train": null
+}

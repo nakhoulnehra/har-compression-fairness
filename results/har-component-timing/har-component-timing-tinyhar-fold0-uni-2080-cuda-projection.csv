@@ -1,0 +1,10 @@
+machine_name,device,part,hours,measured,note,park_over_ce_epoch,smoke
+uni-2080,cuda,noise_floor_training,0.050809624996812394,True,120 CE epochs + validation each epoch (30-epoch upper bound),44.654968850701046,False
+uni-2080,cuda,l1_snip_finetune,0.03380176499861086,True,80 CE epochs + 4 SNIP score calls,44.654968850701046,False
+uni-2080,cuda,park_finetune_incl_tuning,1.4780534258320566,True,80 Park epochs + targets once,44.654968850701046,False
+uni-2080,cuda,ours_finetune_incl_tuning,1.4780534258320566,False,estimated = Park's cost (our method not implemented yet),44.654968850701046,False
+uni-2080,cuda,ptq,8.666555578303006e-06,True,"symmetric + Tulla-style, 8 and 4 bit",44.654968850701046,False
+uni-2080,cuda,shap,0.6838223373486821,True,(26 x 660 + 16 x 90) windows at nsamples 200,44.654968850701046,False
+uni-2080,cuda,evaluation,0.001455841778467099,True,32 models x 26105 test windows,44.654968850701046,False
+uni-2080,cuda,lci,0.0005466099433316332,True,38 model pairs,44.654968850701046,False
+uni-2080,cuda,total_steps_8_9_per_fold,3.7265516972855957,False,plan Section 5 estimate for this machine: None h,44.654968850701046,False

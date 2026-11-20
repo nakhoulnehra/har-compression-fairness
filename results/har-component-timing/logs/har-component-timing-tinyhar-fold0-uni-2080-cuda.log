@@ -1,0 +1,38 @@
+har.time_har_components | C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\har\time_har_components.py --fold 0 --device cuda --machine-name uni-2080 | machine uni-2080 | device cuda GeForce RTX 2080 | CPU Intel64 Family 6 Model 158 Stepping 13, GenuineIntel | torch 2.7.1+cu118 | threads 8
+fold 0: train 51451 windows (15 subjects), inner val 7709 (['S010', 'S020', 'S021']), test 26105 (HARTH ['S008', 'S019', 'S022', 'S025'] + 18 HAR70+), explain 660 of n_ex = 660, inner-val explain n_val = 90, background 100
+weights C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-tinyhar-fold0-nakhoul-3050.pt
+  inference           0.16 s  (26105 windows; 0.00001 s each) predict_proba, batch 1024
+  val_eval            0.05 s  (7709 windows; 0.00001 s each) inner validation, once per noise-floor epoch
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  ce_epoch_1          1.48 s  (1 epoch; 1.47511 s each) 51451 windows, batch 256
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  ce_epoch_2          1.48 s  (1 epoch; 1.47820 s each) 51451 windows, batch 256
+  park_targets       45.80 s  (51451 windows; 0.00089 s each) EG m = 4, no graph, once per fold
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  park_epoch_1       65.94 s  (1 epoch; 65.93995 s each) CE + 50 * L_AM, EG m = 4, create_graph
+  snip_scores         0.89 s  (1 call; 0.88850 s each) 10 batches of 256
+  ptq8                0.01 s  (1 call; 0.00780 s each) ptq_symmetric
+  ptq4                0.01 s  (1 call; 0.00738 s each) ptq_symmetric
+  shap               87.35 s  (660 windows; 0.13235 s each) single output, nsamples 200, background 100, 7 class groups
+  lci                 0.05 s  (1 model pair; 0.05178 s each) 22 subjects, k = 10
+
+Park / CE epoch cost: 44.65x (plan Section 5 assumed 3x; ours assumed 4x, here = Park)
+                     part    hours  measured
+     noise_floor_training 0.050810      True
+         l1_snip_finetune 0.033802      True
+park_finetune_incl_tuning 1.478053      True
+ours_finetune_incl_tuning 1.478053     False
+                      ptq 0.000009      True
+                     shap 0.683822      True
+               evaluation 0.001456      True
+                      lci 0.000547      True
+ total_steps_8_9_per_fold 3.726552     False
+
+wall clock 209.1 s
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-component-timing\har-component-timing-tinyhar-fold0-uni-2080-cuda.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-component-timing\har-component-timing-tinyhar-fold0-uni-2080-cuda-projection.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-component-timing\har-component-timing-tinyhar-fold0-uni-2080-cuda-config.json
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-component-timing\logs\har-component-timing-tinyhar-fold0-uni-2080-cuda.log
