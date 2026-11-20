@@ -1,0 +1,10 @@
+machine_name,device,part,hours,measured,note,park_over_ce_epoch,smoke
+nakhoul-3050,cuda,noise_floor_training,0.08722591000453879,True,120 CE epochs + validation each epoch (30-epoch upper bound),20.77600660489931,False
+nakhoul-3050,cuda,l1_snip_finetune,0.056362953221477156,True,80 CE epochs + 4 SNIP score calls,20.77600660489931,False
+nakhoul-3050,cuda,park_finetune_incl_tuning,1.1637008581641002,True,80 Park epochs + targets once,20.77600660489931,False
+nakhoul-3050,cuda,ours_finetune_incl_tuning,1.1637008581641002,False,estimated = Park's cost (our method not implemented yet),20.77600660489931,False
+nakhoul-3050,cuda,ptq,1.8932444509118794e-05,True,"symmetric + Tulla-style, 8 and 4 bit",20.77600660489931,False
+nakhoul-3050,cuda,shap,0.7217856880808907,True,(26 x 660 + 16 x 90) windows at nsamples 200,20.77600660489931,False
+nakhoul-3050,cuda,evaluation,0.003566313777118921,True,32 models x 26105 test windows,20.77600660489931,False
+nakhoul-3050,cuda,lci,0.0008255816663667146,True,38 model pairs,20.77600660489931,False
+nakhoul-3050,cuda,total_steps_8_9_per_fold,3.197187095523102,False,plan Section 5 estimate for this machine: 5.9 h; ratio 0.54; off by more than 30%: True,20.77600660489931,False

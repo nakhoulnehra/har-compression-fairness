@@ -113,7 +113,7 @@ commands ran / time taken to finish:
 - `python -m har.run_sanity_walking_aid` (Step 5, evaluation only): **30.0 s** wall clock; 28.6 s for the rerun with the merged Ustad 4-class scoring (5 class sets) and `har/tests/test_stats.py` 7/7 in 12.3 s. The 5 frozen TinyHAR fold models predict 42,248 HARTH test windows (each subject once) and 5 × 17,403 HAR70+ windows on CPU; the rest is metrics and 24 bootstraps of 10,000 resamples.
 - Step 6 code (2026-11-20, baseline parts of `har/compression.py` + `har/time_har_components.py`): `python -m pytest har/tests lci/tests` **76.7 s** wall clock (139/139 passed; 13 new in `test_compression.py` and `test_attributions.py`); `python -m har.time_har_components --fold 0 --smoke --machine-name Aya`: **28.5 s** wall clock (19.6 s inside the script). Smoke sizes only, so no timing numbers from it.
 
-### Step 6 timing benchmark (pending: real runs not done yet)
+### Step 6 timing benchmark (GPU runs done: nakhoul-3050, uni-2080; CPU runs pending)
 
 Commands in [../STATUS.md](../STATUS.md). The per-component CSVs and projections go to `results/har-component-timing/`. One rule for every run: **our method's fine-tuning cost = "estimated = Park's cost"**. Our method (keep-score, L_cons, gate) is not implemented yet, so the projection charges its 80 fine-tuning epochs and its targets at Park's measured cost per epoch and marks the row `measured = False`. Its keep-score (EG m = 8 on 1,000 windows, once per level) is not in the projection.
 
@@ -150,5 +150,11 @@ On this GPU, TinyHAR at width 1.0 takes about 2.5× less time per epoch than CNN
 | Total | 22.9 min | 60.2 min |
 
 DeepConvLSTM at width 1.0 is the slowest candidate on this GPU: about 3× HART and 3× CNN1D per epoch. Its LSTM runs step by step over the 128 time steps, so the GPU helps it least. Plan Section 5's CPU upper bounds (DeepConvLSTM 5.4 h, HART 2.0 h on Nakhoul's machine) were not needed.
+
+Step 6 timing benchmark on this GPU (2026-11-20, git 8b770af, clean tree):
+- `python -m har.time_har_components --fold 0 --device cuda --smoke --machine-name nakhoul-3050`: 7.8 s wall clock
+- `python -m har.time_har_components --fold 0 --device cuda --machine-name nakhoul-3050`: **186.6 s wall clock**. Measured: CE epoch 2.5 s, Park epoch 52.0 s (20.8× CE; plan Section 5 assumed 3×), Park targets 31.8 s, SNIP scores 0.7 s, SHAP 92.2 s for 660 windows (0.14 s each), inference 0.4 s for 26,105 windows. **Projected Steps 8–9 per fold: 3.20 h** (Park 1.16 h, ours = Park 1.16 h, SHAP 0.72 h, noise floor 0.09 h, L1+SNIP 0.06 h).
+
+For comparison, uni-2080 (RTX 2080, 2026-11-20, git 52d9f98): 209.1 s wall clock; CE epoch 1.5 s, Park epoch 65.9 s (44.7× CE), SHAP 87.4 s; projected 3.73 h per fold. The 3050 Ti is slower on plain CE but faster on Park's double-backward epochs, so its projection comes out lower.
 
 All five candidates' training is done (GPU, Nakhoul: 105 min for CNN1D, TinyHAR, HART, DeepConvLSTM; CPU, Aya: 8.7 min for XGBoost). The result rows hold `run_seconds`, `device` and `gpu_name`. CPU estimates are in [plan/HAR_IMPLEMENTATION.md](../plan/HAR_IMPLEMENTATION.md) Section 5. The CPU timing command (`python -m har.time_model_selection_cpu`, full protocol) is meant to run on Aya's machine and has not been run yet.

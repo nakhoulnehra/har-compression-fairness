@@ -194,5 +194,6 @@ python -m har.time_har_components --fold 0 --smoke --machine-name Aya   # -> res
 # real runs (not run yet), one job per machine at a time:
 python -m har.time_har_components --fold 0 --device cpu  --threads 10 --machine-name aya-laptop     # Aya
 python -m har.time_har_components --fold 0 --device cpu  --threads 8  --machine-name nakhoul-3050   # Nakhoul
-python -m har.time_har_components --fold 0 --device cuda              --machine-name nakhoul-3050   # Nakhoul GPU
+python -m har.time_har_components --fold 0 --device cuda --smoke      --machine-name nakhoul-3050   # Nakhoul GPU smoke, 7.8 s (2026-11-20)
+python -m har.time_har_components --fold 0 --device cuda              --machine-name nakhoul-3050   # Nakhoul GPU, run 2026-11-20, 186.6 s, git 8b770af
 ```

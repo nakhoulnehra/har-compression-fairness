@@ -1,0 +1,38 @@
+har.time_har_components | C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\har\time_har_components.py --fold 0 --device cuda --machine-name nakhoul-3050 | machine nakhoul-3050 | device cuda NVIDIA GeForce RTX 3050 Ti Laptop GPU | CPU AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD | torch 2.7.1+cu118 | threads 8
+fold 0: train 51451 windows (15 subjects), inner val 7709 (['S010', 'S020', 'S021']), test 26105 (HARTH ['S008', 'S019', 'S022', 'S025'] + 18 HAR70+), explain 660 of n_ex = 660, inner-val explain n_val = 90, background 100
+weights C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-tinyhar-fold0-nakhoul-3050.pt
+  inference           0.40 s  (26105 windows; 0.00002 s each) predict_proba, batch 1024
+  val_eval            0.12 s  (7709 windows; 0.00001 s each) inner validation, once per noise-floor epoch
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  ce_epoch_1          2.55 s  (1 epoch; 2.55458 s each) 51451 windows, batch 256
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  ce_epoch_2          2.45 s  (1 epoch; 2.44820 s each) 51451 windows, batch 256
+  park_targets       31.82 s  (51451 windows; 0.00062 s each) EG m = 4, no graph, once per fold
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  park_epoch_1       51.97 s  (1 epoch; 51.96883 s each) CE + 50 * L_AM, EG m = 4, create_graph
+  snip_scores         0.70 s  (1 call; 0.69892 s each) 10 batches of 256
+  ptq8                0.02 s  (1 call; 0.01704 s each) ptq_symmetric
+  ptq4                0.01 s  (1 call; 0.00768 s each) ptq_symmetric
+  shap               92.20 s  (660 windows; 0.13970 s each) single output, nsamples 200, background 100, 7 class groups
+  lci                 0.08 s  (1 model pair; 0.07821 s each) 22 subjects, k = 10
+
+Park / CE epoch cost: 20.78x (plan Section 5 assumed 3x; ours assumed 4x, here = Park)
+                     part    hours  measured
+     noise_floor_training 0.087226      True
+         l1_snip_finetune 0.056363      True
+park_finetune_incl_tuning 1.163701      True
+ours_finetune_incl_tuning 1.163701     False
+                      ptq 0.000019      True
+                     shap 0.721786      True
+               evaluation 0.003566      True
+                      lci 0.000826      True
+ total_steps_8_9_per_fold 3.197187     False
+
+wall clock 186.6 s
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-component-timing\har-component-timing-tinyhar-fold0-nakhoul-3050-cuda.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-component-timing\har-component-timing-tinyhar-fold0-nakhoul-3050-cuda-projection.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-component-timing\har-component-timing-tinyhar-fold0-nakhoul-3050-cuda-config.json
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-component-timing\logs\har-component-timing-tinyhar-fold0-nakhoul-3050-cuda.log

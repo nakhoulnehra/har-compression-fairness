@@ -200,8 +200,25 @@ There are 233 files (60 tuning, 125 final, 48 logs), listed by pattern. File nam
 ## har-model-selection-smoke/
 **Git-ignored, local only: a pipeline check, not results.** The `--smoke` runs of `har.run_model_selection`, `har.time_model_selection_cpu` and `har.select_model` write here (fold 0, 1 epoch, 300 / 200 / 200 windows), with the same layout as `har-model-selection/`. The folder is rebuilt in under a minute, and its numbers say nothing about the candidates. The smoke runs on each machine passed (2026-11-19: Aya CPU 36.4 s, Nakhoul CUDA 36.7 s; see `environment/time.md`).
 
+## har-component-timing/
+Step 6 timing of the frozen TinyHAR on fold 0 (51,451 training windows, 26,105 test windows, 660 explain windows), `python -m har.time_har_components --fold 0 --device cuda --machine-name <m>`. Each run writes `har-component-timing-tinyhar-fold0-<m>-<device>.csv` (seconds per component), `-projection.csv` (hours for Steps 8–9 per fold), `-config.json` and `logs/<same>.log`. "Ours" is charged at Park's cost (`measured = False`, our method is not implemented yet).
+
+| | nakhoul-3050 (RTX 3050 Ti Laptop), 2026-11-20, git 8b770af | uni-2080 (RTX 2080), 2026-11-20, git 52d9f98 |
+|---|---|---|
+| CE epoch | 2.5 s | 1.5 s |
+| Park epoch (CE + 50·L_AM, EG m = 4) | 52.0 s (**20.8× CE**; plan assumed 3×) | 65.9 s (**44.7× CE**) |
+| SHAP, 660 windows, nsamples 200 | 92.2 s | 87.4 s |
+| Projection: Park fine-tuning (incl. tuning) | 1.16 h | 1.48 h |
+| Projection: ours (= Park) | 1.16 h | 1.48 h |
+| Projection: SHAP | 0.72 h | 0.68 h |
+| Projection: noise floor / L1+SNIP | 0.09 h / 0.06 h | 0.05 h / 0.03 h |
+| **Projected total, Steps 8–9 per fold** | **3.20 h** | **3.73 h** |
+| Wall clock of the timing run | 186.6 s | 209.1 s |
+
+Park's and our fine-tuning together take 73% (3050 Ti) and 79% (2080) of the projected time; PTQ, evaluation and LCI are all under 15 s.
+
 ## har-component-timing-smoke/
-**Git-ignored, local only: a pipeline check, not results.** `python -m har.time_har_components --fold 0 --smoke` (Step 6) writes here: 600 training windows, 8 explain windows, nsamples 20, files named like the real ones in `har-component-timing/` (not run yet). Its projection is dominated by per-batch overhead and says nothing about run time. Passed on Aya CPU on 2026-11-20 (28.5 s wall clock).
+**Git-ignored, local only: a pipeline check, not results.** `python -m har.time_har_components --fold 0 --smoke` (Step 6) writes here: 600 training windows, 8 explain windows, nsamples 20, files named like the real ones in `har-component-timing/`. Its projection is dominated by per-batch overhead and says nothing about run time. Passed on Aya CPU on 2026-11-20 (28.5 s wall clock) and on the nakhoul-3050 GPU (7.8 s).
 
 ## har-baseline-gap/
 Step 5, baseline gap check on HAR70+ (**first HAR70+ use**), with the frozen TinyHAR (`har-model-selection/har-frozen-model-config.json`, lr 1e-3, width 1.0, 54,273 parameters). Evaluation only, nothing trained or changed: the 5 final fold checkpoints (seed 0, trained on Nakhoul's GPU) run on CPU with their stored normalisation. General = each HARTH subject's test windows from its one held-out fold (22 subjects, 42,248 windows); older = all 18 HAR70+ subjects with every fold model (17,403 windows), averaged over the 5 folds. Written by `python -m har.run_sanity_walking_aid` on Aya's laptop, 2026-11-20, 29 s (rerun with the merged Ustad scoring).
