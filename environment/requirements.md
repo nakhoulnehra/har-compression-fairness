@@ -185,3 +185,14 @@ python -m pytest har/tests/test_stats.py      # 7/7 passed
 python -m har.run_sanity_walking_aid --smoke  # output folder deleted afterwards
 python -m har.run_sanity_walking_aid          # CPU, 28.6 s -> results/har-baseline-gap/ (all files rewritten)
 ```
+
+Step 6, timing benchmark of the frozen model (2026-11-20, Aya's laptop, torch 2.7.1+cpu). New code: the baseline parts of `har/compression.py` (`prunable_tensors`, `ptq_symmetric`, `snip_scores`, `eg_attributions`, `segment_attributions`, Park's `park_teacher_attributions` / `park_am_loss`) and `har/time_har_components.py`. Our method (keep-score, L_cons, gate) is not written yet. No new packages. `eg_attributions` forces PyTorch's math SDPA kernel (`torch.nn.attention.sdpa_kernel(SDPBackend.MATH)`): the fused attention kernels have no double backward, so Park's loss failed on TinyHAR's attention without it. Needs `data/processed/har/checkpoints/har-model-selection/har-final-tinyhar-fold0-*.pt`.
+
+```bash
+python -m pytest har/tests lci/tests                                    # 139/139 passed
+python -m har.time_har_components --fold 0 --smoke --machine-name Aya   # -> results/har-component-timing-smoke/ (git-ignored)
+# real runs (not run yet), one job per machine at a time:
+python -m har.time_har_components --fold 0 --device cpu  --threads 10 --machine-name aya-laptop     # Aya
+python -m har.time_har_components --fold 0 --device cpu  --threads 8  --machine-name nakhoul-3050   # Nakhoul
+python -m har.time_har_components --fold 0 --device cuda              --machine-name nakhoul-3050   # Nakhoul GPU
+```

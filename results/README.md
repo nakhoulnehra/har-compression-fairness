@@ -200,6 +200,9 @@ There are 233 files (60 tuning, 125 final, 48 logs), listed by pattern. File nam
 ## har-model-selection-smoke/
 **Git-ignored, local only: a pipeline check, not results.** The `--smoke` runs of `har.run_model_selection`, `har.time_model_selection_cpu` and `har.select_model` write here (fold 0, 1 epoch, 300 / 200 / 200 windows), with the same layout as `har-model-selection/`. The folder is rebuilt in under a minute, and its numbers say nothing about the candidates. The smoke runs on each machine passed (2026-11-19: Aya CPU 36.4 s, Nakhoul CUDA 36.7 s; see `environment/time.md`).
 
+## har-component-timing-smoke/
+**Git-ignored, local only: a pipeline check, not results.** `python -m har.time_har_components --fold 0 --smoke` (Step 6) writes here: 600 training windows, 8 explain windows, nsamples 20, files named like the real ones in `har-component-timing/` (not run yet). Its projection is dominated by per-batch overhead and says nothing about run time. Passed on Aya CPU on 2026-11-20 (28.5 s wall clock).
+
 ## har-baseline-gap/
 Step 5, baseline gap check on HAR70+ (**first HAR70+ use**), with the frozen TinyHAR (`har-model-selection/har-frozen-model-config.json`, lr 1e-3, width 1.0, 54,273 parameters). Evaluation only, nothing trained or changed: the 5 final fold checkpoints (seed 0, trained on Nakhoul's GPU) run on CPU with their stored normalisation. General = each HARTH subject's test windows from its one held-out fold (22 subjects, 42,248 windows); older = all 18 HAR70+ subjects with every fold model (17,403 windows), averaged over the 5 folds. Written by `python -m har.run_sanity_walking_aid` on Aya's laptop, 2026-11-20, 29 s (rerun with the merged Ustad scoring).
 - Groups: walking aid (inferred) = 503, 505, 513, 514, 515; other older = the other 13; walker (inferred) = the walking-aid group without 503 (the 4 walker users; 503 taken as the walking-sticks user, project decision, not stated in Ustad).

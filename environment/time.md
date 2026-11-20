@@ -111,6 +111,11 @@ commands ran / time taken to finish:
 - `python -m pytest har/tests`: 96.1 s (113/113 passed)
 - `python -m har.run_sanity_walking_aid --smoke`: 3.5 s
 - `python -m har.run_sanity_walking_aid` (Step 5, evaluation only): **30.0 s** wall clock; 28.6 s for the rerun with the merged Ustad 4-class scoring (5 class sets) and `har/tests/test_stats.py` 7/7 in 12.3 s. The 5 frozen TinyHAR fold models predict 42,248 HARTH test windows (each subject once) and 5 × 17,403 HAR70+ windows on CPU; the rest is metrics and 24 bootstraps of 10,000 resamples.
+- Step 6 code (2026-11-20, baseline parts of `har/compression.py` + `har/time_har_components.py`): `python -m pytest har/tests lci/tests` **76.7 s** wall clock (139/139 passed; 13 new in `test_compression.py` and `test_attributions.py`); `python -m har.time_har_components --fold 0 --smoke --machine-name Aya`: **28.5 s** wall clock (19.6 s inside the script). Smoke sizes only, so no timing numbers from it.
+
+### Step 6 timing benchmark (pending: real runs not done yet)
+
+Commands in [../STATUS.md](../STATUS.md). The per-component CSVs and projections go to `results/har-component-timing/`. One rule for every run: **our method's fine-tuning cost = "estimated = Park's cost"**. Our method (keep-score, L_cons, gate) is not implemented yet, so the projection charges its 80 fine-tuning epochs and its targets at Park's measured cost per epoch and marks the row `measured = False`. Its keep-score (EG m = 8 on 1,000 windows, once per level) is not in the projection.
 
 ## Nakhoul's machine, GPU (RTX 3050 Ti Laptop, 4 GB), torch 2.7.1+cu118
 
