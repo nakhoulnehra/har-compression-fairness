@@ -87,8 +87,12 @@ def snip_scores_from_batches(model: nn.Module, batches: Iterable[tuple[torch.Ten
     m = copy.deepcopy(model).eval()
     m.zero_grad(set_to_none=True)
     dev = next(m.parameters()).device
-    for X, y in batches:
-        loss_fn(m(X.to(dev)), y.to(dev)).backward()      # gradients accumulate = sum over batches
+    # cuDNN is switched off here: its RNN backward only runs in training mode, so gradients through
+    # TinyHAR's LSTM in eval mode fail on CUDA ("cudnn RNN backward can only be called in training
+    # mode"). No effect on CPU.
+    with torch.backends.cudnn.flags(enabled=False):
+        for X, y in batches:
+            loss_fn(m(X.to(dev)), y.to(dev)).backward()  # gradients accumulate = sum over batches
     return {name: (getattr(mod, p).detach() * getattr(mod, p).grad).abs()
             for name, mod, p in prunable_tensors(m)}
 
