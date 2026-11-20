@@ -42,5 +42,8 @@ def shap_target_class(model: nn.Module, background: torch.Tensor, X: torch.Tenso
         explainer = shap.GradientExplainer(SingleOutput(model, c), background)
         np.random.seed(shap_seed + int(c))
         torch.manual_seed(shap_seed + int(c))
-        out[idx] = _as_array(explainer.shap_values(X[idx], nsamples=nsamples))
+        # cuDNN off: its RNN backward only runs in training mode, and the model is in eval mode, so the
+        # input gradients through TinyHAR's LSTM fail on CUDA. No effect on CPU.
+        with torch.backends.cudnn.flags(enabled=False):
+            out[idx] = _as_array(explainer.shap_values(X[idx], nsamples=nsamples))
     return out

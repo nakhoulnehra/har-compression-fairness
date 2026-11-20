@@ -120,8 +120,11 @@ def eg_attributions(model: nn.Module, X: torch.Tensor, target: torch.Tensor, bas
     The model's train/eval mode is the caller's choice and is not changed here.
     Attention runs on PyTorch's math SDPA kernel: the fused CPU/CUDA kernels (flash, memory-efficient)
     have no double backward, so a loss on these attributions (create_graph=True) would fail on
-    TinyHAR's and HART's attention."""
-    with sdpa_kernel(SDPBackend.MATH):
+    TinyHAR's and HART's attention.
+    cuDNN is switched off here: its RNN backward only runs in training mode, so gradients through
+    TinyHAR's LSTM in eval mode fail on CUDA ("cudnn RNN backward can only be called in training
+    mode"). No effect on CPU."""
+    with sdpa_kernel(SDPBackend.MATH), torch.backends.cudnn.flags(enabled=False):
         return _eg(model, X, target, baselines, m, create_graph, generator)
 
 
