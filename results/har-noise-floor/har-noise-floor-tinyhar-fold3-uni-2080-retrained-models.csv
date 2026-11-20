@@ -1,0 +1,5 @@
+fold,seed,val_macro_f1_pooled7,checkpoint,machine_name,device,best_epoch,epochs_run,best_val_macro_f1_pooled7,train_seconds,reused_checkpoint
+3,0,0.8305283419307302,C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-tinyhar-fold3-nakhoul-3050.pt,uni-2080,cuda,,,,,
+3,1,0.834258459253484,C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\data\processed\har\checkpoints\har-noise-floor\har-noise-floor-tinyhar-fold3-seed1.pt,uni-2080,cuda,8.0,14.0,0.834258459253484,26.025801999960095,False
+3,2,0.8278816660327298,C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\data\processed\har\checkpoints\har-noise-floor\har-noise-floor-tinyhar-fold3-seed2.pt,uni-2080,cuda,12.0,18.0,0.8278816660327298,31.49470219993964,False
+3,3,0.8279087118121414,C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\data\processed\har\checkpoints\har-noise-floor\har-noise-floor-tinyhar-fold3-seed3.pt,uni-2080,cuda,13.0,19.0,0.8279087118121414,33.215957000036724,False

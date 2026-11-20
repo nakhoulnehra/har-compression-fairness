@@ -1,0 +1,71 @@
+{
+ "command_line": [
+  "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\har\\run_noise_floor.py",
+  "--folds",
+  "3",
+  "--device",
+  "cuda",
+  "--machine-name",
+  "uni-2080"
+ ],
+ "machine_name": "uni-2080",
+ "device": {
+  "device": "cuda",
+  "gpu_name": "GeForce RTX 2080",
+  "cuda_version": "11.8",
+  "torch_version": "2.7.1+cu118",
+  "cpu": "Intel64 Family 6 Model 158 Stepping 13, GenuineIntel",
+  "torch_threads": 8,
+  "python": "3.11.9",
+  "os": "Windows 10"
+ },
+ "git_commit": "9de05e9feb6c8cf4d86615b94c030acd0ed3a3dc",
+ "git_dirty": false,
+ "code_sha256": "c0801b47ff8fa4c4725c8828199d7a9e7b7c78ddd61a9cab7f6c451223bfd153",
+ "fold": 3,
+ "smoke": false,
+ "smoke_sizes": null,
+ "retrain_seeds": [
+  1,
+  2,
+  3
+ ],
+ "shap_seeds": [
+  1,
+  2
+ ],
+ "nsamples": 200,
+ "k": 10,
+ "omega": 0.5,
+ "train_config": {
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "batch_size": 256,
+  "max_epochs": 30,
+  "patience": 5,
+  "label_smoothing": 0.0
+ },
+ "architecture": {
+  "filters": 28,
+  "n_conv": 4,
+  "kernel": 5,
+  "stride": 2,
+  "heads": 1,
+  "ff_mult": 2,
+  "dropout": 0.2,
+  "width": 1.0
+ },
+ "seed0_checkpoint": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold3-nakhoul-3050.pt",
+ "n_explain": {
+  "inner_val": 90,
+  "general": 120,
+  "older": 540
+ },
+ "tau_k": 0.6236971762657825,
+ "seconds": {
+  "training": 92.64339139999356,
+  "shap": 595.7439476000145,
+  "wall": 690.402838399983
+ },
+ "finished_at": "2026-11-21T00:29:48+02:00"
+}
