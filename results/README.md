@@ -277,7 +277,37 @@ XGP pilot (plan 2.5 (b)), fold 0, 70% pruning, inner val (S010, S020, S021; 90 e
 - Key numbers: teacher EG 40.0 s, SNIP 0.9 s, I(w) 10.1 s; wall 28,005 s (includes ≈ 4.5 h hibernation).
 
 ## har-xgp-pilot/round2/
-XGP pilot round 2 (plan 2.5 (b), round 2): the last validation-only design iteration before XGP is frozen. Fold 0, inner val only (S010, S020, S021), HAR70+ never loaded. `python -m har.run_xgp_pilot2`. Pre-registration written first (`--prepare`, Aya CPU, 2026-11-21, before any GPU run). The 70% level and the EG-noise diagnostic are done (nakhoul-3050, 2026-11-21, git 7dd23b6, clean). The 90% run (uni-2080) and `--analyze` are still to do; their files (`-90pct-inner-val-uni-2080-*`, `-summary-mean-sd-over-seeds.csv`, `-decision-table.csv`, `-decision.json`) get entries here when they exist.
+XGP pilot round 2 (plan 2.5 (b), round 2): the last validation-only design iteration before XGP is frozen. Fold 0, inner val only (S010, S020, S021), HAR70+ never loaded. `python -m har.run_xgp_pilot2`. Pre-registration written first (`--prepare`, Aya CPU, 2026-11-21, before any GPU run). 70% + EG-noise diagnostic on nakhoul-3050, 90% on uni-2080, both 2026-11-21 at git 7dd23b6 (clean), then `--analyze`. **Decision: final XGP = xgp_kd, β* 0.1 at both levels; Step 9 uses E_ft = 20.**
+
+### [har-xgp-pilot2-tinyhar-fold0-decision.json](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-decision.json)
+- What: the pre-registered decision. It holds the final XGP, β per level, the best baseline F1 per level, the epochs check and the Step 9 E_ft.
+- Key numbers: **final_xgp = xgp_kd**; β* 0.1 at 70% and at 90%, neither flagged. Best baseline F1 (l1_kd) 0.7828 at 70% and 0.6770 at 90%. Epochs check (l1_kd_e20 − l1_kd, seed 0): +0.97 pt at 70%, **+7.69 pt at 90%** (0.7292 against 0.6523). That is over the 1-pt bar, so **E_ft = 20 for every method in Step 9**.
+
+### [har-xgp-pilot2-tinyhar-fold0-decision-table.csv](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-decision-table.csv)
+- What: one row per XGP variant and baseline: mean LCI over the two window sets and F1 at each level, the F1 margin against the best baseline, eligibility, and whether it was selected.
+- Key numbers (mean LCI 70 / 90 / over both levels; F1 70 / 90): **xgp_kd 0.875 / 0.753 / 0.814; 0.776 / 0.718, the only eligible variant, selected**. xgp_worstclass_kd 0.875 / 0.770 / 0.823; 0.761 / 0.728, misses the bar at 70% by 2.1 pt. xgp_aug_kd 0.875 / 0.770 / 0.823; 0.764 / 0.713, misses at 70%. xgp_worstclass_aug_kd 0.876 / 0.766 / 0.821; 0.768 / 0.688, misses at 70%. Baselines: l1 0.852 / 0.781 / 0.816; **l1_kd 0.884 / 0.774 / 0.829**; snip_kd 0.791 / 0.120 / 0.456; park 0.866 / 0.746 / 0.806; park_kd 0.888 / 0.729 / 0.809.
+- Reading: the rule picked xgp_kd because it is the only variant eligible at 70%, not because of its LCI. Its mean LCI over both levels (0.814) is below l1_kd (0.829) and l1 (0.816). At 90%, every XGP variant beats every baseline on F1 (0.69–0.73 against l1_kd 0.677).
+
+### [har-xgp-pilot2-tinyhar-fold0-summary-mean-sd-over-seeds.csv](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-summary-mean-sd-over-seeds.csv)
+- What: mean and SD over seeds for every method and start at both levels. Covers LCI, Spearman, Jaccard, worst-subject LCI, retention, F1 and accuracy on the normal and older-like windows, plus fine-tuning seconds.
+- Key numbers: the per-level values in the runs entries here come from this file.
+
+### [har-xgp-pilot2-tinyhar-fold0-90pct-inner-val-uni-2080-runs.csv](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-90pct-inner-val-uni-2080-runs.csv)
+- What: the same layout as the 70% runs file, at 90% sparsity: 39 assessments. Starts have n_nonzero 6,821 (original 54,273). τ_0 and ceiling_0 come from nakhoul-3050's fold-0 noise floor.
+- Key numbers (mean ± SD over seeds; F1 normal / LCI normal / LCI older-like / mean LCI): l1 0.639 / 0.760 / 0.801 / 0.781; **l1_kd 0.677 ± 0.022** / 0.774 / 0.774 / 0.774; snip_kd 0.055 ± 0.061 / 0.124 / 0.116 / 0.120 (collapsed); park 0.604 / 0.713 / 0.778 / 0.746; park_kd 0.631 / 0.736 / 0.723 / 0.729; l1_kd_e20 0.729 / 0.776 / 0.836 / 0.806. xgp_kd β 0.05: 0.683 / 0.712 / 0.766 / 0.739; **β 0.1: 0.718 ± 0.009 / 0.769 / 0.737 / 0.753**; β 0.3: 0.552 ± 0.214 / 0.649 / 0.645 / 0.647 (one seed collapsed). With β* 0.1: xgp_worstclass_kd 0.728 / 0.759 / 0.781 / 0.770; xgp_aug_kd 0.713 / 0.749 / 0.791 / 0.770; xgp_worstclass_aug_kd 0.688 / 0.734 / 0.798 / 0.766.
+- Reading: the eligibility bar is 0.667, and all four XGP variants clear it at 90%. Without fine-tuning, every start is near chance (F1 0.04–0.23).
+
+### [har-xgp-pilot2-tinyhar-fold0-90pct-inner-val-uni-2080-per-subject-lci.csv](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-90pct-inner-val-uni-2080-per-subject-lci.csv)
+- What: per-subject LCI (S010, S020, S021) for each 90% assessment on the normal and older-like windows.
+
+### [har-xgp-pilot2-tinyhar-fold0-90pct-inner-val-uni-2080-finetune-history.csv](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-90pct-inner-val-uni-2080-finetune-history.csv)
+- What: per-epoch losses, val F1 and accuracy for every 90% fine-tuning run. Fine-tuning takes ≈ 2 s per CE/KD epoch and ≈ 65 s per Park epoch on the RTX 2080.
+
+### [har-xgp-pilot2-tinyhar-fold0-90pct-inner-val-uni-2080-config.json](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-90pct-inner-val-uni-2080-config.json)
+- What: the command, device (RTX 2080, torch 2.7.1+cu118), git 7dd23b6 (clean), the pre-registration hashes, τ_0 0.659 / ceiling_0 0.946 (nakhoul-3050 fold 0), n_nonzero per start, and the rules. Level loop 4,928 s; wall clock 5,114 s (85 min).
+
+### logs/har-xgp-pilot2-tinyhar-fold0-90pct-uni-2080-20261121-152237.log
+- What: the full console log of the 90% run (uni-2080).
 
 ### [har-xgp-pilot2-tinyhar-fold0-70pct-inner-val-nakhoul-3050-runs.csv](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-70pct-inner-val-nakhoul-3050-runs.csv)
 - What: one row per assessment at 70% (original, 8 no-finetune starts, 30 fine-tuned runs: seeds 0–2, plus seed-0-only park, park_kd, l1_kd_e20). Pooled 7-class macro-F1 and LCI on the normal and older-like inner-val windows, sparsity, timings, β*. Every start has n_nonzero 17,365. τ_0 0.659, ceiling_0 0.946.

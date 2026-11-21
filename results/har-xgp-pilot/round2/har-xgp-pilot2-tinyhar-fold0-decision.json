@@ -1,0 +1,36 @@
+{
+ "final_xgp": "xgp_kd",
+ "selection_rule": "Final XGP = the eligible XGP variant with the highest mean LCI_val over {70%, 90%} x {normal, older-like} windows (mean over seeds). Eligible = mean pooled 7-class macro-F1 on the normal inner-val windows >= the best baseline's mean F1 - 1 pt, at both levels. Baselines: l1, l1_kd, snip_kd, park, park_kd. Ties within 0.005 -> the variant with fewer components (keep-score 1, + worst-class 1, + augmentation 1). If no variant is eligible, no fallback: report and stop. Variants: xgp_kd (beta in {0.05, 0.1, 0.3}), xgp_worstclass_kd, xgp_aug_kd, xgp_worstclass_aug_kd; the variants' beta at a level = the beta of xgp_kd picked at that level by the same eligibility and LCI criterion on that level alone (ties within 0.005 -> the smaller beta; none eligible -> the highest F1, flagged), and xgp_kd enters the rule with that beta.",
+ "fairness_rule_step9": "Step 9: whatever recipe and E_ft the final XGP uses, L1 and SNIP-score pruning get the same in the grid; Park runs as published (CE + gamma_P L_AM) and as park_kd. E_ft = 20 for every method in Step 9 if l1_kd_e20 beats l1_kd (seed 0, same level) by more than 1 pt pooled macro-F1 (normal windows) at either level; otherwise 10.",
+ "beta_by_level": {
+  "70pct": 0.1,
+  "90pct": 0.1
+ },
+ "beta_flagged_by_level": {
+  "70pct": false,
+  "90pct": false
+ },
+ "best_baseline_f1": {
+  "70pct": 0.7827528907456278,
+  "90pct": 0.6769589665589462
+ },
+ "epochs_check": {
+  "70pct": {
+   "f1_e20": 0.7858631019841289,
+   "f1_e10": 0.7761666447919432,
+   "gain": 0.009696457192185703
+  },
+  "90pct": {
+   "f1_e20": 0.7291583397660854,
+   "f1_e10": 0.6522322319922192,
+   "gain": 0.0769261077738661
+  }
+ },
+ "e_ft_step9": 20,
+ "files": [
+  "har-xgp-pilot2-tinyhar-fold0-70pct-inner-val-nakhoul-3050-runs.csv",
+  "har-xgp-pilot2-tinyhar-fold0-90pct-inner-val-uni-2080-runs.csv"
+ ],
+ "analyzed_at": "2026-11-21T17:38:57+02:00",
+ "smoke": false
+}

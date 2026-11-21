@@ -221,3 +221,13 @@ command: `python -m har.run_xgp_pilot2 --levels 0.7 --diagnostic --device cuda -
 - Fine-tuning total 0.60 h: CE/KD 10 epochs ≈ 30–36 s per run (≈ 3.3 s per epoch, faster than round 1's 9 s); l1_kd_e20 73 s; **Park ≈ 595 s, park_kd ≈ 606 s** (≈ 60 s per epoch, against 158–207 s in round 1).
 - SHAP total 0.95 h over 38 assessments: ≈ 80–95 s each (600 windows, ≈ 0.14 s per window, round 1's fastest speed).
 - The estimate was too high because CE and Park epochs both ran about 3× faster than in round 1.
+
+## XGP pilot round 2, 90% level (uni-2080, GPU, 2026-11-21)
+
+machine: uni-2080, GeForce RTX 2080, torch 2.7.1+cu118
+command: `python -m har.run_xgp_pilot2 --levels 0.9 --device cuda --machine-name uni-2080 --noise-floor-machine nakhoul-3050`
+- **Wall clock 5,114 s (1.42 h)**, against the 3.2 h estimate. Level loop 4,928 s; started 15:22, finished 16:47.
+- Fine-tuning total 0.52 h: CE/KD 10 epochs ≈ 19–20 s per run (≈ 2 s per epoch); l1_kd_e20 40 s; Park ≈ 652 s, park_kd ≈ 655 s (≈ 65 s per epoch).
+- SHAP total 0.84 h over 38 assessments (≈ 80 s each).
+- `python -m har.run_xgp_pilot2 --analyze` (nakhoul-3050, after both levels): a few seconds.
+- Round 2 in total: both levels ran in parallel on two machines, so ≈ 1.6 h of wall clock.
