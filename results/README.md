@@ -221,7 +221,20 @@ Park's and our fine-tuning together take 73% (3050 Ti) and 79% (2080) of the pro
 **Git-ignored, local only: a pipeline check, not results.** `python -m har.time_har_components --fold 0 --smoke` (Step 6) writes here: 600 training windows, 8 explain windows, nsamples 20, files named like the real ones in `har-component-timing/`. Its projection is dominated by per-batch overhead and says nothing about run time. Passed on Aya CPU on 2026-11-20 (28.5 s wall clock) and on the nakhoul-3050 GPU (7.8 s).
 
 ## har-noise-floor/
-Step 8 noise floor, fold 0, frozen TinyHAR: seed 0 (the model-selection checkpoint) against retrained seeds 1–3 (retrain noise) and against SHAP seeds 1–2 on seed 0 (SHAP noise), nsamples 200. `python -m har.run_noise_floor --folds 0 --device cuda --machine-name nakhoul-3050`, 2026-11-20, git c7787e2 (clean tree), 709 s.
+Step 8 noise floor, frozen TinyHAR: seed 0 (the model-selection checkpoint) against retrained seeds 1–3 (retrain noise) and against SHAP seeds 1–2 on seed 0 (SHAP noise), nsamples 200. Every fold has 5 files `har-noise-floor-tinyhar-fold{k}-{machine}-{tau.csv, group-summary.csv, per-subject-lci.csv, retrained-models.csv, config.json}` plus `logs/har-noise-floor-tinyhar-fold{k}-{machine}.log`. Done: fold 0 (nakhoul-3050, git c7787e2, 709 s), folds 2, 3, 4 (uni-2080, 2026-11-20/21), folds 1 and 3 (nakhoul-3050, 2026-11-21, git 75b5229, clean; 890 s and 1,204 s). Fold 3 on both machines is the cross-machine check (plan Step 9b). Fold 0's files are detailed below; the other folds share the same columns.
+
+### All folds: τ_k and group means (retrain mean | SHAP mean, subject-mean LCI)
+| fold, machine | τ_k (seed) | inner val | general | older (18) | val F1 seed 0 / retrained seeds 1–3 |
+|---|---|---|---|---|---|
+| 0, nakhoul-3050 | 0.659 (1) | 0.729 \| 0.946 | 0.759 \| 0.941 | 0.769 \| 0.927 | 0.818 / 0.832, 0.785, 0.817 |
+| 1, nakhoul-3050 | **0.583** (3) | 0.611 \| 0.892 | 0.623 \| 0.905 | 0.595 \| 0.887 | 0.807 / 0.807, 0.781, 0.791 |
+| 2, uni-2080 | 0.630 (1) | 0.685 \| 0.944 | 0.684 \| 0.921 | 0.687 \| 0.927 | see file |
+| 3, nakhoul-3050 | 0.610 (1) | 0.681 \| 0.913 | 0.740 \| 0.929 | 0.721 \| 0.923 | 0.831 / 0.826, 0.833, 0.803 |
+| 3, uni-2080 | 0.624 (1) | 0.701 \| 0.913 | 0.738 \| 0.929 | 0.706 \| 0.923 | 0.831 / 0.834, 0.828, 0.828 |
+| 4, uni-2080 | 0.613 (3) | 0.677 \| 0.962 | 0.634 \| 0.880 | 0.699 \| 0.923 | see file |
+- Mean over folds 0–4 (fold 3 = nakhoul-3050): retrain general 0.688, older 0.694; SHAP general 0.915, older 0.917. Before any compression, explanations are no less stable for older adults than for the general group. Every τ_k (0.58–0.66) is below Tulla's 0.85, and SHAP noise sits above retrain noise in every group and fold.
+- Fold 1 has the lowest floor (τ_1 0.583; retrain LCI ≈ 0.60 in every group).
+- Cross-machine check, fold 3: the SHAP-noise LCIs are identical on both machines, because both start from the same seed-0 checkpoint. The retrained seeds differ (GPU non-determinism): τ_3 0.610 against 0.624, and group retrain means within 0.02 (inner val 0.681 / 0.701, general 0.740 / 0.738, older 0.721 / 0.706).
 
 ### [har-noise-floor-tinyhar-fold0-nakhoul-3050-tau.csv](har-noise-floor/har-noise-floor-tinyhar-fold0-nakhoul-3050-tau.csv)
 - What: τ_0 = min over retrain seeds of the inner-val LCI (seed 0 vs seed s), and checks.

@@ -191,6 +191,13 @@ Smoke sizes only, so these are no estimate of the real runs. GPU estimates for t
 - Park's epoch here (≈ 206 s, AC) is ≈ 4× the Step 6 benchmark (52.0 s) on the same GPU, and epoch times varied up to 2× within one run (Park 112–207 s, L_cons 53–105 s). Laptop power/thermal state is not controlled, so these are not clean timings. The Step 6 projection (3.20 h/fold; 3.95 h with ablations) is likely too low; re-time Park and L_cons on a plugged-in, idle machine before planning Step 9.
 - L_cons epochs (53–105 s, even on battery) were about half of Park's (158–207 s, on AC), so L_cons is cheaper than Park, not equal as Step 6 assumed.
 
+## Step 8 noise floor, folds 1 and 3 (nakhoul-3050 GPU, 2026-11-21, git 75b5229, clean tree)
+
+- `python -m har.run_noise_floor --folds 1 3 --device cuda --machine-name nakhoul-3050`: 21:11–21:46, **≈ 35 min** for both folds.
+- Fold 1: **890 s** (training 160 s: seeds 1–3 40 / 44 / 73 s, 13–17 epochs; SHAP 728 s).
+- Fold 3: **1,204 s** (training 440 s: seeds 1–3 86 / 270 / 82 s, 10 / 23 / 7 epochs, ≈ 9–12 s per epoch against ≈ 3 s in fold 1; SHAP 763 s). For comparison, fold 3 on uni-2080 took 690 s (training 93 s, SHAP 596 s).
+- Per fold, the noise floor costs ≈ 12–20 min on nakhoul-3050, depending on early stopping and epoch speed.
+
 ## XGP pilot round 2 code (Aya's machine, CPU, 2026-11-21)
 
 machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00), torch 2.7.1+cpu

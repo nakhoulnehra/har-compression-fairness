@@ -215,6 +215,7 @@ python -m har.run_xgp_pilot --fold 0 --smoke --machine-name Aya --tau 0.99   # s
 # real runs, nakhoul-3050 GPU, one after the other (2026-11-20/21, git c7787e2, exit 0 both):
 python -m har.run_noise_floor --folds 0 --device cuda --machine-name nakhoul-3050   # -> results/har-noise-floor/ (709 s)
 python -m har.run_xgp_pilot --fold 0 --device cuda --machine-name nakhoul-3050      # -> results/har-xgp-pilot/ (reads fold 0's tau; 7.8 h incl. 4.5 h hibernation)
+python -m har.run_noise_floor --folds 1 3 --device cuda --machine-name nakhoul-3050   # 2026-11-21, git 75b5229, nakhoul-3050 (torch 2.7.1+cu118); fold 1 890 s, fold 3 1,204 s
 ```
 
 XGP pilot round 2 code (2026-11-21, Aya's laptop, torch 2.7.1+cpu). No new packages. New code:
