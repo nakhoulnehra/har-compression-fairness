@@ -1,0 +1,121 @@
+{
+ "what": "XGP pilot round 2, fold 0, inner validation only; pre-registered before any GPU run",
+ "written_at": "2026-11-21T15:02:58+02:00",
+ "git_commit": "182b16842d73f74cad100e06fd2423c58a236753",
+ "git_dirty": true,
+ "code_sha256": "940cf3a2734b96e47df9e06a7598a9173c18dea2272558b2be14e8cc6ec3bb3a",
+ "smoke": false,
+ "selection_rule": "Final XGP = the eligible XGP variant with the highest mean LCI_val over {70%, 90%} x {normal, older-like} windows (mean over seeds). Eligible = mean pooled 7-class macro-F1 on the normal inner-val windows >= the best baseline's mean F1 - 1 pt, at both levels. Baselines: l1, l1_kd, snip_kd, park, park_kd. Ties within 0.005 -> the variant with fewer components (keep-score 1, + worst-class 1, + augmentation 1). If no variant is eligible, no fallback: report and stop. Variants: xgp_kd (beta in {0.05, 0.1, 0.3}), xgp_worstclass_kd, xgp_aug_kd, xgp_worstclass_aug_kd; the variants' beta at a level = the beta of xgp_kd picked at that level by the same eligibility and LCI criterion on that level alone (ties within 0.005 -> the smaller beta; none eligible -> the highest F1, flagged), and xgp_kd enters the rule with that beta.",
+ "fairness_rule_step9": "Step 9: whatever recipe and E_ft the final XGP uses, L1 and SNIP-score pruning get the same in the grid; Park runs as published (CE + gamma_P L_AM) and as park_kd. E_ft = 20 for every method in Step 9 if l1_kd_e20 beats l1_kd (seed 0, same level) by more than 1 pt pooled macro-F1 (normal windows) at either level; otherwise 10.",
+ "xgp2": {
+  "levels": [
+   0.7,
+   0.9
+  ],
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "single_seed_methods": [
+   "park",
+   "park_kd",
+   "l1_kd_e20"
+  ],
+  "betas": [
+   0.05,
+   0.1,
+   0.3
+  ],
+  "epochs": 10,
+  "epochs_check": 20,
+  "lr": 0.0001,
+  "park_gamma_p": 1.0,
+  "baselines": [
+   "l1",
+   "l1_kd",
+   "snip_kd",
+   "park",
+   "park_kd"
+  ],
+  "variants": {
+   "xgp_kd": [
+    "plain",
+    1
+   ],
+   "xgp_worstclass_kd": [
+    "worstclass",
+    2
+   ],
+   "xgp_aug_kd": [
+    "aug",
+    2
+   ],
+   "xgp_worstclass_aug_kd": [
+    "worstclass_aug",
+    3
+   ]
+  },
+  "f1_tolerance": 0.01,
+  "tie": 0.005,
+  "epochs_check_margin": 0.01,
+  "explain_per_subject": 100,
+  "nsamples": 200,
+  "shap_seed": 0,
+  "eg_diagnostic_m": [
+   4,
+   16,
+   200
+  ],
+  "eg_diagnostic_seeds": [
+   0,
+   1
+  ]
+ },
+ "kd": {
+  "T": 3.0,
+  "alpha": 0.7
+ },
+ "older_like": {
+  "speed": [
+   0.8,
+   0.9
+  ],
+  "scale": [
+   0.7,
+   0.9
+  ],
+  "explain_seed": 42,
+  "reference_seed": 43
+ },
+ "park_tuning_used": {
+  "gamma_p": 1.0,
+  "lr": 0.0001,
+  "m": 4
+ },
+ "xgp_importance": {
+  "n_ref": 1000,
+  "ref_seed": 42,
+  "m_score": 8,
+  "eg_seeds": [
+   0,
+   1
+  ],
+  "score_batch": 125
+ },
+ "fold": 0,
+ "inner_val_subjects": [
+  "S010",
+  "S020",
+  "S021"
+ ],
+ "n_inner_val_windows": 7709,
+ "n_explain_windows": 300,
+ "n_reference_windows": 1000,
+ "explain_windows_first30_equal_round1": true,
+ "round1_explain_windows_contained": 90,
+ "sha256": {
+  "inner_val": "89b78ed7c270dbf685600b8db80d0e156aee54867db70130489682fe3c68e1a8",
+  "reference": "8086bfec112abb2915fb0175402d8ca3734c47793b1fc9cba4420f5d27b217bd"
+ }
+}

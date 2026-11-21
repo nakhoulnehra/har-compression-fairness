@@ -1,5 +1,7 @@
 # Status
-Current step: 9 (compression grid). Step 8 noise floor and the XGP pilot (fold 0) are done.
+Current step: XGP pilot round 2 (fold 0, inner val only; the last validation-only design iteration before XGP is frozen), then Step 9 (compression grid). Step 8 noise floor and pilot round 1 (fold 0) are done.
+Round 2 (code done on Aya CPU, 2026-11-21, not committed): 195/195 tests pass; smoke run passes (both levels + diagnostic 78 s, analyze 8 s). Pre-registration written by `--prepare` before any GPU run: results/har-xgp-pilot/round2/ (rule, window tables with sha256). Design in plan 2.5 (b), round 2: XGP = keep-score variants only (xgp_kd β ∈ {0.05, 0.1, 0.3}, xgp_worstclass_kd, xgp_aug_kd, xgp_worstclass_aug_kd); every method gets the shared KD recipe (0.7 KL(T 3) T² + 0.3 CE, E_ft 10); L_cons and the gate are dropped; baselines l1, l1_kd, snip_kd, park, park_kd; seeds 0–2 (Park seed 0); 300 normal + 300 older-like inner-val explain windows.
+Next (GPU, run by us, both at once): nakhoul-3050 `python -m har.run_xgp_pilot2 --levels 0.7 --diagnostic --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050` (≈ 2.8 h, up to 4.3 h); uni-2080 `python -m har.run_xgp_pilot2 --levels 0.9 --device cuda --machine-name uni-2080 --noise-floor-machine nakhoul-3050` (≈ 3.2 h, up to 5 h). Then `python -m har.run_xgp_pilot2 --analyze` with both runs files in results/har-xgp-pilot/round2/: it applies the pre-registered rule (no fallback: if no variant is eligible it stops) and the E_ft check (l1_kd_e20). Commit the round-2 code and the pre-registration files before the GPU runs, so both machines check against the same tables.
 Done: 7 (code): XGP + noise floor + pilot, implemented and tested on Aya CPU (2026-11-20). 176/176 tests pass (96 s). Smoke runs pass: noise floor 24.8 s, pilot 33 s (also run with `--tau 0.99` to exercise the L_cons branch, 49 s). Committed in c7787e2.
 - `har/xgp.py`: keep-score, I(w), L_cons, gate, tuning rule, method and ablation registry.
 - `har/compression.py`: `l1_scores`, `prune_by_score` (in-place masks), `size_record`, `finetune` (exactly E_ft = 10 epochs), `teacher_segment_attributions`, `attribution_grad_context`.
@@ -12,7 +14,7 @@ GPU notes: attribution/SHAP/SNIP gradients run with cuDNN off and math attention
 Done on nakhoul-3050 GPU (2026-11-20/21, git c7787e2): noise floor fold 0 (709 s) -> results/har-noise-floor/, τ_0 = 0.6593; XGP pilot fold 0 (≈ 3.3 h without a 4.5 h hibernation) -> results/har-xgp-pilot/.
 Pilot result: both β gated to CE + γ·L_cons. XGP β 0.3 γ 0.1 has the highest LCI_val (0.887 vs L1 0.884, Park 0.810) but F1 0.711, 2 pt below L1 (0.731), so it is picked by the fallback; no XGP configuration meets the 1-pt F1 rule. Park picks γp 1, lr 1e-4 (F1 0.743).
 Open from the pilot: (1) decide whether the XGP grid needs smaller γ / more epochs or a looser F1 rule before Step 9; (2) Park epochs took ≈ 206 s (4× Step 6's 52 s), so re-time Park and L_cons on a plugged-in machine and redo the per-fold projection (environment/time.md).
-Next: Step 9's grid runner (`har/run_compression_grid.py`) is still to be written. The XGP parts it needs (`METHODS`, `ABLATIONS`, `pruning_scores`, `make_extra_loss`, `select_config`) are in `har/xgp.py`.
+Step 9's grid runner (`har/run_compression_grid.py`) is still to be written, after round 2 fixes XGP. Round 1's open point (1) is replaced by round 2. Round 1's `METHODS`, `ABLATIONS`, gate and `select_config` in `har/xgp.py` describe round 1 only; Step 9 takes the final variant, the β and E_ft from round 2's `-decision.json` and applies the fairness rule (L1 and SNIP get the same recipe and E_ft; Park as published and as park_kd).
 
 Done: 1 setup, 2 plan, 3 data pipeline + explain windows + backgrounds; 4e Nakhoul GPU smoke run; 4f all 5 candidates trained (tuning + folds 0–4) in results/har-model-selection/: CNN1D + TinyHAR (Nakhoul GPU, 21.6 min), XGBoost (Aya CPU, 8.7 min), HART + DeepConvLSTM (Nakhoul GPU, 83.2 min)
 4: TinyHAR frozen (81.98 macro-F1, 54K params, 0.17 s SHAP/window).
@@ -21,6 +23,7 @@ Done: 1 setup, 2 plan, 3 data pipeline + explain windows + backgrounds; 4e Nakho
 Last commit: e07eabf.
 
 ## Decisions since the plan (short)
+- XGP pilot round 2 (2026-11-21; plan 2.5 (b), round 2): KD is a shared fine-tuning recipe for every method, not part of XGP; XGP = the keep-score variants only; L_cons and the gate are dropped (EG m = 4 self-agreement ≈ 0.44 in an unsaved check; the gate never fired), and the EG-noise diagnostic is reported as a finding. Pre-registered rule: final XGP = the eligible variant with the highest mean LCI_val over {70, 90%} × {normal, older-like}; eligible = mean F1 ≥ best baseline − 1 pt at both levels; ties within 0.005 → fewer components; no eligible variant → stop, no fallback. Our resolution of β: the variants use the β of xgp_kd picked at that level by the same criterion (ties → smaller β). E_ft = 20 in Step 9 if l1_kd_e20 beats l1_kd (seed 0) by > 1 pt F1 at either level. Older-like windows: s ~ U(0.8, 0.9) time-stretch + a ~ U(0.7, 0.9) movement scaling around the per-channel mean (`har/augment.py`); worst-class I uses the reference windows' labels; seeds = the fine-tuning batch-order seed.
 - Selection rule: best macro-F1; among models within 2 pt, lowest CPU SHAP time; params break ties
 - 20 Hz low-pass on both datasets
 - FA-LCI = min(LCI_older, LCI_general) (λ = 0.5)
@@ -44,6 +47,6 @@ Last commit: e07eabf.
 - HART on CUDA warns that the backward pass of memory-efficient attention is non-deterministic: repeat runs of HART on GPU may not be bit-identical.
 - Run inside `.venv`: the system Python on Nakhoul's laptop has no numpy.
 - HAR70+: at least 15 pt of older subjects' walking/standing/sitting/lying windows are predicted as shuffling or stairs (older 4-class accuracy 76.6% with the 7-class argmax vs 91.6% restricted to the 4 classes; general 91.1 vs 97.3; merged Ustad scoring 84.6 vs 95.5). Subject 514 is an outlier (42.9% merged 4-class accuracy).
-- `run_noise_floor` and `run_xgp_pilot` are smoke-tested on CPU only. If either fails on GPU, rerun it there with `--smoke --device cuda` first.
+- `run_noise_floor` and `run_xgp_pilot` ran on GPU; `run_xgp_pilot2` is smoke-tested on CPU only. If either fails on GPU, rerun it there with `--smoke --device cuda` first.
 - L_cons epoch cost is assumed equal to Park's (52 s on the 3050 Ti); the pilot's `finetune_seconds` will measure it.
 - Step 6 projection uses 8 × n_val SHAP windows for tuning (Park 4 + ours 4 configurations); plan Section 5 counts 360 for both, so the projection is slightly higher there.

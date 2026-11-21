@@ -3,6 +3,8 @@
     prunable_tensors      the weight tensors pruning and PTQ act on (head excluded unless asked)
     l1_scores, prune_by_score, apply_masks, size_record, finetune
                           uniform per-tensor unstructured pruning and the shared fine-tuning loop
+    KD, kd_kl_term, kd_loss, predict_logits
+                          the shared KD fine-tuning recipe (XGP pilot round 2): every method gets it
     ptq_symmetric         per-tensor symmetric weight PTQ, the primary PTQ            [plan 2.5, Q1]
     snip_scores           SNIP saliency |w * dL/dw| on the trained model             [Lee et al. 2019; plan Q2]
     eg_attributions       differentiable expected-gradients surrogate of SHAP        [plan 2.5]
@@ -31,6 +33,7 @@ from typing import Callable, Iterable
 import numpy as np
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from sklearn.metrics import accuracy_score
 from torch.nn.attention import SDPBackend, sdpa_kernel
 
@@ -42,6 +45,10 @@ SEG_LEN = 16
 E_FT = 10            # fine-tuning epochs, every pruning method [plan 2.5]
 FT_LR = 1e-4         # Adam [plan 2.5]
 FT_BATCH = 256
+# The shared KD fine-tuning recipe (XGP pilot round 2, plan 2.5): every method gets it, it is not part
+# of XGP. alpha KL(T) T^2 to the original model's logits + (1 - alpha) class-weighted CE on the labels,
+# as in lci.compression.distill.
+KD = {"T": 3.0, "alpha": 0.7}
 
 
 # ------------------------------------------------------------------------------ scope
@@ -151,9 +158,32 @@ def size_record(model: nn.Module, quantized: dict[str, int] | None = None) -> di
             "size_kb_dense": n_params * 4 / 1024, "size_kb_nominal": nominal / 1024}
 
 
+def kd_kl_term(student_logits: torch.Tensor, teacher_logits: torch.Tensor, T: float = KD["T"]) -> torch.Tensor:
+    """KL(softmax(teacher / T) || softmax(student / T)), batch mean (without the T^2 factor)."""
+    return F.kl_div(F.log_softmax(student_logits / T, 1), F.softmax(teacher_logits.detach() / T, 1),
+                    reduction="batchmean")
+
+
+def kd_loss(student_logits: torch.Tensor, teacher_logits: torch.Tensor, y: torch.Tensor, ce_fn: nn.Module,
+            T: float = KD["T"], alpha: float = KD["alpha"]) -> torch.Tensor:
+    """The shared KD recipe: alpha KL(T) T^2 + (1 - alpha) CE(student, y), with ce_fn the class-weighted CE."""
+    return alpha * kd_kl_term(student_logits, teacher_logits, T) * T * T + (1 - alpha) * ce_fn(student_logits, y)
+
+
+@torch.no_grad()
+def predict_logits(model: nn.Module, X: np.ndarray, device: str = "cpu", batch_size: int = 1024) -> np.ndarray:
+    """Logits in eval mode, (n, n_classes) float32 (the KD teacher outputs)."""
+    model.eval()
+    dev = torch.device(device)
+    out = [model(torch.from_numpy(np.ascontiguousarray(X[i:i + batch_size])).to(dev)).float().cpu().numpy()
+           for i in range(0, len(X), batch_size)]
+    return np.concatenate(out)
+
+
 def finetune(model: nn.Module, train: Windows, val: Windows, *, epochs: int = E_FT, lr: float = FT_LR,
              batch_size: int = FT_BATCH, seed: int = 0, device: str = "cpu",
              extra_loss: Callable[[nn.Module, torch.Tensor], torch.Tensor] | None = None,
+             kd_teacher_logits: torch.Tensor | None = None,
              log: Callable[[str], None] = print) -> dict:
     """The fine-tuning loop shared by every pruning method [plan 2.5]: exactly `epochs` epochs (no early
     stopping; the last state is kept), Adam(lr), class-weighted CE from `train`, batch order from a
@@ -162,8 +192,14 @@ def finetune(model: nn.Module, train: Windows, val: Windows, *, epochs: int = E_
     is computed in train mode and the extra term in eval mode, so BatchNorm running statistics are not
     updated by EG's interpolated inputs. Masked gradients are zeroed before each step and the masks
     re-applied after it, so pruned weights stay exactly zero. Inner-validation pooled 7-class macro-F1
-    is logged after every epoch. The model is left on `device` in eval mode."""
+    is logged after every epoch. The model is left on `device` in eval mode.
+    With kd_teacher_logits ((n_train, n_classes), the original model's logits on `train`), the
+    supervised term is the shared KD recipe kd_loss (KD["alpha"] KL(T) T^2 + (1 - alpha) CE) instead of
+    CE; `train_ce` then logs the CE part and `train_kd` the KL part."""
     require_harth(train, val)
+    if kd_teacher_logits is not None and tuple(kd_teacher_logits.shape)[:1] != (len(train),):
+        raise ValueError(f"kd_teacher_logits must have one row per training window ({len(train)}), "
+                         f"got {tuple(kd_teacher_logits.shape)}")
     dev = torch.device(device)
     model.to(dev)
     set_seed(seed)
@@ -172,12 +208,13 @@ def finetune(model: nn.Module, train: Windows, val: Windows, *, epochs: int = E_
     Xtr, ytr = torch.from_numpy(train.X).to(dev), torch.from_numpy(train.y).to(dev)
     loss_fn = nn.CrossEntropyLoss(weight=class_weights(train.y).to(dev))
     opt = torch.optim.Adam(model.parameters(), lr=lr)
+    zt = kd_teacher_logits.to(dev) if kd_teacher_logits is not None else None
     g = torch.Generator().manual_seed(seed)
     n, history, t_start = len(train), [], time.perf_counter()
     for epoch in range(epochs):
         t0 = time.perf_counter()
         perm = torch.randperm(n, generator=g).to(dev)
-        tot_ce = tot_extra = 0.0
+        tot_ce = tot_extra = tot_kd = 0.0
         seen = 0
         for i in range(0, n, batch_size):
             idx = perm[i:i + batch_size]
@@ -185,12 +222,18 @@ def finetune(model: nn.Module, train: Windows, val: Windows, *, epochs: int = E_
                 continue
             opt.zero_grad(set_to_none=True)
             model.train()
-            ce = loss_fn(model(Xtr[idx]), ytr[idx])
-            loss = ce
+            z = model(Xtr[idx])
+            ce = loss_fn(z, ytr[idx])
+            if zt is None:
+                loss = ce
+            else:
+                kl = kd_kl_term(z, zt[idx], KD["T"])
+                loss = KD["alpha"] * kl * KD["T"] ** 2 + (1 - KD["alpha"]) * ce
+                tot_kd += float(kl.detach()) * len(idx)
             if extra_loss is not None:
                 model.eval()
                 ex = extra_loss(model, idx)
-                loss = ce + ex
+                loss = loss + ex
                 tot_extra += float(ex.detach()) * len(idx)
             loss.backward()
             with torch.no_grad():
@@ -206,8 +249,10 @@ def finetune(model: nn.Module, train: Windows, val: Windows, *, epochs: int = E_
         dt = time.perf_counter() - t0
         history.append({"epoch": epoch, "train_ce": tot_ce / max(seen, 1),
                         "train_extra": tot_extra / max(seen, 1) if extra_loss is not None else None,
+                        "train_kd": tot_kd / max(seen, 1) if zt is not None else None,
                         "val_macro_f1_pooled7": f1, "val_accuracy": acc, "seconds": dt})
         log(f"    ft epoch {epoch + 1:2d}/{epochs}  CE {tot_ce / max(seen, 1):.4f}"
+            + (f"  KL {tot_kd / max(seen, 1):.4f}" if zt is not None else "")
             + (f"  extra {tot_extra / max(seen, 1):.4f}" if extra_loss is not None else "")
             + f"  val F1 {f1:.4f}  acc {acc:.4f}  {dt:.1f}s")
     model.eval()

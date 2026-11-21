@@ -189,3 +189,105 @@ def select_config(rows: list[dict], l1_f1: float, f1_key: str = "val_f1", lci_ke
     if ok:
         return max(ok, key=lambda r: r[lci_key]), False
     return max(rows, key=lambda r: r[f1_key]), True
+
+
+# ------------------------------------------------------------------------------ pilot round 2 (2026-11-21)
+# Validation-only design iteration [plan 2.5 (b), round 2]. XGP = the keep-score variants only; every
+# method is fine-tuned with the shared KD recipe (compression.KD), which is not part of XGP. L_cons and
+# the gate are dropped (kept above for the round-1 record). Pre-registered before any GPU run:
+#   final XGP = the eligible variant with the highest mean LCI_val over {70%, 90%} x {normal, older-like}
+#   windows (mean over seeds); eligible = mean pooled 7-class macro-F1 on the normal inner-val windows
+#   >= the best baseline's mean F1 - 1 pt at BOTH levels; ties within 0.005 -> fewer components (then
+#   the higher LCI). No eligible variant -> no fallback: report and stop.
+#   beta of the variants at a level = the beta of xgp_kd chosen by the same rule at that level alone
+#   (ties within 0.005 -> the smaller beta); if no beta is eligible there, the highest F1, flagged.
+XGP2 = {"levels": (0.7, 0.9), "seeds": (0, 1, 2), "single_seed_methods": ("park", "park_kd", "l1_kd_e20"),
+        "betas": (0.05, 0.1, 0.3), "epochs": 10, "epochs_check": 20, "lr": 1e-4, "park_gamma_p": 1.0,
+        "baselines": ("l1", "l1_kd", "snip_kd", "park", "park_kd"),
+        # variant: (importance, number of XGP components) -- keep-score = 1, + worst-class, + augmentation
+        "variants": {"xgp_kd": ("plain", 1), "xgp_worstclass_kd": ("worstclass", 2),
+                     "xgp_aug_kd": ("aug", 2), "xgp_worstclass_aug_kd": ("worstclass_aug", 3)},
+        "f1_tolerance": 0.01, "tie": 0.005, "epochs_check_margin": 0.01,
+        "explain_per_subject": 100, "nsamples": 200, "shap_seed": 0, "eg_diagnostic_m": (4, 16, 200),
+        "eg_diagnostic_seeds": (0, 1)}
+
+
+def classwise_alignment_importance(model: nn.Module, X: torch.Tensor, target: torch.Tensor, classes,
+                                   baselines: torch.Tensor, m: int = XGP["m_score"], eg_seeds=XGP["eg_seeds"],
+                                   batch_size: int = XGP["score_batch"]) -> dict[int, dict[str, torch.Tensor]]:
+    """I_c(w) per class c present in `classes` (one label per reference window): alignment_importance on
+    that class's reference windows only (same EG seeds, same batching)."""
+    classes = np.asarray(classes)
+    if classes.shape != (len(X),):
+        raise ValueError(f"classes must have one entry per window ({len(X)}), got {classes.shape}")
+    target = torch.as_tensor(target)
+    out = {}
+    for c in np.unique(classes):
+        idx = torch.from_numpy(np.flatnonzero(classes == c))
+        out[int(c)] = alignment_importance(model, X[idx.to(X.device)], target[idx.to(target.device)], baselines,
+                                           m=m, eg_seeds=eg_seeds, batch_size=batch_size)
+    return out
+
+
+def worst_class_importance(per_class: dict[int, dict[str, torch.Tensor]],
+                           eps: float = XGP["eps"]) -> dict[str, torch.Tensor]:
+    """I(w) = max over classes of I_c(w) / mean_layer I_c (a class whose I_c is all zero in a layer adds 0
+    there). With one class this is I / mean_layer I, which keep_scores turns into the plain keep-score."""
+    names = next(iter(per_class.values())).keys()
+    out = {}
+    for n in names:
+        parts = []
+        for imp in per_class.values():
+            I = imp[n].detach()
+            mu = I.mean()
+            parts.append(I / mu if mu > eps else torch.zeros_like(I))
+        out[n] = torch.stack(parts).amax(0)
+    return out
+
+
+def _pick(cands: list[tuple], tie: float) -> tuple:
+    """cands = (key, lci, tie_break); highest lci, then among those within `tie` of it the smallest
+    tie_break, then the highest lci."""
+    top = max(c[1] for c in cands)
+    near = [c for c in cands if c[1] >= top - tie - 1e-12]
+    return min(near, key=lambda c: (c[2], -c[1]))
+
+
+def choose_beta(by_beta: dict[float, dict], best_baseline_f1: float, tol: float = XGP2["f1_tolerance"],
+                tie: float = XGP2["tie"]) -> tuple[float, bool]:
+    """beta of xgp_kd at one level (pre-registered): eligible = f1_normal >= best_baseline_f1 - tol; the
+    highest lci_mean_sets, ties within `tie` -> the smaller beta. None eligible: highest F1, flagged."""
+    ok = [(b, r["lci_mean_sets"], b) for b, r in by_beta.items() if r["f1_normal"] >= best_baseline_f1 - tol - 1e-12]
+    if ok:
+        return _pick(ok, tie)[0], False
+    return max(by_beta, key=lambda b: (by_beta[b]["f1_normal"], -b)), True
+
+
+def select_final_xgp(stats: dict[tuple[str, float], dict], levels=XGP2["levels"], baselines=XGP2["baselines"],
+                     variants=XGP2["variants"], tol: float = XGP2["f1_tolerance"], tie: float = XGP2["tie"]) -> dict:
+    """The pre-registered rule. stats[(method, level)] = {"lci_mean_sets": mean over seeds of the mean of
+    LCI_val on normal and older-like windows, "f1_normal": mean over seeds of the pooled 7-class macro-F1
+    on the normal inner-val windows}. Returns {"final": variant or None, "best_baseline_f1": {level: f1},
+    "table": one row per variant}. Raises KeyError if a (method, level) cell is missing."""
+    best = {lv: max(stats[(b, lv)]["f1_normal"] for b in baselines) for lv in levels}
+    table = []
+    for v, (_, n_comp) in variants.items():
+        row = {"variant": v, "n_components": n_comp}
+        ok = True
+        for lv in levels:
+            st = stats[(v, lv)]
+            p = int(round(lv * 100))
+            row[f"lci_mean_sets_{p}"] = st["lci_mean_sets"]
+            row[f"f1_normal_{p}"] = st["f1_normal"]
+            row[f"best_baseline_f1_{p}"] = best[lv]
+            row[f"f1_margin_{p}"] = st["f1_normal"] - best[lv]
+            row[f"f1_ok_{p}"] = bool(st["f1_normal"] >= best[lv] - tol - 1e-12)
+            ok &= row[f"f1_ok_{p}"]
+        row["lci_mean_levels_sets"] = float(np.mean([stats[(v, lv)]["lci_mean_sets"] for lv in levels]))
+        row["eligible"] = bool(ok)
+        table.append(row)
+    ok = [(r["variant"], r["lci_mean_levels_sets"], r["n_components"]) for r in table if r["eligible"]]
+    final = _pick(ok, tie)[0] if ok else None
+    for r in table:
+        r["selected"] = r["variant"] == final
+    return {"final": final, "best_baseline_f1": best, "table": table}

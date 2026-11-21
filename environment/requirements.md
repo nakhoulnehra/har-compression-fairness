@@ -216,3 +216,21 @@ python -m har.run_xgp_pilot --fold 0 --smoke --machine-name Aya --tau 0.99   # s
 python -m har.run_noise_floor --folds 0 --device cuda --machine-name nakhoul-3050   # -> results/har-noise-floor/ (709 s)
 python -m har.run_xgp_pilot --fold 0 --device cuda --machine-name nakhoul-3050      # -> results/har-xgp-pilot/ (reads fold 0's tau; 7.8 h incl. 4.5 h hibernation)
 ```
+
+XGP pilot round 2 code (2026-11-21, Aya's laptop, torch 2.7.1+cpu). No new packages. New code:
+- `har/augment.py`: older-like copies of HARTH windows (time-stretch s ~ U(0.8, 0.9), movement scaling a ~ U(0.7, 0.9) around the per-channel mean).
+- `har/compression.py`: the shared KD fine-tuning recipe (`KD`, `kd_kl_term`, `kd_loss`, `predict_logits`, `finetune(kd_teacher_logits=...)`).
+- `har/xgp.py`: `XGP2`, `classwise_alignment_importance`, `worst_class_importance`, `choose_beta`, `select_final_xgp` (the pre-registered rule).
+- `har/run_xgp_pilot2.py` (`--prepare`, `--levels`, `--diagnostic`, `--analyze`, `--resume`, `--smoke`); tests in `har/tests/test_xgp_round2.py`.
+
+```bash
+python -m pytest har/tests lci/tests                                   # 195/195 passed
+python -m har.run_xgp_pilot2 --prepare --smoke                         # -> results/har-xgp-pilot-smoke/round2/ (git-ignored)
+python -m har.run_xgp_pilot2 --levels 0.7 0.9 --diagnostic --smoke     # 78 s
+python -m har.run_xgp_pilot2 --analyze --smoke                         # 8 s
+python -m har.run_xgp_pilot2 --prepare                                 # -> results/har-xgp-pilot/round2/ pre-registration (run 2026-11-21, before any GPU run)
+# real runs (not run yet), one per machine, at the same time; uni-2080 reads tau_0 and ceiling_0 from nakhoul-3050's fold-0 noise floor:
+python -m har.run_xgp_pilot2 --levels 0.7 --diagnostic --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050
+python -m har.run_xgp_pilot2 --levels 0.9 --device cuda --machine-name uni-2080 --noise-floor-machine nakhoul-3050
+python -m har.run_xgp_pilot2 --analyze                                 # after both runs files are in results/har-xgp-pilot/round2/
+```

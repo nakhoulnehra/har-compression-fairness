@@ -276,11 +276,29 @@ XGP pilot (plan 2.5 (b)), fold 0, 70% pruning, inner val (S010, S020, S021; 90 e
 - What: command line, device, git, code hash, XGP / Park settings, n_nonzero, chosen configurations, seconds; terminal output.
 - Key numbers: teacher EG 40.0 s, SNIP 0.9 s, I(w) 10.1 s; wall 28,005 s (includes ≈ 4.5 h hibernation).
 
+## har-xgp-pilot/round2/
+XGP pilot round 2 (plan 2.5 (b), round 2): the last validation-only design iteration before XGP is frozen. Fold 0, inner val only (S010, S020, S021), HAR70+ never loaded. `python -m har.run_xgp_pilot2`. So far only the pre-registration is written (`--prepare`, Aya CPU, 2026-11-21, before any GPU run). The 70% / 90% runs and `--analyze` are still to do; their files (`-70pct-inner-val-nakhoul-3050-*`, `-90pct-inner-val-uni-2080-*`, `-eg-noise-diagnostic-nakhoul-3050.csv`, `-summary-mean-sd-over-seeds.csv`, `-decision-table.csv`, `-decision.json`) get entries here when they exist.
+
+### [har-xgp-pilot2-tinyhar-fold0-inner-val-windows-older-like-params.csv](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-inner-val-windows-older-like-params.csv)
+- What: every fold-0 inner-val window (non-overlapping split) by window ID: label, older-like speed s and scale a (seed 42), explain flag and pick order.
+- Key numbers: 7,709 windows; 300 explain windows (100 per subject; per class 47 / 47 / 45 / 45 / 44 / 44 / 28); the first 30 per subject are exactly round 1's 90 windows. s in [0.800, 0.900] (mean 0.850), a in [0.700, 0.900] (mean 0.801).
+
+### [har-xgp-pilot2-tinyhar-fold0-reference-windows-older-like-params.csv](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-reference-windows-older-like-params.csv)
+- What: the 1,000 class-stratified HARTH training reference windows of the keep-score (seed 42, as in round 1), with their older-like s and a (seed 43) for `xgp_aug_kd`.
+- Key numbers: 1,000 windows.
+
+### [har-xgp-pilot2-tinyhar-fold0-preregistration.json](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-preregistration.json)
+- What: the pre-registered selection rule, the Step 9 fairness rule, the design (variants, baselines, β grid {0.05, 0.1, 0.3}, seeds 0–2, KD T = 3, α = 0.7, E_ft 10, lr 1e-4), and the sha256 of the two window tables (line endings normalised). Every level run checks the tables against it and refuses to run if they changed.
+- Key numbers: written 2026-11-21 at git 182b168 (uncommitted round-2 code).
+
 ## har-noise-floor-smoke/
 **Git-ignored, local only: a pipeline check, not results.** `python -m har.run_noise_floor --folds 0 --smoke` (Step 8) writes here: seeds 1–3 retrained for 1 epoch on 600 windows, 3 explain windows per subject (3 HAR70+ subjects), nsamples 20. The file names match the real ones (`har-noise-floor-tinyhar-fold0-<machine>-{per-subject-lci, group-summary, tau, retrained-models}.csv`, `-config.json`). Its τ_0 (0.07) means nothing. Passed on Aya CPU on 2026-11-20 (24.8 s wall clock; a rerun reuses the cached checkpoints and SHAP).
 
 ## har-xgp-pilot-smoke/
 **Git-ignored, local only: a pipeline check, not results.** `python -m har.run_xgp_pilot --fold 0 --smoke` writes here: 600 training windows, 1 fine-tuning epoch, 9 inner-val explain windows, nsamples 20, 35 reference windows, EG m = 2. The file names match the real ones (`har-xgp-pilot-tinyhar-fold0-70pct-inner-val-<machine>-{runs, per-subject-lci, finetune-history}.csv`, `-config.json`). All 10 pruned runs had the same n_nonzero (17,365 of 54,273). Passed on Aya CPU on 2026-11-20: 33 s with the smoke τ_0 (both β gated to CE), 49 s with `--tau 0.99` (both β gated to CE + γ·L_cons).
+
+## har-xgp-pilot-smoke/round2/
+**Git-ignored, local only: a pipeline check, not results.** `python -m har.run_xgp_pilot2 --smoke` (`--prepare`, `--levels 0.7 0.9 --diagnostic`, `--analyze`) writes here: 600 training windows, 200 inner-val windows for F1, 3 explain windows per subject, nsamples 20, 35 reference windows, EG m = 2, 1 epoch (2 for `l1_kd_e20`), seeds 0, 1. The file names match the real ones. Every level had one n_nonzero across all starts and runs. Passed on Aya CPU on 2026-11-21: both levels + diagnostic in 78 s, analyze 8 s (its decision means nothing at smoke sizes); `--resume` skipped every finished run.
 
 ## har-baseline-gap/
 Step 5, baseline gap check on HAR70+ (**first HAR70+ use**), with the frozen TinyHAR (`har-model-selection/har-frozen-model-config.json`, lr 1e-3, width 1.0, 54,273 parameters). Evaluation only, nothing trained or changed: the 5 final fold checkpoints (seed 0, trained on Nakhoul's GPU) run on CPU with their stored normalisation. General = each HARTH subject's test windows from its one held-out fold (22 subjects, 42,248 windows); older = all 18 HAR70+ subjects with every fold model (17,403 windows), averaged over the 5 folds. Written by `python -m har.run_sanity_walking_aid` on Aya's laptop, 2026-11-20, 29 s (rerun with the merged Ustad scoring).

@@ -46,3 +46,6 @@ NOISE_FLOOR_CKPT_DIR = CHECKPOINT_DIR / "har-noise-floor"
 NOISE_FLOOR_SMOKE_CKPT_DIR = CHECKPOINT_DIR / "har-noise-floor-smoke"
 XGP_PILOT_DIR = RESULTS_DIR / "har-xgp-pilot"
 XGP_PILOT_SMOKE_DIR = RESULTS_DIR / "har-xgp-pilot-smoke"
+# XGP pilot round 2 (fold 0, inner validation only; a validation-only design iteration before XGP is frozen)
+XGP_PILOT2_DIR = XGP_PILOT_DIR / "round2"
+XGP_PILOT2_SMOKE_DIR = XGP_PILOT_SMOKE_DIR / "round2"

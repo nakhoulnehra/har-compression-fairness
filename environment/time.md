@@ -190,3 +190,24 @@ Smoke sizes only, so these are no estimate of the real runs. GPU estimates for t
 
 - Park's epoch here (≈ 206 s, AC) is ≈ 4× the Step 6 benchmark (52.0 s) on the same GPU, and epoch times varied up to 2× within one run (Park 112–207 s, L_cons 53–105 s). Laptop power/thermal state is not controlled, so these are not clean timings. The Step 6 projection (3.20 h/fold; 3.95 h with ablations) is likely too low; re-time Park and L_cons on a plugged-in, idle machine before planning Step 9.
 - L_cons epochs (53–105 s, even on battery) were about half of Park's (158–207 s, on AC), so L_cons is cheaper than Park, not equal as Step 6 assumed.
+
+## XGP pilot round 2 code (Aya's machine, CPU, 2026-11-21)
+
+machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00), torch 2.7.1+cpu
+commands ran / time taken to finish:
+- `python -m pytest har/tests lci/tests`: ≈ 90 s (195/195 passed; 19 new).
+- `python -m har.run_xgp_pilot2 --prepare` (real, writes the pre-registration): ≈ 8 s.
+- `python -m har.run_xgp_pilot2 --levels 0.7 0.9 --diagnostic --smoke`: **78 s** wall clock (60 smoke fine-tunings of 1–2 epochs, 16 starts, diagnostic). `--analyze --smoke`: 8 s.
+
+Estimate of the real runs (one level per machine, from round 1's nakhoul-3050 timings: CE epoch ≈ 9 s, Park epoch 158–207 s on AC, SHAP 0.155–0.36 s per window; KD costs about as much as CE because the teacher logits are precomputed):
+
+| Part, per level | Count | nakhoul-3050 |
+|---|---|---|
+| CE / KD fine-tunings, 10 epochs | 27 + `l1_kd_e20` (20 epochs) | ≈ 0.7 h |
+| Park, park_kd (10 epochs, CE/KD + L_AM) | 2 | ≈ 0.9–1.15 h |
+| SHAP, 600 windows per assessment (300 normal + 300 older-like) | 38 (8 starts + 30 runs) + original | ≈ 1.0 h (up to 2.3 h at round 1's slowest SHAP speed) |
+| Teacher logits, Park targets, SNIP, 4 importances (≈ 6,000 window-passes at m = 8, 2 EG seeds) | once | ≈ 2 min |
+| EG-noise diagnostic (EG m = 4, 16, 200 + SHAP seed 1 on 300 windows) | 70% machine only | ≈ 2 min |
+| **Total** | | **≈ 2.8 h (up to ≈ 4.3 h)** |
+
+uni-2080 (90%): ≈ 1.16× nakhoul-3050 (Step 6: 3.7 vs 3.2 h per fold) → **≈ 3.2 h (up to ≈ 5 h)**. Both on AC power, laptop sleep/hibernation off; `--resume` continues an interrupted run.
