@@ -211,3 +211,13 @@ Estimate of the real runs (one level per machine, from round 1's nakhoul-3050 ti
 | **Total** | | **≈ 2.8 h (up to ≈ 4.3 h)** |
 
 uni-2080 (90%): ≈ 1.16× nakhoul-3050 (Step 6: 3.7 vs 3.2 h per fold) → **≈ 3.2 h (up to ≈ 5 h)**. Both on AC power, laptop sleep/hibernation off; `--resume` continues an interrupted run.
+
+## XGP pilot round 2, 70% level (nakhoul-3050, GPU, 2026-11-21)
+
+machine: nakhoul-3050, NVIDIA GeForce RTX 3050 Ti Laptop GPU, torch 2.7.1+cu118
+command: `python -m har.run_xgp_pilot2 --levels 0.7 --diagnostic --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050`
+- **Wall clock 5,834 s (1.62 h)**, against the 2.8 h estimate. Level loop 5,603 s; started 15:27, finished 17:04.
+- EG-noise diagnostic: ≈ 2 min. Setup: SHAP on the original 85 s, teacher logits + Park targets 38 s, SNIP 0.8 s, importances 7 / 9 / 15 / 16 s (plain / worstclass / aug / worstclass_aug).
+- Fine-tuning total 0.60 h: CE/KD 10 epochs ≈ 30–36 s per run (≈ 3.3 s per epoch, faster than round 1's 9 s); l1_kd_e20 73 s; **Park ≈ 595 s, park_kd ≈ 606 s** (≈ 60 s per epoch, against 158–207 s in round 1).
+- SHAP total 0.95 h over 38 assessments: ≈ 80–95 s each (600 windows, ≈ 0.14 s per window, round 1's fastest speed).
+- The estimate was too high because CE and Park epochs both ran about 3× faster than in round 1.

@@ -229,8 +229,8 @@ python -m har.run_xgp_pilot2 --prepare --smoke                         # -> resu
 python -m har.run_xgp_pilot2 --levels 0.7 0.9 --diagnostic --smoke     # 78 s
 python -m har.run_xgp_pilot2 --analyze --smoke                         # 8 s
 python -m har.run_xgp_pilot2 --prepare                                 # -> results/har-xgp-pilot/round2/ pre-registration (run 2026-11-21, before any GPU run)
-# real runs (not run yet), one per machine, at the same time; uni-2080 reads tau_0 and ceiling_0 from nakhoul-3050's fold-0 noise floor:
-python -m har.run_xgp_pilot2 --levels 0.7 --diagnostic --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050
+# real runs, one per machine; uni-2080 reads tau_0 and ceiling_0 from nakhoul-3050's fold-0 noise floor:
+python -m har.run_xgp_pilot2 --levels 0.7 --diagnostic --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050   # ran 2026-11-21 on nakhoul-3050 (torch 2.7.1+cu118, git 7dd23b6), 1.62 h
 python -m har.run_xgp_pilot2 --levels 0.9 --device cuda --machine-name uni-2080 --noise-floor-machine nakhoul-3050
 python -m har.run_xgp_pilot2 --analyze                                 # after both runs files are in results/har-xgp-pilot/round2/
 ```
