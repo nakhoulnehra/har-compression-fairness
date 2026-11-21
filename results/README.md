@@ -277,7 +277,28 @@ XGP pilot (plan 2.5 (b)), fold 0, 70% pruning, inner val (S010, S020, S021; 90 e
 - Key numbers: teacher EG 40.0 s, SNIP 0.9 s, I(w) 10.1 s; wall 28,005 s (includes ≈ 4.5 h hibernation).
 
 ## har-xgp-pilot/round2/
-XGP pilot round 2 (plan 2.5 (b), round 2): the last validation-only design iteration before XGP is frozen. Fold 0, inner val only (S010, S020, S021), HAR70+ never loaded. `python -m har.run_xgp_pilot2`. So far only the pre-registration is written (`--prepare`, Aya CPU, 2026-11-21, before any GPU run). The 70% / 90% runs and `--analyze` are still to do; their files (`-70pct-inner-val-nakhoul-3050-*`, `-90pct-inner-val-uni-2080-*`, `-eg-noise-diagnostic-nakhoul-3050.csv`, `-summary-mean-sd-over-seeds.csv`, `-decision-table.csv`, `-decision.json`) get entries here when they exist.
+XGP pilot round 2 (plan 2.5 (b), round 2): the last validation-only design iteration before XGP is frozen. Fold 0, inner val only (S010, S020, S021), HAR70+ never loaded. `python -m har.run_xgp_pilot2`. Pre-registration written first (`--prepare`, Aya CPU, 2026-11-21, before any GPU run). The 70% level and the EG-noise diagnostic are done (nakhoul-3050, 2026-11-21, git 7dd23b6, clean). The 90% run (uni-2080) and `--analyze` are still to do; their files (`-90pct-inner-val-uni-2080-*`, `-summary-mean-sd-over-seeds.csv`, `-decision-table.csv`, `-decision.json`) get entries here when they exist.
+
+### [har-xgp-pilot2-tinyhar-fold0-70pct-inner-val-nakhoul-3050-runs.csv](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-70pct-inner-val-nakhoul-3050-runs.csv)
+- What: one row per assessment at 70% (original, 8 no-finetune starts, 30 fine-tuned runs: seeds 0–2, plus seed-0-only park, park_kd, l1_kd_e20). Pooled 7-class macro-F1 and LCI on the normal and older-like inner-val windows, sparsity, timings, β*. Every start has n_nonzero 17,365. τ_0 0.659, ceiling_0 0.946.
+- Key numbers (mean ± SD over seeds; F1 normal / LCI normal / LCI older-like / mean LCI): original F1 0.818 (older-like 0.696). l1 0.738 ± 0.012 / 0.831 / 0.872 / 0.852; **l1_kd 0.783 ± 0.008** / 0.867 / 0.901 / 0.884; snip_kd 0.749 / 0.781 / 0.801 / 0.791; park 0.742 / 0.833 / 0.899 / 0.866; **park_kd 0.768 / 0.871 / 0.904 / 0.888**; l1_kd_e20 0.786 / 0.846 / 0.875 / 0.861. xgp_kd β 0.05: 0.770 / 0.872 / 0.885 / 0.879; **β 0.1: 0.776 ± 0.007 / 0.873 / 0.876 / 0.875**; β 0.3: 0.758 / 0.839 / 0.899 / 0.869. With β* 0.1: xgp_worstclass_kd 0.761 / 0.874 / 0.877 / 0.875; xgp_aug_kd 0.764 / 0.874 / 0.876 / 0.875; xgp_worstclass_aug_kd 0.768 / 0.865 / 0.886 / 0.876.
+- Reading: best baseline F1 = l1_kd 0.7828, so the eligibility bar is 0.7728. At 70% only xgp_kd β 0.1 clears it; β* = 0.1, not flagged. XGP variants have the highest normal-window LCI (≈ 0.873 against 0.867 for l1_kd) but lower older-like LCI (≈ 0.876 against 0.901 / 0.904 for l1_kd / park_kd), so their mean LCI (≈ 0.875) is below l1_kd (0.884) and park_kd (0.888). Epochs check, seed 0: l1_kd_e20 0.7859 against l1_kd 0.7762 = +0.97 pt, just under the 1-pt bar for E_ft 20 at this level.
+
+### [har-xgp-pilot2-tinyhar-fold0-70pct-inner-val-nakhoul-3050-per-subject-lci.csv](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-70pct-inner-val-nakhoul-3050-per-subject-lci.csv)
+- What: per-subject LCI (S010, S020, S021) for each 70% assessment on the normal and older-like windows. The worst-subject LCI is also in the runs file.
+
+### [har-xgp-pilot2-tinyhar-fold0-70pct-inner-val-nakhoul-3050-finetune-history.csv](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-70pct-inner-val-nakhoul-3050-finetune-history.csv)
+- What: per-epoch CE, KL and L_AM losses, val F1 and accuracy for every 70% fine-tuning run. Fine-tuning takes ≈ 3.3 s per CE/KD epoch and ≈ 60 s per Park epoch.
+
+### [har-xgp-pilot2-tinyhar-fold0-70pct-inner-val-nakhoul-3050-config.json](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-70pct-inner-val-nakhoul-3050-config.json)
+- What: the command, device (RTX 3050 Ti, torch 2.7.1+cu118), git 7dd23b6 (clean), code sha256, the pre-registration hashes, τ_0 / ceiling_0 and their sources, n_nonzero per start, and the selection and Step 9 rules. Level wall clock 5,603 s (93 min).
+
+### [har-xgp-pilot2-tinyhar-fold0-eg-noise-diagnostic-nakhoul-3050.csv](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-eg-noise-diagnostic-nakhoul-3050.csv)
+- What: EG-noise diagnostic on the original model, 300 normal explain windows (100 per subject). Each row is a per-subject LCI, Spearman correlation and top-10 Jaccard between two explainers.
+- Key numbers (mean LCI / Spearman): SHAP vs EG m = 4: 0.684 / 0.549; m = 16: 0.770 / 0.772; m = 200: 0.946 / 0.952. EG m = 4 seed 0 vs seed 1: 0.515 / 0.305. SHAP seed 0 vs seed 1: 0.915 / 0.952. So EG at small m is noisy: two m = 4 seeds agree less with each other than with SHAP.
+
+### logs/har-xgp-pilot2-tinyhar-fold0-70pct-nakhoul-3050-20261121-152712.log
+- What: the full console log of the 70% run. One-off setup costs: SHAP on the original 85 s, teacher logits + Park targets 38 s, the 4 importances 7–16 s each.
 
 ### [har-xgp-pilot2-tinyhar-fold0-inner-val-windows-older-like-params.csv](har-xgp-pilot/round2/har-xgp-pilot2-tinyhar-fold0-inner-val-windows-older-like-params.csv)
 - What: every fold-0 inner-val window (non-overlapping split) by window ID: label, older-like speed s and scale a (seed 42), explain flag and pick order.
