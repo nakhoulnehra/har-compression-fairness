@@ -1,0 +1,88 @@
+{
+ "command_line": [
+  "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\har\\run_xgp_pilot2.py",
+  "--levels",
+  "0.9",
+  "--device",
+  "cuda",
+  "--machine-name",
+  "uni-2080",
+  "--noise-floor-machine",
+  "nakhoul-3050"
+ ],
+ "machine_name": "uni-2080",
+ "device": {
+  "device": "cuda",
+  "gpu_name": "GeForce RTX 2080",
+  "cuda_version": "11.8",
+  "torch_version": "2.7.1+cu118",
+  "cpu": "Intel64 Family 6 Model 158 Stepping 13, GenuineIntel",
+  "torch_threads": 8,
+  "python": "3.11.9",
+  "os": "Windows 10"
+ },
+ "git_commit": "7dd23b674073812e782ddd3fee76facda46460ef",
+ "git_dirty": false,
+ "code_sha256": "d612e6301d635c72d53a2ea77a0fc47b93be5c32b89ffa41c45150ffd41dfd2c",
+ "finished_at": "2026-11-21T16:47:51+02:00",
+ "fold": 0,
+ "level": 0.9,
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "epochs": 10,
+ "nsamples": 200,
+ "smoke": false,
+ "smoke_sizes": null,
+ "selection_rule": "Final XGP = the eligible XGP variant with the highest mean LCI_val over {70%, 90%} x {normal, older-like} windows (mean over seeds). Eligible = mean pooled 7-class macro-F1 on the normal inner-val windows >= the best baseline's mean F1 - 1 pt, at both levels. Baselines: l1, l1_kd, snip_kd, park, park_kd. Ties within 0.005 -> the variant with fewer components (keep-score 1, + worst-class 1, + augmentation 1). If no variant is eligible, no fallback: report and stop. Variants: xgp_kd (beta in {0.05, 0.1, 0.3}), xgp_worstclass_kd, xgp_aug_kd, xgp_worstclass_aug_kd; the variants' beta at a level = the beta of xgp_kd picked at that level by the same eligibility and LCI criterion on that level alone (ties within 0.005 -> the smaller beta; none eligible -> the highest F1, flagged), and xgp_kd enters the rule with that beta.",
+ "fairness_rule_step9": "Step 9: whatever recipe and E_ft the final XGP uses, L1 and SNIP-score pruning get the same in the grid; Park runs as published (CE + gamma_P L_AM) and as park_kd. E_ft = 20 for every method in Step 9 if l1_kd_e20 beats l1_kd (seed 0, same level) by more than 1 pt pooled macro-F1 (normal windows) at either level; otherwise 10.",
+ "preregistration_written_at": "2026-11-21T15:02:58+02:00",
+ "preregistration_sha256": {
+  "inner_val": "89b78ed7c270dbf685600b8db80d0e156aee54867db70130489682fe3c68e1a8",
+  "reference": "8086bfec112abb2915fb0175402d8ca3734c47793b1fc9cba4420f5d27b217bd"
+ },
+ "tau_0": 0.659347126693845,
+ "tau_source": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\results\\har-noise-floor\\har-noise-floor-tinyhar-fold0-nakhoul-3050-tau.csv",
+ "ceiling_0": 0.9455042425573076,
+ "ceiling_source": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\results\\har-noise-floor\\har-noise-floor-tinyhar-fold0-nakhoul-3050-group-summary.csv",
+ "weights": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold0-nakhoul-3050.pt",
+ "n_nonzero": {
+  "l1": 6821,
+  "snip": 6821,
+  "plain_beta0.05": 6821,
+  "plain_beta0.1": 6821,
+  "plain_beta0.3": 6821,
+  "worstclass_beta0.1": 6821,
+  "aug_beta0.1": 6821,
+  "worstclass_aug_beta0.1": 6821
+ },
+ "beta_star": 0.1,
+ "beta_star_flagged": false,
+ "best_baseline_f1": 0.6769589665589462,
+ "xgp_kd_by_beta": {
+  "0.05": {
+   "lci_mean_sets": 0.7386123154505767,
+   "f1_normal": 0.6825504344974243
+  },
+  "0.1": {
+   "lci_mean_sets": 0.7526679947864751,
+   "f1_normal": 0.7180859947270711
+  },
+  "0.3": {
+   "lci_mean_sets": 0.6467763094308121,
+   "f1_normal": 0.552192160538857
+  }
+ },
+ "seconds_fixed": {
+  "shap_original": 80.21621179999784,
+  "teacher_logits_and_park_targets": 49.23430010001175,
+  "snip_scores": 0.937771899974905,
+  "importance_plain": 8.559207700076513,
+  "importance_worstclass": 9.026324299979024,
+  "importance_aug": 16.979948499938473,
+  "importance_worstclass_aug": 17.430781499948353
+ },
+ "seconds_level": 4927.593399000005
+}
