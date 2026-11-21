@@ -424,3 +424,12 @@ Step 5, baseline gap check on HAR70+ (**first HAR70+ use**), with the frozen Tin
 ### har-baseline-gap-tinyhar-config.json, logs/har-baseline-gap-run.log
 - What: command line, checkpoint paths, each class set's kept classes / F1 classes / argmax restriction / merge map, group IDs, bootstrap settings, Ustad reference values, machine, torch, git commit, code hash, elapsed time; the terminal output.
 - Key numbers: git 2981eeb, dirty tree (the Step 5 code is uncommitted), 28.6 s.
+
+## har-compression-grid-smoke/
+**Git-ignored, local only: a pipeline check, not results.** `python -m har.run_compression_grid --folds 0 --smoke` (Step 9A) writes here: 600 training windows, 1 fine-tuning epoch, the noise-floor smoke explain windows (3 per subject; 4 general, 3 HAR70+ incl. 503, 3 inner-val subjects), 40 evaluation windows per subject, nsamples 20, EG m = 2. File names match the real ones (`har-grid-tinyhar-fold0-<machine>-{per-subject-metrics, per-subject-class-lci, per-group-class-lci, models, finetune-history}.csv`, `-shap-48-segments.npz` with one (n, 48) array per model plus `meta_*` window ID / subject / group / class / target per row, `-config.json`). 38 models (original, 5 noise references, 4 PTQ, 8 starts, 20 fine-tuned); n_nonzero identical per level (38,457 / 27,911 / 17,365 / 6,821 of 54,273 at 30 / 50 / 70 / 90%), head unpruned. Passed on Aya CPU on 2026-11-21: 62 s; `--resume` skipped all 38 models (1.5 s). Its LCI values mean nothing at nsamples 20.
+
+## har-compression-grid-analysis-smoke/
+**Git-ignored, local only: a pipeline check, not results.** `python -m har.run_compression_grid --analyze --smoke` writes the 8 `har-grid-a-*.csv` tables and `har-grid-a-analysis-config.json` (same names as the real analysis, below) from the smoke fold. Passed on Aya CPU on 2026-11-21 (5 s with `--n-boot 500`).
+
+## har-compression-grid/ and har-compression-grid-analysis/ (Step 9A, not run yet)
+To be written by the GPU runs (plan Step 9) and `--analyze`. Analysis tables: `har-grid-a-per-subject-pooled-over-folds.csv`, `-group-summary-gaps-bootstrap-ci.csv`, `-fa-lci-bootstrap-ci.csv`, `-method-comparisons-wilcoxon-holm.csv`, `-safe-explanation-rate.csv`, `-per-class-lci-drift.csv`, `-stairs-f1-pooled-per-group.csv`, `-inner-val-lci-per-fold.csv`, `-analysis-config.json`. Entries with numbers follow when the files exist.

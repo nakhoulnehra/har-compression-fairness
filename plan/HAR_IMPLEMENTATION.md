@@ -4,6 +4,14 @@ This document is the complete specification for the HAR part of the study. It co
 
 **Research question.** When a HAR model trained on adults (HARTH) is compressed, do its SHAP explanations stay consistent with those of the original model, and does that consistency drop more for older adults (HAR70+) than for the general population the model was trained on? Can an explanation-guided pruning rule, built from HARTH data only, keep explanations consistent for both groups at the same size?
 
+**Research questions (for the paper, decided 2026-11-21).**
+- **RQ0:** Is FA-LCI a valid measure of subgroup explanation consistency? It must equal the worse group's LCI, detect injected gaps and agree with deletion faithfulness (the three FA-LCI validation checks, Section 2.8).
+- **RQ1:** Does compression (pruning, quantization) change SHAP explanations beyond retraining noise, even when accuracy is kept?
+- **RQ2:** Is this explanation drift larger for older adults (and walking-aid users, inferred) than for general adults?
+- **RQ3:** Can XGP reduce the drift and the subgroup gap at the same model size, without losing accuracy?
+
+Step 9A answers RQ1 and RQ2 with the standard methods and gives RQ0 its grid data; Step 9B (XGP) answers RQ3; the RQ0 validation checks run in Step 11.
+
 **Ground rules**
 - **HAR70+ is test-only.** It is never used for training, early stopping, hyperparameter tuning, model choice, choosing or tuning the pruning rule, or setting any threshold that a method uses during training. Enforce this in code (Section 2.4), not just by convention.
 - **No person appears in both train and test.** All splits are by subject.
@@ -300,6 +308,7 @@ Both attribution losses compare 48-segment attributions (Section 2.6), with targ
 - **Diagnostic (finding).** On the original fold-0 model and the normal inner-val windows: LCI(real SHAP, EG) for m = 4, 16, 200, EG m = 4 vs EG m = 4 with another seed, and SHAP seed 0 vs seed 1 for scale.
 - **Pre-registered selection rule (written 2026-11-21, before any GPU run; also in `har-xgp-pilot2-tinyhar-fold0-preregistration.json`).** Final XGP = the eligible XGP variant with the highest mean LCI_val over {70%, 90%} × {normal, older-like} windows (mean over seeds). Eligible = mean pooled 7-class macro-F1 on the normal inner-val windows ≥ the best baseline's mean F1 − 1 pt, **at both levels**. Baselines: l1, l1_kd, snip_kd, park, park_kd. Ties within 0.005 → the variant with fewer components (keep-score 1, + worst-class 1, + augmentation 1). **If no variant is eligible, there is no fallback: report and stop.**
   - Our resolution of the β detail (fixed before the runs): the variants' β at a level = the β of `xgp_kd` that is eligible at that level alone and has the highest mean LCI there (ties within 0.005 → the smaller β; if no β is eligible there, the highest F1, flagged); `xgp_kd` enters the rule with that β.
+- **Step 9A (2026-11-21):** round 2's epochs check gave E_ft = 20, so every fine-tuned method in the grid runs 20 epochs; the KD recipe is shared by l1_kd, snip_kd and park_kd. XGP's final version is designed after 9A (Section 3, Step 9); round 3 is on hold.
 - **Fairness rule for Step 9.** Whatever recipe and E_ft the final XGP uses, L1 and SNIP-score pruning get the same in the grid; Park runs as published and as park_kd. E_ft = 20 for every method in Step 9 if `l1_kd_e20` beats `l1_kd` (seed 0, same level) by more than 1 pt pooled F1 (normal windows) at either level; otherwise 10.
 - `python -m har.run_xgp_pilot2 --analyze` merges both machines' files, applies the rule and writes the decision table.
 
@@ -613,6 +622,16 @@ Each step ends with an acceptance check. If a check fails, stop, fix the code (n
    *Acceptance:* per group, the SHAP-noise LCI is above the retrain-noise LCI; `τ_k` for each fold and the global τ are written; τ is reported next to 0.85.
 
 9. **Compression grid** (`python -m har.run_compression_grid --folds ...`, folds split across machines, Section 5).
+   **New order (decided 2026-11-21).** Step 9 is split. **9A** runs the standard methods only (PTQ, L1, SNIP-score pruning, Park, each with CE and the shared KD recipe) on the real test windows and measures explanation drift and its subgroup gap (RQ1, RQ2; grid data for RQ0; RQs defined at the top). **Then XGP's final version is designed** for the drift 9A shows (which classes, which levels, which groups), and **9B** adds it to the same grid as one more registered method. Pilot round 3 (shift-aware + worst-case KD) is on hold: it was designed before any test-set drift was seen, and it has no code yet.
+   *Why:* round 2 showed XGP's advantage disappears after fine-tuning and reverses on older-like proxy windows; the proxies are a guess at the shift. Measuring where real drift happens first tells us what XGP must fix, instead of tuning XGP against a proxy. *Cost to disclose:* XGP is then designed after seeing test-set behaviour of the baselines. XGP's own tuning still uses HARTH inner validation only (never HAR70+ or test subjects), its design choice is pre-registered before 9B runs, and the paper states the order. The baselines' numbers do not change, because 9B reuses 9A's rows.
+   **9A specification** (`har/run_compression_grid.py`, implemented and smoke-tested 2026-11-21; per fold, folds split as in STATUS.md):
+   - Models: original; `ptq8`, `ptq4` (per-tensor symmetric, primary) and `ptq_tulla8`, `ptq_tulla4` (secondary); pruning at 30/50/70/90% with identical `n_nonzero`: `l1` (CE), `l1_kd`, `snip` (CE), `snip_kd` at all levels, `park` and `park_kd` at 70% and 90% only. KD = 0.7 · KL(T = 3) · T² + 0.3 · class-weighted CE vs the original model's logits. **E_ft = 20** for every fine-tuned method (round 2's epochs check), Adam lr 1e-4, seed 0, γ_P = 1, EG m = 4.
+   - Scenarios: `no_finetune` = each score's pruned start (`l1`, `snip`; Park and the KD variants start from the L1 start, so their no_finetune model is the `l1` row) and `finetune`.
+   - Explain windows: the fold's fixed windows; inner val (kept for XGP's validation-only design), general = the fold's HARTH test subjects, older = all 18 HAR70+; walking-aid (inferred) = 503, 505, 513, 514, 515. SHAP is called per group exactly as in the noise floor, so the original model's SHAP is the noise floor's cached array.
+   - Per subject: LCI (48 segments, k = 10) with ρ and Jaccard, raw-768 LCI, k = 16 LCI, retention = (LCI − τ_k) / (ceiling_g − τ_k) with τ_k and the **group's** SHAP-noise mean from the noise-floor file of the machine running the fold, deletion faithfulness (AOPC, drop_k5, random baseline), accuracy, non-stair macro-F1 and the confusion matrix (stairs F1 only pooled). Per class (true label): LCI per (subject, class) with ≥ 3 windows and per (group, class) on pooled windows. The noise-floor models (SHAP seeds 1–2, retrain seeds 1–3) are scored with the same code, giving a per-class noise reference.
+   - Saved after every model; `--resume` skips finished model IDs. Fine-tuned weights go to `data/processed/har/checkpoints/har-compression-grid/` (git-ignored).
+   - `--analyze`: per method × level × scenario, group LCI with bootstrap CIs over subjects, FA-LCI with CI, the older − general gap (bootstrap CI, Mann-Whitney U), walking-aid (inferred) − other older (exploratory), paired Wilcoxon per subject between every pair of pruning methods within (scenario, level) and between each fine-tuned method and its start (40 subjects primary, per group secondary; Holm per metric × comparison × scenario × population), safe-explanation rate (fold settings and subjects; τ_k, min τ_k, 0.85), the per-class drift table and pooled stairs F1. The XGP-vs-baseline tests of Section 2.8 come with 9B.
+   - Fold 3 runs on both machines; **the analysis uses uni-2080's copy** (decided 2026-11-21; `FOLD_MACHINE_DEFAULT`, overridable with `--use-machine`). nakhoul-3050's copy is for the Step 9b comparison only.
    *Why:* the core experiment: every method at matched size, same folds, same explain windows.
    *Acceptance, per fold:*
    - identical `n_nonzero` across L1, SNIP-score pruning, Park and ours at each level;
@@ -741,6 +760,19 @@ Model selection (Step 4), upper bound at 30 epochs, A / N: CNN1D 0.85 / 0.4 h, D
 - **Before Step 9:**
   - Noise floor, fold 0: ≤ 90 CE epochs + 6 × 750 SHAP windows, ≈ 15 min on nakhoul-3050.
   - Pilot, fold 0: 4 Park + up to 4 XGP fine-tunings at ≈ 9 min each, + L1, SNIP and ≈ 15 × 90 SHAP windows. About 75 min on nakhoul-3050 (≈ 90 min on uni-2080). It is shorter if the gate picks CE for a β (2 CE runs instead of 4 attribution runs).
+
+**Step 9A estimate (2026-11-21, from pilot round 2's measured GPU timings).** Per fold: 16 CE/KD fine-tunings × 20 epochs (nakhoul-3050 ≈ 3.3 s, uni-2080 ≈ 2 s per epoch), 4 Park runs × 20 epochs (≈ 60 / 65 s per epoch), SHAP for 32 models × ≈ 765 windows (≈ 0.14 / 0.13 s per window; the original and noise-floor models are cache hits on the machine that ran the fold's noise floor), deletion faithfulness and accuracy (minutes):
+
+| Part, per fold | nakhoul-3050 | uni-2080 |
+|---|---|---|
+| CE / KD fine-tuning | ≈ 18 min | ≈ 11 min |
+| Park, park_kd | ≈ 80 min | ≈ 87 min |
+| SHAP | ≈ 57 min | ≈ 54 min |
+| Setup, faithfulness, accuracy | ≈ 5 min | ≈ 5 min |
+| **Total per fold** | **≈ 2.7 h** | **≈ 2.6 h** |
+| **3 folds (0, 1, 3 / 2, 3, 4)** | **≈ 8 h** | **≈ 8 h** |
+
+Upper bound ≈ 2× (round 1 saw 2–4× slower epochs on a laptop in a poor power state).
 
 **Machine split.** Nakhoul's machine is ≈ 1.9–2× faster on this workload, so it gets about two thirds of the work.
 - **Step 4:** Nakhoul's runs DeepConvLSTM and TinyHAR (≈ 7.5 h); Aya's runs CNN1D, HART and XGBoost (≈ 5.5 h). After training, all candidates' inference and SHAP times are measured on **Aya's machine only**, so the model choice compares like with like.

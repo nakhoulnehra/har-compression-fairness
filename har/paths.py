@@ -49,3 +49,11 @@ XGP_PILOT_SMOKE_DIR = RESULTS_DIR / "har-xgp-pilot-smoke"
 # XGP pilot round 2 (fold 0, inner validation only; a validation-only design iteration before XGP is frozen)
 XGP_PILOT2_DIR = XGP_PILOT_DIR / "round2"
 XGP_PILOT2_SMOKE_DIR = XGP_PILOT_SMOKE_DIR / "round2"
+
+# Compression grid (plan Step 9): per-fold files, and the --analyze outputs (part A = baselines only)
+GRID_DIR = RESULTS_DIR / "har-compression-grid"
+GRID_SMOKE_DIR = RESULTS_DIR / "har-compression-grid-smoke"
+GRID_ANALYSIS_DIR = RESULTS_DIR / "har-compression-grid-analysis"
+GRID_ANALYSIS_SMOKE_DIR = RESULTS_DIR / "har-compression-grid-analysis-smoke"
+GRID_CKPT_DIR = CHECKPOINT_DIR / "har-compression-grid"
+GRID_SMOKE_CKPT_DIR = CHECKPOINT_DIR / "har-compression-grid-smoke"

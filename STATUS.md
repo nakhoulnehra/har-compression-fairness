@@ -5,10 +5,13 @@ Done:
 - 1–5 setup, plan, data, model choice (TinyHAR frozen), baseline gap (older −10.9 pts, p < 0.001)
 - 6 timing; 8 noise floor all folds done (τ: f0 0.66, f1 0.58, f2 0.63, f3 0.61/0.62 on the two machines, f4 0.61)
 - XGP pilots (fold 0, validation only): round 1 (repair loss hurts); round 2 pre-registered → xgp_kd β 0.1, E_ft 20 for all. XGP wins without fine-tuning at 70% (LCI 0.62 vs 0.38, F1 0.60 vs 0.37); ties L1+KD after fine-tuning; worse on older-like proxy windows. EG m=4 self-agreement 0.51 → explains repair-loss failure.
-- Round 3 (shift-aware + worst-case KD) designed, ON HOLD until 9A results.
-Next: 9A runs on both GPUs → --analyze → look at where older adults drift more → finalise XGP → 9B.
+- Round 3 (shift-aware + worst-case KD) designed, ON HOLD until 9A results (no code written; nothing to run).
+- 9A code done (2026-11-21, CPU smoke only): `har/run_compression_grid.py` (+ `har/faithfulness.py`, `ptq_tulla`, Step 9 stats in `har/stats.py`); 223/223 tests pass. Methods are a registry, so XGP is added in 9B as one scorer + one method entry. Spec in plan Step 9.
+Next: 9A runs on both GPUs (nakhoul-3050: folds 0 1 3; uni-2080: folds 2 3 4; ≈ 8 h each) → commit per-fold files → `--analyze` (fold 3 = uni-2080's copy, the default) → look at where older adults drift more → finalise XGP → 9B.
 
 ## Decisions since the plan (short)
+- RQ0–RQ3 written into the plan (top of the file), 2026-11-21.
+- Fold 3 in the analysis = uni-2080's copy; nakhoul-3050's fold 3 is for the Step 9b machine comparison only (2026-11-21).
 - XGP pilot round 2 (2026-11-21; plan 2.5 (b), round 2): KD is a shared fine-tuning recipe for every method, not part of XGP; XGP = the keep-score variants only; L_cons and the gate are dropped (EG m = 4 self-agreement ≈ 0.44 in an unsaved check; the gate never fired), and the EG-noise diagnostic is reported as a finding. Pre-registered rule: final XGP = the eligible variant with the highest mean LCI_val over {70, 90%} × {normal, older-like}; eligible = mean F1 ≥ best baseline − 1 pt at both levels; ties within 0.005 → fewer components; no eligible variant → stop, no fallback. Our resolution of β: the variants use the β of xgp_kd picked at that level by the same criterion (ties → smaller β). E_ft = 20 in Step 9 if l1_kd_e20 beats l1_kd (seed 0) by > 1 pt F1 at either level. Older-like windows: s ~ U(0.8, 0.9) time-stretch + a ~ U(0.7, 0.9) movement scaling around the per-channel mean (`har/augment.py`); worst-class I uses the reference windows' labels; seeds = the fine-tuning batch-order seed.
 - Selection rule: best macro-F1; among models within 2 pt, lowest CPU SHAP time; params break ties
 - 20 Hz low-pass on both datasets
@@ -29,6 +32,8 @@ Next: 9A runs on both GPUs → --analyze → look at where older adults drift mo
 - Step 6 GPU fixes: (1) `har/run_sanity_walking_aid.py` no longer sets `CUDA_VISIBLE_DEVICES=""` at import (it hid the GPU from `time_har_components`); `har/tests/test_time_har_components.py` checks the import leaves it unchanged. (2) `eg_attributions`, `shap_target_class` and `snip_scores_from_batches` (every gradient taken with the model in eval mode) run with `torch.backends.cudnn.flags(enabled=False)`: cuDNN's RNN backward only runs in training mode, so gradients through TinyHAR's LSTM in eval mode failed on CUDA. **Our method's loss (keep-score I(w), L_cons) must do the same** (go through `eg_attributions`, or wrap its own gradients in both `sdpa_kernel(SDPBackend.MATH)` and `cudnn.flags(enabled=False)`). No effect on CPU.
 
 ## Open issues
+- 9A: `run_compression_grid` is smoke-tested on CPU only. Run `--smoke --device cuda` on each GPU first (needs that machine's smoke noise floor: `python -m har.run_noise_floor --folds 0 --smoke --device cuda --machine-name <m>`).
+- CPU inference time per model (plan 2.7, Aya's machine only) is not part of the grid runner yet.
 - On Windows, pandas writes CRLF line endings, so after `har.build_windows` git shows results/har-setup/ as modified even though the content is identical (`git diff --ignore-cr-at-eol` is empty). Restore with `git restore results/har-setup/`, or fix it with `lineterminator="\n"` or a `.gitattributes`.
 - HART on CUDA warns that the backward pass of memory-efficient attention is non-deterministic: repeat runs of HART on GPU may not be bit-identical.
 - Run inside `.venv`: the system Python on Nakhoul's laptop has no numpy.

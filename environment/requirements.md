@@ -235,3 +235,27 @@ python -m har.run_xgp_pilot2 --levels 0.7 --diagnostic --device cuda --machine-n
 python -m har.run_xgp_pilot2 --levels 0.9 --device cuda --machine-name uni-2080 --noise-floor-machine nakhoul-3050   # ran 2026-11-21 on uni-2080 (torch 2.7.1+cu118, git 7dd23b6), 1.42 h
 python -m har.run_xgp_pilot2 --analyze                                 # ran 2026-11-21 on nakhoul-3050 after both levels -> final XGP = xgp_kd, beta* 0.1, E_ft 20 in Step 9
 ```
+
+Step 9A code, compression grid with the standard methods only (2026-11-21, Aya's laptop, torch 2.7.1+cpu). No new packages. New code:
+- `har/run_compression_grid.py`: the grid (method registry, `--folds`, `--resume`, `--smoke`, `--analyze`).
+- `har/faithfulness.py`: deletion curve, random-deletion baseline, AOPC and drop_k5 (plan 2.7).
+- `har/compression.py`: `ptq_tulla` (= `lci.compression.ptq`).
+- `har/stats.py`: `paired_wilcoxon`, `holm`, `cohens_dz`, `bootstrap_mean_ci`, `bootstrap_fa_lci_ci`, `safe_rate`; `bootstrap_group_gap_ci` vectorised for the mean (same draws, same result).
+- Tests: `har/tests/test_compression_grid.py`, `har/tests/test_faithfulness.py`, additions to `har/tests/test_stats.py`.
+
+Needs on each machine: `data/processed/har/checkpoints/har-model-selection/har-final-tinyhar-fold{k}-*.pt`, the fold's noise-floor files from the same machine in `results/har-noise-floor/` (τ_k and the SHAP-noise ceilings), and, for the per-class retrain-noise reference and SHAP cache hits, that machine's `data/processed/har/checkpoints/har-noise-floor/` and `data/processed/har/shap-cache/`.
+
+```bash
+python -m pytest har/tests lci/tests                                        # 223/223 passed (61 s)
+python -m har.run_compression_grid --folds 0 --smoke --machine-name Aya      # -> results/har-compression-grid-smoke/ (git-ignored), 62 s
+python -m har.run_compression_grid --folds 0 --smoke --machine-name Aya --resume   # skips all 38 models
+python -m har.run_compression_grid --analyze --smoke --n-boot 500            # -> results/har-compression-grid-analysis-smoke/
+# GPU runs (to do), one job per machine:
+python -m har.run_noise_floor --folds 0 --smoke --device cuda --machine-name nakhoul-3050      # smoke noise floor for this machine name
+python -m har.run_compression_grid --folds 0 --smoke --device cuda --machine-name nakhoul-3050
+python -m har.run_compression_grid --folds 0 1 3 --device cuda --machine-name nakhoul-3050
+python -m har.run_noise_floor --folds 0 --smoke --device cuda --machine-name uni-2080
+python -m har.run_compression_grid --folds 0 --smoke --device cuda --machine-name uni-2080
+python -m har.run_compression_grid --folds 2 3 4 --device cuda --machine-name uni-2080
+python -m har.run_compression_grid --analyze                                                   # after both machines' files are merged; fold 3 = uni-2080's copy
+```

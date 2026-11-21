@@ -13,7 +13,8 @@
     teacher_segment_attributions  the original model's fixed 48-segment EG attributions
     park_teacher_attributions, park_am_distance, park_am_loss
                           L1 + attribution matching, adapted                         [Park Sec 3.2, Eq. 2]
-Our method (XGP: keep-score, L_cons, gate) is in har/xgp.py. Not written yet: ptq_tulla.
+    ptq_tulla             Tulla-style PTQ = lci.compression.ptq unchanged (secondary)  [plan 2.5, Q1]
+Our method (XGP: keep-score, L_cons, gate) is in har/xgp.py.
 
 Pruning masks (deviation from the plan's torch.nn.utils.prune.custom_from_mask, decided 2026-11-20):
 the masks are a plain dict `model.prune_masks` {tensor name: bool keep-mask}, applied in place to the
@@ -279,6 +280,16 @@ def ptq_symmetric(model: nn.Module, bits: int) -> tuple[nn.Module, dict[str, int
             quantized[name] = bits
     q.eval()
     return q, quantized
+
+
+def ptq_tulla(model: nn.Module, bits: int) -> tuple[nn.Module, dict[str, int]]:
+    """Tulla-style PTQ (secondary, always labelled so) [plan 2.5, Q1]: lci.compression.ptq unchanged, i.e.
+    every learnable parameter (normalization parameters and biases included) rounded to a fixed
+    1 / (2^(b-1) - 1) grid, no scale, no clamping. Returns (model in eval mode, {parameter name: bits})."""
+    from lci.compression import ptq
+
+    q, _ = ptq(model, bits)
+    return q, {n: bits for n, _ in q.named_parameters()}
 
 
 # ------------------------------------------------------------------------------ SNIP-score pruning

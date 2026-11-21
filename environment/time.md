@@ -238,3 +238,23 @@ command: `python -m har.run_xgp_pilot2 --levels 0.9 --device cuda --machine-name
 - SHAP total 0.84 h over 38 assessments (≈ 80 s each).
 - `python -m har.run_xgp_pilot2 --analyze` (nakhoul-3050, after both levels): a few seconds.
 - Round 2 in total: both levels ran in parallel on two machines, so ≈ 1.6 h of wall clock.
+
+## Step 9A compression grid code (Aya's machine, CPU, 2026-11-21)
+
+machine model: Lenovo ThinkPad E14 Gen 5 (21JLS20R00), torch 2.7.1+cpu
+commands ran / time taken to finish:
+- `python -m pytest har/tests lci/tests`: **61 s** (223/223 passed; 28 new).
+- `python -m har.run_compression_grid --folds 0 --smoke --machine-name Aya`: **62 s** (38 models; 20 one-epoch fine-tunings on 600 windows, SHAP nsamples 20 on 30 windows). `--resume` with everything done: 1.5 s. `--analyze --smoke --n-boot 500`: 5 s.
+
+Estimate of the real runs (from pilot round 2's GPU timings: CE/KD epoch ≈ 3.3 s on nakhoul-3050 and ≈ 2 s on uni-2080, Park epoch ≈ 60 / 65 s, SHAP ≈ 0.14 / 0.13 s per window):
+
+| Part, per fold | Count | nakhoul-3050 | uni-2080 |
+|---|---|---|---|
+| CE / KD fine-tunings, 20 epochs | 16 | ≈ 18 min | ≈ 11 min |
+| park, park_kd at 70 / 90%, 20 epochs | 4 | ≈ 80 min | ≈ 87 min |
+| SHAP, ≈ 765 windows (90 inner val + 120–150 general + 540 older) | 32 models (original and noise references are cache hits) | ≈ 57 min | ≈ 54 min |
+| Teacher logits + Park targets, faithfulness (66 forward passes per window), accuracy on ≈ 25K test windows | once / per model | ≈ 5 min | ≈ 5 min |
+| **Total per fold** | | **≈ 2.7 h** | **≈ 2.6 h** |
+| **Assigned folds** | 0, 1, 3 / 2, 3, 4 | **≈ 8 h** | **≈ 8 h** |
+
+Upper bound ≈ 2× (round 1's slow epochs on a laptop on battery). `--analyze` with 10,000 bootstrap draws: minutes, not measured on real data yet.
