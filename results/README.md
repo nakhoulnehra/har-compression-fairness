@@ -220,6 +220,62 @@ Park's and our fine-tuning together take 73% (3050 Ti) and 79% (2080) of the pro
 ## har-component-timing-smoke/
 **Git-ignored, local only: a pipeline check, not results.** `python -m har.time_har_components --fold 0 --smoke` (Step 6) writes here: 600 training windows, 8 explain windows, nsamples 20, files named like the real ones in `har-component-timing/`. Its projection is dominated by per-batch overhead and says nothing about run time. Passed on Aya CPU on 2026-11-20 (28.5 s wall clock) and on the nakhoul-3050 GPU (7.8 s).
 
+## har-noise-floor/
+Step 8 noise floor, fold 0, frozen TinyHAR: seed 0 (the model-selection checkpoint) against retrained seeds 1–3 (retrain noise) and against SHAP seeds 1–2 on seed 0 (SHAP noise), nsamples 200. `python -m har.run_noise_floor --folds 0 --device cuda --machine-name nakhoul-3050`, 2026-11-20, git c7787e2 (clean tree), 709 s.
+
+### [har-noise-floor-tinyhar-fold0-nakhoul-3050-tau.csv](har-noise-floor/har-noise-floor-tinyhar-fold0-nakhoul-3050-tau.csv)
+- What: τ_0 = min over retrain seeds of the inner-val LCI (seed 0 vs seed s), and checks.
+- Key numbers: **τ_0 = 0.6593** (seed 1; seeds 2 / 3: 0.7564 / 0.7724). Below Tulla's τ = 0.85. SHAP noise above retrain noise in every group.
+
+### [har-noise-floor-tinyhar-fold0-nakhoul-3050-group-summary.csv](har-noise-floor/har-noise-floor-tinyhar-fold0-nakhoul-3050-group-summary.csv)
+- What: mean / min / max subject-mean LCI per group (inner val 3, general 4, older 18 subjects) and noise type.
+- Key numbers (retrain mean [min, max] | SHAP mean): inner val 0.729 [0.659, 0.772] | 0.946; general 0.759 [0.707, 0.811] | 0.941; older 0.769 [0.736, 0.786] | 0.927.
+
+### [har-noise-floor-tinyhar-fold0-nakhoul-3050-per-subject-lci.csv](har-noise-floor/har-noise-floor-tinyhar-fold0-nakhoul-3050-per-subject-lci.csv)
+- What: 125 rows (noise × seed × subject): LCI, SHAP correlation, Jaccard, MPRF feature / shift.
+- Key numbers: per-subject retrain LCI 0.602–0.932 (older), 0.642–0.870 (general), 0.631–0.873 (inner val); SHAP LCI 0.809–0.980.
+
+### [har-noise-floor-tinyhar-fold0-nakhoul-3050-retrained-models.csv](har-noise-floor/har-noise-floor-tinyhar-fold0-nakhoul-3050-retrained-models.csv)
+- What: inner-val macro-F1 and training time of seed 0 and retrained seeds 1–3.
+- Key numbers: inner-val macro-F1 seed 0 0.818, seeds 1–3 0.832 / 0.785 / 0.817; training 44 / 30 / 26 s (16 / 11 / 9 epochs, early stopping).
+
+### har-noise-floor-tinyhar-fold0-nakhoul-3050-config.json, logs/har-noise-floor-tinyhar-fold0-nakhoul-3050.log
+- What: command line, device, git, code hash, seeds, explain-window counts, seconds; terminal output.
+- Key numbers: training 104 s, SHAP 603 s, wall 709 s.
+
+## har-xgp-pilot/
+XGP pilot (plan 2.5 (b)), fold 0, 70% pruning, inner val (S010, S020, S021; 90 explain windows, nsamples 200), τ_0 = 0.6593 from `har-noise-floor/`. `python -m har.run_xgp_pilot --fold 0 --device cuda --machine-name nakhoul-3050`, 2026-11-20/21, git c7787e2 (clean tree). All pruned models: 17,365 of 54,273 weights non-zero. Fine-tuning times are not usable as timings (see `environment/time.md`).
+
+### [har-xgp-pilot-tinyhar-fold0-70pct-inner-val-nakhoul-3050-runs.csv](har-xgp-pilot/har-xgp-pilot-tinyhar-fold0-70pct-inner-val-nakhoul-3050-runs.csv)
+- What: one row per configuration: LCI_val, SHAP corr, Jaccard, inner-val macro-F1, before-fine-tuning LCI/F1, gate branch, tuning selection.
+- Key numbers (LCI_val / F1; original F1 0.818; eligible F1 ≥ L1 − 1 pt = 0.721):
+
+| Run | Before ft LCI / F1 | LCI_val | F1 |
+|---|---|---|---|
+| L1 | 0.402 / 0.374 | 0.884 | 0.731 |
+| SNIP | 0.074 / 0.239 | 0.771 | 0.678 |
+| Park γp 1, lr 1e-4 (**selected**) | 0.402 / 0.374 | 0.810 | 0.743 |
+| Park γp 1, lr 3e-4 / γp 50, lr 1e-4 / γp 50, lr 3e-4 | 0.402 / 0.374 | 0.721 / 0.789 / 0.797 | 0.704 / 0.607 / 0.676 |
+| XGP β 0.3, γ 0.1 (**selected, fallback**) | 0.486 / 0.485 | **0.887** | 0.711 |
+| XGP β 0.3, γ 1 | 0.486 / 0.485 | 0.874 | 0.671 |
+| XGP β 0.7, γ 0.1 / γ 1 | 0.444 / 0.403 | 0.799 / 0.815 | 0.674 / 0.634 |
+
+- Gate: both β start below τ_0 (0.486, 0.444 < 0.659), so all 4 XGP runs used CE + γ·L_cons.
+- No XGP configuration is within 1 pt of L1's F1 (best 0.711, 2.0 pt below), so XGP is picked by the fallback (highest F1). Its LCI_val is 0.003 above L1. Only L1 and Park γp 1 lr 1e-4 meet the F1 rule.
+- The keep-score raises LCI before fine-tuning (β 0.3: 0.486 vs L1 0.402) and F1 before fine-tuning (0.485 vs 0.374). Larger γ and β lower F1.
+
+### [har-xgp-pilot-tinyhar-fold0-70pct-inner-val-nakhoul-3050-per-subject-lci.csv](har-xgp-pilot/har-xgp-pilot-tinyhar-fold0-70pct-inner-val-nakhoul-3050-per-subject-lci.csv)
+- What: 42 rows (14 runs incl. 4 pre-fine-tuning starts × 3 inner-val subjects): LCI, SHAP corr, Jaccard.
+- Key numbers (S010 / S020 / S021): L1 0.853 / 0.853 / 0.945; XGP β 0.3 γ 0.1 0.851 / 0.862 / 0.946; Park selected 0.826 / 0.768 / 0.836; SNIP 0.722 / 0.792 / 0.799.
+
+### [har-xgp-pilot-tinyhar-fold0-70pct-inner-val-nakhoul-3050-finetune-history.csv](har-xgp-pilot/har-xgp-pilot-tinyhar-fold0-70pct-inner-val-nakhoul-3050-finetune-history.csv)
+- What: per epoch (10 per run): train CE, extra loss, inner-val F1 / accuracy, seconds.
+- Key numbers: median s/epoch: CE (L1 / SNIP) 9–12, Park 158–207, L_cons 105. Epoch 1 of `xgp_beta0.7_gamma1` is 16,134 s (laptop hibernated).
+
+### har-xgp-pilot-tinyhar-fold0-70pct-inner-val-nakhoul-3050-config.json, logs/har-xgp-pilot-tinyhar-fold0-70pct-inner-val-nakhoul-3050.log
+- What: command line, device, git, code hash, XGP / Park settings, n_nonzero, chosen configurations, seconds; terminal output.
+- Key numbers: teacher EG 40.0 s, SNIP 0.9 s, I(w) 10.1 s; wall 28,005 s (includes ≈ 4.5 h hibernation).
+
 ## har-noise-floor-smoke/
 **Git-ignored, local only: a pipeline check, not results.** `python -m har.run_noise_floor --folds 0 --smoke` (Step 8) writes here: seeds 1–3 retrained for 1 epoch on 600 windows, 3 explain windows per subject (3 HAR70+ subjects), nsamples 20. The file names match the real ones (`har-noise-floor-tinyhar-fold0-<machine>-{per-subject-lci, group-summary, tau, retrained-models}.csv`, `-config.json`). Its τ_0 (0.07) means nothing. Passed on Aya CPU on 2026-11-20 (24.8 s wall clock; a rerun reuses the cached checkpoints and SHAP).
 

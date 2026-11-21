@@ -173,3 +173,20 @@ Smoke sizes only, so these are no estimate of the real runs. GPU estimates for t
 - Noise floor, fold 0: ≈ 15 min on nakhoul-3050.
 - Pilot, fold 0: ≈ 75 min upper bound on nakhoul-3050 (≈ 90 min on uni-2080).
 - Steps 8 + 9 with the XGP ablations: ≈ 3.95 h per fold on nakhoul-3050 and ≈ 4.6 h on uni-2080.
+
+## Step 8 noise floor + XGP pilot, fold 0 (nakhoul-3050 GPU, 2026-11-20/21, git c7787e2, clean tree)
+
+- `python -m har.run_noise_floor --folds 0 --device cuda --machine-name nakhoul-3050`: **709 s** (23:36–23:48; estimate ≈ 15 min). Retraining seeds 1–3 104 s (26–44 s each, early stopping), 18 SHAP calls 603 s (90 / 120 / 540 windows, nsamples 200). On AC power.
+- `python -m har.run_xgp_pilot --fold 0 --device cuda --machine-name nakhoul-3050`: 23:48–07:35, wall 28,005 s, of which ≈ 4.5 h hibernation (the laptop was unplugged at 01:58 and hibernated on critical battery at 02:56; resumed at 07:23). **Without the hibernation ≈ 3.3 h** (estimate was ≈ 75 min).
+
+| Part (10 epochs each) | s / epoch (median) | s / run | Power |
+|---|---|---|---|
+| L1, SNIP (CE) | 9–12 | 85, 113 | AC |
+| Park, 4 configurations (CE + γp·L_AM) | 158–207 | 1,546–2,065 | AC (last epochs of the 4th on battery) |
+| XGP L_cons, β 0.3 γ 0.1 / γ 1, β 0.7 γ 0.1 | 105 | 1,047–1,060 | battery |
+| XGP L_cons, β 0.7 γ 1 | 53–105 (rising) | not usable (epoch 1 = 16,134 s, hibernation) | AC |
+| SHAP per assessment (90 windows) | | 14–32 | |
+| References: teacher EG / SNIP / I(w) | | 40.0 / 0.9 / 10.1 | AC |
+
+- Park's epoch here (≈ 206 s, AC) is ≈ 4× the Step 6 benchmark (52.0 s) on the same GPU, and epoch times varied up to 2× within one run (Park 112–207 s, L_cons 53–105 s). Laptop power/thermal state is not controlled, so these are not clean timings. The Step 6 projection (3.20 h/fold; 3.95 h with ablations) is likely too low; re-time Park and L_cons on a plugged-in, idle machine before planning Step 9.
+- L_cons epochs (53–105 s, even on battery) were about half of Park's (158–207 s, on AC), so L_cons is cheaper than Park, not equal as Step 6 assumed.

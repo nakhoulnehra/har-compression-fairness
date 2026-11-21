@@ -1,6 +1,6 @@
 # Status
-Current step: 8 (noise floor, fold 0) then the XGP pilot (fold 0, inner validation). Both are run on GPU by us.
-Done: 7 (code): XGP + noise floor + pilot, implemented and tested on Aya CPU (2026-11-20). 176/176 tests pass (96 s). Smoke runs pass: noise floor 24.8 s, pilot 33 s (also run with `--tau 0.99` to exercise the L_cons branch, 49 s). Not committed.
+Current step: 9 (compression grid). Step 8 noise floor and the XGP pilot (fold 0) are done.
+Done: 7 (code): XGP + noise floor + pilot, implemented and tested on Aya CPU (2026-11-20). 176/176 tests pass (96 s). Smoke runs pass: noise floor 24.8 s, pilot 33 s (also run with `--tau 0.99` to exercise the L_cons branch, 49 s). Committed in c7787e2.
 - `har/xgp.py`: keep-score, I(w), L_cons, gate, tuning rule, method and ablation registry.
 - `har/compression.py`: `l1_scores`, `prune_by_score` (in-place masks), `size_record`, `finetune` (exactly E_ft = 10 epochs), `teacher_segment_attributions`, `attribution_grad_context`.
 - `har/attributions.py`: SHAP cache, per-subject LCI. `lci/metric.py`: `aggregate_time_segments`, `compute_lci_by_subject`.
@@ -9,10 +9,10 @@ Done: 7 (code): XGP + noise floor + pilot, implemented and tested on Aya CPU (20
 Fold split for Steps 8–9: nakhoul-3050 folds 0, 1, 3; uni-2080 folds 2, 3, 4 (fold 3 on both = cross-machine check)
 GPU notes: attribution/SHAP/SNIP gradients run with cuDNN off and math attention (LSTM backward in eval mode)
 
-Next, on nakhoul-3050 (GPU), from the repo root in `.venv`, one job at a time. Needs `data/processed/har/checkpoints/har-model-selection/har-final-tinyhar-fold0-nakhoul-3050.pt`.
-1. `python -m har.run_noise_floor --folds 0 --device cuda --machine-name nakhoul-3050` (≈ 15 min) -> results/har-noise-floor/
-2. `python -m har.run_xgp_pilot --fold 0 --device cuda --machine-name nakhoul-3050` (≈ 75 min upper bound) -> results/har-xgp-pilot/
-Then: check the pilot table (gate branch per β, LCI_val vs L1/SNIP/Park, F1 within 1 pt of L1), commit results/, and put the times in environment/time.md and the numbers in results/README.md. Step 9's grid runner (`har/run_compression_grid.py`) is still to be written. The XGP parts it needs (`METHODS`, `ABLATIONS`, `pruning_scores`, `make_extra_loss`, `select_config`) are in `har/xgp.py`.
+Done on nakhoul-3050 GPU (2026-11-20/21, git c7787e2): noise floor fold 0 (709 s) -> results/har-noise-floor/, τ_0 = 0.6593; XGP pilot fold 0 (≈ 3.3 h without a 4.5 h hibernation) -> results/har-xgp-pilot/.
+Pilot result: both β gated to CE + γ·L_cons. XGP β 0.3 γ 0.1 has the highest LCI_val (0.887 vs L1 0.884, Park 0.810) but F1 0.711, 2 pt below L1 (0.731), so it is picked by the fallback; no XGP configuration meets the 1-pt F1 rule. Park picks γp 1, lr 1e-4 (F1 0.743).
+Open from the pilot: (1) decide whether the XGP grid needs smaller γ / more epochs or a looser F1 rule before Step 9; (2) Park epochs took ≈ 206 s (4× Step 6's 52 s), so re-time Park and L_cons on a plugged-in machine and redo the per-fold projection (environment/time.md).
+Next: Step 9's grid runner (`har/run_compression_grid.py`) is still to be written. The XGP parts it needs (`METHODS`, `ABLATIONS`, `pruning_scores`, `make_extra_loss`, `select_config`) are in `har/xgp.py`.
 
 Done: 1 setup, 2 plan, 3 data pipeline + explain windows + backgrounds; 4e Nakhoul GPU smoke run; 4f all 5 candidates trained (tuning + folds 0–4) in results/har-model-selection/: CNN1D + TinyHAR (Nakhoul GPU, 21.6 min), XGBoost (Aya CPU, 8.7 min), HART + DeepConvLSTM (Nakhoul GPU, 83.2 min)
 4: TinyHAR frozen (81.98 macro-F1, 54K params, 0.17 s SHAP/window).

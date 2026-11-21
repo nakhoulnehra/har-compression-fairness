@@ -212,7 +212,7 @@ python -m pytest har/tests lci/tests                                        # 17
 python -m har.run_noise_floor --folds 0 --smoke --machine-name Aya           # -> results/har-noise-floor-smoke/ (git-ignored)
 python -m har.run_xgp_pilot --fold 0 --smoke --machine-name Aya              # -> results/har-xgp-pilot-smoke/ (git-ignored)
 python -m har.run_xgp_pilot --fold 0 --smoke --machine-name Aya --tau 0.99   # same, forces the CE + gamma L_cons branch
-# real runs (not run yet), nakhoul-3050 GPU, one job at a time:
-python -m har.run_noise_floor --folds 0 --device cuda --machine-name nakhoul-3050   # -> results/har-noise-floor/
-python -m har.run_xgp_pilot --fold 0 --device cuda --machine-name nakhoul-3050      # -> results/har-xgp-pilot/ (reads fold 0's tau)
+# real runs, nakhoul-3050 GPU, one after the other (2026-11-20/21, git c7787e2, exit 0 both):
+python -m har.run_noise_floor --folds 0 --device cuda --machine-name nakhoul-3050   # -> results/har-noise-floor/ (709 s)
+python -m har.run_xgp_pilot --fold 0 --device cuda --machine-name nakhoul-3050      # -> results/har-xgp-pilot/ (reads fold 0's tau; 7.8 h incl. 4.5 h hibernation)
 ```

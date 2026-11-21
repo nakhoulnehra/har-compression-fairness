@@ -1,0 +1,108 @@
+{
+ "command_line": [
+  "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\har\\run_xgp_pilot.py",
+  "--fold",
+  "0",
+  "--device",
+  "cuda",
+  "--machine-name",
+  "nakhoul-3050"
+ ],
+ "machine_name": "nakhoul-3050",
+ "device": {
+  "device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "cuda_version": "11.8",
+  "torch_version": "2.7.1+cu118",
+  "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+  "torch_threads": 8,
+  "python": "3.11.9",
+  "os": "Windows 10"
+ },
+ "git_commit": "c7787e225e5870858167199fdd59791c612cc2db",
+ "git_dirty": false,
+ "code_sha256": "a0b14cc641bfe695255b9fe2e75de01d56e586ebbc232b145b1fc8e056acc245",
+ "started_at": "2026-11-20T23:48:41+02:00",
+ "finished_at": "2026-11-21T07:35:20+02:00",
+ "fold": 0,
+ "level": 0.7,
+ "tau_k": 0.659347126693845,
+ "tau_source": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\results\\har-noise-floor\\har-noise-floor-tinyhar-fold0-nakhoul-3050-tau.csv",
+ "epochs": 10,
+ "nsamples": 200,
+ "xgp": {
+  "n_ref": 1000,
+  "ref_seed": 42,
+  "m_score": 8,
+  "eg_seeds": [
+   0,
+   1
+  ],
+  "score_batch": 125,
+  "m_cons": 4,
+  "betas": [
+   0.3,
+   0.7
+  ],
+  "gammas": [
+   0.1,
+   1.0
+  ],
+  "tune_level": 0.7,
+  "ablation_levels": [
+   0.7,
+   0.9
+  ],
+  "f1_tolerance": 0.01,
+  "eps": 1e-12
+ },
+ "park_tuning": {
+  "gamma_p": [
+   1.0,
+   50.0
+  ],
+  "lr": [
+   0.0001,
+   0.0003
+  ],
+  "m": 4
+ },
+ "m_score": 8,
+ "m_cons": 4,
+ "m_park": 4,
+ "smoke": false,
+ "smoke_sizes": null,
+ "weights": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold0-nakhoul-3050.pt",
+ "inner_val_subjects": [
+  "S010",
+  "S020",
+  "S021"
+ ],
+ "n_train": 51451,
+ "n_val": 7709,
+ "n_inner_val_explain": 90,
+ "n_ref": 1000,
+ "n_nonzero": {
+  "l1": 17365,
+  "snip": 17365,
+  "keep_beta0.3": 17365,
+  "keep_beta0.7": 17365
+ },
+ "chosen": {
+  "park": [
+   "park_gammap1_lr0.0001",
+   false
+  ],
+  "xgp": [
+   "xgp_beta0.3_gamma0.1",
+   true
+  ]
+ },
+ "l1_val_f1": 0.7313617769128066,
+ "seconds": {
+  "teacher_attributions": 39.95708020008169,
+  "snip_scores": 0.9155690998304635,
+  "xgp_importance": 10.126445099944249,
+  "wall": 28004.693636700045
+ }
+}
