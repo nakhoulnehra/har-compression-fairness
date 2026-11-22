@@ -258,3 +258,14 @@ Estimate of the real runs (from pilot round 2's GPU timings: CE/KD epoch ≈ 3.3
 | **Assigned folds** | 0, 1, 3 / 2, 3, 4 | **≈ 8 h** | **≈ 8 h** |
 
 Upper bound ≈ 2× (round 1's slow epochs on a laptop on battery). `--analyze` with 10,000 bootstrap draws: minutes, not measured on real data yet.
+
+## Step 9A compression grid, folds 0, 1, 3 (nakhoul-3050 GPU, 2026-11-21/22, git 9b228cd)
+
+machine: nakhoul-3050, NVIDIA GeForce RTX 3050 Ti Laptop GPU, torch 2.7.1+cu118
+command: `python -m har.run_compression_grid --folds 0 1 3 --device cuda --machine-name nakhoul-3050` (22:45), stopped on purpose at 01:50 during fold 1, resumed with `--resume` at 06:58, finished 11:50.
+- Smoke runs first: `run_noise_floor --folds 0 --smoke` 23 s; `run_compression_grid --folds 0 --smoke` 59 s.
+- **Fold 0: 2 h 34 min** (22:45–01:19).
+- **Fold 1: ≈ 2 h 39 min** (01:19–01:50, then 06:59–09:08). The model in progress at the stop (`l1_kd-50pct-finetune`, ≈ 2 min) was redone.
+- **Fold 3: 2 h 42 min** (09:08–11:50).
+- **Total ≈ 7 h 55 min of compute** for 3 folds (estimate ≈ 8 h), i.e. ≈ 2.6 h per fold. The resumed run reported 17,480 s (4.86 h).
+- Park / park_kd at 20 epochs: ≈ 63–65 s per epoch, ≈ 22 min per run, 4 runs per fold ≈ 1.5 h of each fold.

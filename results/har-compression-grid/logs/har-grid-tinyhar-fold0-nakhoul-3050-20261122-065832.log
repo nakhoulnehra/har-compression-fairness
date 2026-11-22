@@ -1,0 +1,89 @@
+=== compression grid fold 0 | machine nakhoul-3050 | device cuda NVIDIA GeForce RTX 3050 Ti Laptop GPU | torch 2.7.1+cu118 | started 2026-11-22T06:58:32+02:00 | C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\har\run_compression_grid.py --folds 0 1 3 --device cuda --machine-name nakhoul-3050 --resume | resuming, 38 models done
+    SHAP cache hit har-noise-floor-fold0-inner_val-d922856156a009f1.npz
+    SHAP cache hit har-noise-floor-fold0-general-618ab6ff351cf9ae.npz
+    SHAP cache hit har-noise-floor-fold0-older-6be68d6c95a0d1a6.npz
+fold 0: train 51451 windows, inner val ['S010', 'S020', 'S021'], general ['S008', 'S019', 'S022', 'S025'], older 18 subjects; explain inner_val 90, general 120, older 540; tau_k 0.6593 (C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-noise-floor\har-noise-floor-tinyhar-fold0-nakhoul-3050-tau.csv); ceilings inner_val 0.9455, general 0.9408, older 0.9273; original SHAP 0.0 s
+
+acceptance checks: {
+ "n_nonzero_identical_per_level": {
+  "30%": true,
+  "50%": true,
+  "70%": true,
+  "90%": true
+ },
+ "head_unpruned_all": false,
+ "epochs_run_equal_e_ft": true,
+ "ptq8_rho_by_group": {
+  "general": 0.9997503184725521,
+  "inner_val": 0.9997769586362913,
+  "older": 0.9997204215443519
+ },
+ "ptq8_rho_above_0.99_all_groups": true,
+ "ptq8_accuracy_delta_pooled_by_group": {
+  "inner_val": 0.00012971851083154462,
+  "general": 0.0,
+  "older": -0.0022409929322529942
+ },
+ "ptq8_accuracy_within_0.5pt": true,
+ "ptq_tulla8_rho_by_group": {
+  "general": 0.9982017981750837,
+  "inner_val": 0.9983627238812528,
+  "older": 0.9982704834713209
+ },
+ "ptq_tulla8_rho_above_0.99_all_groups": true,
+ "ptq_tulla8_accuracy_delta_pooled_by_group": {
+  "inner_val": 0.002724088727461438,
+  "general": 0.0010342450011491255,
+  "older": 0.0035626041487100135
+ },
+ "ptq_tulla8_accuracy_within_0.5pt": true,
+ "n_skipped_by_model": {
+  "original": 0,
+  "noise_shap_seed1": 0,
+  "noise_shap_seed2": 0,
+  "noise_retrain_seed1": 0,
+  "noise_retrain_seed2": 0,
+  "noise_retrain_seed3": 0,
+  "ptq8": 0,
+  "ptq4": 0,
+  "ptq_tulla8": 0,
+  "ptq_tulla4": 0,
+  "l1-30pct-no_finetune": 0,
+  "snip-30pct-no_finetune": 0,
+  "l1-30pct-finetune": 0,
+  "l1_kd-30pct-finetune": 0,
+  "snip-30pct-finetune": 0,
+  "snip_kd-30pct-finetune": 0,
+  "l1-50pct-no_finetune": 0,
+  "snip-50pct-no_finetune": 0,
+  "l1-50pct-finetune": 0,
+  "l1_kd-50pct-finetune": 0,
+  "snip-50pct-finetune": 0,
+  "snip_kd-50pct-finetune": 0,
+  "l1-70pct-no_finetune": 0,
+  "snip-70pct-no_finetune": 0,
+  "l1-70pct-finetune": 0,
+  "l1_kd-70pct-finetune": 0,
+  "snip-70pct-finetune": 0,
+  "snip_kd-70pct-finetune": 0,
+  "park-70pct-finetune": 0,
+  "park_kd-70pct-finetune": 0,
+  "l1-90pct-no_finetune": 0,
+  "snip-90pct-no_finetune": 0,
+  "l1-90pct-finetune": 0,
+  "l1_kd-90pct-finetune": 0,
+  "snip-90pct-finetune": 0,
+  "snip_kd-90pct-finetune": 0,
+  "park-90pct-finetune": 0,
+  "park_kd-90pct-finetune": 0
+ }
+}
+fold 0 done in 35.3 s
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid\har-grid-tinyhar-fold0-nakhoul-3050-per-subject-metrics.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid\har-grid-tinyhar-fold0-nakhoul-3050-per-subject-class-lci.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid\har-grid-tinyhar-fold0-nakhoul-3050-per-group-class-lci.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid\har-grid-tinyhar-fold0-nakhoul-3050-models.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid\har-grid-tinyhar-fold0-nakhoul-3050-finetune-history.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid\har-grid-tinyhar-fold0-nakhoul-3050-shap-48-segments.npz
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid\har-grid-tinyhar-fold0-nakhoul-3050-config.json
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid\logs\har-grid-tinyhar-fold0-nakhoul-3050-20261122-065832.log

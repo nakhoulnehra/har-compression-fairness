@@ -253,7 +253,8 @@ python -m har.run_compression_grid --analyze --smoke --n-boot 500            # -
 # GPU runs (to do), one job per machine:
 python -m har.run_noise_floor --folds 0 --smoke --device cuda --machine-name nakhoul-3050      # smoke noise floor for this machine name
 python -m har.run_compression_grid --folds 0 --smoke --device cuda --machine-name nakhoul-3050
-python -m har.run_compression_grid --folds 0 1 3 --device cuda --machine-name nakhoul-3050
+python -m har.run_compression_grid --folds 0 1 3 --device cuda --machine-name nakhoul-3050   # ran 2026-11-21/22 (git 9b228cd, torch 2.7.1+cu118); stopped at 01:50 during fold 1, then:
+python -m har.run_compression_grid --folds 0 1 3 --device cuda --machine-name nakhoul-3050 --resume   # 06:58-11:50, exit 0
 python -m har.run_noise_floor --folds 0 --smoke --device cuda --machine-name uni-2080
 python -m har.run_compression_grid --folds 0 --smoke --device cuda --machine-name uni-2080
 python -m har.run_compression_grid --folds 2 3 4 --device cuda --machine-name uni-2080
