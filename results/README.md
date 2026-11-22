@@ -355,6 +355,27 @@ XGP pilot round 2 (plan 2.5 (b), round 2): the last validation-only design itera
 - What: the pre-registered selection rule, the Step 9 fairness rule, the design (variants, baselines, β grid {0.05, 0.1, 0.3}, seeds 0–2, KD T = 3, α = 0.7, E_ft 10, lr 1e-4), and the sha256 of the two window tables (line endings normalised). Every level run checks the tables against it and refuses to run if they changed.
 - Key numbers: written 2026-11-21 at git 182b168 (uncommitted round-2 code).
 
+## har-xgp-pilot/round3/
+XGP pilot round 3: the final, validation-only design of XGP, made after Step 9A (plan 2.5 (b), "Round 3 pre-registration"). Folds 0 and 1, inner val only, HAR70+ never loaded. `python -m har.run_xgp_pilot3`. **Disclosure:** the design was informed by 9A's test-set posture-class drift; all tuning uses inner-val and older-like windows only. So far only `--prepare` has run (2026-11-22, LenovoP330-01, CPU, before any round-3 GPU run). It was rerun the same day after the amendment that added the per-sensor rotation; the first version was used by no run. Phase 1 (tuning), phase 2 (ablations) and `decision.json` come from the GPU runs.
+
+### [har-xgp-pilot3-tinyhar-preregistration.json](har-xgp-pilot/round3/har-xgp-pilot3-tinyhar-preregistration.json)
+- What: the pre-registration, written before any run. It holds the disclosure, the amendment note, both rules (phase-1 selection, phase-2 final), the full design (`ROUND3`, `STARTS`, `COMPONENTS`, older-like `OLDER_LIKE_R3` and KD parameters), `phase1_curve_seeds` [0], window counts, git / code SHA, and the SHA-256 of the two window tables. Every run checks the tables against it.
+- Key numbers:
+  - older-like = time-stretch s ~ U(0.8, 0.9) → movement scale a ~ U(0.7, 0.9) → per-sensor 3D rotation (back and thigh independently, random axis, angle ~ U(−15°, 15°));
+  - grid β ∈ {0.1, 0.3, 0.5}, r ∈ {0.25, 0.5}; levels 50 / 70 / 90%; seeds 0–2;
+  - K = 5, E_ft 20, ridge dampening 0.01, DRO η 0.01, F1 tolerance 1 pt, tie 0.005.
+
+### [har-xgp-pilot3-tinyhar-fold0-inner-val-window-roles-older-like-params.csv](har-xgp-pilot/round3/har-xgp-pilot3-tinyhar-fold0-inner-val-window-roles-older-like-params.csv)
+- What: every fold-0 inner-val window (S010, S020, S021) by window ID, with label, older-like s and a (seed 42), the back and thigh rotation (unit axis x / y / z, angle in degrees), and role (explain / calibration / f1_only) plus pick order.
+- Key numbers: 7,709 windows; 300 explain windows, identical to round 2's (and so are s and a); rotation angles span −15.0 to 15.0° (mean 0.09° back, 0.03° thigh); 426 calibration windows (per class 70 / 70 / 56 / 20 / 70 / 70 / 70); 7,283 F1 windows. Stairs in the F1 set come from explain windows only (45 up, 45 down).
+
+### [har-xgp-pilot3-tinyhar-fold1-inner-val-window-roles-older-like-params.csv](har-xgp-pilot/round3/har-xgp-pilot3-tinyhar-fold1-inner-val-window-roles-older-like-params.csv)
+- What: the same table for fold 1 (S014, S018, S024).
+- Key numbers: 6,163 windows; 300 explain windows; rotation angles −15.0 to 15.0°; 459 calibration windows (70 / 70 / 64 / 45 / 70 / 70 / 70); 5,704 F1 windows. Stairs in the F1 set: 42 up, 42 down (explain only).
+
+## har-xgp-pilot-smoke/round3/
+**Git-ignored, local only: a pipeline check, not results.** The full chain ran with `--smoke` on 2026-11-22 (LenovoP330-01, CPU): prepare, tuning on folds 0 and 1 (`--curve-seeds 0`), tuning analysis, ablation on folds 0 and 1, final analysis. It was rerun after the rotation amendment. Phase 1 takes ≈ 10–13 s per fold and phase 2 ≈ 14 s. In the rerun, the no-fine-tuning scenario had no eligible configuration, so the no-fallback path (skip, with the reason recorded in the decision) was exercised as well.
+
 ## har-noise-floor-smoke/
 **Git-ignored, local only: a pipeline check, not results.** `python -m har.run_noise_floor --folds 0 --smoke` (Step 8) writes here: seeds 1–3 retrained for 1 epoch on 600 windows, 3 explain windows per subject (3 HAR70+ subjects), nsamples 20. The file names match the real ones (`har-noise-floor-tinyhar-fold0-<machine>-{per-subject-lci, group-summary, tau, retrained-models}.csv`, `-config.json`). Its τ_0 (0.07) means nothing. Passed on Aya CPU on 2026-11-20 (24.8 s wall clock; a rerun reuses the cached checkpoints and SHAP).
 
@@ -431,7 +452,7 @@ Step 5, baseline gap check on HAR70+ (**first HAR70+ use**), with the frozen Tin
 ## har-compression-grid-analysis-smoke/
 **Git-ignored, local only: a pipeline check, not results.** `python -m har.run_compression_grid --analyze --smoke` writes the 8 `har-grid-a-*.csv` tables and `har-grid-a-analysis-config.json` (same names as the real analysis, below) from the smoke fold. Passed on Aya CPU on 2026-11-21 (5 s with `--n-boot 500`).
 
-## har-compression-grid/ (Step 9A grid, all 5 folds done) and har-compression-grid-analysis/ (not run yet)
+## har-compression-grid/ (Step 9A grid, all 5 folds done) and har-compression-grid-analysis/ (analysis done)
 Step 9A baseline grid, frozen TinyHAR, 38 models per fold: original, 5 noise references (retrain seeds 1–3, SHAP seeds 1–2), 4 PTQ (ptq8, ptq4, ptq_tulla8, ptq_tulla4), l1 / snip starts without fine-tuning at 30 / 50 / 70 / 90%, l1 / l1_kd / snip / snip_kd fine-tuned at every level, park / park_kd at 70 / 90%. E_ft 20 (round-2 decision), lr 1e-4. Runs: folds 0, 1, 3 on nakhoul-3050 (2026-11-21/22, git 9b228cd; fold 3's config records 86c8578, because a pull mid-run added only uni-2080 result files and no code); folds 2, 3, 4 on uni-2080. Per fold and machine: `har-grid-tinyhar-fold{k}-{machine}-{models, per-subject-metrics, per-subject-class-lci, per-group-class-lci, finetune-history}.csv`, `-config.json`, `logs/…log`. The `-shap-48-segments.npz` files (≈ 5 MB per fold) stay local and uncommitted; only `--resume` reads them. Fold 0 on nakhoul-3050 has two logs (the run was stopped at 01:50 during fold 1 and resumed at 06:58; the model in progress was redone).
 
 ### har-grid-tinyhar-fold{0,1,2,3,4}-{machine}-models.csv (all folds, means over folds 0–4, fold 3 = uni-2080's copy as the analysis uses)
@@ -445,4 +466,71 @@ Step 9A baseline grid, frozen TinyHAR, 38 models per fold: original, 5 noise ref
 - Key numbers: per fold ≈ 950–990 per-subject-metrics rows, ≈ 5,500–5,700 per-subject-class rows, 1,254 per-group-class rows, 400 fine-tune-history rows (20 runs × 20 epochs).
 
 ### har-compression-grid-analysis/
-To be written by `--analyze`. Analysis tables: `har-grid-a-per-subject-pooled-over-folds.csv`, `-group-summary-gaps-bootstrap-ci.csv`, `-fa-lci-bootstrap-ci.csv`, `-method-comparisons-wilcoxon-holm.csv`, `-safe-explanation-rate.csv`, `-per-class-lci-drift.csv`, `-stairs-f1-pooled-per-group.csv`, `-inner-val-lci-per-fold.csv`, `-analysis-config.json`. Entries with numbers follow when the files exist.
+Written by `python -m har.run_compression_grid --analyze` (committed in eb09f83): 5 folds, with fold 3 = uni-2080's copy (folds 0 and 1 from nakhoul-3050, 2–4 from uni-2080). Bootstrap 10,000 draws, seed 42. Subjects are pooled over folds: each of the 22 HARTH subjects is tested in 1 fold, and each of the 18 HAR70+ subjects in all 5 folds, averaged. "Gap" = older − general. Bootstrap CIs are over subjects; Mann-Whitney U is the secondary test.
+
+#### [har-grid-a-fa-lci-bootstrap-ci.csv](har-compression-grid-analysis/har-grid-a-fa-lci-bootstrap-ci.csv)
+- What: per model (38), the subject-pooled LCI per group, LCI_all, the gap, the worst group, FA-LCI with its CI, and LCI for walking-aid (inferred) and other older.
+- Key numbers (FA-LCI [CI]; LCI general / older):
+  - noise references: retrain 0.67–0.71, SHAP 0.91–0.92;
+  - ptq8 0.994 [0.990, 0.998]; ptq4 0.904; ptq_tulla4 0.689;
+  - **l1_kd** 30 / 50 / 70 / 90%: 0.902 / 0.885 / 0.875 / **0.733** [0.707, 0.750] (90%: 0.750 / 0.733);
+  - l1 without fine-tuning: 0.877 / 0.622 / **0.337** / 0.141 (70%: 0.425 / 0.337);
+  - snip without fine-tuning: 0.684 / 0.361 / 0.144 / 0.108;
+  - at 70%: snip_kd 0.778, park 0.777, park_kd 0.788;
+  - at 90%: snip_kd 0.490, park 0.714, park_kd 0.713.
+  - Without fine-tuning, the older group is the worst group in every pruned model except snip at 90%.
+
+#### [har-grid-a-group-summary-gaps-bootstrap-ci.csv](har-compression-grid-analysis/har-grid-a-group-summary-gaps-bootstrap-ci.csv)
+- What: per model × metric (13 metrics), the group means with CIs (general, older, walking-aid (inferred), other older), the older − general gap with its CI and Mann-Whitney U, and the walking-aid − other-older gap.
+- Key numbers (LCI gap [CI]):
+  - **CIs that exclude 0 are all without fine-tuning:** l1 70% −0.088 [−0.139, −0.039]; snip 30 / 50 / 70% −0.059 / −0.072 / −0.053; ptq8 −0.006 [−0.010, −0.002].
+  - Every fine-tuned gap has a CI that includes 0 (l1_kd: +0.006 / +0.011 / +0.002 / −0.017).
+  - Noise references: −0.004 to +0.016, all CIs include 0.
+  - Non-stair macro-F1 gap: original −0.098 [−0.162, −0.042]. It stays at −0.08 to −0.11 for every fine-tuned model; l1_kd at 90% is −0.103.
+  - Accuracy gap at 90%: l1 −0.209, l1_kd −0.172, against −0.11 to −0.14 at 30–70%.
+  - Walking-aid (inferred) − other older, LCI: ≈ 0 except snip without fine-tuning (−0.047 to −0.059, CI excludes 0).
+
+#### [har-grid-a-per-class-lci-drift.csv](har-compression-grid-analysis/har-grid-a-per-class-lci-drift.csv)
+- What: per model × class, the LCI per group (subject-class cells with ≥ 3 windows) with CIs, the gap, pooled-window LCI per group, and the per-class noise references (SHAP mean, retrain min) with "below retrain noise" flags.
+- Key numbers (l1 without fine-tuning, gap [CI]; posture classes):
+  - standing at 70%: −0.103 [−0.185, −0.022];
+  - sitting at 90%: −0.105 [−0.188, −0.018];
+  - lying at 50%: −0.131 [−0.222, −0.040].
+  - The other classes' CIs include 0. Per-class retrain-noise minimum LCI ≈ 0.51–0.64. This table is the basis of the round-3 disclosure.
+
+#### [har-grid-a-method-comparisons-wilcoxon-holm.csv](har-compression-grid-analysis/har-grid-a-method-comparisons-wilcoxon-holm.csv)
+- What: 594 paired Wilcoxon tests on LCI, non-stair macro-F1 and AOPC. They cover every pair of pruning methods within (scenario, level) and each fine-tuned method against its start. Populations: all 40 subjects (primary), general, older. Columns: mean diff (a − b), Cohen's d_z, rank-biserial r, Holm p.
+- Key numbers: 385 / 594 are Holm-significant (all subjects: LCI 51, F1 39, AOPC 46).
+  - l1_kd − l1, LCI: +0.102 / +0.083 / +0.063 at 30 / 50 / 70% (Holm p < 1e-4), +0.011 at 90% (p 0.25).
+  - l1_kd − snip_kd: +0.087 at 70% and +0.250 at 90%.
+  - l1_kd − park_kd: +0.082 at 70% and +0.028 at 90% (p 0.03).
+  - Fine-tuning gain over the start (l1_kd − l1 without fine-tuning): +0.02 / +0.25 / +0.49 / +0.59.
+
+#### [har-grid-a-safe-explanation-rate.csv](har-compression-grid-analysis/har-grid-a-safe-explanation-rate.csv)
+- What: the share of LCI ≥ threshold, per fold setting and per subject (general 22; older 18 × 5 folds), for τ_k, the global τ (0.583) and Tulla's 0.85.
+- Key numbers (per subject, τ_k, general / older):
+  - l1_kd 1.00 / 1.00 at 30–70%, **0.955 / 0.867 at 90%**;
+  - l1 without fine-tuning 0.09 / 0.00 at 70%; snip_kd at 90% 0.14 / 0.17; ptq4 1.00 / 1.00.
+  - At 0.85: l1_kd 0.86 / 0.86 (30%), 0.73 / 0.80 (70%), 0.14 / 0.09 (90%); ptq4 0.86 / 0.82.
+
+#### [har-grid-a-stairs-f1-pooled-per-group.csv](har-compression-grid-analysis/har-grid-a-stairs-f1-pooled-per-group.csv)
+- What: pooled stairs-up and stairs-down F1 (with CIs), 7-class macro-F1 and accuracy per model and group. Older windows are pooled over the 5 folds (190 up / 195 down window-instances); there is no per-subject stairs F1.
+- Key numbers (up / down):
+  - original general 0.791 / 0.699, older 0.046 / 0.058;
+  - l1_kd 90%: general 0.688 / 0.656, older 0.028 / 0.048;
+  - snip_kd 90%: general 0.367 / 0.171.
+  - The older group's stairs F1 is near 0 for every model, including the original.
+
+#### [har-grid-a-inner-val-lci-per-fold.csv](har-compression-grid-analysis/har-grid-a-inner-val-lci-per-fold.csv)
+- What: inner-val LCI (with ρ, J, retention), accuracy and non-stair F1 per fold and model. These are the validation-side numbers; the round-3 design uses this kind of data only.
+- Key numbers (mean over folds [min, max]):
+  - l1_kd 0.902 / 0.906 / 0.882 / 0.744 at 30 / 50 / 70 / 90% (90%: [0.571, 0.860]);
+  - l1 without fine-tuning: 0.892 / 0.659 / 0.411 / 0.177.
+
+#### [har-grid-a-per-subject-pooled-over-folds.csv](har-compression-grid-analysis/har-grid-a-per-subject-pooled-over-folds.csv)
+- What: 1,520 rows (38 models × 40 subjects): LCI, ρ, J, LCI768, LCI at k = 16, retention, accuracy, non-stair F1, AOPC, drop_k5 and their random baselines, with n_folds (1 for HARTH, 5 for HAR70+) and subgroup. The other tables are computed from this one.
+- Key numbers: 836 general rows, 494 other-older rows and 190 walking-aid (inferred) rows.
+
+#### [har-grid-a-analysis-config.json](har-compression-grid-analysis/har-grid-a-analysis-config.json)
+- What: the folds and machines, bootstrap settings, metrics, τ_k per fold (0.659 / 0.583 / 0.630 / 0.624 / 0.613; global τ = min = 0.583) and the per-fold acceptance checks.
+- Key numbers: n_nonzero is identical per level, E_ft is met, and ptq8 ρ > 0.99 with accuracy within 0.5 pt in every fold. `head_unpruned_all` is false in every fold; that is the old head check's bug, fixed 2026-11-22. Rerun `--recheck-head` on each GPU machine, then `--analyze`, to refresh it.

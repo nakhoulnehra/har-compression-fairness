@@ -58,6 +58,14 @@ def _head(model: nn.Module) -> nn.Module | None:
     return getattr(model, "head", None)
 
 
+def head_unpruned(model: nn.Module) -> bool:
+    """Step 9 acceptance (fixed 2026-11-22): the classification head carries no pruning mask and none of
+    its weights is zero. (The head is trained during fine-tuning, so "unchanged" is the wrong test.)"""
+    head = _head(model)
+    masks = getattr(model, "prune_masks", None) or {}
+    return bool(not any(n.endswith("head.weight") for n in masks) and torch.all(head.weight.detach() != 0))
+
+
 def prunable_tensors(model: nn.Module, include_head: bool = False) -> list[tuple[str, nn.Module, str]]:
     """(full parameter name, owning module, parameter name) of every prunable weight tensor [plan 2.5, Q3]:
     Conv1d / Conv2d / Linear `weight`, LSTM `weight_ih_l*` / `weight_hh_l*`, attention `in_proj_weight`
@@ -185,6 +193,8 @@ def finetune(model: nn.Module, train: Windows, val: Windows, *, epochs: int = E_
              batch_size: int = FT_BATCH, seed: int = 0, device: str = "cpu",
              extra_loss: Callable[[nn.Module, torch.Tensor], torch.Tensor] | None = None,
              kd_teacher_logits: torch.Tensor | None = None,
+             groups: np.ndarray | None = None, dro_eta: float | None = None,
+             on_epoch_end: Callable[[int, nn.Module], None] | None = None,
              log: Callable[[str], None] = print) -> dict:
     """The fine-tuning loop shared by every pruning method [plan 2.5]: exactly `epochs` epochs (no early
     stopping; the last state is kept), Adam(lr), class-weighted CE from `train`, batch order from a
@@ -196,20 +206,37 @@ def finetune(model: nn.Module, train: Windows, val: Windows, *, epochs: int = E_
     is logged after every epoch. The model is left on `device` in eval mode.
     With kd_teacher_logits ((n_train, n_classes), the original model's logits on `train`), the
     supervised term is the shared KD recipe kd_loss (KD["alpha"] KL(T) T^2 + (1 - alpha) CE) instead of
-    CE; `train_ce` then logs the CE part and `train_kd` the KL part."""
+    CE; `train_ce` then logs the CE part and `train_kd` the KL part.
+    Group DRO (XGP round 3; Sagawa et al. 2020, Algorithm 1): with `groups` (one int per training
+    window, 0..G-1) and `dro_eta`, the batch loss is sum_g q_g l_g over the groups present in the batch
+    (renormalised), l_g = the supervised loss (CE or the KD recipe) on group g's windows, and before
+    each step q_g <- q_g exp(dro_eta l_g), normalised; q starts uniform. q is logged per epoch.
+    `on_epoch_end(epoch_1based, model)` is called after each epoch's validation (e.g. the round-3
+    budget curve); every RNG state is saved before and restored after it, so the training run is
+    identical with or without the callback."""
     require_harth(train, val)
     if kd_teacher_logits is not None and tuple(kd_teacher_logits.shape)[:1] != (len(train),):
         raise ValueError(f"kd_teacher_logits must have one row per training window ({len(train)}), "
                          f"got {tuple(kd_teacher_logits.shape)}")
+    if (groups is None) != (dro_eta is None):
+        raise ValueError("group DRO needs both groups and dro_eta")
     dev = torch.device(device)
     model.to(dev)
     set_seed(seed)
     apply_masks(model)
     masked = _masked_params(model)
     Xtr, ytr = torch.from_numpy(train.X).to(dev), torch.from_numpy(train.y).to(dev)
-    loss_fn = nn.CrossEntropyLoss(weight=class_weights(train.y).to(dev))
+    cw = class_weights(train.y).to(dev)
+    loss_fn = nn.CrossEntropyLoss(weight=cw)
     opt = torch.optim.Adam(model.parameters(), lr=lr)
     zt = kd_teacher_logits.to(dev) if kd_teacher_logits is not None else None
+    if groups is not None:
+        groups = np.asarray(groups)
+        if groups.shape != (len(train),):
+            raise ValueError(f"groups must have one entry per training window ({len(train)}), got {groups.shape}")
+        gtr = torch.from_numpy(groups.astype(np.int64)).to(dev)
+        n_groups = int(groups.max()) + 1
+        q = torch.full((n_groups,), 1.0 / n_groups, dtype=torch.float64, device=dev)
     g = torch.Generator().manual_seed(seed)
     n, history, t_start = len(train), [], time.perf_counter()
     for epoch in range(epochs):
@@ -231,6 +258,8 @@ def finetune(model: nn.Module, train: Windows, val: Windows, *, epochs: int = E_
                 kl = kd_kl_term(z, zt[idx], KD["T"])
                 loss = KD["alpha"] * kl * KD["T"] ** 2 + (1 - KD["alpha"]) * ce
                 tot_kd += float(kl.detach()) * len(idx)
+            if groups is not None:
+                loss = _dro_loss(z, ytr[idx], zt[idx] if zt is not None else None, gtr[idx], cw, q, dro_eta)
             if extra_loss is not None:
                 model.eval()
                 ex = extra_loss(model, idx)
@@ -251,14 +280,64 @@ def finetune(model: nn.Module, train: Windows, val: Windows, *, epochs: int = E_
         history.append({"epoch": epoch, "train_ce": tot_ce / max(seen, 1),
                         "train_extra": tot_extra / max(seen, 1) if extra_loss is not None else None,
                         "train_kd": tot_kd / max(seen, 1) if zt is not None else None,
-                        "val_macro_f1_pooled7": f1, "val_accuracy": acc, "seconds": dt})
+                        "val_macro_f1_pooled7": f1, "val_accuracy": acc, "seconds": dt,
+                        **({f"dro_q{j}": float(q[j]) for j in range(len(q))} if groups is not None else {})})
         log(f"    ft epoch {epoch + 1:2d}/{epochs}  CE {tot_ce / max(seen, 1):.4f}"
             + (f"  KL {tot_kd / max(seen, 1):.4f}" if zt is not None else "")
             + (f"  extra {tot_extra / max(seen, 1):.4f}" if extra_loss is not None else "")
+            + (f"  DRO q {[round(float(v), 3) for v in q]}" if groups is not None else "")
             + f"  val F1 {f1:.4f}  acc {acc:.4f}  {dt:.1f}s")
+        if on_epoch_end is not None:
+            states = _rng_states()
+            on_epoch_end(epoch + 1, model)
+            _restore_rng_states(states)
+            model.to(dev)
     model.eval()
     return {"epochs_run": len(history), "history": history, "seconds": time.perf_counter() - t_start,
             "val_macro_f1_pooled7": history[-1]["val_macro_f1_pooled7"] if history else None}
+
+
+def _dro_loss(z, y, zt, grp, cw, q, eta) -> torch.Tensor:
+    """Online group DRO step (Sagawa et al. 2020, Algorithm 1) on one batch; updates q in place.
+    l_g = (1 - alpha) class-weighted CE (weighted mean over g's windows, as nn.CrossEntropyLoss(weight))
+    + alpha T^2 KL (mean over g's windows) when zt is given, else the class-weighted CE alone."""
+    ce_i = F.cross_entropy(z, y, reduction="none")
+    w_i = cw[y]
+    if zt is not None:
+        T = KD["T"]
+        p_t = F.softmax(zt.detach() / T, 1)
+        kl_i = (p_t * (torch.log(p_t.clamp_min(1e-30)) - F.log_softmax(z / T, 1))).sum(1)
+    losses, present = [], []
+    for j in range(len(q)):
+        m = grp == j
+        if not bool(m.any()):
+            continue
+        l_g = (w_i[m] * ce_i[m]).sum() / w_i[m].sum()
+        if zt is not None:
+            l_g = KD["alpha"] * kl_i[m].mean() * T * T + (1 - KD["alpha"]) * l_g
+        losses.append(l_g)
+        present.append(j)
+    with torch.no_grad():
+        for j, l_g in zip(present, losses):
+            q[j] = q[j] * torch.exp(eta * l_g.detach().double())
+        q /= q.sum()
+    qp = q[present].to(z.dtype)
+    return (qp * torch.stack(losses)).sum() / qp.sum()
+
+
+def _rng_states() -> dict:
+    import random
+    return {"torch": torch.get_rng_state(), "numpy": np.random.get_state(), "python": random.getstate(),
+            "cuda": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None}
+
+
+def _restore_rng_states(s: dict) -> None:
+    import random
+    torch.set_rng_state(s["torch"])
+    np.random.set_state(s["numpy"])
+    random.setstate(s["python"])
+    if s["cuda"] is not None:
+        torch.cuda.set_rng_state_all(s["cuda"])
 
 
 # ------------------------------------------------------------------------------ PTQ (primary)

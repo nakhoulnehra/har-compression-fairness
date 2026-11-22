@@ -308,9 +308,125 @@ Both attribution losses compare 48-segment attributions (Section 2.6), with targ
 - **Diagnostic (finding).** On the original fold-0 model and the normal inner-val windows: LCI(real SHAP, EG) for m = 4, 16, 200, EG m = 4 vs EG m = 4 with another seed, and SHAP seed 0 vs seed 1 for scale.
 - **Pre-registered selection rule (written 2026-11-21, before any GPU run; also in `har-xgp-pilot2-tinyhar-fold0-preregistration.json`).** Final XGP = the eligible XGP variant with the highest mean LCI_val over {70%, 90%} × {normal, older-like} windows (mean over seeds). Eligible = mean pooled 7-class macro-F1 on the normal inner-val windows ≥ the best baseline's mean F1 − 1 pt, **at both levels**. Baselines: l1, l1_kd, snip_kd, park, park_kd. Ties within 0.005 → the variant with fewer components (keep-score 1, + worst-class 1, + augmentation 1). **If no variant is eligible, there is no fallback: report and stop.**
   - Our resolution of the β detail (fixed before the runs): the variants' β at a level = the β of `xgp_kd` that is eligible at that level alone and has the highest mean LCI there (ties within 0.005 → the smaller β; if no β is eligible there, the highest F1, flagged); `xgp_kd` enters the rule with that β.
-- **Step 9A (2026-11-21):** round 2's epochs check gave E_ft = 20, so every fine-tuned method in the grid runs 20 epochs; the KD recipe is shared by l1_kd, snip_kd and park_kd. XGP's final version is designed after 9A (Section 3, Step 9); round 3 is on hold.
+- **Step 9A (2026-11-21):** round 2's epochs check gave E_ft = 20, so every fine-tuned method in the grid runs 20 epochs; the KD recipe is shared by l1_kd, snip_kd and park_kd. XGP's final version is designed after 9A (Section 3, Step 9): round 3, pre-registered below (2026-11-22).
 - **Fairness rule for Step 9.** Whatever recipe and E_ft the final XGP uses, L1 and SNIP-score pruning get the same in the grid; Park runs as published and as park_kd. E_ft = 20 for every method in Step 9 if `l1_kd_e20` beats `l1_kd` (seed 0, same level) by more than 1 pt pooled F1 (normal windows) at either level; otherwise 10.
 - `python -m har.run_xgp_pilot2 --analyze` merges both machines' files, applies the rule and writes the decision table.
+
+#### Round 3 pre-registration
+
+Written 2026-11-22, before any round-3 code existed and before any round-3 run.
+
+**Amendment (2026-11-22, still before any round-3 run).** The older-like transform gains a per-sensor random 3D rotation (below), to address the posture limitation that the first version flagged. Phase 1 also runs with `--curve-seeds 0`; the full budget curve goes to 9B. The first `--prepare` output (same day, used by no run) was deleted and `--prepare` rerun, so the JSON and the window tables reflect the amended design. Its `amended` field records this.
+
+`--prepare` copies the rule into `results/har-xgp-pilot/round3/har-xgp-pilot3-tinyhar-preregistration.json`, together with the SHA-256 of the window tables. This is the final design iteration of XGP and uses validation data only. Code: `har/xgp3.py`, `har/run_xgp_pilot3.py`. Output: `results/har-xgp-pilot/round3/`.
+
+- **Disclosure (goes into the paper verbatim in substance).** The round-3 design was informed by the Step 9A test-set analysis (posture-class drift). All tuning uses inner-val and older-like windows only.
+  - Without fine-tuning, the older adults' LCI fell more than the general adults' in the posture classes (`har-grid-a-per-class-lci-drift.csv`, l1): standing at 70% (gap −0.103, CI −0.185 to −0.022), sitting at 90% (−0.105, CI −0.188 to −0.018) and lying at 50% (−0.131, CI −0.222 to −0.040).
+  - The accuracy gap widens at 90% (`har-grid-a-group-summary-gaps-bootstrap-ci.csv`): fine-tuned l1 −0.209 and l1_kd −0.172, against −0.11 to −0.14 at 30–70%.
+  - Round-3 tuning and selection use only the HARTH inner-validation windows of folds 0 and 1 and their older-like copies. HAR70+ and the folds' test subjects are never loaded (`require_harth` on every window set). The 9A rows are not rerun or changed.
+- **Why each component (the link to 9A).**
+  - Older adults drift most when there is no fine-tuning, so the pruning step itself must keep the explanation. That motivates the keep-score, iterative re-scoring and the layer-wise reconstruction, which repairs the function without any training.
+  - The drift is concentrated in some classes for one group, so the keep-score protects each class and each group separately (class-balanced within a group, max over groups).
+  - The accuracy gap widens at 90%, so the fine-tuned variant adds older-like training windows and weights the worse group (group DRO).
+- **Older-like augmentation: round 2's two steps plus a per-sensor rotation (amended); every parameter fixed a priori, none tuned.** `har/augment.py`, `older_like_r3`, applies three steps in order:
+  1. time-stretch with speed s ~ U(0.8, 0.9);
+  2. movement scaling a ~ U(0.7, 0.9) around the per-channel mean;
+  3. **a per-sensor random 3D rotation.** The back triplet (channels 0–2) and the thigh triplet (3–5) are rotated independently. The axis is uniform on the unit sphere, the angle ~ U(−15°, 15°), and x'(t) = R x(t) at every time step, gravity included.
+
+  s and a are drawn exactly as in round 2 (same seed and streams, so fold 0's values are identical to round 2's). The axes and angles come from two further, independent streams of the same seed. Round 2's `older_like` is unchanged.
+  - Basis in the gait-ageing literature (PDFs not in `papers/` yet; check the exact tables before submission):
+    - comfortable walking speed falls with age, by roughly 10–25% from the 20–40-year decades to the 70–80-year decades [Bohannon & Andrews 2011, *Physiotherapy* 97:182–189, meta-analysis tables by decade; Hollman et al. 2011, *Gait & Posture* 34:111–118];
+    - healthy older adults walk with reduced joint excursion and push-off independent of speed (reduced hip extension and ankle plantar-flexion) [Kerrigan et al. 1998, *Arch Phys Med Rehabil* 79:317–322; Winter et al. 1990, *Phys Ther* 70:340–347];
+    - their trunk accelerations are smaller and less rhythmic [Menz, Lord & Fitzpatrick 2003, *Age Ageing* 32:137–142; review: Kavanagh & Menz 2008, *Gait & Posture* 28:1–15].
+    - rotation: Um et al. (2017, ICMI, "Data augmentation of wearable sensor data for Parkinson's disease monitoring using convolutional neural networks") use random rotation of the accelerometer signal to simulate different sensor placements and orientations. Here it stands for the differences in posture (e.g. trunk inclination) and in sensor fit between older and younger wearers. The ±15° bound is our a-priori choice for a small orientation change; it is not taken from the paper (PDF not in `papers/`; check the section on rotation before submission).
+  - The ranges are our a-priori reading of these sources. They are not fitted to them, and not fitted to HAR70+.
+  - **Known limitation (amended).** Steps 1–2 keep each window's per-channel mean (the gravity component), so on their own they left static postures (lying, sitting, standing) almost unchanged. That is where 9A saw the drift. The rotation (step 3) changes the gravity direction per sensor, so posture windows now change too. What remains a limitation:
+    - the rotation is a generic orientation perturbation (random axis, at most 15°), not a model of how older adults actually sit, stand or lie;
+    - if the 9A posture drift comes from something else (e.g. different movement within a posture, or label differences between the datasets), the proxy still misses it;
+    - the ±15° bound is not validated against HAR70+, and must not be (HAR70+ is test-only).
+- **Windows per fold (folds 0 and 1; `--prepare`, saved by window ID, seeded, CPU).**
+  - Each inner-val window of the fold gets an older-like (s, a) drawn as in round 2 (seed 42), plus a back and a thigh rotation (axis, angle) from independent streams of seed 42 (`draw_older_like_r3_params`). All are saved in the window table.
+  - Roles:
+    - **explain**: 100 per subject, `select_explain_windows` as in round 2; fold 0's windows are identical to round 2's.
+    - **calibration**: 70 per class, so 490 normal windows (`stratified_pick`, seed 44), drawn from the non-explain windows; a class with fewer than 70 gives all it has. Their older-like copies make 980 calibration windows.
+    - **F1**: every inner-val window that is not a calibration window, plus its older-like copy.
+  - Calibration windows are disjoint from the explain and F1 windows.
+  - *Counts written by `--prepare` (2026-11-22).*
+    - Calibration per class: fold 0 70 / 70 / 56 / 20 / 70 / 70 / 70 (426 + 426 older-like); fold 1 70 / 70 / 64 / 45 / 70 / 70 / 70 (459 + 459).
+    - The stairs classes run short, so calibration takes every non-explain stairs window. In the F1 sets, stairs then come from the explain windows only (fold 0: 45 up / 45 down; fold 1: 42 / 42).
+    - Fold 0's explain windows and older-like (s, a) equal round 2's (checked).
+  - *Caveat.* They come from the same 3 subjects, so XGP's inner-val numbers can be slightly optimistic relative to baselines that never see inner-val windows. 9B's test numbers are not affected (calibration = inner val, test = other subjects).
+- **XGP, round 3 (all on a deepcopy of the fold's frozen model; fine-tuning only in the fine-tuned variant).**
+  1. **Calibration set**: the 980 calibration windows above, class-balanced in each group.
+  2. **Group-aware keep-score.**
+     - `I_{g,c}(w) = | w · ∂/∂w Σ_i ⟨A_θ(x_i), sg(A_θ0(x_i))⟩ |` on the calibration windows of group g ∈ {normal, older-like} and class c (true label).
+     - A = 48-segment EG attribution of the original model's predicted class (m = 8; EG seeds (2s, 2s + 1) for run seed s, so seed 0 uses round 2's (0, 1)). The same EG draws are used for θ and θ0.
+     - `I_g = mean_c I_{g,c} / mean_layer I_{g,c}` (class-balanced), and `I = max(I_normal, I_older-like)`.
+     - `score = (1 − β)|w| / mean + β · I / mean`, both means over the tensor's surviving weights.
+     - At θ0 with one group and one class, I equals round 2's `alignment_importance` (tested).
+  3. **Iterative pruning.**
+     - K = 5 steps to the target level s, with step k at sparsity s·k/5.
+     - At each step the scores (|w| and I) are recomputed on the current model, after its reconstruction. Pruned weights stay pruned (nested masks).
+     - No gradient training. Every tensor ends at exactly the uniform target, so n_nonzero equals L1's.
+  4. **Layer-wise reconstruction (no gradient training), after every pruning step.**
+     - Layer by layer in forward order, the kept weights and the bias of each refitted layer are refit by ridge least squares. Per output row i: `min ||w_iᵀ X̃ + b_i − y_i||² + λ ||w_i||²` over the row's kept weights.
+     - X̃ = the layer's inputs in the current pruned model (earlier layers already refit). y = the original layer's outputs on the original model's inputs. Both are taken on the 980 calibration windows in eval mode.
+     - λ = 0.01 · mean diag(X̃ X̃ᵀ), the 1% dampening of SparseGPT / GPTQ.
+     - Refitted layers: TinyHAR's 4 Conv2d, the transformer feed-forward linear1 / linear2, the fusion Linear and the attention-score Linear.
+     - Not refitted (masks only): the attention in/out projections (`out_proj` is applied without calling its forward, so its input cannot be hooked) and the LSTM. The head is unpruned.
+     - Masks are fixed and n_nonzero is unchanged (asserted).
+     - *Sources* (PDFs not in `papers/` yet; verify section and equation numbers): the layer-wise compression problem `argmin ||WX − ŴX||²` with a fixed sparsity pattern [OBC: Frantar, Singh & Alistarh 2022, NeurIPS, Sec 3, Eq. 1]; the row-wise exact least-squares reconstruction for a fixed mask, and the 1% Hessian dampening [SparseGPT: Frantar & Alistarh 2023, ICML, Sec 3 (Eq. 2) and the experimental setup].
+     - *Deviation:* OBC and SparseGPT choose the mask and update the remaining weights jointly. Here the mask comes from the keep-score, and the reconstruction only refits.
+  5. **Fine-tuned variant.**
+     - The shared KD recipe (E_ft = 20, Adam lr 1e-4, batch 256, 0.7 KL(T = 3) T² + 0.3 class-weighted CE).
+     - Training data: the HARTH training windows plus round(r · N) older-like copies. The indices are uniform without replacement; the indices and (s, a, rotation) are seeded with 1000 + seed.
+     - The copies are **teacher-labelled**: their KD target is the original model's logits on the copy, and their CE label is the true activity label, which the transform does not change.
+     - Group DRO over {normal, older-like} [Sagawa et al. 2020, ICLR, Algorithm 1 (online group DRO)]: per batch, `q_g ← q_g · exp(η ℓ_g)`, normalised, and loss = Σ q_g ℓ_g over the groups present. ℓ_g = the recipe's loss on group g's windows. η = 0.01; q starts uniform.
+     - An epoch covers all N(1 + r) windows, so it has (1 + r) times l1_kd's steps. The control `l1_kdaug` gets the identical recipe.
+     - The DRO weights q per epoch are logged.
+- **Phase 1 (tuning)**: folds 0 and 1, levels 50 / 70 / 90%, seeds 0 / 1 / 2.
+  - No fine-tuning:
+    - `l1`, `snip` and `l1_recon` (one-shot L1 + the reconstruction on the same calibration set). These are deterministic, so they run once, as seed 0.
+    - `xgp(β)` with β ∈ {0.1, 0.3, 0.5}.
+  - Fine-tuned (E_ft = 20):
+    - `l1` (CE), `l1_kd` and `snip_kd` (9A recipes);
+    - `l1_kdaug(r)` = L1 start + the round-3 fine-tuning recipe;
+    - `xgp_ft(β, r)` = the xgp(β) start of the same seed + that recipe.
+    - r ∈ {0.25, 0.5}; seed = the batch-order and augmentation seed.
+  - **Fine-tuning budget curve:** every phase-1 fine-tuned run is also assessed after 2 and 5 epochs, inside the same run (0 = its start, 20 = the final model). The RNG states are saved and restored around each assessment, so training is identical with or without the curve (tested). **Phase 1 runs with `--curve-seeds 0` (amended):** the 2- and 5-epoch points are taken for seed 0 only, and the full budget curve over all seeds goes to 9B. The rules use epoch 20 of every seed, so they are unaffected.
+- **Phase 2 (ablations, the same budget: the same calibration set, K, E_ft, seeds, folds and levels, each at the per-level configuration that phase 1 selected).**
+  - No fine-tuning:
+    - `xgp_no_score` (β = 0: |w| only, still iterative and reconstructed);
+    - `xgp_no_group` (I and the reconstruction on the 490 normal calibration windows only);
+    - `xgp_no_iter` (K = 1);
+    - `xgp_no_recon`.
+  - Fine-tuned:
+    - each of those four starts + the round-3 recipe(r*);
+    - `xgp_ft_no_aug` (the XGP start + the plain shared KD, so aug and DRO removed);
+    - `xgp_ft_no_dro` (KD + aug(r*), unweighted);
+    - `l1_recon_ft` (l1_recon + the recipe(r*)).
+  - These runs are assessed at epoch 20 only.
+- **Metrics per run**, on each window set (normal, older-like):
+  - LCI_val (mean over the 3 subjects) with ρ and Jaccard, and the worst-subject LCI;
+  - pooled 7-class macro-F1 and accuracy on the F1 windows;
+  - **FA-LCI_val = min(LCI_normal, LCI_older-like)** and **gap = LCI_normal − LCI_older-like**;
+  - the F1 gap, n_nonzero and seconds.
+  - SHAP as in round 2: GradientExplainer, nsamples 200, SHAP seed 0, target = the original model's predicted class on each window, background = the fold's 100 HARTH windows.
+- **Pre-registered selection rule (phase 1; per scenario and level).**
+  - B_set = the highest mean F1 on that window set among the scenario's baselines. The no-fine-tuning baselines are l1, snip and l1_recon; the fine-tuned baselines are l1, l1_kd, snip_kd and l1_kdaug (both r).
+  - A configuration is **eligible** if its mean F1_normal ≥ B_normal − 1 pt **and** its mean F1_older-like ≥ B_older-like − 1 pt.
+  - **Selected** = the eligible configuration with the highest mean FA-LCI_val (the mean over folds 0, 1 and seeds of each run's FA-LCI). Ties within 0.005 → the smaller β, then the smaller r.
+  - If nothing is eligible at a level, there is no configuration there (flagged, no fallback), and phase 2 skips that level and scenario.
+- **Pre-registered final rule (phase 2; per scenario).**
+  - Candidates are the full XGP and its single-component ablations, each at the selected per-level configuration. A candidate must be eligible (the same F1 rule) at **every** level.
+  - **Final** = the eligible candidate with the highest FA-LCI_val, averaged over the levels. Ties within 0.005 → fewer components, then the higher FA-LCI.
+  - Components:
+    - without fine-tuning, the full method has 4 (the I term, group-aware calibration, iterative, reconstruction);
+    - fine-tuned, it has 6 (those 4 plus aug and DRO); `no_aug` removes both aug and DRO.
+  - If no candidate is eligible, XGP is not frozen for that scenario: report and stop. Only measured variants can be chosen, never an untested combination.
+  - Reported but not part of the rule: final − best baseline FA-LCI per level, with the sign per fold; the budget curve.
+- **Machines:** `--folds` and `--machine-name` split the work. Fold 0 runs on uni-2080 and fold 1 on nakhoul-3050; both have the checkpoints. τ_k and the inner-val ceiling come from nakhoul-3050's fold-0 and fold-1 noise-floor files, which are in git.
+- **Cost estimate** (from round 2: ≈ 80 s of SHAP per assessed model and 40–70 s per 20-epoch KD run): phase 1 ≈ 6.5 h per fold with `--curve-seeds 0` (≈ 9.5 h with the curve on every seed); phase 2 ≈ 3.5 h per fold. The rotation costs well under a second per window set.
 
 *Round 1 (2026-11-20/21, superseded by round 2 for the method design):*
 - **Keep-score** per weight: `score(w) = (1 − β) · |w| / mean_layer|w| + β · I(w) / mean_layer I(w)`. A tensor whose I is all zero keeps only the |w| term. With β = 0 it ranks exactly like L1 (tested).
@@ -622,7 +738,7 @@ Each step ends with an acceptance check. If a check fails, stop, fix the code (n
    *Acceptance:* per group, the SHAP-noise LCI is above the retrain-noise LCI; `τ_k` for each fold and the global τ are written; τ is reported next to 0.85.
 
 9. **Compression grid** (`python -m har.run_compression_grid --folds ...`, folds split across machines, Section 5).
-   **New order (decided 2026-11-21).** Step 9 is split. **9A** runs the standard methods only (PTQ, L1, SNIP-score pruning, Park, each with CE and the shared KD recipe) on the real test windows and measures explanation drift and its subgroup gap (RQ1, RQ2; grid data for RQ0; RQs defined at the top). **Then XGP's final version is designed** for the drift 9A shows (which classes, which levels, which groups), and **9B** adds it to the same grid as one more registered method. Pilot round 3 (shift-aware + worst-case KD) is on hold: it was designed before any test-set drift was seen, and it has no code yet.
+   **New order (decided 2026-11-21).** Step 9 is split. **9A** runs the standard methods only (PTQ, L1, SNIP-score pruning, Park, each with CE and the shared KD recipe) on the real test windows and measures explanation drift and its subgroup gap (RQ1, RQ2; grid data for RQ0; RQs defined at the top). **Then XGP's final version is designed** for the drift 9A shows (which classes, which levels, which groups), and **9B** adds it to the same grid as one more registered method. The earlier round-3 idea (shift-aware + worst-case KD, designed before any test-set drift was seen) is replaced by the round-3 pre-registration in Section 2.5 (b) (2026-11-22), designed after 9A.
    *Why:* round 2 showed XGP's advantage disappears after fine-tuning and reverses on older-like proxy windows; the proxies are a guess at the shift. Measuring where real drift happens first tells us what XGP must fix, instead of tuning XGP against a proxy. *Cost to disclose:* XGP is then designed after seeing test-set behaviour of the baselines. XGP's own tuning still uses HARTH inner validation only (never HAR70+ or test subjects), its design choice is pre-registered before 9B runs, and the paper states the order. The baselines' numbers do not change, because 9B reuses 9A's rows.
    **9A specification** (`har/run_compression_grid.py`, implemented and smoke-tested 2026-11-21; per fold, folds split as in STATUS.md):
    - Models: original; `ptq8`, `ptq4` (per-tensor symmetric, primary) and `ptq_tulla8`, `ptq_tulla4` (secondary); pruning at 30/50/70/90% with identical `n_nonzero`: `l1` (CE), `l1_kd`, `snip` (CE), `snip_kd` at all levels, `park` and `park_kd` at 70% and 90% only. KD = 0.7 · KL(T = 3) · T² + 0.3 · class-weighted CE vs the original model's logits. **E_ft = 20** for every fine-tuned method (round 2's epochs check), Adam lr 1e-4, seed 0, γ_P = 1, EG m = 4.
@@ -635,7 +751,7 @@ Each step ends with an acceptance check. If a check fails, stop, fix the code (n
    *Why:* the core experiment: every method at matched size, same folds, same explain windows.
    *Acceptance, per fold:*
    - identical `n_nonzero` across L1, SNIP-score pruning, Park and ours at each level;
-   - the head is unpruned, and the nominal and actual total sparsity are both recorded;
+   - the head is unpruned, and the nominal and actual total sparsity are both recorded. *Check fixed 2026-11-22:* `head_unpruned` = the head has no mask and no zeroed weight (`compression.head_unpruned`). The old check (head unchanged) was always False after fine-tuning, because the head trains. `--recheck-head` recomputes the column of finished folds from the saved checkpoints;
    - every pruning method ran exactly `E_ft` epochs;
    - the tuning and gate logs show HARTH subjects only;
    - the primary PTQ-8 (per-tensor symmetric) has ρ̄ > 0.99 per group and accuracy within 0.5 pt of the original; the Tulla-style rows are present and labelled;

@@ -1,13 +1,25 @@
 # Status
-Current step: 9A — standard-compression grid (baselines only) on real test data, then subgroup analysis
-New order (decided 2026-11-21): measure drift and unfairness with existing methods first (RQ1, RQ2, RQ0), then design XGP's final version for the observed drift (validation-only tuning; disclosed in the paper), then 9B adds XGP to the same grid.
+Current step: XGP pilot round 3 (final design, validation only), code done 2026-11-22; GPU runs next, then 9B.
+Order (decided 2026-11-21): measure drift and unfairness with existing methods first (9A: RQ1, RQ2, RQ0) ✔, then design XGP's final version for the observed drift (round 3; validation-only tuning; disclosed in the paper), then 9B adds XGP to the same grid.
 Done:
 - 1–5 setup, plan, data, model choice (TinyHAR frozen), baseline gap (older −10.9 pts, p < 0.001)
 - 6 timing; 8 noise floor all folds done (τ: f0 0.66, f1 0.58, f2 0.63, f3 0.61/0.62 on the two machines, f4 0.61)
 - XGP pilots (fold 0, validation only): round 1 (repair loss hurts); round 2 pre-registered → xgp_kd β 0.1, E_ft 20 for all. XGP wins without fine-tuning at 70% (LCI 0.62 vs 0.38, F1 0.60 vs 0.37); ties L1+KD after fine-tuning; worse on older-like proxy windows. EG m=4 self-agreement 0.51 → explains repair-loss failure.
-- Round 3 (shift-aware + worst-case KD) designed, ON HOLD until 9A results (no code written; nothing to run).
-- 9A code done (2026-11-21, CPU smoke only): `har/run_compression_grid.py` (+ `har/faithfulness.py`, `ptq_tulla`, Step 9 stats in `har/stats.py`); 223/223 tests pass. Methods are a registry, so XGP is added in 9B as one scorer + one method entry. Spec in plan Step 9.
-Next: 9A runs on both GPUs (nakhoul-3050: folds 0 1 3; uni-2080: folds 2 3 4; ≈ 8 h each) → commit per-fold files → `--analyze` (fold 3 = uni-2080's copy, the default) → look at where older adults drift more → finalise XGP → 9B.
+- 9A grid (all 5 folds) + `--analyze` (results/har-compression-grid-analysis/). Without fine-tuning, older adults drift more in posture classes (l1: standing 70% gap −0.10, sitting 90% −0.11, lying 50% −0.13); the accuracy gap widens at 90% (l1 −0.21, l1_kd −0.17 vs −0.11 to −0.14 at 30–70%). With KD fine-tuning the LCI gap is ≈ 0 up to 70%.
+- **Round 3 (2026-11-22):** pre-registration written into the plan first (2.5 (b), "Round 3 pre-registration", with the disclosure line, gait-ageing citations for the fixed augmentation, SparseGPT / OBC / group-DRO citations), then code. `har/xgp3.py` (group-aware class-balanced keep-score, K = 5 iterative pruning, ridge layer-wise reconstruction, rules), `har/run_xgp_pilot3.py` (two phases: tuning, ablation; `--folds`, `--machine-name`; budget curve at 0 / 2 / 5 / 20 epochs), DRO + epoch callback in `compression.finetune`.
+  - **Amended the same day, before any run:** the older-like transform gains a per-sensor random 3D rotation (back and thigh independently, random axis, angle ~ U(−15°, 15°), after the stretch and amplitude steps; Um et al. 2017; fixed a priori), so static postures change too. Phase 1 uses `--curve-seeds 0`.
+  - 248/248 tests pass; the full smoke chain passes on CPU.
+  - **`--prepare` rerun for real** → `results/har-xgp-pilot/round3/` pre-registration (with the `amended` note) + window tables with the rotation parameters (fold 0's explain windows and s, a = round 2's).
+- 9A head check fixed: `head_unpruned` = no mask and no zeroed head weight (the old "head unchanged" test was False for every fine-tuned row, because the head trains). `--recheck-head` rewrites the column of finished folds from the checkpoints (needs each GPU machine's checkpoints).
+
+Next (exact commands in environment/requirements.md, round 3 block):
+1. Pull. Smoke on each GPU: uni-2080 `python -m har.run_xgp_pilot3 --phase tuning --folds 0 --smoke --device cuda --machine-name uni-2080`; nakhoul-3050 the same with `--folds 1 --machine-name nakhoul-3050`.
+2. Phase 1: uni-2080 `python -m har.run_xgp_pilot3 --phase tuning --folds 0 --curve-seeds 0 --device cuda --machine-name uni-2080 --noise-floor-machine nakhoul-3050`; nakhoul-3050 `python -m har.run_xgp_pilot3 --phase tuning --folds 1 --curve-seeds 0 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050` (≈ 6.6 h each). The 2 / 5-epoch curve points are taken for seed 0 only; the full budget curve goes to 9B. Commit both folds' files; the pruned-start checkpoints stay local.
+3. `python -m har.run_xgp_pilot3 --analyze --phase tuning` → `har-xgp-pilot3-tinyhar-tuning-selection.json`; commit it, pull it on both GPUs.
+4. Phase 2: the same two commands with `--phase ablation` (≈ 3.5 h each).
+5. `python -m har.run_xgp_pilot3 --analyze --phase ablation` → `har-xgp-pilot3-tinyhar-decision.json`. Exit 2 = no eligible candidate for a scenario → XGP not frozen there; stop and review (no fallback).
+6. 9A head column: `python -m har.run_compression_grid --folds 0 1 3 --recheck-head --machine-name nakhoul-3050` and `--folds 2 3 4 --recheck-head --machine-name uni-2080`.
+7. Register the final XGP in `run_compression_grid` (one scorer + method entry) → 9B.
 
 ## Decisions since the plan (short)
 - RQ0–RQ3 written into the plan (top of the file), 2026-11-21.
@@ -32,6 +44,10 @@ Next: 9A runs on both GPUs (nakhoul-3050: folds 0 1 3; uni-2080: folds 2 3 4; �
 - Step 6 GPU fixes: (1) `har/run_sanity_walking_aid.py` no longer sets `CUDA_VISIBLE_DEVICES=""` at import (it hid the GPU from `time_har_components`); `har/tests/test_time_har_components.py` checks the import leaves it unchanged. (2) `eg_attributions`, `shap_target_class` and `snip_scores_from_batches` (every gradient taken with the model in eval mode) run with `torch.backends.cudnn.flags(enabled=False)`: cuDNN's RNN backward only runs in training mode, so gradients through TinyHAR's LSTM in eval mode failed on CUDA. **Our method's loss (keep-score I(w), L_cons) must do the same** (go through `eg_attributions`, or wrap its own gradients in both `sdpa_kernel(SDPBackend.MATH)` and `cudnn.flags(enabled=False)`). No effect on CPU.
 
 ## Open issues
+- Round 3: the older-like proxy now rotates each sensor by up to 15° (amendment), so posture windows change. It is still a generic orientation perturbation, not a model of older adults' postures. If 9A's posture drift has another cause, the proxy misses it (limitation note in the plan).
+- Round 3: calibration windows come from the same 3 inner-val subjects as the evaluation windows (disjoint windows), so XGP's inner-val numbers may be slightly optimistic against baselines that never see inner-val. 9B's test numbers are not affected. Stairs F1 in round 3 rests on 42–45 explain windows per stairs class (calibration took the rest).
+- Round 3: SparseGPT / OBC / Sagawa / Um et al. / gait-ageing PDFs are not in `papers/`; verify the cited sections and tables before submission.
+- The 9A analysis config reports `head_unpruned_all: false` (the old check's bug). After `--recheck-head` on both machines, rerun `python -m har.run_compression_grid --analyze` to refresh it; nothing else changes.
 - 9A: `run_compression_grid` is smoke-tested on CPU only. Run `--smoke --device cuda` on each GPU first (needs that machine's smoke noise floor: `python -m har.run_noise_floor --folds 0 --smoke --device cuda --machine-name <m>`).
 - CPU inference time per model (plan 2.7, Aya's machine only) is not part of the grid runner yet.
 - On Windows, pandas writes CRLF line endings, so after `har.build_windows` git shows results/har-setup/ as modified even though the content is identical (`git diff --ignore-cr-at-eol` is empty). Restore with `git restore results/har-setup/`, or fix it with `lineterminator="\n"` or a `.gitattributes`.

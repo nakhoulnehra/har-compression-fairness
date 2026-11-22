@@ -1,0 +1,286 @@
+{
+ "what": "XGP pilot round 3 (final design, validation only); pre-registered before any run",
+ "written_at": "2026-11-22T14:21:57+02:00",
+ "git_commit": "eb09f83a88df3044c07fca2e4f456047c5dee7a2",
+ "git_dirty": true,
+ "code_sha256": "7c538952fd1ffc64b81fcd68904402e24fcd44b24c30dbe7e8a0d736889f9b35",
+ "smoke": false,
+ "disclosure": "The round-3 design was informed by the Step 9A test-set analysis (posture-class drift: without fine-tuning, older adults' LCI fell more in standing at 70%, sitting at 90% and lying at 50%; the accuracy gap widens at 90%). All round-3 tuning and selection use HARTH inner-validation windows of folds 0 and 1 and their older-like copies only; HAR70+ and the folds' test subjects are never loaded.",
+ "selection_rule_phase1": "Phase 1, per scenario and level: B_set = the highest mean F1 on that window set among the scenario's baselines (no_finetune: l1, snip, l1_recon; finetune: l1, l1_kd, snip_kd, l1_kdaug at both r). Eligible configuration: mean F1_normal >= B_normal - 1 pt and mean F1_older_like >= B_older_like - 1 pt. Selected = the eligible configuration with the highest mean FA-LCI_val (mean over folds 0, 1 and seeds of each run's min(LCI_normal, LCI_older_like)); ties within 0.005 -> smaller beta, then smaller r. None eligible -> no configuration at that level (flagged, no fallback), and phase 2 skips it.",
+ "final_rule_phase2": "Phase 2, per scenario: candidates = the full XGP and its single-component ablations, each at the selected per-level configuration; eligible = eligible (same F1 rule) at every level; final = the eligible candidate with the highest FA-LCI_val averaged over levels; ties within 0.005 -> fewer components, then the higher FA-LCI. No candidate eligible -> XGP not frozen for that scenario: report and stop. Components: no_finetune full = 4 (score, group, iter, recon), finetune full = 6 (+ aug, + dro); no_aug removes aug and dro.",
+ "round3": {
+  "folds": [
+   0,
+   1
+  ],
+  "levels": [
+   0.5,
+   0.7,
+   0.9
+  ],
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "betas": [
+   0.1,
+   0.3,
+   0.5
+  ],
+  "rs": [
+   0.25,
+   0.5
+  ],
+  "K": 5,
+  "m_score": 8,
+  "score_batch": 125,
+  "damp": 0.01,
+  "dro_eta": 0.01,
+  "epochs": 20,
+  "lr": 0.0001,
+  "curve_epochs": [
+   2,
+   5
+  ],
+  "cal_per_class": 70,
+  "cal_seed": 44,
+  "explain_per_subject": 100,
+  "nsamples": 200,
+  "shap_seed": 0,
+  "aug_seed_offset": 1000,
+  "f1_tolerance": 0.01,
+  "tie": 0.005,
+  "eps": 1e-12,
+  "baselines": {
+   "no_finetune": [
+    "l1",
+    "snip",
+    "l1_recon"
+   ],
+   "finetune": [
+    "l1",
+    "l1_kd",
+    "snip_kd",
+    "l1_kdaug"
+   ]
+  }
+ },
+ "starts": {
+  "xgp": {
+   "score": true,
+   "groups": [
+    "normal",
+    "older_like"
+   ],
+   "K": 5,
+   "recon": true
+  },
+  "xgp_no_score": {
+   "score": false,
+   "groups": [
+    "normal",
+    "older_like"
+   ],
+   "K": 5,
+   "recon": true
+  },
+  "xgp_no_group": {
+   "score": true,
+   "groups": [
+    "normal"
+   ],
+   "K": 5,
+   "recon": true
+  },
+  "xgp_no_iter": {
+   "score": true,
+   "groups": [
+    "normal",
+    "older_like"
+   ],
+   "K": 1,
+   "recon": true
+  },
+  "xgp_no_recon": {
+   "score": true,
+   "groups": [
+    "normal",
+    "older_like"
+   ],
+   "K": 5,
+   "recon": false
+  }
+ },
+ "components": {
+  "no_finetune": {
+   "xgp": [
+    "score",
+    "group",
+    "iter",
+    "recon"
+   ],
+   "xgp_no_score": [
+    "group",
+    "iter",
+    "recon"
+   ],
+   "xgp_no_group": [
+    "score",
+    "iter",
+    "recon"
+   ],
+   "xgp_no_iter": [
+    "score",
+    "group",
+    "recon"
+   ],
+   "xgp_no_recon": [
+    "score",
+    "group",
+    "iter"
+   ]
+  },
+  "finetune": {
+   "xgp_ft": [
+    "score",
+    "group",
+    "iter",
+    "recon",
+    "aug",
+    "dro"
+   ],
+   "xgp_no_score_ft": [
+    "group",
+    "iter",
+    "recon",
+    "aug",
+    "dro"
+   ],
+   "xgp_no_group_ft": [
+    "score",
+    "iter",
+    "recon",
+    "aug",
+    "dro"
+   ],
+   "xgp_no_iter_ft": [
+    "score",
+    "group",
+    "recon",
+    "aug",
+    "dro"
+   ],
+   "xgp_no_recon_ft": [
+    "score",
+    "group",
+    "iter",
+    "aug",
+    "dro"
+   ],
+   "xgp_ft_no_aug": [
+    "score",
+    "group",
+    "iter",
+    "recon"
+   ],
+   "xgp_ft_no_dro": [
+    "score",
+    "group",
+    "iter",
+    "recon",
+    "aug"
+   ]
+  }
+ },
+ "older_like": {
+  "speed": [
+   0.8,
+   0.9
+  ],
+  "scale": [
+   0.7,
+   0.9
+  ],
+  "explain_seed": 42,
+  "reference_seed": 43,
+  "rotation_deg": [
+   -15.0,
+   15.0
+  ],
+  "sensors": {
+   "back": [
+    0,
+    1,
+    2
+   ],
+   "thigh": [
+    3,
+    4,
+    5
+   ]
+  },
+  "order": "time_stretch -> scale_movement -> rotate_sensors"
+ },
+ "kd": {
+  "T": 3.0,
+  "alpha": 0.7
+ },
+ "phase1_curve_seeds": [
+  0
+ ],
+ "amended": "2026-11-22, before any round-3 run: the older-like transform gains a per-sensor random 3D rotation (back and thigh triplets independently, axis uniform on the sphere, angle ~ U(-15, 15) deg; Um et al. 2017), applied after the time-stretch and amplitude steps, so that static postures change too. The first pre-registration (same day, no run used it) was replaced. Phase 1 runs with --curve-seeds 0; the full budget curve goes to 9B.",
+ "folds": [
+  0,
+  1
+ ],
+ "windows": {
+  "0": {
+   "inner_val_subjects": [
+    "S010",
+    "S020",
+    "S021"
+   ],
+   "n_inner_val": 7709,
+   "n_explain": 300,
+   "n_calibration": 426,
+   "calibration_per_class": {
+    "0": 70,
+    "1": 70,
+    "2": 56,
+    "3": 20,
+    "4": 70,
+    "5": 70,
+    "6": 70
+   },
+   "n_f1_windows": 7283,
+   "explain_windows_equal_round2": true,
+   "older_like_params_equal_round2": true
+  },
+  "1": {
+   "inner_val_subjects": [
+    "S014",
+    "S018",
+    "S024"
+   ],
+   "n_inner_val": 6163,
+   "n_explain": 300,
+   "n_calibration": 459,
+   "calibration_per_class": {
+    "0": 70,
+    "1": 70,
+    "2": 64,
+    "3": 45,
+    "4": 70,
+    "5": 70,
+    "6": 70
+   },
+   "n_f1_windows": 5704
+  }
+ },
+ "sha256_window_tables": {
+  "0": "a33ff140afb6733cb68d912fd898e578f7dfe6084884759c3b4e3f77bfa85f54",
+  "1": "597b87993e648c3c06e99a33f777efe53fd99954155cb52139e6fd309fa0f027"
+ },
+ "plan": "plan/HAR_IMPLEMENTATION.md, Section 2.5 (b), 'Round 3 pre-registration'"
+}

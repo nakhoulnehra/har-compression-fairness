@@ -260,3 +260,34 @@ python -m har.run_compression_grid --folds 0 --smoke --device cuda --machine-nam
 python -m har.run_compression_grid --folds 2 3 4 --device cuda --machine-name uni-2080
 python -m har.run_compression_grid --analyze                                                   # after both machines' files are merged; fold 3 = uni-2080's copy
 ```
+
+XGP pilot round 3 code (2026-11-22, LenovoP330-01, torch 2.7.1+cu118, CPU only). No new packages. New and changed code:
+- `har/xgp3.py`: `ROUND3`, `STARTS`, `COMPONENTS`, `alignment_importance_ref`, `group_class_importance`, `masked_keep_scores`, `layerwise_reconstruct` / `ridge_refit_rows` / `refit_modules`, `iterative_prune`, `select_config`, `select_final`, `best_baseline`.
+- `har/run_xgp_pilot3.py` (`--prepare`, `--phase tuning|ablation`, `--folds`, `--machine-name`, `--curve-seeds`, `--analyze`, `--resume`, `--smoke`, `--use-machine`).
+- `har/augment.py` (amendment): `OLDER_LIKE_R3`, `draw_rotation_params`, `draw_older_like_r3_params`, `rotation_matrices`, `rotate_sensors`, `older_like_r3`, `older_like_windows_r3`; round 2's functions unchanged.
+- `har/compression.py`: `head_unpruned`; in `finetune`, group DRO (`groups`, `dro_eta`) and `on_epoch_end` (RNG states saved and restored around it).
+- `har/run_compression_grid.py`: the head check is now `head_unpruned` (no mask, no zeroed weight) and a `head_check` column is added; `--recheck-head` recomputes the column of finished folds from their checkpoints.
+- Tests: `har/tests/test_xgp_round3.py` (23).
+
+```bash
+python -m pytest har/tests lci/tests                                   # 244/244 passed (48 s); after the rotation amendment 248/248 (58 s)
+python -m har.run_xgp_pilot3 --prepare --smoke                         # -> results/har-xgp-pilot-smoke/round3/ (git-ignored)
+python -m har.run_xgp_pilot3 --phase tuning --folds 0 --curve-seeds 0 --smoke --machine-name smoke-cpu      # 12 s (fold 1 the same)
+python -m har.run_xgp_pilot3 --analyze --phase tuning --smoke
+python -m har.run_xgp_pilot3 --phase ablation --folds 0 --smoke --machine-name smoke-cpu    # 5 s (fold 1 the same)
+python -m har.run_xgp_pilot3 --analyze --phase ablation --smoke
+python -m har.run_compression_grid --folds 0 --smoke --machine-name smoke-cpu --noise-floor-machine nakhoul-3050 --levels 0.7 --no-ptq   # 16 s, head_unpruned_all true (outputs deleted afterwards)
+python -m har.run_compression_grid --folds 0 --recheck-head --smoke --machine-name uni-2080   # 28 smoke rows, all True
+python -m har.run_xgp_pilot3 --prepare                                 # -> results/har-xgp-pilot/round3/ pre-registration (run 2026-11-22, before any GPU run; deleted and rerun the same day after the rotation amendment, and the smoke chain was rerun too)
+# GPU runs (to do): fold 0 on uni-2080, fold 1 on nakhoul-3050; tau_k and the ceiling come from nakhoul-3050's noise floor (in git)
+python -m har.run_xgp_pilot3 --phase tuning --folds 0 --smoke --device cuda --machine-name uni-2080
+python -m har.run_xgp_pilot3 --phase tuning --folds 0 --curve-seeds 0 --device cuda --machine-name uni-2080 --noise-floor-machine nakhoul-3050
+python -m har.run_xgp_pilot3 --phase tuning --folds 1 --smoke --device cuda --machine-name nakhoul-3050
+python -m har.run_xgp_pilot3 --phase tuning --folds 1 --curve-seeds 0 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050
+python -m har.run_xgp_pilot3 --analyze --phase tuning                  # after both folds' files are merged
+python -m har.run_xgp_pilot3 --phase ablation --folds 0 --device cuda --machine-name uni-2080 --noise-floor-machine nakhoul-3050
+python -m har.run_xgp_pilot3 --phase ablation --folds 1 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050
+python -m har.run_xgp_pilot3 --analyze --phase ablation                # -> decision.json
+python -m har.run_compression_grid --folds 0 1 3 --recheck-head --machine-name nakhoul-3050   # 9A head column fix, on nakhoul-3050
+python -m har.run_compression_grid --folds 2 3 4 --recheck-head --machine-name uni-2080       # on uni-2080
+```

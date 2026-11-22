@@ -13,6 +13,7 @@ __pycache__/
 # Smoke-run outputs (pipeline checks only, rebuilt in under a minute) - never commit
 results/har-model-selection-smoke/
 results/har-component-timing-smoke/
+results/har-xgp-pilot-smoke/
 
 # Local virtual environment - recreate with pip, never commit
 .venv/

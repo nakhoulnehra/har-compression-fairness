@@ -68,7 +68,7 @@ import pandas as pd
 import torch
 
 from . import runlog as R
-from .compression import (finetune, l1_scores, predict_logits, prune_by_score, ptq_symmetric, ptq_tulla, size_record,
+from .compression import (finetune, head_unpruned, l1_scores, predict_logits, prune_by_score, ptq_symmetric, ptq_tulla, size_record,
                           snip_scores, teacher_segment_attributions, unit_norm)
 from .data import CLASS_NAMES, STAIRS, WALKING_AID_INFERRED, require_harth
 from .faithfulness import background_mean, deletion_curve, faithfulness_scores, random_deletion_curve
@@ -571,13 +571,13 @@ def run_fold(args, k: int, harth: dict, test: dict, folds, frozen: dict) -> None
             nnz[(lv, score)] = rec["n_nonzero"]
             if len({v for (l_, _), v in nnz.items() if l_ == lv}) != 1:
                 raise RuntimeError(f"n_nonzero differs across scores at {lv:.0%}: {nnz}")
-            if not torch.equal(start.head.weight, ctx.net0.head.weight):
-                raise RuntimeError("the classification head was pruned")
+            if not head_unpruned(start):
+                raise RuntimeError("the classification head was pruned (it has a mask or a zeroed weight)")
             if mid in store.done:
                 continue
             if entry["scenario"] == "no_finetune":
                 s = assess(ctx, store, start, entry, {})
-                finish(entry, start, s, {"epochs_run": 0, "head_unpruned": True})
+                finish(entry, start, s, {"epochs_run": 0, "head_unpruned": head_unpruned(start), "head_check": HEAD_CHECK})
                 continue
             m = METHODS[entry["method"]]
             print(f"\n=== fold {k} {mid}: start {score}, {m.recipe.upper()}" + (" + gamma_P L_AM" if m.park else "")
@@ -604,7 +604,7 @@ def run_fold(args, k: int, harth: dict, test: dict, folds, frozen: dict) -> None
                                    "park_m": S.get("park_m", GRID["park_m"]) if m.park else None,
                                    "finetune_seconds": info["seconds"],
                                    "val_macro_f1_pooled7_after_ft": info["val_macro_f1_pooled7"],
-                                   "head_unpruned": bool(torch.equal(net.head.weight.cpu(), ctx.net0.head.weight.cpu())),
+                                   "head_unpruned": head_unpruned(net), "head_check": HEAD_CHECK,
                                    "checkpoint": str(cp)})
 
         checks = fold_checks(pd.DataFrame(store.rows["models"]), pd.DataFrame(store.rows["per-subject-metrics"]))
@@ -992,11 +992,46 @@ def analyze(args) -> None:
 
 # ------------------------------------------------------------------------------ main
 
+HEAD_CHECK = "no mask and no zeroed weight in the head (compression.head_unpruned, 2026-11-22)"
+
+
+def recheck_head(args) -> None:
+    """--recheck-head (2026-11-22): the models files written before the fix compared the head with the
+    original model's, which is always False after fine-tuning (the head trains). Recompute head_unpruned
+    for this machine's folds: fine-tuned rows from their saved checkpoints, no-fine-tuning starts by
+    re-pruning (the head is never in the prunable set). Only the head_unpruned / head_check columns of
+    the models file change; the file is rewritten in place."""
+    out = GRID_SMOKE_DIR if args.smoke else GRID_DIR
+    frozen = json.loads(FROZEN_CONFIG.read_text(encoding="utf-8"))
+    for k in args.folds:
+        p = out / f"har-grid-tinyhar-fold{k}-{args.machine_name}-models.csv"
+        df = pd.read_csv(p)
+        net0, _ = load_fold_model(k, frozen["architecture"])
+        res = {}
+        for i, r in df[df.family == "pruning"].iterrows():
+            if r.scenario == "no_finetune":
+                net = prune_by_score(net0, l1_scores(net0), float(r.sparsity))   # head excluded by scope
+            else:
+                ck = torch.load(r.checkpoint, map_location="cpu", weights_only=False)
+                net = copy.deepcopy(net0)
+                net.load_state_dict(ck["state_dict"])
+                net.prune_masks = ck["prune_masks"]
+            res[i] = head_unpruned(net)
+        for i, v in res.items():
+            df.loc[i, "head_unpruned"] = v
+            df.loc[i, "head_check"] = HEAD_CHECK
+        R.write_csv(p, df)
+        print(f"fold {k}: head_unpruned recomputed for {len(res)} pruning rows, all True: {all(res.values())}; "
+              f"rewrote {p}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     mode = ap.add_mutually_exclusive_group(required=True)
     mode.add_argument("--folds", type=int, nargs="+")
     mode.add_argument("--analyze", action="store_true")
+    ap.add_argument("--recheck-head", action="store_true",
+                    help="with --folds: recompute head_unpruned in this machine's finished models files")
     ap.add_argument("--methods", nargs="+", default=list(PART_A), help="registered pruning methods to run")
     ap.add_argument("--levels", type=float, nargs="+", default=None, choices=GRID["levels"])
     ap.add_argument("--no-ptq", action="store_true")
@@ -1014,6 +1049,8 @@ def main() -> None:
         torch.set_num_threads(args.threads)
     if args.analyze:
         return analyze(args)
+    if args.recheck_head:
+        return recheck_head(args)
     unknown = [m for m in args.methods if m not in METHODS]
     if unknown:
         raise SystemExit(f"unknown methods {unknown}; registered: {list(METHODS)}")

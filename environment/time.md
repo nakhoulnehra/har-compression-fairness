@@ -269,3 +269,21 @@ command: `python -m har.run_compression_grid --folds 0 1 3 --device cuda --machi
 - **Fold 3: 2 h 42 min** (09:08–11:50).
 - **Total ≈ 7 h 55 min of compute** for 3 folds (estimate ≈ 8 h), i.e. ≈ 2.6 h per fold. The resumed run reported 17,480 s (4.86 h).
 - Park / park_kd at 20 epochs: ≈ 63–65 s per epoch, ≈ 22 min per run, 4 runs per fold ≈ 1.5 h of each fold.
+
+## XGP pilot round 3 code (LenovoP330-01, CPU, 2026-11-22)
+
+machine: LenovoP330-01 (Intel Core, family 6 model 158), torch 2.7.1+cu118, all runs on CPU
+commands ran / time taken to finish:
+- `python -m pytest har/tests lci/tests`: **48 s** (244/244 passed; 19 new). After the rotation amendment: **58 s** (248/248).
+- Smoke chain (`--smoke`): phase 1 ≈ 12 s per fold, phase 2 ≈ 5 s per fold, both analyses < 5 s. `--prepare` (real): ≈ 10 s.
+
+Estimate of the real runs per fold, from pilot round 2's GPU timings (SHAP ≈ 80 s per assessed model on 300 + 300 windows; 20-epoch KD ≈ 40 s on uni-2080 and ≈ 70 s on nakhoul-3050; one importance on ≈ 1,000 windows ≈ 8–17 s):
+
+| Part, per fold | Count | Estimate |
+|---|---|---|
+| Phase 1, no-fine-tuning starts (l1, snip, l1_recon once per level; xgp × 3 β × 3 seeds), 5 importance + reconstruction steps each | 30 assessed | ≈ 1 h |
+| Phase 1, fine-tuned runs (l1, l1_kd, snip_kd, l1_kdaug × 2 r, xgp_ft × 6) × 3 seeds × 3 levels, curve at 2 / 5 / 20 epochs (aug runs have 1.25–1.5 × the steps) | 99 runs, 297 assessments | ≈ 8.5 h (≈ 5.6 h with `--curve-seeds 0`) |
+| **Phase 1 total** | | **≈ 9.5 h** (≈ 6.6 h) |
+| Phase 2: 4 starts × 3 seeds × 3 levels + 7 fine-tuned ablations × 3 seeds × 3 levels (epoch 20 only) | 36 + 63 | **≈ 3.5 h** |
+
+Phase 1 runs with `--curve-seeds 0` (decided 2026-11-22), so ≈ 6.6 h per fold. The rotation adds well under a second per window set. Folds run in parallel (fold 0 on uni-2080, fold 1 on nakhoul-3050), so wall clock ≈ 6.6 h + 3.5 h on the slower machine. Not measured yet; replace with the real times after the runs.
