@@ -1,0 +1,45 @@
+=== noise floor fold 0 | machine nakhoul-3050 | device cuda NVIDIA GeForce RTX 3050 Ti Laptop GPU | torch 2.7.1+cu118 | started 2026-11-21T22:44:05+02:00 | C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\har\run_noise_floor.py --folds 0 --smoke --device cuda --machine-name nakhoul-3050
+  train 600 windows (15 subjects), inner val 200 (['S010', 'S020', 'S021']), test general ['S008', 'S019', 'S022', 'S025'] + 18 HAR70+
+  seed 0: C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\data\processed\har\checkpoints\har-model-selection\har-final-tinyhar-fold0-nakhoul-3050.pt
+  seed 1: training (<= 1 epochs, patience 5)
+    epoch  1/1  loss 1.9218  val F1 0.0777  acc 0.1800  *best*  1.3s  (max ETA 0.0 min)
+  seed 2: training (<= 1 epochs, patience 5)
+    epoch  1/1  loss 1.9241  val F1 0.2011  acc 0.2850  *best*  0.1s  (max ETA 0.0 min)
+  seed 3: training (<= 1 epochs, patience 5)
+    epoch  1/1  loss 1.9369  val F1 0.1666  acc 0.2550  *best*  0.1s  (max ETA 0.0 min)
+  SHAP inner_val: model seed 0, SHAP seed 0, 9 windows, nsamples 20
+    SHAP cache hit har-noise-floor-fold0-inner_val-bb759bd3940240fb.npz
+  SHAP inner_val: model seed 0, SHAP seed 1, 9 windows, nsamples 20
+    SHAP cache hit har-noise-floor-fold0-inner_val-3a3bbfca6399e407.npz
+  SHAP inner_val: model seed 0, SHAP seed 2, 9 windows, nsamples 20
+  SHAP inner_val: model seed 1, SHAP seed 0, 9 windows, nsamples 20
+  SHAP inner_val: model seed 2, SHAP seed 0, 9 windows, nsamples 20
+  SHAP inner_val: model seed 3, SHAP seed 0, 9 windows, nsamples 20
+  SHAP general: model seed 0, SHAP seed 0, 12 windows, nsamples 20
+  SHAP general: model seed 0, SHAP seed 1, 12 windows, nsamples 20
+  SHAP general: model seed 0, SHAP seed 2, 12 windows, nsamples 20
+  SHAP general: model seed 1, SHAP seed 0, 12 windows, nsamples 20
+  SHAP general: model seed 2, SHAP seed 0, 12 windows, nsamples 20
+  SHAP general: model seed 3, SHAP seed 0, 12 windows, nsamples 20
+  SHAP older: model seed 0, SHAP seed 0, 9 windows, nsamples 20
+  SHAP older: model seed 0, SHAP seed 1, 9 windows, nsamples 20
+  SHAP older: model seed 0, SHAP seed 2, 9 windows, nsamples 20
+  SHAP older: model seed 1, SHAP seed 0, 9 windows, nsamples 20
+  SHAP older: model seed 2, SHAP seed 0, 9 windows, nsamples 20
+  SHAP older: model seed 3, SHAP seed 0, 9 windows, nsamples 20
+
+    group   noise               values     mean      min      max  shap_above_retrain
+inner_val retrain 0.0623;0.1378;0.1111 0.103756 0.062336 0.137838                True
+inner_val    shap        0.4790;0.5227 0.500862 0.479027 0.522697                True
+  general retrain 0.0276;0.0297;0.0577 0.038336 0.027580 0.057714                True
+  general    shap        0.4644;0.4480 0.456173 0.447976 0.464369                True
+    older retrain 0.0566;0.0531;0.1240 0.077868 0.053087 0.123966                True
+    older    shap        0.4713;0.5267 0.498983 0.471307 0.526660                True
+
+fold 0: tau_k = 0.0623 (retrain seed 1; Tulla's tau = 0.85); training 4.9 s, SHAP 4.7 s, wall 10.7 s
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-noise-floor-smoke\har-noise-floor-tinyhar-fold0-nakhoul-3050-per-subject-lci.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-noise-floor-smoke\har-noise-floor-tinyhar-fold0-nakhoul-3050-group-summary.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-noise-floor-smoke\har-noise-floor-tinyhar-fold0-nakhoul-3050-tau.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-noise-floor-smoke\har-noise-floor-tinyhar-fold0-nakhoul-3050-retrained-models.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-noise-floor-smoke\har-noise-floor-tinyhar-fold0-nakhoul-3050-config.json
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-noise-floor-smoke\logs\har-noise-floor-tinyhar-fold0-nakhoul-3050.log

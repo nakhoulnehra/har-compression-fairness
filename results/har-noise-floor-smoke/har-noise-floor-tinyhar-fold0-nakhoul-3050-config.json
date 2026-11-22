@@ -1,0 +1,79 @@
+{
+ "command_line": [
+  "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\har\\run_noise_floor.py",
+  "--folds",
+  "0",
+  "--smoke",
+  "--device",
+  "cuda",
+  "--machine-name",
+  "nakhoul-3050"
+ ],
+ "machine_name": "nakhoul-3050",
+ "device": {
+  "device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "cuda_version": "11.8",
+  "torch_version": "2.7.1+cu118",
+  "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+  "torch_threads": 8,
+  "python": "3.11.9",
+  "os": "Windows 10"
+ },
+ "git_commit": "9b228cd15b0cea1cc0fb94fa5424fb88f3928a32",
+ "git_dirty": false,
+ "code_sha256": "13ca241780651e9dd4da369b92548d866241cf5e3c2b95cbec60f58be5d37645",
+ "fold": 0,
+ "smoke": true,
+ "smoke_sizes": {
+  "epochs": 1,
+  "n_train": 600,
+  "n_val": 200,
+  "per_subject": 3,
+  "n_older_subjects": 3,
+  "nsamples": 20
+ },
+ "retrain_seeds": [
+  1,
+  2,
+  3
+ ],
+ "shap_seeds": [
+  1,
+  2
+ ],
+ "nsamples": 20,
+ "k": 10,
+ "omega": 0.5,
+ "train_config": {
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "batch_size": 256,
+  "max_epochs": 1,
+  "patience": 5,
+  "label_smoothing": 0.0
+ },
+ "architecture": {
+  "filters": 28,
+  "n_conv": 4,
+  "kernel": 5,
+  "stride": 2,
+  "heads": 1,
+  "ff_mult": 2,
+  "dropout": 0.2,
+  "width": 1.0
+ },
+ "seed0_checkpoint": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold0-nakhoul-3050.pt",
+ "n_explain": {
+  "inner_val": 9,
+  "general": 12,
+  "older": 9
+ },
+ "tau_k": 0.06233574720679847,
+ "seconds": {
+  "training": 4.9309513999614865,
+  "shap": 4.71471850015223,
+  "wall": 10.712815900100395
+ },
+ "finished_at": "2026-11-21T22:44:16+02:00"
+}

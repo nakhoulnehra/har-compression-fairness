@@ -1,0 +1,2 @@
+fold,tau_k,tau_seed,lci_val_retrain_seed1,lci_val_retrain_seed2,lci_val_retrain_seed3,inner_val_subjects,tulla_tau,tau_k_below_tulla,shap_above_retrain_inner_val,shap_above_retrain_general,shap_above_retrain_older,nsamples,smoke,machine_name,device
+0,0.06233574720679847,1,0.06233574720679847,0.13783848879633148,0.11109274161565595,S010;S020;S021,0.85,True,True,True,True,20,True,nakhoul-3050,cuda

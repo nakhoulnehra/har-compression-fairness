@@ -1,0 +1,266 @@
+=== compression grid fold 0 | machine nakhoul-3050 | device cuda NVIDIA GeForce RTX 3050 Ti Laptop GPU | torch 2.7.1+cu118 | started 2026-11-21T22:44:30+02:00 | C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\har\run_compression_grid.py --folds 0 --smoke --device cuda --machine-name nakhoul-3050
+    SHAP cache hit har-noise-floor-fold0-inner_val-bb759bd3940240fb.npz
+    SHAP cache hit har-noise-floor-fold0-general-e579c2318fec0953.npz
+    SHAP cache hit har-noise-floor-fold0-older-4a4ae06bfd762622.npz
+fold 0: train 600 windows, inner val ['S010', 'S020', 'S021'], general ['S008', 'S019', 'S022', 'S025'], older 3 subjects; explain inner_val 9, general 12, older 9; tau_k 0.0623 (C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-noise-floor-smoke\har-noise-floor-tinyhar-fold0-nakhoul-3050-tau.csv); ceilings inner_val 0.5009, general 0.4562, older 0.4990; original SHAP 0.0 s
+  original                         LCI general 1.0000, older 1.0000, inner val 1.0000; acc general 0.9062, older 0.9167; n_nonzero 54273; 0 s
+    SHAP cache hit har-noise-floor-fold0-inner_val-3a3bbfca6399e407.npz
+    SHAP cache hit har-noise-floor-fold0-general-cbb627cda8f20595.npz
+    SHAP cache hit har-noise-floor-fold0-older-354ec91db66c7d30.npz
+  noise_shap_seed1                 LCI general 0.4644, older 0.4713, inner val 0.4790; acc general nan, older nan; n_nonzero 54273; 0 s
+    SHAP cache hit har-noise-floor-fold0-inner_val-28a74e2fb397c03e.npz
+    SHAP cache hit har-noise-floor-fold0-general-54d36653324de469.npz
+    SHAP cache hit har-noise-floor-fold0-older-e20acadc4fc49490.npz
+  noise_shap_seed2                 LCI general 0.4480, older 0.5267, inner val 0.5227; acc general nan, older nan; n_nonzero 54273; 0 s
+    SHAP cache hit har-noise-floor-fold0-inner_val-4ecb51e5d55dff91.npz
+    SHAP cache hit har-noise-floor-fold0-general-66dba38bef3a241f.npz
+    SHAP cache hit har-noise-floor-fold0-older-655d23d357ad608b.npz
+  noise_retrain_seed1              LCI general 0.0276, older 0.0566, inner val 0.0623; acc general nan, older nan; n_nonzero 54273; 0 s
+    SHAP cache hit har-noise-floor-fold0-inner_val-174704cfd35e8caf.npz
+    SHAP cache hit har-noise-floor-fold0-general-fa63a197bb58ec2a.npz
+    SHAP cache hit har-noise-floor-fold0-older-7d775df52dc8cafa.npz
+  noise_retrain_seed2              LCI general 0.0297, older 0.0531, inner val 0.1378; acc general nan, older nan; n_nonzero 54273; 0 s
+    SHAP cache hit har-noise-floor-fold0-inner_val-9961a73750a106e9.npz
+    SHAP cache hit har-noise-floor-fold0-general-44d741e43bffb3b0.npz
+    SHAP cache hit har-noise-floor-fold0-older-5a50c4ae38ca241a.npz
+  noise_retrain_seed3              LCI general 0.0577, older 0.1240, inner val 0.1111; acc general nan, older nan; n_nonzero 54273; 0 s
+  ptq8                             LCI general 0.9534, older 0.9988, inner val 0.9690; acc general 0.9062, older 0.9167; n_nonzero 53749; 1 s
+  ptq4                             LCI general 0.7357, older 0.8511, inner val 0.8218; acc general 0.8688, older 0.9500; n_nonzero 44871; 1 s
+  ptq_tulla8                       LCI general 0.9281, older 0.9076, inner val 0.9668; acc general 0.9062, older 0.9250; n_nonzero 52009; 1 s
+  ptq_tulla4                       LCI general 0.4244, older 0.3762, inner val 0.4704; acc general 0.7625, older 0.7167; n_nonzero 19497; 1 s
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  l1-30pct-no_finetune             LCI general 0.7203, older 0.7262, inner val 0.7157; acc general 0.8500, older 0.9167; n_nonzero 38457; 1 s
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  snip-30pct-no_finetune           LCI general 0.5282, older 0.4801, inner val 0.4657; acc general 0.8562, older 0.9333; n_nonzero 38457; 1 s
+
+=== fold 0 l1-30pct-finetune: start l1, CE, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 0.3426  val F1 0.7947  acc 0.8921  0.4s
+  l1-30pct-finetune                LCI general 0.7331, older 0.7492, inner val 0.7595; acc general 0.8688, older 0.9167; n_nonzero 38457; 1 s
+
+=== fold 0 l1_kd-30pct-finetune: start l1, KD, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 0.3435  KL 0.0341  val F1 0.7962  acc 0.8922  0.2s
+  l1_kd-30pct-finetune             LCI general 0.7172, older 0.7504, inner val 0.7622; acc general 0.8688, older 0.9167; n_nonzero 38457; 1 s
+
+=== fold 0 snip-30pct-finetune: start snip, CE, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 0.4012  val F1 0.7037  acc 0.8779  0.2s
+  snip-30pct-finetune              LCI general 0.5513, older 0.5028, inner val 0.5174; acc general 0.8938, older 0.9333; n_nonzero 38457; 1 s
+
+=== fold 0 snip_kd-30pct-finetune: start snip, KD, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 0.4025  KL 0.0534  val F1 0.7032  acc 0.8779  0.2s
+  snip_kd-30pct-finetune           LCI general 0.5494, older 0.5025, inner val 0.5175; acc general 0.8938, older 0.9333; n_nonzero 38457; 1 s
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  l1-50pct-no_finetune             LCI general 0.4531, older 0.4501, inner val 0.4589; acc general 0.5500, older 0.7417; n_nonzero 27911; 1 s
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  snip-50pct-no_finetune           LCI general 0.3679, older 0.3830, inner val 0.4069; acc general 0.5750, older 0.4500; n_nonzero 27911; 1 s
+
+=== fold 0 l1-50pct-finetune: start l1, CE, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 0.3995  val F1 0.6800  acc 0.8194  0.2s
+  l1-50pct-finetune                LCI general 0.5169, older 0.4698, inner val 0.4871; acc general 0.6500, older 0.9500; n_nonzero 27911; 1 s
+
+=== fold 0 l1_kd-50pct-finetune: start l1, KD, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 0.4001  KL 0.0446  val F1 0.6825  acc 0.8246  0.2s
+  l1_kd-50pct-finetune             LCI general 0.5299, older 0.4713, inner val 0.4708; acc general 0.6438, older 0.9500; n_nonzero 27911; 1 s
+
+=== fold 0 snip-50pct-finetune: start snip, CE, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 0.7277  val F1 0.4225  acc 0.6860  0.2s
+  snip-50pct-finetune              LCI general 0.3690, older 0.3209, inner val 0.4015; acc general 0.7250, older 0.5917; n_nonzero 27911; 1 s
+
+=== fold 0 snip_kd-50pct-finetune: start snip, KD, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 0.7289  KL 0.2633  val F1 0.4325  acc 0.6914  0.2s
+  snip_kd-50pct-finetune           LCI general 0.3553, older 0.3212, inner val 0.4012; acc general 0.7250, older 0.5917; n_nonzero 27911; 1 s
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  l1-70pct-no_finetune             LCI general 0.2712, older 0.2783, inner val 0.3568; acc general 0.5500, older 0.4667; n_nonzero 17365; 1 s
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  snip-70pct-no_finetune           LCI general 0.1393, older 0.1619, inner val 0.2621; acc general 0.1500, older 0.4250; n_nonzero 17365; 1 s
+
+=== fold 0 l1-70pct-finetune: start l1, CE, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 0.4926  val F1 0.4311  acc 0.5866  0.2s
+  l1-70pct-finetune                LCI general 0.2902, older 0.3169, inner val 0.3713; acc general 0.5687, older 0.5250; n_nonzero 17365; 1 s
+
+=== fold 0 l1_kd-70pct-finetune: start l1, KD, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 0.4933  KL 0.1370  val F1 0.4328  acc 0.5915  0.2s
+  l1_kd-70pct-finetune             LCI general 0.2918, older 0.3171, inner val 0.3715; acc general 0.5687, older 0.5250; n_nonzero 17365; 1 s
+
+=== fold 0 snip-70pct-finetune: start snip, CE, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 1.5485  val F1 0.3167  acc 0.6530  0.2s
+  snip-70pct-finetune              LCI general 0.1729, older 0.1846, inner val 0.2772; acc general 0.1938, older 0.4333; n_nonzero 17365; 1 s
+
+=== fold 0 snip_kd-70pct-finetune: start snip, KD, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 1.5490  KL 0.5980  val F1 0.3178  acc 0.6546  0.2s
+  snip_kd-70pct-finetune           LCI general 0.1734, older 0.1733, inner val 0.2767; acc general 0.1938, older 0.4333; n_nonzero 17365; 1 s
+
+=== fold 0 park-70pct-finetune: start l1, CE + gamma_P L_AM, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 0.4927  extra 1.2958  val F1 0.4289  acc 0.5822  0.8s
+  park-70pct-finetune              LCI general 0.3020, older 0.3171, inner val 0.3729; acc general 0.5687, older 0.5250; n_nonzero 17365; 1 s
+
+=== fold 0 park_kd-70pct-finetune: start l1, KD + gamma_P L_AM, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 0.4933  KL 0.1370  extra 1.2958  val F1 0.4318  acc 0.5896  0.6s
+  park_kd-70pct-finetune           LCI general 0.2916, older 0.3190, inner val 0.3726; acc general 0.5687, older 0.5250; n_nonzero 17365; 1 s
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  l1-90pct-no_finetune             LCI general 0.1542, older 0.1738, inner val 0.0972; acc general 0.1062, older 0.0917; n_nonzero 6821; 1 s
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  snip-90pct-no_finetune           LCI general 0.0784, older 0.0650, inner val 0.1279; acc general 0.1500, older 0.3917; n_nonzero 6821; 1 s
+
+=== fold 0 l1-90pct-finetune: start l1, CE, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 1.6950  val F1 0.0790  acc 0.1337  0.2s
+  l1-90pct-finetune                LCI general 0.1593, older 0.1445, inner val 0.1728; acc general 0.1062, older 0.0917; n_nonzero 6821; 1 s
+
+=== fold 0 l1_kd-90pct-finetune: start l1, KD, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 1.6949  KL 0.6657  val F1 0.0808  acc 0.1370  0.2s
+  l1_kd-90pct-finetune             LCI general 0.1595, older 0.1438, inner val 0.1736; acc general 0.1062, older 0.0917; n_nonzero 6821; 1 s
+
+=== fold 0 snip-90pct-finetune: start snip, CE, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 1.8089  val F1 0.2013  acc 0.6050  0.2s
+  snip-90pct-finetune              LCI general 0.0802, older 0.0696, inner val 0.1265; acc general 0.1375, older 0.4250; n_nonzero 6821; 1 s
+
+=== fold 0 snip_kd-90pct-finetune: start snip, KD, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 1.8089  KL 0.7091  val F1 0.2016  acc 0.6057  0.2s
+  snip_kd-90pct-finetune           LCI general 0.0802, older 0.0692, inner val 0.1265; acc general 0.1375, older 0.4250; n_nonzero 6821; 1 s
+
+=== fold 0 park-90pct-finetune: start l1, CE + gamma_P L_AM, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 1.6951  extra 1.3526  val F1 0.0817  acc 0.1391  0.7s
+  park-90pct-finetune              LCI general 0.1604, older 0.1440, inner val 0.1830; acc general 0.1062, older 0.0917; n_nonzero 6821; 1 s
+
+=== fold 0 park_kd-90pct-finetune: start l1, KD + gamma_P L_AM, E_ft 1, lr 0.0001
+    ft epoch  1/1  CE 1.6950  KL 0.6657  extra 1.3527  val F1 0.0825  acc 0.1406  0.6s
+  park_kd-90pct-finetune           LCI general 0.1610, older 0.1440, inner val 0.1834; acc general 0.1000, older 0.0917; n_nonzero 6821; 1 s
+
+acceptance checks: {
+ "n_nonzero_identical_per_level": {
+  "30%": true,
+  "50%": true,
+  "70%": true,
+  "90%": true
+ },
+ "head_unpruned_all": false,
+ "epochs_run_equal_e_ft": true,
+ "ptq8_rho_by_group": {
+  "general": 0.9976222931414741,
+  "inner_val": 0.9985406880705795,
+  "older": 0.9975799538996187
+ },
+ "ptq8_rho_above_0.99_all_groups": true,
+ "ptq8_accuracy_delta_pooled_by_group": {
+  "inner_val": 0.0,
+  "general": 0.0,
+  "older": 0.0
+ },
+ "ptq8_accuracy_within_0.5pt": true,
+ "ptq_tulla8_rho_by_group": {
+  "general": 0.9926437741368903,
+  "inner_val": 0.994162620137638,
+  "older": 0.9868249878668033
+ },
+ "ptq_tulla8_rho_above_0.99_all_groups": false,
+ "ptq_tulla8_accuracy_delta_pooled_by_group": {
+  "inner_val": 0.0,
+  "general": 0.0,
+  "older": 0.008333333333333415
+ },
+ "ptq_tulla8_accuracy_within_0.5pt": false,
+ "n_skipped_by_model": {
+  "original": 0,
+  "noise_shap_seed1": 0,
+  "noise_shap_seed2": 0,
+  "noise_retrain_seed1": 0,
+  "noise_retrain_seed2": 0,
+  "noise_retrain_seed3": 0,
+  "ptq8": 0,
+  "ptq4": 0,
+  "ptq_tulla8": 0,
+  "ptq_tulla4": 0,
+  "l1-30pct-no_finetune": 0,
+  "snip-30pct-no_finetune": 0,
+  "l1-30pct-finetune": 0,
+  "l1_kd-30pct-finetune": 0,
+  "snip-30pct-finetune": 0,
+  "snip_kd-30pct-finetune": 0,
+  "l1-50pct-no_finetune": 0,
+  "snip-50pct-no_finetune": 0,
+  "l1-50pct-finetune": 0,
+  "l1_kd-50pct-finetune": 0,
+  "snip-50pct-finetune": 0,
+  "snip_kd-50pct-finetune": 0,
+  "l1-70pct-no_finetune": 0,
+  "snip-70pct-no_finetune": 0,
+  "l1-70pct-finetune": 0,
+  "l1_kd-70pct-finetune": 0,
+  "snip-70pct-finetune": 0,
+  "snip_kd-70pct-finetune": 0,
+  "park-70pct-finetune": 0,
+  "park_kd-70pct-finetune": 0,
+  "l1-90pct-no_finetune": 0,
+  "snip-90pct-no_finetune": 0,
+  "l1-90pct-finetune": 0,
+  "l1_kd-90pct-finetune": 0,
+  "snip-90pct-finetune": 0,
+  "snip_kd-90pct-finetune": 0,
+  "park-90pct-finetune": 0,
+  "park_kd-90pct-finetune": 0
+ }
+}
+fold 0 done in 51.1 s
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid-smoke\har-grid-tinyhar-fold0-nakhoul-3050-per-subject-metrics.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid-smoke\har-grid-tinyhar-fold0-nakhoul-3050-per-subject-class-lci.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid-smoke\har-grid-tinyhar-fold0-nakhoul-3050-per-group-class-lci.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid-smoke\har-grid-tinyhar-fold0-nakhoul-3050-models.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid-smoke\har-grid-tinyhar-fold0-nakhoul-3050-finetune-history.csv
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid-smoke\har-grid-tinyhar-fold0-nakhoul-3050-shap-48-segments.npz
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid-smoke\har-grid-tinyhar-fold0-nakhoul-3050-config.json
+saved C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-compression-grid-smoke\logs\har-grid-tinyhar-fold0-nakhoul-3050-20261121-224430.log
