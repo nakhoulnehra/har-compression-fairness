@@ -1,0 +1,337 @@
+method,family,scenario,level,unit,threshold,tau_value,safe_general,safe_older,safe_fa_lci,n
+original,original,original,all,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+original,original,original,none,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+original,original,original,all,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+original,original,original,none,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+original,original,original,all,fold_setting,tulla_0.85,0.85,1.0,1.0,1.0,5
+original,original,original,none,fold_setting,tulla_0.85,0.85,1.0,1.0,1.0,5
+original,original,original,all,subject,tau_global,0.582721677640067,1.0,1.0,,112
+original,original,original,none,subject,tau_global,0.582721677640067,1.0,1.0,,112
+original,original,original,all,subject,tau_k,per fold,1.0,1.0,,112
+original,original,original,none,subject,tau_k,per fold,1.0,1.0,,112
+original,original,original,all,subject,tulla_0.85,0.85,1.0,1.0,,112
+original,original,original,none,subject,tulla_0.85,0.85,1.0,1.0,,112
+noise_retrain_seed1,noise_ref,reference,all,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+noise_retrain_seed1,noise_ref,reference,none,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+noise_retrain_seed1,noise_ref,reference,all,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+noise_retrain_seed1,noise_ref,reference,none,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+noise_retrain_seed1,noise_ref,reference,all,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+noise_retrain_seed1,noise_ref,reference,none,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+noise_retrain_seed1,noise_ref,reference,all,subject,tau_global,0.582721677640067,0.8636363636363636,0.7888888888888889,,112
+noise_retrain_seed1,noise_ref,reference,none,subject,tau_global,0.582721677640067,0.8636363636363636,0.7888888888888889,,112
+noise_retrain_seed1,noise_ref,reference,all,subject,tau_k,per fold,0.8181818181818182,0.7111111111111111,,112
+noise_retrain_seed1,noise_ref,reference,none,subject,tau_k,per fold,0.8181818181818182,0.7111111111111111,,112
+noise_retrain_seed1,noise_ref,reference,all,subject,tulla_0.85,0.85,0.045454545454545456,0.05555555555555555,,112
+noise_retrain_seed1,noise_ref,reference,none,subject,tulla_0.85,0.85,0.045454545454545456,0.05555555555555555,,112
+noise_retrain_seed2,noise_ref,reference,all,fold_setting,tau_global,0.582721677640067,1.0,0.8,0.8,5
+noise_retrain_seed2,noise_ref,reference,none,fold_setting,tau_global,0.582721677640067,1.0,0.8,0.8,5
+noise_retrain_seed2,noise_ref,reference,all,fold_setting,tau_k,per fold,1.0,0.8,0.8,5
+noise_retrain_seed2,noise_ref,reference,none,fold_setting,tau_k,per fold,1.0,0.8,0.8,5
+noise_retrain_seed2,noise_ref,reference,all,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+noise_retrain_seed2,noise_ref,reference,none,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+noise_retrain_seed2,noise_ref,reference,all,subject,tau_global,0.582721677640067,0.7727272727272727,0.8555555555555555,,112
+noise_retrain_seed2,noise_ref,reference,none,subject,tau_global,0.582721677640067,0.7727272727272727,0.8555555555555555,,112
+noise_retrain_seed2,noise_ref,reference,all,subject,tau_k,per fold,0.6818181818181818,0.7444444444444445,,112
+noise_retrain_seed2,noise_ref,reference,none,subject,tau_k,per fold,0.6818181818181818,0.7444444444444445,,112
+noise_retrain_seed2,noise_ref,reference,all,subject,tulla_0.85,0.85,0.045454545454545456,0.05555555555555555,,112
+noise_retrain_seed2,noise_ref,reference,none,subject,tulla_0.85,0.85,0.045454545454545456,0.05555555555555555,,112
+noise_retrain_seed3,noise_ref,reference,all,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+noise_retrain_seed3,noise_ref,reference,none,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+noise_retrain_seed3,noise_ref,reference,all,fold_setting,tau_k,per fold,0.8,1.0,0.8,5
+noise_retrain_seed3,noise_ref,reference,none,fold_setting,tau_k,per fold,0.8,1.0,0.8,5
+noise_retrain_seed3,noise_ref,reference,all,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+noise_retrain_seed3,noise_ref,reference,none,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+noise_retrain_seed3,noise_ref,reference,all,subject,tau_global,0.582721677640067,0.8636363636363636,0.9222222222222223,,112
+noise_retrain_seed3,noise_ref,reference,none,subject,tau_global,0.582721677640067,0.8636363636363636,0.9222222222222223,,112
+noise_retrain_seed3,noise_ref,reference,all,subject,tau_k,per fold,0.8636363636363636,0.8555555555555555,,112
+noise_retrain_seed3,noise_ref,reference,none,subject,tau_k,per fold,0.8636363636363636,0.8555555555555555,,112
+noise_retrain_seed3,noise_ref,reference,all,subject,tulla_0.85,0.85,0.045454545454545456,0.05555555555555555,,112
+noise_retrain_seed3,noise_ref,reference,none,subject,tulla_0.85,0.85,0.045454545454545456,0.05555555555555555,,112
+noise_shap_seed1,noise_ref,reference,all,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+noise_shap_seed1,noise_ref,reference,none,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+noise_shap_seed1,noise_ref,reference,all,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+noise_shap_seed1,noise_ref,reference,none,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+noise_shap_seed1,noise_ref,reference,all,fold_setting,tulla_0.85,0.85,1.0,1.0,1.0,5
+noise_shap_seed1,noise_ref,reference,none,fold_setting,tulla_0.85,0.85,1.0,1.0,1.0,5
+noise_shap_seed1,noise_ref,reference,all,subject,tau_global,0.582721677640067,1.0,1.0,,112
+noise_shap_seed1,noise_ref,reference,none,subject,tau_global,0.582721677640067,1.0,1.0,,112
+noise_shap_seed1,noise_ref,reference,all,subject,tau_k,per fold,1.0,1.0,,112
+noise_shap_seed1,noise_ref,reference,none,subject,tau_k,per fold,1.0,1.0,,112
+noise_shap_seed1,noise_ref,reference,all,subject,tulla_0.85,0.85,0.8636363636363636,0.9444444444444444,,112
+noise_shap_seed1,noise_ref,reference,none,subject,tulla_0.85,0.85,0.8636363636363636,0.9444444444444444,,112
+noise_shap_seed2,noise_ref,reference,all,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+noise_shap_seed2,noise_ref,reference,none,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+noise_shap_seed2,noise_ref,reference,all,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+noise_shap_seed2,noise_ref,reference,none,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+noise_shap_seed2,noise_ref,reference,all,fold_setting,tulla_0.85,0.85,1.0,1.0,1.0,5
+noise_shap_seed2,noise_ref,reference,none,fold_setting,tulla_0.85,0.85,1.0,1.0,1.0,5
+noise_shap_seed2,noise_ref,reference,all,subject,tau_global,0.582721677640067,1.0,1.0,,112
+noise_shap_seed2,noise_ref,reference,none,subject,tau_global,0.582721677640067,1.0,1.0,,112
+noise_shap_seed2,noise_ref,reference,all,subject,tau_k,per fold,1.0,1.0,,112
+noise_shap_seed2,noise_ref,reference,none,subject,tau_k,per fold,1.0,1.0,,112
+noise_shap_seed2,noise_ref,reference,all,subject,tulla_0.85,0.85,0.9545454545454546,0.9222222222222223,,112
+noise_shap_seed2,noise_ref,reference,none,subject,tulla_0.85,0.85,0.9545454545454546,0.9222222222222223,,112
+ptq8,ptq,no_finetune,8-bit,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+ptq8,ptq,no_finetune,8-bit,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+ptq8,ptq,no_finetune,8-bit,fold_setting,tulla_0.85,0.85,1.0,1.0,1.0,5
+ptq8,ptq,no_finetune,8-bit,subject,tau_global,0.582721677640067,1.0,1.0,,112
+ptq8,ptq,no_finetune,8-bit,subject,tau_k,per fold,1.0,1.0,,112
+ptq8,ptq,no_finetune,8-bit,subject,tulla_0.85,0.85,1.0,1.0,,112
+ptq_tulla8,ptq,no_finetune,8-bit,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+ptq_tulla8,ptq,no_finetune,8-bit,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+ptq_tulla8,ptq,no_finetune,8-bit,fold_setting,tulla_0.85,0.85,1.0,1.0,1.0,5
+ptq_tulla8,ptq,no_finetune,8-bit,subject,tau_global,0.582721677640067,1.0,1.0,,112
+ptq_tulla8,ptq,no_finetune,8-bit,subject,tau_k,per fold,1.0,1.0,,112
+ptq_tulla8,ptq,no_finetune,8-bit,subject,tulla_0.85,0.85,1.0,1.0,,112
+ptq4,ptq,no_finetune,4-bit,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+ptq4,ptq,no_finetune,4-bit,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+ptq4,ptq,no_finetune,4-bit,fold_setting,tulla_0.85,0.85,1.0,0.8,0.8,5
+ptq4,ptq,no_finetune,4-bit,subject,tau_global,0.582721677640067,1.0,1.0,,112
+ptq4,ptq,no_finetune,4-bit,subject,tau_k,per fold,1.0,1.0,,112
+ptq4,ptq,no_finetune,4-bit,subject,tulla_0.85,0.85,0.8636363636363636,0.8222222222222222,,112
+ptq_tulla4,ptq,no_finetune,4-bit,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+ptq_tulla4,ptq,no_finetune,4-bit,fold_setting,tau_k,per fold,0.8,1.0,0.8,5
+ptq_tulla4,ptq,no_finetune,4-bit,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+ptq_tulla4,ptq,no_finetune,4-bit,subject,tau_global,0.582721677640067,0.9545454545454546,0.9,,112
+ptq_tulla4,ptq,no_finetune,4-bit,subject,tau_k,per fold,0.8181818181818182,0.7888888888888889,,112
+ptq_tulla4,ptq,no_finetune,4-bit,subject,tulla_0.85,0.85,0.045454545454545456,0.03333333333333333,,112
+ptq4,ptq,no_finetune,all,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+ptq4,ptq,no_finetune,all,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+ptq4,ptq,no_finetune,all,fold_setting,tulla_0.85,0.85,1.0,0.8,0.8,5
+ptq4,ptq,no_finetune,all,subject,tau_global,0.582721677640067,1.0,1.0,,112
+ptq4,ptq,no_finetune,all,subject,tau_k,per fold,1.0,1.0,,112
+ptq4,ptq,no_finetune,all,subject,tulla_0.85,0.85,0.8636363636363636,0.8222222222222222,,112
+ptq8,ptq,no_finetune,all,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+ptq8,ptq,no_finetune,all,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+ptq8,ptq,no_finetune,all,fold_setting,tulla_0.85,0.85,1.0,1.0,1.0,5
+ptq8,ptq,no_finetune,all,subject,tau_global,0.582721677640067,1.0,1.0,,112
+ptq8,ptq,no_finetune,all,subject,tau_k,per fold,1.0,1.0,,112
+ptq8,ptq,no_finetune,all,subject,tulla_0.85,0.85,1.0,1.0,,112
+ptq_tulla4,ptq,no_finetune,all,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+ptq_tulla4,ptq,no_finetune,all,fold_setting,tau_k,per fold,0.8,1.0,0.8,5
+ptq_tulla4,ptq,no_finetune,all,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+ptq_tulla4,ptq,no_finetune,all,subject,tau_global,0.582721677640067,0.9545454545454546,0.9,,112
+ptq_tulla4,ptq,no_finetune,all,subject,tau_k,per fold,0.8181818181818182,0.7888888888888889,,112
+ptq_tulla4,ptq,no_finetune,all,subject,tulla_0.85,0.85,0.045454545454545456,0.03333333333333333,,112
+ptq_tulla8,ptq,no_finetune,all,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+ptq_tulla8,ptq,no_finetune,all,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+ptq_tulla8,ptq,no_finetune,all,fold_setting,tulla_0.85,0.85,1.0,1.0,1.0,5
+ptq_tulla8,ptq,no_finetune,all,subject,tau_global,0.582721677640067,1.0,1.0,,112
+ptq_tulla8,ptq,no_finetune,all,subject,tau_k,per fold,1.0,1.0,,112
+ptq_tulla8,ptq,no_finetune,all,subject,tulla_0.85,0.85,1.0,1.0,,112
+l1,pruning,no_finetune,all,fold_setting,tau_global,0.582721677640067,0.45,0.4,0.4,20
+l1,pruning,no_finetune,all,fold_setting,tau_k,per fold,0.45,0.35,0.35,20
+l1,pruning,no_finetune,all,fold_setting,tulla_0.85,0.85,0.25,0.15,0.15,20
+l1,pruning,no_finetune,all,subject,tau_global,0.582721677640067,0.48863636363636365,0.41944444444444445,,448
+l1,pruning,no_finetune,all,subject,tau_k,per fold,0.4318181818181818,0.3888888888888889,,448
+l1,pruning,no_finetune,all,subject,tulla_0.85,0.85,0.18181818181818182,0.18055555555555555,,448
+snip,pruning,no_finetune,all,fold_setting,tau_global,0.582721677640067,0.25,0.25,0.25,20
+snip,pruning,no_finetune,all,fold_setting,tau_k,per fold,0.25,0.25,0.25,20
+snip,pruning,no_finetune,all,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,20
+snip,pruning,no_finetune,all,subject,tau_global,0.582721677640067,0.2727272727272727,0.21944444444444444,,448
+snip,pruning,no_finetune,all,subject,tau_k,per fold,0.26136363636363635,0.19722222222222222,,448
+snip,pruning,no_finetune,all,subject,tulla_0.85,0.85,0.0,0.0,,448
+l1,pruning,finetune,all,fold_setting,tau_global,0.582721677640067,1.0,0.95,0.95,20
+l1,pruning,finetune,all,fold_setting,tau_k,per fold,1.0,0.95,0.95,20
+l1,pruning,finetune,all,fold_setting,tulla_0.85,0.85,0.25,0.25,0.1,20
+l1,pruning,finetune,all,subject,tau_global,0.582721677640067,0.9659090909090909,0.9638888888888889,,448
+l1,pruning,finetune,all,subject,tau_k,per fold,0.9545454545454546,0.9583333333333334,,448
+l1,pruning,finetune,all,subject,tulla_0.85,0.85,0.3409090909090909,0.2638888888888889,,448
+l1_kd,pruning,finetune,all,fold_setting,tau_global,0.582721677640067,1.0,0.95,0.95,20
+l1_kd,pruning,finetune,all,fold_setting,tau_k,per fold,1.0,0.95,0.95,20
+l1_kd,pruning,finetune,all,fold_setting,tulla_0.85,0.85,0.6,0.65,0.55,20
+l1_kd,pruning,finetune,all,subject,tau_global,0.582721677640067,0.9886363636363636,0.975,,448
+l1_kd,pruning,finetune,all,subject,tau_k,per fold,0.9886363636363636,0.9666666666666667,,448
+l1_kd,pruning,finetune,all,subject,tulla_0.85,0.85,0.625,0.6416666666666667,,448
+snip,pruning,finetune,all,fold_setting,tau_global,0.582721677640067,0.8,0.85,0.8,20
+snip,pruning,finetune,all,fold_setting,tau_k,per fold,0.75,0.75,0.75,20
+snip,pruning,finetune,all,fold_setting,tulla_0.85,0.85,0.15,0.2,0.1,20
+snip,pruning,finetune,all,subject,tau_global,0.582721677640067,0.8181818181818182,0.825,,448
+snip,pruning,finetune,all,subject,tau_k,per fold,0.75,0.7833333333333333,,448
+snip,pruning,finetune,all,subject,tulla_0.85,0.85,0.1590909090909091,0.16666666666666666,,448
+snip_kd,pruning,finetune,all,fold_setting,tau_global,0.582721677640067,0.75,0.85,0.75,20
+snip_kd,pruning,finetune,all,fold_setting,tau_k,per fold,0.75,0.75,0.75,20
+snip_kd,pruning,finetune,all,fold_setting,tulla_0.85,0.85,0.35,0.45,0.35,20
+snip_kd,pruning,finetune,all,subject,tau_global,0.582721677640067,0.7954545454545454,0.8055555555555556,,448
+snip_kd,pruning,finetune,all,subject,tau_k,per fold,0.7840909090909091,0.775,,448
+snip_kd,pruning,finetune,all,subject,tulla_0.85,0.85,0.4431818181818182,0.45,,448
+park,pruning,finetune,all,fold_setting,tau_global,0.582721677640067,1.0,0.9,0.9,10
+park,pruning,finetune,all,fold_setting,tau_k,per fold,1.0,0.9,0.9,10
+park,pruning,finetune,all,fold_setting,tulla_0.85,0.85,0.0,0.1,0.0,10
+park,pruning,finetune,all,subject,tau_global,0.582721677640067,1.0,0.9,,224
+park,pruning,finetune,all,subject,tau_k,per fold,0.9772727272727273,0.8833333333333333,,224
+park,pruning,finetune,all,subject,tulla_0.85,0.85,0.06818181818181818,0.09444444444444444,,224
+park_kd,pruning,finetune,all,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,10
+park_kd,pruning,finetune,all,fold_setting,tau_k,per fold,1.0,1.0,1.0,10
+park_kd,pruning,finetune,all,fold_setting,tulla_0.85,0.85,0.1,0.0,0.0,10
+park_kd,pruning,finetune,all,subject,tau_global,0.582721677640067,0.9545454545454546,0.9222222222222223,,224
+park_kd,pruning,finetune,all,subject,tau_k,per fold,0.9090909090909091,0.8888888888888888,,224
+park_kd,pruning,finetune,all,subject,tulla_0.85,0.85,0.11363636363636363,0.08888888888888889,,224
+l1,pruning,no_finetune,30%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+l1,pruning,no_finetune,30%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+l1,pruning,no_finetune,30%,fold_setting,tulla_0.85,0.85,1.0,0.6,0.6,5
+l1,pruning,no_finetune,30%,subject,tau_global,0.582721677640067,1.0,1.0,,112
+l1,pruning,no_finetune,30%,subject,tau_k,per fold,1.0,1.0,,112
+l1,pruning,no_finetune,30%,subject,tulla_0.85,0.85,0.7272727272727273,0.7222222222222222,,112
+snip,pruning,no_finetune,30%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+snip,pruning,no_finetune,30%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+snip,pruning,no_finetune,30%,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+snip,pruning,no_finetune,30%,subject,tau_global,0.582721677640067,1.0,0.8444444444444444,,112
+snip,pruning,no_finetune,30%,subject,tau_k,per fold,1.0,0.7666666666666667,,112
+snip,pruning,no_finetune,30%,subject,tulla_0.85,0.85,0.0,0.0,,112
+l1,pruning,finetune,30%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+l1,pruning,finetune,30%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+l1,pruning,finetune,30%,fold_setting,tulla_0.85,0.85,0.6,0.0,0.0,5
+l1,pruning,finetune,30%,subject,tau_global,0.582721677640067,0.9545454545454546,0.9888888888888889,,112
+l1,pruning,finetune,30%,subject,tau_k,per fold,0.9545454545454546,0.9888888888888889,,112
+l1,pruning,finetune,30%,subject,tulla_0.85,0.85,0.45454545454545453,0.26666666666666666,,112
+l1_kd,pruning,finetune,30%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+l1_kd,pruning,finetune,30%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+l1_kd,pruning,finetune,30%,fold_setting,tulla_0.85,0.85,1.0,1.0,1.0,5
+l1_kd,pruning,finetune,30%,subject,tau_global,0.582721677640067,1.0,1.0,,112
+l1_kd,pruning,finetune,30%,subject,tau_k,per fold,1.0,1.0,,112
+l1_kd,pruning,finetune,30%,subject,tulla_0.85,0.85,0.8636363636363636,0.8555555555555555,,112
+snip,pruning,finetune,30%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+snip,pruning,finetune,30%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+snip,pruning,finetune,30%,fold_setting,tulla_0.85,0.85,0.2,0.6,0.2,5
+snip,pruning,finetune,30%,subject,tau_global,0.582721677640067,1.0,1.0,,112
+snip,pruning,finetune,30%,subject,tau_k,per fold,0.9545454545454546,1.0,,112
+snip,pruning,finetune,30%,subject,tulla_0.85,0.85,0.2727272727272727,0.4222222222222222,,112
+snip_kd,pruning,finetune,30%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+snip_kd,pruning,finetune,30%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+snip_kd,pruning,finetune,30%,fold_setting,tulla_0.85,0.85,0.8,1.0,0.8,5
+snip_kd,pruning,finetune,30%,subject,tau_global,0.582721677640067,1.0,1.0,,112
+snip_kd,pruning,finetune,30%,subject,tau_k,per fold,1.0,1.0,,112
+snip_kd,pruning,finetune,30%,subject,tulla_0.85,0.85,0.8636363636363636,0.8444444444444444,,112
+l1,pruning,no_finetune,50%,fold_setting,tau_global,0.582721677640067,0.8,0.6,0.6,5
+l1,pruning,no_finetune,50%,fold_setting,tau_k,per fold,0.8,0.4,0.4,5
+l1,pruning,no_finetune,50%,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+l1,pruning,no_finetune,50%,subject,tau_global,0.582721677640067,0.8181818181818182,0.6666666666666666,,112
+l1,pruning,no_finetune,50%,subject,tau_k,per fold,0.6363636363636364,0.5555555555555556,,112
+l1,pruning,no_finetune,50%,subject,tulla_0.85,0.85,0.0,0.0,,112
+snip,pruning,no_finetune,50%,fold_setting,tau_global,0.582721677640067,0.0,0.0,0.0,5
+snip,pruning,no_finetune,50%,fold_setting,tau_k,per fold,0.0,0.0,0.0,5
+snip,pruning,no_finetune,50%,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+snip,pruning,no_finetune,50%,subject,tau_global,0.582721677640067,0.09090909090909091,0.03333333333333333,,112
+snip,pruning,no_finetune,50%,subject,tau_k,per fold,0.045454545454545456,0.022222222222222223,,112
+snip,pruning,no_finetune,50%,subject,tulla_0.85,0.85,0.0,0.0,,112
+l1,pruning,finetune,50%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+l1,pruning,finetune,50%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+l1,pruning,finetune,50%,fold_setting,tulla_0.85,0.85,0.2,0.6,0.2,5
+l1,pruning,finetune,50%,subject,tau_global,0.582721677640067,1.0,1.0,,112
+l1,pruning,finetune,50%,subject,tau_k,per fold,0.9545454545454546,1.0,,112
+l1,pruning,finetune,50%,subject,tulla_0.85,0.85,0.45454545454545453,0.43333333333333335,,112
+l1_kd,pruning,finetune,50%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+l1_kd,pruning,finetune,50%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+l1_kd,pruning,finetune,50%,fold_setting,tulla_0.85,0.85,0.8,0.8,0.6,5
+l1_kd,pruning,finetune,50%,subject,tau_global,0.582721677640067,1.0,1.0,,112
+l1_kd,pruning,finetune,50%,subject,tau_k,per fold,1.0,1.0,,112
+l1_kd,pruning,finetune,50%,subject,tulla_0.85,0.85,0.7727272727272727,0.8222222222222222,,112
+snip,pruning,finetune,50%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+snip,pruning,finetune,50%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+snip,pruning,finetune,50%,fold_setting,tulla_0.85,0.85,0.2,0.2,0.2,5
+snip,pruning,finetune,50%,subject,tau_global,0.582721677640067,1.0,0.9777777777777777,,112
+snip,pruning,finetune,50%,subject,tau_k,per fold,0.9545454545454546,0.9777777777777777,,112
+snip,pruning,finetune,50%,subject,tulla_0.85,0.85,0.18181818181818182,0.17777777777777778,,112
+snip_kd,pruning,finetune,50%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+snip_kd,pruning,finetune,50%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+snip_kd,pruning,finetune,50%,fold_setting,tulla_0.85,0.85,0.6,0.8,0.6,5
+snip_kd,pruning,finetune,50%,subject,tau_global,0.582721677640067,1.0,1.0,,112
+snip_kd,pruning,finetune,50%,subject,tau_k,per fold,1.0,1.0,,112
+snip_kd,pruning,finetune,50%,subject,tulla_0.85,0.85,0.8181818181818182,0.7444444444444445,,112
+l1,pruning,no_finetune,70%,fold_setting,tau_global,0.582721677640067,0.0,0.0,0.0,5
+l1,pruning,no_finetune,70%,fold_setting,tau_k,per fold,0.0,0.0,0.0,5
+l1,pruning,no_finetune,70%,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+l1,pruning,no_finetune,70%,subject,tau_global,0.582721677640067,0.13636363636363635,0.011111111111111112,,112
+l1,pruning,no_finetune,70%,subject,tau_k,per fold,0.09090909090909091,0.0,,112
+l1,pruning,no_finetune,70%,subject,tulla_0.85,0.85,0.0,0.0,,112
+snip,pruning,no_finetune,70%,fold_setting,tau_global,0.582721677640067,0.0,0.0,0.0,5
+snip,pruning,no_finetune,70%,fold_setting,tau_k,per fold,0.0,0.0,0.0,5
+snip,pruning,no_finetune,70%,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+snip,pruning,no_finetune,70%,subject,tau_global,0.582721677640067,0.0,0.0,,112
+snip,pruning,no_finetune,70%,subject,tau_k,per fold,0.0,0.0,,112
+snip,pruning,no_finetune,70%,subject,tulla_0.85,0.85,0.0,0.0,,112
+l1,pruning,finetune,70%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+l1,pruning,finetune,70%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+l1,pruning,finetune,70%,fold_setting,tulla_0.85,0.85,0.2,0.4,0.2,5
+l1,pruning,finetune,70%,subject,tau_global,0.582721677640067,1.0,1.0,,112
+l1,pruning,finetune,70%,subject,tau_k,per fold,1.0,1.0,,112
+l1,pruning,finetune,70%,subject,tulla_0.85,0.85,0.2727272727272727,0.3111111111111111,,112
+l1_kd,pruning,finetune,70%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+l1_kd,pruning,finetune,70%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+l1_kd,pruning,finetune,70%,fold_setting,tulla_0.85,0.85,0.6,0.8,0.6,5
+l1_kd,pruning,finetune,70%,subject,tau_global,0.582721677640067,1.0,1.0,,112
+l1_kd,pruning,finetune,70%,subject,tau_k,per fold,1.0,1.0,,112
+l1_kd,pruning,finetune,70%,subject,tulla_0.85,0.85,0.7272727272727273,0.8,,112
+snip,pruning,finetune,70%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+snip,pruning,finetune,70%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+snip,pruning,finetune,70%,fold_setting,tulla_0.85,0.85,0.2,0.0,0.0,5
+snip,pruning,finetune,70%,subject,tau_global,0.582721677640067,0.9545454545454546,0.9444444444444444,,112
+snip,pruning,finetune,70%,subject,tau_k,per fold,0.9090909090909091,0.9111111111111111,,112
+snip,pruning,finetune,70%,subject,tulla_0.85,0.85,0.18181818181818182,0.06666666666666667,,112
+snip_kd,pruning,finetune,70%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+snip_kd,pruning,finetune,70%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+snip_kd,pruning,finetune,70%,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+snip_kd,pruning,finetune,70%,subject,tau_global,0.582721677640067,1.0,0.9444444444444444,,112
+snip_kd,pruning,finetune,70%,subject,tau_k,per fold,1.0,0.9333333333333333,,112
+snip_kd,pruning,finetune,70%,subject,tulla_0.85,0.85,0.09090909090909091,0.2111111111111111,,112
+park,pruning,finetune,70%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+park,pruning,finetune,70%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+park,pruning,finetune,70%,fold_setting,tulla_0.85,0.85,0.0,0.2,0.0,5
+park,pruning,finetune,70%,subject,tau_global,0.582721677640067,1.0,0.9777777777777777,,112
+park,pruning,finetune,70%,subject,tau_k,per fold,1.0,0.9777777777777777,,112
+park,pruning,finetune,70%,subject,tulla_0.85,0.85,0.09090909090909091,0.13333333333333333,,112
+park_kd,pruning,finetune,70%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+park_kd,pruning,finetune,70%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+park_kd,pruning,finetune,70%,fold_setting,tulla_0.85,0.85,0.2,0.0,0.0,5
+park_kd,pruning,finetune,70%,subject,tau_global,0.582721677640067,1.0,0.9777777777777777,,112
+park_kd,pruning,finetune,70%,subject,tau_k,per fold,1.0,0.9777777777777777,,112
+park_kd,pruning,finetune,70%,subject,tulla_0.85,0.85,0.09090909090909091,0.13333333333333333,,112
+l1,pruning,no_finetune,90%,fold_setting,tau_global,0.582721677640067,0.0,0.0,0.0,5
+l1,pruning,no_finetune,90%,fold_setting,tau_k,per fold,0.0,0.0,0.0,5
+l1,pruning,no_finetune,90%,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+l1,pruning,no_finetune,90%,subject,tau_global,0.582721677640067,0.0,0.0,,112
+l1,pruning,no_finetune,90%,subject,tau_k,per fold,0.0,0.0,,112
+l1,pruning,no_finetune,90%,subject,tulla_0.85,0.85,0.0,0.0,,112
+snip,pruning,no_finetune,90%,fold_setting,tau_global,0.582721677640067,0.0,0.0,0.0,5
+snip,pruning,no_finetune,90%,fold_setting,tau_k,per fold,0.0,0.0,0.0,5
+snip,pruning,no_finetune,90%,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+snip,pruning,no_finetune,90%,subject,tau_global,0.582721677640067,0.0,0.0,,112
+snip,pruning,no_finetune,90%,subject,tau_k,per fold,0.0,0.0,,112
+snip,pruning,no_finetune,90%,subject,tulla_0.85,0.85,0.0,0.0,,112
+l1,pruning,finetune,90%,fold_setting,tau_global,0.582721677640067,1.0,0.8,0.8,5
+l1,pruning,finetune,90%,fold_setting,tau_k,per fold,1.0,0.8,0.8,5
+l1,pruning,finetune,90%,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+l1,pruning,finetune,90%,subject,tau_global,0.582721677640067,0.9090909090909091,0.8666666666666667,,112
+l1,pruning,finetune,90%,subject,tau_k,per fold,0.9090909090909091,0.8444444444444444,,112
+l1,pruning,finetune,90%,subject,tulla_0.85,0.85,0.18181818181818182,0.044444444444444446,,112
+l1_kd,pruning,finetune,90%,fold_setting,tau_global,0.582721677640067,1.0,0.8,0.8,5
+l1_kd,pruning,finetune,90%,fold_setting,tau_k,per fold,1.0,0.8,0.8,5
+l1_kd,pruning,finetune,90%,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+l1_kd,pruning,finetune,90%,subject,tau_global,0.582721677640067,0.9545454545454546,0.9,,112
+l1_kd,pruning,finetune,90%,subject,tau_k,per fold,0.9545454545454546,0.8666666666666667,,112
+l1_kd,pruning,finetune,90%,subject,tulla_0.85,0.85,0.13636363636363635,0.08888888888888889,,112
+snip,pruning,finetune,90%,fold_setting,tau_global,0.582721677640067,0.2,0.4,0.2,5
+snip,pruning,finetune,90%,fold_setting,tau_k,per fold,0.0,0.0,0.0,5
+snip,pruning,finetune,90%,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+snip,pruning,finetune,90%,subject,tau_global,0.582721677640067,0.3181818181818182,0.37777777777777777,,112
+snip,pruning,finetune,90%,subject,tau_k,per fold,0.18181818181818182,0.24444444444444444,,112
+snip,pruning,finetune,90%,subject,tulla_0.85,0.85,0.0,0.0,,112
+snip_kd,pruning,finetune,90%,fold_setting,tau_global,0.582721677640067,0.0,0.4,0.0,5
+snip_kd,pruning,finetune,90%,fold_setting,tau_k,per fold,0.0,0.0,0.0,5
+snip_kd,pruning,finetune,90%,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+snip_kd,pruning,finetune,90%,subject,tau_global,0.582721677640067,0.18181818181818182,0.2777777777777778,,112
+snip_kd,pruning,finetune,90%,subject,tau_k,per fold,0.13636363636363635,0.16666666666666666,,112
+snip_kd,pruning,finetune,90%,subject,tulla_0.85,0.85,0.0,0.0,,112
+park,pruning,finetune,90%,fold_setting,tau_global,0.582721677640067,1.0,0.8,0.8,5
+park,pruning,finetune,90%,fold_setting,tau_k,per fold,1.0,0.8,0.8,5
+park,pruning,finetune,90%,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+park,pruning,finetune,90%,subject,tau_global,0.582721677640067,1.0,0.8222222222222222,,112
+park,pruning,finetune,90%,subject,tau_k,per fold,0.9545454545454546,0.7888888888888889,,112
+park,pruning,finetune,90%,subject,tulla_0.85,0.85,0.045454545454545456,0.05555555555555555,,112
+park_kd,pruning,finetune,90%,fold_setting,tau_global,0.582721677640067,1.0,1.0,1.0,5
+park_kd,pruning,finetune,90%,fold_setting,tau_k,per fold,1.0,1.0,1.0,5
+park_kd,pruning,finetune,90%,fold_setting,tulla_0.85,0.85,0.0,0.0,0.0,5
+park_kd,pruning,finetune,90%,subject,tau_global,0.582721677640067,0.9090909090909091,0.8666666666666667,,112
+park_kd,pruning,finetune,90%,subject,tau_k,per fold,0.8181818181818182,0.8,,112
+park_kd,pruning,finetune,90%,subject,tulla_0.85,0.85,0.13636363636363635,0.044444444444444446,,112
