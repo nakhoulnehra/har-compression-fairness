@@ -1,0 +1,182 @@
+{
+ "command_line": [
+  "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\har\\run_compression_grid.py",
+  "--folds",
+  "2",
+  "3",
+  "4",
+  "--device",
+  "cuda",
+  "--machine-name",
+  "uni-2080"
+ ],
+ "machine_name": "uni-2080",
+ "device": {
+  "device": "cuda",
+  "gpu_name": "GeForce RTX 2080",
+  "cuda_version": "11.8",
+  "torch_version": "2.7.1+cu118",
+  "cpu": "Intel64 Family 6 Model 158 Stepping 13, GenuineIntel",
+  "torch_threads": 8,
+  "python": "3.11.9",
+  "os": "Windows 10"
+ },
+ "git_commit": "9b228cd15b0cea1cc0fb94fa5424fb88f3928a32",
+ "git_dirty": false,
+ "code_sha256": "a8b52a51e7ffecb4033f0e2f246a12c51c2d47db552af0948385b65df2207b1d",
+ "fold": 4,
+ "smoke": false,
+ "smoke_sizes": null,
+ "grid": {
+  "levels": [
+   0.3,
+   0.5,
+   0.7,
+   0.9
+  ],
+  "park_levels": [
+   0.7,
+   0.9
+  ],
+  "ptq_bits": [
+   8,
+   4
+  ],
+  "epochs": 20,
+  "lr": 0.0001,
+  "seed": 0,
+  "park_gamma_p": 1.0,
+  "park_m": 4,
+  "nsamples": 200,
+  "shap_seed": 0,
+  "k": 10,
+  "k_sensitivity": 16,
+  "omega": 0.5,
+  "min_class_windows": 3,
+  "random_repeats": 5,
+  "random_seed": 42,
+  "tulla_tau": 0.85
+ },
+ "methods": [
+  "l1",
+  "l1_kd",
+  "snip",
+  "snip_kd",
+  "park",
+  "park_kd"
+ ],
+ "levels": [
+  0.3,
+  0.5,
+  0.7,
+  0.9
+ ],
+ "epochs": 20,
+ "nsamples": 200,
+ "kd": {
+  "T": 3.0,
+  "alpha": 0.7
+ },
+ "tau_k": 0.6125386127035136,
+ "tau_source": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\results\\har-noise-floor\\har-noise-floor-tinyhar-fold4-uni-2080-tau.csv",
+ "ceilings": {
+  "inner_val": 0.9616889975833962,
+  "general": 0.8796828170860509,
+  "older": 0.923029317306719
+ },
+ "noise_floor_machine": "uni-2080",
+ "weights": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold4-nakhoul-3050.pt",
+ "n_explain": {
+  "inner_val": 90,
+  "general": 150,
+  "older": 540
+ },
+ "n_eval_windows": {
+  "inner_val": 6682,
+  "general": 8295,
+  "older": 17403
+ },
+ "original_n_params": 54273,
+ "seconds_fixed": {
+  "shap_original": 0.05836060002911836,
+  "teacher_logits_and_park_targets": 74.24486909992993,
+  "snip_scores": 1.1185071000363678
+ },
+ "acceptance_checks": {
+  "n_nonzero_identical_per_level": {
+   "30%": true,
+   "50%": true,
+   "70%": true,
+   "90%": true
+  },
+  "head_unpruned_all": false,
+  "epochs_run_equal_e_ft": true,
+  "ptq8_rho_by_group": {
+   "general": 0.9998213595308485,
+   "inner_val": 0.9998331454787932,
+   "older": 0.9998249851197342
+  },
+  "ptq8_rho_above_0.99_all_groups": true,
+  "ptq8_accuracy_delta_pooled_by_group": {
+   "inner_val": 0.0,
+   "general": 0.00012055455093429313,
+   "older": -0.00017238407171171755
+  },
+  "ptq8_accuracy_within_0.5pt": true,
+  "ptq_tulla8_rho_by_group": {
+   "general": 0.997989694164248,
+   "inner_val": 0.9982965875381913,
+   "older": 0.997787211780613
+  },
+  "ptq_tulla8_rho_above_0.99_all_groups": true,
+  "ptq_tulla8_accuracy_delta_pooled_by_group": {
+   "inner_val": 0.0,
+   "general": 0.00012055455093429313,
+   "older": -0.0006895362868470922
+  },
+  "ptq_tulla8_accuracy_within_0.5pt": true,
+  "n_skipped_by_model": {
+   "original": 0,
+   "noise_shap_seed1": 0,
+   "noise_shap_seed2": 0,
+   "noise_retrain_seed1": 0,
+   "noise_retrain_seed2": 0,
+   "noise_retrain_seed3": 0,
+   "ptq8": 0,
+   "ptq4": 0,
+   "ptq_tulla8": 0,
+   "ptq_tulla4": 0,
+   "l1-30pct-no_finetune": 0,
+   "snip-30pct-no_finetune": 0,
+   "l1-30pct-finetune": 0,
+   "l1_kd-30pct-finetune": 0,
+   "snip-30pct-finetune": 0,
+   "snip_kd-30pct-finetune": 0,
+   "l1-50pct-no_finetune": 0,
+   "snip-50pct-no_finetune": 0,
+   "l1-50pct-finetune": 0,
+   "l1_kd-50pct-finetune": 0,
+   "snip-50pct-finetune": 0,
+   "snip_kd-50pct-finetune": 0,
+   "l1-70pct-no_finetune": 0,
+   "snip-70pct-no_finetune": 0,
+   "l1-70pct-finetune": 0,
+   "l1_kd-70pct-finetune": 0,
+   "snip-70pct-finetune": 0,
+   "snip_kd-70pct-finetune": 0,
+   "park-70pct-finetune": 0,
+   "park_kd-70pct-finetune": 0,
+   "l1-90pct-no_finetune": 0,
+   "snip-90pct-no_finetune": 0,
+   "l1-90pct-finetune": 0,
+   "l1_kd-90pct-finetune": 0,
+   "snip-90pct-finetune": 0,
+   "snip_kd-90pct-finetune": 0,
+   "park-90pct-finetune": 0,
+   "park_kd-90pct-finetune": 0
+  }
+ },
+ "tuning": "none in part A (no tuned method, no gate)",
+ "seconds_wall_this_invocation": 12710.178403400001,
+ "finished_at": "2026-11-22T09:56:24+02:00"
+}

@@ -1,0 +1,646 @@
+=== compression grid fold 2 | machine uni-2080 | device cuda GeForce RTX 2080 | torch 2.7.1+cu118 | started 2026-11-21T22:43:47+02:00 | C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\har\run_compression_grid.py --folds 2 3 4 --device cuda --machine-name uni-2080
+    SHAP cache hit har-noise-floor-fold2-inner_val-3380c7b8519ae04c.npz
+    SHAP cache hit har-noise-floor-fold2-general-bcf416b70303deb9.npz
+    SHAP cache hit har-noise-floor-fold2-older-d79025caa6df0bac.npz
+fold 2: train 52771 windows, inner val ['S013', 'S019', 'S022'], general ['S006', 'S010', 'S012', 'S024', 'S027'], older 18 subjects; explain inner_val 90, general 150, older 540; tau_k 0.6295 (C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-noise-floor\har-noise-floor-tinyhar-fold2-uni-2080-tau.csv); ceilings inner_val 0.9439, general 0.9209, older 0.9271; original SHAP 0.0 s
+  original                         LCI general 1.0000, older 1.0000, inner val 1.0000; acc general 0.9091, older 0.7603; n_nonzero 54273; 2 s
+    SHAP cache hit har-noise-floor-fold2-inner_val-a80cfed8e7e7df25.npz
+    SHAP cache hit har-noise-floor-fold2-general-b1cd266b7c5de1d0.npz
+    SHAP cache hit har-noise-floor-fold2-older-f349c000f9ae4da4.npz
+  noise_shap_seed1                 LCI general 0.9401, older 0.9243, inner val 0.9447; acc general nan, older nan; n_nonzero 54273; 0 s
+    SHAP cache hit har-noise-floor-fold2-inner_val-792be6e153c74921.npz
+    SHAP cache hit har-noise-floor-fold2-general-0d5b64ca6b1aac2c.npz
+    SHAP cache hit har-noise-floor-fold2-older-0f4a4e56432843a8.npz
+  noise_shap_seed2                 LCI general 0.9017, older 0.9299, inner val 0.9430; acc general nan, older nan; n_nonzero 54273; 0 s
+    SHAP cache hit har-noise-floor-fold2-inner_val-8339f77465655c46.npz
+    SHAP cache hit har-noise-floor-fold2-general-92976c92b8ed5c4b.npz
+    SHAP cache hit har-noise-floor-fold2-older-a87c2bece4d49e53.npz
+  noise_retrain_seed1              LCI general 0.6833, older 0.6377, inner val 0.6295; acc general nan, older nan; n_nonzero 54273; 0 s
+    SHAP cache hit har-noise-floor-fold2-inner_val-9d7f6886b89a5a7a.npz
+    SHAP cache hit har-noise-floor-fold2-general-13c7eb8b6d862ac7.npz
+    SHAP cache hit har-noise-floor-fold2-older-89c3d7373c0535e2.npz
+  noise_retrain_seed2              LCI general 0.6325, older 0.6623, inner val 0.6479; acc general nan, older nan; n_nonzero 54273; 0 s
+    SHAP cache hit har-noise-floor-fold2-inner_val-ada625d041de5817.npz
+    SHAP cache hit har-noise-floor-fold2-general-620d2309c41a7321.npz
+    SHAP cache hit har-noise-floor-fold2-older-b2bddd8c68b6d5f6.npz
+  noise_retrain_seed3              LCI general 0.7355, older 0.7596, inner val 0.7785; acc general nan, older nan; n_nonzero 54273; 0 s
+  ptq8                             LCI general 0.9999, older 0.9999, inner val 0.9999; acc general 0.9091, older 0.7603; n_nonzero 53696; 174 s
+  ptq4                             LCI general 0.9437, older 0.8776, inner val 0.8965; acc general 0.8817, older 0.7926; n_nonzero 44243; 170 s
+  ptq_tulla8                       LCI general 0.9989, older 0.9837, inner val 0.9687; acc general 0.9079, older 0.7589; n_nonzero 51987; 172 s
+  ptq_tulla4                       LCI general 0.6129, older 0.6317, inner val 0.6602; acc general 0.8602, older 0.5937; n_nonzero 19547; 196 s
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  l1-30pct-no_finetune             LCI general 0.8551, older 0.8248, inner val 0.8383; acc general 0.8809, older 0.7608; n_nonzero 38457; 168 s
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  snip-30pct-no_finetune           LCI general 0.7359, older 0.6780, inner val 0.7234; acc general 0.8259, older 0.6375; n_nonzero 38457; 163 s
+
+=== fold 2 l1-30pct-finetune: start l1, CE, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 0.2303  val F1 0.8783  acc 0.9326  5.0s
+    ft epoch  2/20  CE 0.2217  val F1 0.8790  acc 0.9340  5.0s
+    ft epoch  3/20  CE 0.2148  val F1 0.8824  acc 0.9364  5.0s
+    ft epoch  4/20  CE 0.2132  val F1 0.8784  acc 0.9360  5.0s
+    ft epoch  5/20  CE 0.2107  val F1 0.8912  acc 0.9364  3.5s
+    ft epoch  6/20  CE 0.2058  val F1 0.8811  acc 0.9357  2.0s
+    ft epoch  7/20  CE 0.2025  val F1 0.8791  acc 0.9352  2.0s
+    ft epoch  8/20  CE 0.2037  val F1 0.8902  acc 0.9377  2.2s
+    ft epoch  9/20  CE 0.1990  val F1 0.8751  acc 0.9337  2.1s
+    ft epoch 10/20  CE 0.1991  val F1 0.8753  acc 0.9334  2.0s
+    ft epoch 11/20  CE 0.1983  val F1 0.8826  acc 0.9348  2.0s
+    ft epoch 12/20  CE 0.1946  val F1 0.8892  acc 0.9357  2.0s
+    ft epoch 13/20  CE 0.1914  val F1 0.8899  acc 0.9383  2.0s
+    ft epoch 14/20  CE 0.1901  val F1 0.8794  acc 0.9353  2.1s
+    ft epoch 15/20  CE 0.1885  val F1 0.8750  acc 0.9349  2.0s
+    ft epoch 16/20  CE 0.1850  val F1 0.8762  acc 0.9346  2.0s
+    ft epoch 17/20  CE 0.1867  val F1 0.8835  acc 0.9369  2.0s
+    ft epoch 18/20  CE 0.1826  val F1 0.8795  acc 0.9350  2.0s
+    ft epoch 19/20  CE 0.1811  val F1 0.8794  acc 0.9344  2.1s
+    ft epoch 20/20  CE 0.1798  val F1 0.8857  acc 0.9371  2.2s
+  l1-30pct-finetune                LCI general 0.8637, older 0.8370, inner val 0.8124; acc general 0.8978, older 0.7975; n_nonzero 38457; 133 s
+
+=== fold 2 l1_kd-30pct-finetune: start l1, KD, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 0.2300  KL 0.0100  val F1 0.8786  acc 0.9342  2.1s
+    ft epoch  2/20  CE 0.2262  KL 0.0094  val F1 0.8785  acc 0.9349  2.1s
+    ft epoch  3/20  CE 0.2220  KL 0.0092  val F1 0.8816  acc 0.9359  2.1s
+    ft epoch  4/20  CE 0.2218  KL 0.0089  val F1 0.8738  acc 0.9331  2.1s
+    ft epoch  5/20  CE 0.2210  KL 0.0088  val F1 0.8831  acc 0.9353  2.2s
+    ft epoch  6/20  CE 0.2178  KL 0.0086  val F1 0.8784  acc 0.9348  2.1s
+    ft epoch  7/20  CE 0.2158  KL 0.0085  val F1 0.8773  acc 0.9346  2.1s
+    ft epoch  8/20  CE 0.2182  KL 0.0083  val F1 0.8830  acc 0.9360  2.2s
+    ft epoch  9/20  CE 0.2147  KL 0.0083  val F1 0.8763  acc 0.9346  2.1s
+    ft epoch 10/20  CE 0.2159  KL 0.0081  val F1 0.8770  acc 0.9342  2.1s
+    ft epoch 11/20  CE 0.2160  KL 0.0081  val F1 0.8811  acc 0.9360  2.1s
+    ft epoch 12/20  CE 0.2132  KL 0.0081  val F1 0.8886  acc 0.9361  2.2s
+    ft epoch 13/20  CE 0.2129  KL 0.0079  val F1 0.8877  acc 0.9376  2.1s
+    ft epoch 14/20  CE 0.2124  KL 0.0078  val F1 0.8848  acc 0.9372  2.1s
+    ft epoch 15/20  CE 0.2115  KL 0.0078  val F1 0.8823  acc 0.9371  2.2s
+    ft epoch 16/20  CE 0.2093  KL 0.0078  val F1 0.8831  acc 0.9372  2.1s
+    ft epoch 17/20  CE 0.2113  KL 0.0077  val F1 0.8838  acc 0.9365  2.1s
+    ft epoch 18/20  CE 0.2094  KL 0.0077  val F1 0.8816  acc 0.9363  2.2s
+    ft epoch 19/20  CE 0.2084  KL 0.0077  val F1 0.8862  acc 0.9354  2.1s
+    ft epoch 20/20  CE 0.2095  KL 0.0076  val F1 0.8849  acc 0.9367  2.2s
+  l1_kd-30pct-finetune             LCI general 0.8953, older 0.8956, inner val 0.9294; acc general 0.9095, older 0.7721; n_nonzero 38457; 113 s
+
+=== fold 2 snip-30pct-finetune: start snip, CE, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 0.2421  val F1 0.8722  acc 0.9296  2.0s
+    ft epoch  2/20  CE 0.2291  val F1 0.8778  acc 0.9323  2.0s
+    ft epoch  3/20  CE 0.2217  val F1 0.8781  acc 0.9350  2.0s
+    ft epoch  4/20  CE 0.2187  val F1 0.8706  acc 0.9317  2.0s
+    ft epoch  5/20  CE 0.2160  val F1 0.8897  acc 0.9350  2.0s
+    ft epoch  6/20  CE 0.2117  val F1 0.8881  acc 0.9360  2.0s
+    ft epoch  7/20  CE 0.2075  val F1 0.8747  acc 0.9337  2.0s
+    ft epoch  8/20  CE 0.2090  val F1 0.8873  acc 0.9364  2.0s
+    ft epoch  9/20  CE 0.2042  val F1 0.8761  acc 0.9341  2.0s
+    ft epoch 10/20  CE 0.2027  val F1 0.8686  acc 0.9321  2.0s
+    ft epoch 11/20  CE 0.2010  val F1 0.8838  acc 0.9354  2.0s
+    ft epoch 12/20  CE 0.1991  val F1 0.8893  acc 0.9354  2.0s
+    ft epoch 13/20  CE 0.1952  val F1 0.8827  acc 0.9363  2.0s
+    ft epoch 14/20  CE 0.1944  val F1 0.8852  acc 0.9357  2.0s
+    ft epoch 15/20  CE 0.1913  val F1 0.8782  acc 0.9349  2.0s
+    ft epoch 16/20  CE 0.1884  val F1 0.8853  acc 0.9365  2.0s
+    ft epoch 17/20  CE 0.1898  val F1 0.8861  acc 0.9359  2.0s
+    ft epoch 18/20  CE 0.1863  val F1 0.8788  acc 0.9338  2.0s
+    ft epoch 19/20  CE 0.1834  val F1 0.8829  acc 0.9319  2.0s
+    ft epoch 20/20  CE 0.1839  val F1 0.8782  acc 0.9342  2.0s
+  snip-30pct-finetune              LCI general 0.8356, older 0.8510, inner val 0.8031; acc general 0.9121, older 0.7914; n_nonzero 38457; 111 s
+
+=== fold 2 snip_kd-30pct-finetune: start snip, KD, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 0.2427  KL 0.0128  val F1 0.8777  acc 0.9318  2.1s
+    ft epoch  2/20  CE 0.2330  KL 0.0102  val F1 0.8802  acc 0.9337  2.1s
+    ft epoch  3/20  CE 0.2279  KL 0.0098  val F1 0.8774  acc 0.9333  2.1s
+    ft epoch  4/20  CE 0.2267  KL 0.0095  val F1 0.8780  acc 0.9329  2.1s
+    ft epoch  5/20  CE 0.2259  KL 0.0093  val F1 0.8854  acc 0.9344  2.1s
+    ft epoch  6/20  CE 0.2228  KL 0.0090  val F1 0.8821  acc 0.9338  2.1s
+    ft epoch  7/20  CE 0.2205  KL 0.0089  val F1 0.8852  acc 0.9350  2.1s
+    ft epoch  8/20  CE 0.2221  KL 0.0087  val F1 0.8852  acc 0.9346  2.2s
+    ft epoch  9/20  CE 0.2189  KL 0.0086  val F1 0.8739  acc 0.9331  2.1s
+    ft epoch 10/20  CE 0.2193  KL 0.0085  val F1 0.8863  acc 0.9352  2.1s
+    ft epoch 11/20  CE 0.2189  KL 0.0084  val F1 0.8781  acc 0.9346  2.1s
+    ft epoch 12/20  CE 0.2166  KL 0.0084  val F1 0.8878  acc 0.9346  2.1s
+    ft epoch 13/20  CE 0.2158  KL 0.0082  val F1 0.8875  acc 0.9360  2.1s
+    ft epoch 14/20  CE 0.2155  KL 0.0081  val F1 0.8872  acc 0.9363  2.1s
+    ft epoch 15/20  CE 0.2139  KL 0.0081  val F1 0.8861  acc 0.9361  2.1s
+    ft epoch 16/20  CE 0.2121  KL 0.0080  val F1 0.8869  acc 0.9367  2.1s
+    ft epoch 17/20  CE 0.2141  KL 0.0079  val F1 0.8860  acc 0.9357  2.1s
+    ft epoch 18/20  CE 0.2120  KL 0.0079  val F1 0.8811  acc 0.9348  2.1s
+    ft epoch 19/20  CE 0.2106  KL 0.0079  val F1 0.8879  acc 0.9342  2.1s
+    ft epoch 20/20  CE 0.2118  KL 0.0078  val F1 0.8867  acc 0.9361  2.1s
+  snip_kd-30pct-finetune           LCI general 0.9399, older 0.9016, inner val 0.9479; acc general 0.9065, older 0.7703; n_nonzero 38457; 111 s
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  l1-50pct-no_finetune             LCI general 0.6568, older 0.5770, inner val 0.6295; acc general 0.7904, older 0.6459; n_nonzero 27911; 109 s
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  snip-50pct-no_finetune           LCI general 0.4377, older 0.4053, inner val 0.3966; acc general 0.4555, older 0.6367; n_nonzero 27911; 143 s
+
+=== fold 2 l1-50pct-finetune: start l1, CE, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 0.2472  val F1 0.8785  acc 0.9325  4.1s
+    ft epoch  2/20  CE 0.2332  val F1 0.8805  acc 0.9344  3.6s
+    ft epoch  3/20  CE 0.2247  val F1 0.8804  acc 0.9353  3.6s
+    ft epoch  4/20  CE 0.2228  val F1 0.8721  acc 0.9344  3.8s
+    ft epoch  5/20  CE 0.2202  val F1 0.8890  acc 0.9356  3.7s
+    ft epoch  6/20  CE 0.2149  val F1 0.8868  acc 0.9364  3.7s
+    ft epoch  7/20  CE 0.2108  val F1 0.8833  acc 0.9369  3.6s
+    ft epoch  8/20  CE 0.2119  val F1 0.8876  acc 0.9372  3.6s
+    ft epoch  9/20  CE 0.2079  val F1 0.8812  acc 0.9356  3.6s
+    ft epoch 10/20  CE 0.2073  val F1 0.8806  acc 0.9356  3.6s
+    ft epoch 11/20  CE 0.2062  val F1 0.8847  acc 0.9367  3.7s
+    ft epoch 12/20  CE 0.2032  val F1 0.8893  acc 0.9356  3.7s
+    ft epoch 13/20  CE 0.2007  val F1 0.8902  acc 0.9383  3.6s
+    ft epoch 14/20  CE 0.1996  val F1 0.8864  acc 0.9379  3.6s
+    ft epoch 15/20  CE 0.1974  val F1 0.8837  acc 0.9384  3.7s
+    ft epoch 16/20  CE 0.1946  val F1 0.8781  acc 0.9375  3.8s
+    ft epoch 17/20  CE 0.1961  val F1 0.8890  acc 0.9403  3.7s
+    ft epoch 18/20  CE 0.1925  val F1 0.8854  acc 0.9379  3.6s
+    ft epoch 19/20  CE 0.1911  val F1 0.8851  acc 0.9354  3.5s
+    ft epoch 20/20  CE 0.1906  val F1 0.8881  acc 0.9392  5.5s
+  l1-50pct-finetune                LCI general 0.8424, older 0.8548, inner val 0.8371; acc general 0.9037, older 0.7910; n_nonzero 27911; 163 s
+
+=== fold 2 l1_kd-50pct-finetune: start l1, KD, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 0.2457  KL 0.0128  val F1 0.8830  acc 0.9342  3.8s
+    ft epoch  2/20  CE 0.2348  KL 0.0103  val F1 0.8842  acc 0.9352  3.8s
+    ft epoch  3/20  CE 0.2287  KL 0.0099  val F1 0.8807  acc 0.9348  3.8s
+    ft epoch  4/20  CE 0.2285  KL 0.0096  val F1 0.8764  acc 0.9337  3.8s
+    ft epoch  5/20  CE 0.2281  KL 0.0094  val F1 0.8849  acc 0.9356  3.8s
+    ft epoch  6/20  CE 0.2243  KL 0.0091  val F1 0.8815  acc 0.9340  3.8s
+    ft epoch  7/20  CE 0.2215  KL 0.0090  val F1 0.8831  acc 0.9354  3.8s
+    ft epoch  8/20  CE 0.2240  KL 0.0088  val F1 0.8850  acc 0.9361  3.8s
+    ft epoch  9/20  CE 0.2209  KL 0.0087  val F1 0.8788  acc 0.9345  3.8s
+    ft epoch 10/20  CE 0.2215  KL 0.0085  val F1 0.8840  acc 0.9360  3.8s
+    ft epoch 11/20  CE 0.2217  KL 0.0085  val F1 0.8824  acc 0.9364  3.8s
+    ft epoch 12/20  CE 0.2189  KL 0.0085  val F1 0.8870  acc 0.9360  3.8s
+    ft epoch 13/20  CE 0.2182  KL 0.0083  val F1 0.8861  acc 0.9364  3.8s
+    ft epoch 14/20  CE 0.2185  KL 0.0082  val F1 0.8856  acc 0.9376  3.8s
+    ft epoch 15/20  CE 0.2173  KL 0.0082  val F1 0.8838  acc 0.9373  3.8s
+    ft epoch 16/20  CE 0.2149  KL 0.0081  val F1 0.8828  acc 0.9369  3.8s
+    ft epoch 17/20  CE 0.2171  KL 0.0080  val F1 0.8839  acc 0.9369  3.8s
+    ft epoch 18/20  CE 0.2154  KL 0.0080  val F1 0.8810  acc 0.9365  3.8s
+    ft epoch 19/20  CE 0.2143  KL 0.0079  val F1 0.8845  acc 0.9353  3.8s
+    ft epoch 20/20  CE 0.2157  KL 0.0079  val F1 0.8849  acc 0.9373  3.9s
+  l1_kd-50pct-finetune             LCI general 0.8854, older 0.8984, inner val 0.9205; acc general 0.9100, older 0.7753; n_nonzero 27911; 172 s
+
+=== fold 2 snip-50pct-finetune: start snip, CE, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 0.2981  val F1 0.8580  acc 0.9281  4.2s
+    ft epoch  2/20  CE 0.2546  val F1 0.8648  acc 0.9308  4.2s
+    ft epoch  3/20  CE 0.2433  val F1 0.8694  acc 0.9330  4.2s
+    ft epoch  4/20  CE 0.2398  val F1 0.8567  acc 0.9295  4.3s
+    ft epoch  5/20  CE 0.2354  val F1 0.8753  acc 0.9322  4.2s
+    ft epoch  6/20  CE 0.2296  val F1 0.8703  acc 0.9317  4.3s
+    ft epoch  7/20  CE 0.2254  val F1 0.8599  acc 0.9295  4.3s
+    ft epoch  8/20  CE 0.2252  val F1 0.8694  acc 0.9330  4.2s
+    ft epoch  9/20  CE 0.2199  val F1 0.8707  acc 0.9334  6.0s
+    ft epoch 10/20  CE 0.2191  val F1 0.8627  acc 0.9292  5.9s
+    ft epoch 11/20  CE 0.2178  val F1 0.8744  acc 0.9321  4.3s
+    ft epoch 12/20  CE 0.2149  val F1 0.8799  acc 0.9338  4.1s
+    ft epoch 13/20  CE 0.2089  val F1 0.8714  acc 0.9344  4.3s
+    ft epoch 14/20  CE 0.2096  val F1 0.8807  acc 0.9353  4.3s
+    ft epoch 15/20  CE 0.2056  val F1 0.8714  acc 0.9340  4.2s
+    ft epoch 16/20  CE 0.2036  val F1 0.8765  acc 0.9346  4.2s
+    ft epoch 17/20  CE 0.2057  val F1 0.8711  acc 0.9334  4.2s
+    ft epoch 18/20  CE 0.2018  val F1 0.8670  acc 0.9315  4.3s
+    ft epoch 19/20  CE 0.1992  val F1 0.8723  acc 0.9317  4.3s
+    ft epoch 20/20  CE 0.2005  val F1 0.8644  acc 0.9325  4.3s
+  snip-50pct-finetune              LCI general 0.8096, older 0.8094, inner val 0.8193; acc general 0.9107, older 0.7703; n_nonzero 27911; 184 s
+
+=== fold 2 snip_kd-50pct-finetune: start snip, KD, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 0.3063  KL 0.0577  val F1 0.8642  acc 0.9294  4.4s
+    ft epoch  2/20  CE 0.2569  KL 0.0148  val F1 0.8593  acc 0.9292  4.3s
+    ft epoch  3/20  CE 0.2483  KL 0.0126  val F1 0.8643  acc 0.9317  4.4s
+    ft epoch  4/20  CE 0.2460  KL 0.0118  val F1 0.8616  acc 0.9294  4.4s
+    ft epoch  5/20  CE 0.2444  KL 0.0114  val F1 0.8691  acc 0.9303  4.4s
+    ft epoch  6/20  CE 0.2398  KL 0.0109  val F1 0.8654  acc 0.9302  4.3s
+    ft epoch  7/20  CE 0.2365  KL 0.0107  val F1 0.8710  acc 0.9310  4.3s
+    ft epoch  8/20  CE 0.2383  KL 0.0103  val F1 0.8704  acc 0.9319  4.4s
+    ft epoch  9/20  CE 0.2334  KL 0.0101  val F1 0.8710  acc 0.9322  4.5s
+    ft epoch 10/20  CE 0.2337  KL 0.0099  val F1 0.8671  acc 0.9315  4.6s
+    ft epoch 11/20  CE 0.2342  KL 0.0098  val F1 0.8730  acc 0.9340  4.5s
+    ft epoch 12/20  CE 0.2308  KL 0.0097  val F1 0.8807  acc 0.9330  5.1s
+    ft epoch 13/20  CE 0.2284  KL 0.0095  val F1 0.8761  acc 0.9323  6.5s
+    ft epoch 14/20  CE 0.2290  KL 0.0093  val F1 0.8787  acc 0.9346  4.8s
+    ft epoch 15/20  CE 0.2270  KL 0.0092  val F1 0.8727  acc 0.9334  4.3s
+    ft epoch 16/20  CE 0.2248  KL 0.0091  val F1 0.8774  acc 0.9349  4.4s
+    ft epoch 17/20  CE 0.2269  KL 0.0090  val F1 0.8820  acc 0.9345  4.4s
+    ft epoch 18/20  CE 0.2243  KL 0.0090  val F1 0.8766  acc 0.9348  4.4s
+    ft epoch 19/20  CE 0.2232  KL 0.0088  val F1 0.8864  acc 0.9344  4.3s
+    ft epoch 20/20  CE 0.2243  KL 0.0088  val F1 0.8803  acc 0.9352  4.4s
+  snip_kd-50pct-finetune           LCI general 0.8711, older 0.8631, inner val 0.8761; acc general 0.8996, older 0.7749; n_nonzero 27911; 180 s
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  l1-70pct-no_finetune             LCI general 0.3281, older 0.2997, inner val 0.2506; acc general 0.2754, older 0.4243; n_nonzero 17365; 170 s
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  snip-70pct-no_finetune           LCI general 0.1592, older 0.1109, inner val 0.1367; acc general 0.3963, older 0.5886; n_nonzero 17365; 173 s
+
+=== fold 2 l1-70pct-finetune: start l1, CE, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 0.3219  val F1 0.8673  acc 0.9243  3.5s
+    ft epoch  2/20  CE 0.2704  val F1 0.8664  acc 0.9277  3.6s
+    ft epoch  3/20  CE 0.2552  val F1 0.8703  acc 0.9298  3.6s
+    ft epoch  4/20  CE 0.2482  val F1 0.8685  acc 0.9310  5.3s
+    ft epoch  5/20  CE 0.2450  val F1 0.8778  acc 0.9291  4.9s
+    ft epoch  6/20  CE 0.2400  val F1 0.8712  acc 0.9287  3.7s
+    ft epoch  7/20  CE 0.2337  val F1 0.8731  acc 0.9318  3.7s
+    ft epoch  8/20  CE 0.2348  val F1 0.8726  acc 0.9303  3.8s
+    ft epoch  9/20  CE 0.2296  val F1 0.8726  acc 0.9317  3.7s
+    ft epoch 10/20  CE 0.2286  val F1 0.8749  acc 0.9334  3.6s
+    ft epoch 11/20  CE 0.2283  val F1 0.8844  acc 0.9342  3.7s
+    ft epoch 12/20  CE 0.2250  val F1 0.8792  acc 0.9321  3.6s
+    ft epoch 13/20  CE 0.2207  val F1 0.8793  acc 0.9345  3.6s
+    ft epoch 14/20  CE 0.2210  val F1 0.8805  acc 0.9352  3.8s
+    ft epoch 15/20  CE 0.2188  val F1 0.8811  acc 0.9361  3.7s
+    ft epoch 16/20  CE 0.2162  val F1 0.8813  acc 0.9365  3.7s
+    ft epoch 17/20  CE 0.2188  val F1 0.8823  acc 0.9367  3.8s
+    ft epoch 18/20  CE 0.2140  val F1 0.8819  acc 0.9360  3.6s
+    ft epoch 19/20  CE 0.2133  val F1 0.8840  acc 0.9337  3.7s
+    ft epoch 20/20  CE 0.2139  val F1 0.8874  acc 0.9384  3.6s
+  l1-70pct-finetune                LCI general 0.8408, older 0.8049, inner val 0.8204; acc general 0.9008, older 0.7675; n_nonzero 17365; 173 s
+
+=== fold 2 l1_kd-70pct-finetune: start l1, KD, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 0.3366  KL 0.0447  val F1 0.8576  acc 0.9264  3.9s
+    ft epoch  2/20  CE 0.2756  KL 0.0153  val F1 0.8667  acc 0.9296  4.0s
+    ft epoch  3/20  CE 0.2600  KL 0.0131  val F1 0.8683  acc 0.9312  4.1s
+    ft epoch  4/20  CE 0.2542  KL 0.0122  val F1 0.8708  acc 0.9315  4.2s
+    ft epoch  5/20  CE 0.2524  KL 0.0117  val F1 0.8740  acc 0.9306  5.8s
+    ft epoch  6/20  CE 0.2480  KL 0.0112  val F1 0.8726  acc 0.9326  4.2s
+    ft epoch  7/20  CE 0.2420  KL 0.0110  val F1 0.8746  acc 0.9325  3.8s
+    ft epoch  8/20  CE 0.2439  KL 0.0106  val F1 0.8762  acc 0.9326  3.8s
+    ft epoch  9/20  CE 0.2392  KL 0.0104  val F1 0.8754  acc 0.9329  3.8s
+    ft epoch 10/20  CE 0.2387  KL 0.0102  val F1 0.8744  acc 0.9337  3.7s
+    ft epoch 11/20  CE 0.2399  KL 0.0101  val F1 0.8798  acc 0.9348  3.8s
+    ft epoch 12/20  CE 0.2363  KL 0.0100  val F1 0.8800  acc 0.9331  3.8s
+    ft epoch 13/20  CE 0.2340  KL 0.0097  val F1 0.8810  acc 0.9344  3.8s
+    ft epoch 14/20  CE 0.2337  KL 0.0095  val F1 0.8804  acc 0.9348  3.8s
+    ft epoch 15/20  CE 0.2328  KL 0.0095  val F1 0.8766  acc 0.9348  3.9s
+    ft epoch 16/20  CE 0.2306  KL 0.0094  val F1 0.8833  acc 0.9359  4.0s
+    ft epoch 17/20  CE 0.2330  KL 0.0092  val F1 0.8832  acc 0.9356  3.9s
+    ft epoch 18/20  CE 0.2301  KL 0.0092  val F1 0.8800  acc 0.9350  3.7s
+    ft epoch 19/20  CE 0.2295  KL 0.0091  val F1 0.8848  acc 0.9342  3.7s
+    ft epoch 20/20  CE 0.2308  KL 0.0090  val F1 0.8846  acc 0.9364  3.8s
+  l1_kd-70pct-finetune             LCI general 0.9014, older 0.8575, inner val 0.9022; acc general 0.9061, older 0.7660; n_nonzero 17365; 172 s
+
+=== fold 2 snip-70pct-finetune: start snip, CE, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 0.6236  val F1 0.8240  acc 0.9166  5.5s
+    ft epoch  2/20  CE 0.3527  val F1 0.8355  acc 0.9214  4.7s
+    ft epoch  3/20  CE 0.3148  val F1 0.8420  acc 0.9243  3.7s
+    ft epoch  4/20  CE 0.2968  val F1 0.8449  acc 0.9231  3.6s
+    ft epoch  5/20  CE 0.2882  val F1 0.8452  acc 0.9154  3.7s
+    ft epoch  6/20  CE 0.2772  val F1 0.8576  acc 0.9245  3.8s
+    ft epoch  7/20  CE 0.2692  val F1 0.8449  acc 0.9208  3.7s
+    ft epoch  8/20  CE 0.2664  val F1 0.8581  acc 0.9271  3.7s
+    ft epoch  9/20  CE 0.2588  val F1 0.8568  acc 0.9266  3.8s
+    ft epoch 10/20  CE 0.2559  val F1 0.8565  acc 0.9246  3.7s
+    ft epoch 11/20  CE 0.2544  val F1 0.8581  acc 0.9260  3.7s
+    ft epoch 12/20  CE 0.2516  val F1 0.8715  acc 0.9268  3.6s
+    ft epoch 13/20  CE 0.2441  val F1 0.8565  acc 0.9214  3.6s
+    ft epoch 14/20  CE 0.2437  val F1 0.8650  acc 0.9299  3.7s
+    ft epoch 15/20  CE 0.2404  val F1 0.8689  acc 0.9298  3.6s
+    ft epoch 16/20  CE 0.2369  val F1 0.8627  acc 0.9288  3.8s
+    ft epoch 17/20  CE 0.2389  val F1 0.8665  acc 0.9306  3.5s
+    ft epoch 18/20  CE 0.2352  val F1 0.8596  acc 0.9275  5.3s
+    ft epoch 19/20  CE 0.2329  val F1 0.8728  acc 0.9298  4.9s
+    ft epoch 20/20  CE 0.2336  val F1 0.8801  acc 0.9349  3.6s
+  snip-70pct-finetune              LCI general 0.7764, older 0.7548, inner val 0.7999; acc general 0.9042, older 0.7448; n_nonzero 17365; 133 s
+
+=== fold 2 snip_kd-70pct-finetune: start snip, KD, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 0.6949  KL 0.2502  val F1 0.8374  acc 0.9223  2.1s
+    ft epoch  2/20  CE 0.3681  KL 0.0503  val F1 0.8430  acc 0.9254  2.0s
+    ft epoch  3/20  CE 0.3261  KL 0.0259  val F1 0.8459  acc 0.9271  2.1s
+    ft epoch  4/20  CE 0.3050  KL 0.0193  val F1 0.8476  acc 0.9266  2.1s
+    ft epoch  5/20  CE 0.2983  KL 0.0169  val F1 0.8617  acc 0.9272  2.1s
+    ft epoch  6/20  CE 0.2860  KL 0.0155  val F1 0.8552  acc 0.9248  2.0s
+    ft epoch  7/20  CE 0.2781  KL 0.0146  val F1 0.8534  acc 0.9250  2.1s
+    ft epoch  8/20  CE 0.2756  KL 0.0139  val F1 0.8583  acc 0.9264  2.0s
+    ft epoch  9/20  CE 0.2686  KL 0.0134  val F1 0.8577  acc 0.9260  2.1s
+    ft epoch 10/20  CE 0.2661  KL 0.0130  val F1 0.8589  acc 0.9275  2.0s
+    ft epoch 11/20  CE 0.2652  KL 0.0128  val F1 0.8539  acc 0.9260  2.0s
+    ft epoch 12/20  CE 0.2625  KL 0.0125  val F1 0.8506  acc 0.9215  2.1s
+    ft epoch 13/20  CE 0.2554  KL 0.0121  val F1 0.8616  acc 0.9273  2.0s
+    ft epoch 14/20  CE 0.2554  KL 0.0118  val F1 0.8586  acc 0.9277  2.0s
+    ft epoch 15/20  CE 0.2546  KL 0.0117  val F1 0.8596  acc 0.9275  2.1s
+    ft epoch 16/20  CE 0.2508  KL 0.0115  val F1 0.8696  acc 0.9314  2.1s
+    ft epoch 17/20  CE 0.2523  KL 0.0113  val F1 0.8682  acc 0.9331  2.1s
+    ft epoch 18/20  CE 0.2490  KL 0.0112  val F1 0.8652  acc 0.9300  2.1s
+    ft epoch 19/20  CE 0.2503  KL 0.0111  val F1 0.8679  acc 0.9264  2.0s
+    ft epoch 20/20  CE 0.2498  KL 0.0108  val F1 0.8734  acc 0.9329  2.0s
+  snip_kd-70pct-finetune           LCI general 0.8069, older 0.7581, inner val 0.7684; acc general 0.9033, older 0.7766; n_nonzero 17365; 112 s
+
+=== fold 2 park-70pct-finetune: start l1, CE + gamma_P L_AM, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 0.3234  extra 1.1318  val F1 0.8561  acc 0.9219  68.4s
+    ft epoch  2/20  CE 0.2737  extra 1.0764  val F1 0.8588  acc 0.9262  69.2s
+    ft epoch  3/20  CE 0.2628  extra 1.0531  val F1 0.8623  acc 0.9294  68.7s
+    ft epoch  4/20  CE 0.2608  extra 1.0399  val F1 0.8653  acc 0.9292  68.1s
+    ft epoch  5/20  CE 0.2581  extra 1.0329  val F1 0.8680  acc 0.9265  68.4s
+    ft epoch  6/20  CE 0.2577  extra 1.0270  val F1 0.8656  acc 0.9287  69.0s
+    ft epoch  7/20  CE 0.2526  extra 1.0234  val F1 0.8694  acc 0.9294  68.1s
+    ft epoch  8/20  CE 0.2554  extra 1.0197  val F1 0.8713  acc 0.9295  67.6s
+    ft epoch  9/20  CE 0.2521  extra 1.0179  val F1 0.8734  acc 0.9311  69.1s
+    ft epoch 10/20  CE 0.2529  extra 1.0163  val F1 0.8680  acc 0.9311  69.2s
+    ft epoch 11/20  CE 0.2540  extra 1.0132  val F1 0.8755  acc 0.9319  70.1s
+    ft epoch 12/20  CE 0.2501  extra 1.0112  val F1 0.8730  acc 0.9303  71.8s
+    ft epoch 13/20  CE 0.2488  extra 1.0095  val F1 0.8731  acc 0.9312  71.3s
+    ft epoch 14/20  CE 0.2489  extra 1.0077  val F1 0.8762  acc 0.9334  71.2s
+    ft epoch 15/20  CE 0.2461  extra 1.0061  val F1 0.8792  acc 0.9342  81.6s
+    ft epoch 16/20  CE 0.2429  extra 1.0043  val F1 0.8822  acc 0.9344  85.8s
+    ft epoch 17/20  CE 0.2467  extra 1.0022  val F1 0.8739  acc 0.9326  98.1s
+    ft epoch 18/20  CE 0.2438  extra 1.0007  val F1 0.8606  acc 0.9288  101.5s
+    ft epoch 19/20  CE 0.2456  extra 1.0006  val F1 0.8749  acc 0.9295  94.9s
+    ft epoch 20/20  CE 0.2438  extra 0.9983  val F1 0.8631  acc 0.9304  93.9s
+  park-70pct-finetune              LCI general 0.7844, older 0.7820, inner val 0.8161; acc general 0.8943, older 0.7508; n_nonzero 17365; 143 s
+
+=== fold 2 park_kd-70pct-finetune: start l1, KD + gamma_P L_AM, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 0.3370  KL 0.0449  extra 1.1312  val F1 0.8529  acc 0.9248  94.7s
+    ft epoch  2/20  CE 0.2778  KL 0.0159  extra 1.0893  val F1 0.8552  acc 0.9277  94.3s
+    ft epoch  3/20  CE 0.2670  KL 0.0142  extra 1.0687  val F1 0.8641  acc 0.9303  88.9s
+    ft epoch  4/20  CE 0.2666  KL 0.0138  extra 1.0573  val F1 0.8677  acc 0.9296  91.2s
+    ft epoch  5/20  CE 0.2668  KL 0.0136  extra 1.0502  val F1 0.8713  acc 0.9281  97.1s
+    ft epoch  6/20  CE 0.2684  KL 0.0136  extra 1.0446  val F1 0.8634  acc 0.9294  103.7s
+    ft epoch  7/20  CE 0.2645  KL 0.0136  extra 1.0436  val F1 0.8660  acc 0.9303  97.4s
+    ft epoch  8/20  CE 0.2687  KL 0.0135  extra 1.0414  val F1 0.8677  acc 0.9295  94.0s
+    ft epoch  9/20  CE 0.2671  KL 0.0134  extra 1.0388  val F1 0.8629  acc 0.9302  99.9s
+    ft epoch 10/20  CE 0.2706  KL 0.0134  extra 1.0367  val F1 0.8626  acc 0.9298  91.6s
+    ft epoch 11/20  CE 0.2695  KL 0.0134  extra 1.0336  val F1 0.8731  acc 0.9331  96.3s
+    ft epoch 12/20  CE 0.2681  KL 0.0135  extra 1.0314  val F1 0.8605  acc 0.9261  94.4s
+    ft epoch 13/20  CE 0.2665  KL 0.0133  extra 1.0298  val F1 0.8575  acc 0.9277  99.3s
+    ft epoch 14/20  CE 0.2675  KL 0.0132  extra 1.0277  val F1 0.8549  acc 0.9299  93.0s
+    ft epoch 15/20  CE 0.2671  KL 0.0133  extra 1.0270  val F1 0.8614  acc 0.9296  97.0s
+    ft epoch 16/20  CE 0.2642  KL 0.0132  extra 1.0232  val F1 0.8548  acc 0.9294  99.5s
+    ft epoch 17/20  CE 0.2689  KL 0.0130  extra 1.0192  val F1 0.8480  acc 0.9257  99.9s
+    ft epoch 18/20  CE 0.2684  KL 0.0130  extra 1.0185  val F1 0.8375  acc 0.9265  104.4s
+    ft epoch 19/20  CE 0.2682  KL 0.0127  extra 1.0178  val F1 0.8455  acc 0.9288  110.3s
+    ft epoch 20/20  CE 0.2684  KL 0.0126  extra 1.0135  val F1 0.8247  acc 0.9248  105.8s
+  park_kd-70pct-finetune           LCI general 0.7829, older 0.7759, inner val 0.8337; acc general 0.9055, older 0.7853; n_nonzero 17365; 147 s
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  l1-90pct-no_finetune             LCI general 0.1473, older 0.1193, inner val 0.1860; acc general 0.0369, older 0.0296; n_nonzero 6821; 146 s
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  snip-90pct-no_finetune           LCI general 0.0590, older 0.0443, inner val 0.0292; acc general 0.1437, older 0.1855; n_nonzero 6821; 147 s
+
+=== fold 2 l1-90pct-finetune: start l1, CE, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 1.5530  val F1 0.6240  acc 0.8093  3.2s
+    ft epoch  2/20  CE 0.8731  val F1 0.7416  acc 0.8947  3.3s
+    ft epoch  3/20  CE 0.5872  val F1 0.7650  acc 0.8952  3.4s
+    ft epoch  4/20  CE 0.4683  val F1 0.7779  acc 0.9081  3.2s
+    ft epoch  5/20  CE 0.4156  val F1 0.8018  acc 0.9105  3.2s
+    ft epoch  6/20  CE 0.3875  val F1 0.8051  acc 0.9147  3.2s
+    ft epoch  7/20  CE 0.3694  val F1 0.8164  acc 0.9162  3.2s
+    ft epoch  8/20  CE 0.3595  val F1 0.8278  acc 0.9200  3.2s
+    ft epoch  9/20  CE 0.3474  val F1 0.8227  acc 0.9206  3.1s
+    ft epoch 10/20  CE 0.3412  val F1 0.8250  acc 0.9214  3.1s
+    ft epoch 11/20  CE 0.3362  val F1 0.8381  acc 0.9229  3.3s
+    ft epoch 12/20  CE 0.3292  val F1 0.8356  acc 0.9197  3.2s
+    ft epoch 13/20  CE 0.3228  val F1 0.8466  acc 0.9237  3.1s
+    ft epoch 14/20  CE 0.3188  val F1 0.8414  acc 0.9234  3.2s
+    ft epoch 15/20  CE 0.3125  val F1 0.8427  acc 0.9241  3.2s
+    ft epoch 16/20  CE 0.3102  val F1 0.8275  acc 0.9222  3.3s
+    ft epoch 17/20  CE 0.3104  val F1 0.8386  acc 0.9235  3.2s
+    ft epoch 18/20  CE 0.3062  val F1 0.8334  acc 0.9215  3.1s
+    ft epoch 19/20  CE 0.3036  val F1 0.8439  acc 0.9234  3.3s
+    ft epoch 20/20  CE 0.3026  val F1 0.8427  acc 0.9249  3.2s
+  l1-90pct-finetune                LCI general 0.7981, older 0.7268, inner val 0.7172; acc general 0.8766, older 0.6784; n_nonzero 6821; 135 s
+
+=== fold 2 l1_kd-90pct-finetune: start l1, KD, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 1.6148  KL 0.6490  val F1 0.5577  acc 0.8557  3.4s
+    ft epoch  2/20  CE 1.1438  KL 0.2300  val F1 0.6080  acc 0.9019  3.4s
+    ft epoch  3/20  CE 0.8799  KL 0.0924  val F1 0.6941  acc 0.9120  3.3s
+    ft epoch  4/20  CE 0.6829  KL 0.0529  val F1 0.7581  acc 0.9164  3.4s
+    ft epoch  5/20  CE 0.5316  KL 0.0391  val F1 0.8130  acc 0.9162  3.5s
+    ft epoch  6/20  CE 0.4619  KL 0.0329  val F1 0.8112  acc 0.9204  3.3s
+    ft epoch  7/20  CE 0.4226  KL 0.0294  val F1 0.7971  acc 0.9080  3.4s
+    ft epoch  8/20  CE 0.4021  KL 0.0270  val F1 0.8223  acc 0.9210  3.5s
+    ft epoch  9/20  CE 0.3827  KL 0.0254  val F1 0.8141  acc 0.9203  3.5s
+    ft epoch 10/20  CE 0.3736  KL 0.0240  val F1 0.8185  acc 0.9220  3.9s
+    ft epoch 11/20  CE 0.3618  KL 0.0228  val F1 0.8316  acc 0.9238  3.5s
+    ft epoch 12/20  CE 0.3524  KL 0.0222  val F1 0.8283  acc 0.9188  3.4s
+    ft epoch 13/20  CE 0.3445  KL 0.0213  val F1 0.8377  acc 0.9237  3.4s
+    ft epoch 14/20  CE 0.3373  KL 0.0204  val F1 0.8414  acc 0.9261  3.4s
+    ft epoch 15/20  CE 0.3311  KL 0.0199  val F1 0.8410  acc 0.9271  3.4s
+    ft epoch 16/20  CE 0.3282  KL 0.0194  val F1 0.8384  acc 0.9260  3.2s
+    ft epoch 17/20  CE 0.3262  KL 0.0188  val F1 0.8354  acc 0.9238  3.4s
+    ft epoch 18/20  CE 0.3214  KL 0.0184  val F1 0.8389  acc 0.9246  3.6s
+    ft epoch 19/20  CE 0.3203  KL 0.0180  val F1 0.8518  acc 0.9266  3.4s
+    ft epoch 20/20  CE 0.3174  KL 0.0175  val F1 0.8478  acc 0.9269  3.5s
+  l1_kd-90pct-finetune             LCI general 0.7746, older 0.7286, inner val 0.7462; acc general 0.8926, older 0.7271; n_nonzero 6821; 136 s
+
+=== fold 2 snip-90pct-finetune: start snip, CE, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 1.6572  val F1 0.5044  acc 0.6060  3.3s
+    ft epoch  2/20  CE 1.1426  val F1 0.6208  acc 0.8242  3.3s
+    ft epoch  3/20  CE 0.7763  val F1 0.2215  acc 0.6481  3.2s
+    ft epoch  4/20  CE 0.6077  val F1 0.6136  acc 0.8369  3.3s
+    ft epoch  5/20  CE 0.5204  val F1 0.7355  acc 0.8885  3.3s
+    ft epoch  6/20  CE 0.4705  val F1 0.6938  acc 0.8569  3.2s
+    ft epoch  7/20  CE 0.4372  val F1 0.7356  acc 0.8851  3.2s
+    ft epoch  8/20  CE 0.4147  val F1 0.6100  acc 0.8302  3.4s
+    ft epoch  9/20  CE 0.3938  val F1 0.5827  acc 0.7075  3.3s
+    ft epoch 10/20  CE 0.3830  val F1 0.7172  acc 0.8731  3.2s
+    ft epoch 11/20  CE 0.3741  val F1 0.7634  acc 0.8938  3.3s
+    ft epoch 12/20  CE 0.3644  val F1 0.7701  acc 0.8963  3.4s
+    ft epoch 13/20  CE 0.3550  val F1 0.7591  acc 0.8898  3.3s
+    ft epoch 14/20  CE 0.3500  val F1 0.7989  acc 0.9104  3.3s
+    ft epoch 15/20  CE 0.3434  val F1 0.1106  acc 0.1850  3.1s
+    ft epoch 16/20  CE 0.3411  val F1 0.7832  acc 0.8984  3.5s
+    ft epoch 17/20  CE 0.3358  val F1 0.8029  acc 0.9081  3.3s
+    ft epoch 18/20  CE 0.3315  val F1 0.7843  acc 0.8996  3.4s
+    ft epoch 19/20  CE 0.3307  val F1 0.7871  acc 0.9013  3.3s
+    ft epoch 20/20  CE 0.3263  val F1 0.8073  acc 0.9122  3.2s
+  snip-90pct-finetune              LCI general 0.5987, older 0.6202, inner val 0.6265; acc general 0.8701, older 0.6870; n_nonzero 6821; 132 s
+
+=== fold 2 snip_kd-90pct-finetune: start snip, KD, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 1.7357  KL 0.7230  val F1 0.2581  acc 0.6927  3.5s
+    ft epoch  2/20  CE 1.4805  KL 0.4247  val F1 0.1528  acc 0.5953  3.4s
+    ft epoch  3/20  CE 1.0339  KL 0.2202  val F1 0.4001  acc 0.7530  3.4s
+    ft epoch  4/20  CE 0.8485  KL 0.1256  val F1 0.3547  acc 0.7217  3.5s
+    ft epoch  5/20  CE 0.7527  KL 0.0812  val F1 0.5283  acc 0.8326  3.5s
+    ft epoch  6/20  CE 0.6779  KL 0.0606  val F1 0.6895  acc 0.8745  3.7s
+    ft epoch  7/20  CE 0.5946  KL 0.0491  val F1 0.2987  acc 0.6940  3.5s
+    ft epoch  8/20  CE 0.5271  KL 0.0415  val F1 0.1065  acc 0.1255  3.4s
+    ft epoch  9/20  CE 0.4802  KL 0.0361  val F1 0.1758  acc 0.1954  3.5s
+    ft epoch 10/20  CE 0.4531  KL 0.0326  val F1 0.7077  acc 0.8740  3.4s
+    ft epoch 11/20  CE 0.4369  KL 0.0303  val F1 0.2887  acc 0.3090  3.5s
+    ft epoch 12/20  CE 0.4184  KL 0.0287  val F1 0.2413  acc 0.3232  3.5s
+    ft epoch 13/20  CE 0.4025  KL 0.0270  val F1 0.7428  acc 0.8874  3.4s
+    ft epoch 14/20  CE 0.3924  KL 0.0254  val F1 0.7410  acc 0.8793  3.4s
+    ft epoch 15/20  CE 0.3806  KL 0.0247  val F1 0.2267  acc 0.2908  3.3s
+    ft epoch 16/20  CE 0.3729  KL 0.0237  val F1 0.7576  acc 0.9062  3.3s
+    ft epoch 17/20  CE 0.3644  KL 0.0228  val F1 0.1223  acc 0.1953  3.5s
+    ft epoch 18/20  CE 0.3562  KL 0.0222  val F1 0.4055  acc 0.7647  3.4s
+    ft epoch 19/20  CE 0.3538  KL 0.0217  val F1 0.1053  acc 0.1941  3.3s
+    ft epoch 20/20  CE 0.3485  KL 0.0208  val F1 0.6839  acc 0.9000  3.3s
+  snip_kd-90pct-finetune           LCI general 0.5009, older 0.5084, inner val 0.5292; acc general 0.8848, older 0.7687; n_nonzero 6821; 134 s
+
+=== fold 2 park-90pct-finetune: start l1, CE + gamma_P L_AM, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 1.5619  extra 1.3109  val F1 0.4139  acc 0.6753  99.3s
+    ft epoch  2/20  CE 0.8899  extra 1.1932  val F1 0.4303  acc 0.7291  100.8s
+    ft epoch  3/20  CE 0.6049  extra 1.1128  val F1 0.4670  acc 0.7955  100.5s
+    ft epoch  4/20  CE 0.4736  extra 1.0711  val F1 0.4914  acc 0.7977  97.9s
+    ft epoch  5/20  CE 0.4130  extra 1.0523  val F1 0.4662  acc 0.7816  98.2s
+    ft epoch  6/20  CE 0.3838  extra 1.0423  val F1 0.4546  acc 0.7816  98.4s
+    ft epoch  7/20  CE 0.3662  extra 1.0375  val F1 0.4430  acc 0.7786  108.4s
+    ft epoch  8/20  CE 0.3555  extra 1.0327  val F1 0.4512  acc 0.7793  109.8s
+    ft epoch  9/20  CE 0.3451  extra 1.0289  val F1 0.4582  acc 0.7799  105.0s
+    ft epoch 10/20  CE 0.3388  extra 1.0266  val F1 0.4475  acc 0.7871  103.9s
+    ft epoch 11/20  CE 0.3347  extra 1.0240  val F1 0.4499  acc 0.7794  102.0s
+    ft epoch 12/20  CE 0.3288  extra 1.0207  val F1 0.4330  acc 0.7779  99.4s
+    ft epoch 13/20  CE 0.3225  extra 1.0184  val F1 0.4420  acc 0.7799  101.1s
+    ft epoch 14/20  CE 0.3184  extra 1.0164  val F1 0.4456  acc 0.7850  100.3s
+    ft epoch 15/20  CE 0.3149  extra 1.0152  val F1 0.4455  acc 0.7896  99.2s
+    ft epoch 16/20  CE 0.3139  extra 1.0134  val F1 0.4427  acc 0.7944  103.3s
+    ft epoch 17/20  CE 0.3122  extra 1.0107  val F1 0.4485  acc 0.7887  112.8s
+    ft epoch 18/20  CE 0.3090  extra 1.0095  val F1 0.4474  acc 0.7871  105.6s
+    ft epoch 19/20  CE 0.3074  extra 1.0080  val F1 0.4440  acc 0.7875  104.4s
+    ft epoch 20/20  CE 0.3066  extra 1.0052  val F1 0.4407  acc 0.7917  105.7s
+  park-90pct-finetune              LCI general 0.6676, older 0.6670, inner val 0.6464; acc general 0.7176, older 0.6106; n_nonzero 6821; 148 s
+
+=== fold 2 park_kd-90pct-finetune: start l1, KD + gamma_P L_AM, E_ft 20, lr 0.0001
+    ft epoch  1/20  CE 1.6152  KL 0.6531  extra 1.3174  val F1 0.3709  acc 0.7768  100.1s
+    ft epoch  2/20  CE 1.1526  KL 0.2340  extra 1.1928  val F1 0.2811  acc 0.6782  104.1s
+    ft epoch  3/20  CE 0.8932  KL 0.0946  extra 1.1316  val F1 0.2777  acc 0.6719  99.9s
+    ft epoch  4/20  CE 0.7041  KL 0.0538  extra 1.1016  val F1 0.3500  acc 0.7664  100.8s
+    ft epoch  5/20  CE 0.5513  KL 0.0394  extra 1.0851  val F1 0.3414  acc 0.7595  99.6s
+    ft epoch  6/20  CE 0.4751  KL 0.0329  extra 1.0703  val F1 0.2784  acc 0.6726  100.1s
+    ft epoch  7/20  CE 0.4314  KL 0.0293  extra 1.0587  val F1 0.2734  acc 0.6622  103.5s
+    ft epoch  8/20  CE 0.4082  KL 0.0269  extra 1.0516  val F1 0.2644  acc 0.6412  101.8s
+    ft epoch  9/20  CE 0.3902  KL 0.0253  extra 1.0458  val F1 0.2653  acc 0.6435  103.1s
+    ft epoch 10/20  CE 0.3793  KL 0.0240  extra 1.0407  val F1 0.2609  acc 0.6327  103.2s
+    ft epoch 11/20  CE 0.3667  KL 0.0228  extra 1.0369  val F1 0.2172  acc 0.5022  103.2s
+    ft epoch 12/20  CE 0.3569  KL 0.0223  extra 1.0328  val F1 0.2706  acc 0.6557  98.6s
+    ft epoch 13/20  CE 0.3517  KL 0.0214  extra 1.0291  val F1 0.2751  acc 0.6654  98.8s
+    ft epoch 14/20  CE 0.3435  KL 0.0205  extra 1.0262  val F1 0.2728  acc 0.6607  99.3s
+    ft epoch 15/20  CE 0.3379  KL 0.0201  extra 1.0237  val F1 0.3144  acc 0.7278  98.9s
+    ft epoch 16/20  CE 0.3347  KL 0.0197  extra 1.0201  val F1 0.3090  acc 0.7236  102.8s
+    ft epoch 17/20  CE 0.3324  KL 0.0191  extra 1.0172  val F1 0.3331  acc 0.7491  105.1s
+    ft epoch 18/20  CE 0.3282  KL 0.0188  extra 1.0151  val F1 0.2794  acc 0.6736  103.7s
+    ft epoch 19/20  CE 0.3274  KL 0.0183  extra 1.0118  val F1 0.3333  acc 0.7492  103.2s
+    ft epoch 20/20  CE 0.3240  KL 0.0178  extra 1.0086  val F1 0.2080  acc 0.4729  105.1s
+  park_kd-90pct-finetune           LCI general 0.6722, older 0.6348, inner val 0.7113; acc general 0.5620, older 0.5733; n_nonzero 6821; 130 s
+
+acceptance checks: {
+ "n_nonzero_identical_per_level": {
+  "30%": true,
+  "50%": true,
+  "70%": true,
+  "90%": true
+ },
+ "head_unpruned_all": false,
+ "epochs_run_equal_e_ft": true,
+ "ptq8_rho_by_group": {
+  "general": 0.9997774546341558,
+  "inner_val": 0.9997933618500627,
+  "older": 0.9997752796372826
+ },
+ "ptq8_rho_above_0.99_all_groups": true,
+ "ptq8_accuracy_delta_pooled_by_group": {
+  "inner_val": -0.0004060089321964444,
+  "general": 0.0,
+  "older": -5.746135723716517e-05
+ },
+ "ptq8_accuracy_within_0.5pt": true,
+ "ptq_tulla8_rho_by_group": {
+  "general": 0.9978791632435577,
+  "inner_val": 0.9979530358295575,
+  "older": 0.9977570588287493
+ },
+ "ptq_tulla8_rho_above_0.99_all_groups": true,
+ "ptq_tulla8_accuracy_delta_pooled_by_group": {
+  "inner_val": -0.00027067262146429627,
+  "general": -0.0011957431543704322,
+  "older": -0.0014365339309313496
+ },
+ "ptq_tulla8_accuracy_within_0.5pt": true,
+ "n_skipped_by_model": {
+  "original": 0,
+  "noise_shap_seed1": 0,
+  "noise_shap_seed2": 0,
+  "noise_retrain_seed1": 0,
+  "noise_retrain_seed2": 0,
+  "noise_retrain_seed3": 0,
+  "ptq8": 0,
+  "ptq4": 0,
+  "ptq_tulla8": 0,
+  "ptq_tulla4": 0,
+  "l1-30pct-no_finetune": 0,
+  "snip-30pct-no_finetune": 0,
+  "l1-30pct-finetune": 0,
+  "l1_kd-30pct-finetune": 0,
+  "snip-30pct-finetune": 0,
+  "snip_kd-30pct-finetune": 0,
+  "l1-50pct-no_finetune": 0,
+  "snip-50pct-no_finetune": 0,
+  "l1-50pct-finetune": 0,
+  "l1_kd-50pct-finetune": 0,
+  "snip-50pct-finetune": 0,
+  "snip_kd-50pct-finetune": 0,
+  "l1-70pct-no_finetune": 0,
+  "snip-70pct-no_finetune": 0,
+  "l1-70pct-finetune": 0,
+  "l1_kd-70pct-finetune": 0,
+  "snip-70pct-finetune": 0,
+  "snip_kd-70pct-finetune": 0,
+  "park-70pct-finetune": 0,
+  "park_kd-70pct-finetune": 0,
+  "l1-90pct-no_finetune": 0,
+  "snip-90pct-no_finetune": 0,
+  "l1-90pct-finetune": 0,
+  "l1_kd-90pct-finetune": 0,
+  "snip-90pct-finetune": 0,
+  "snip_kd-90pct-finetune": 0,
+  "park-90pct-finetune": 0,
+  "park_kd-90pct-finetune": 0
+ }
+}
+fold 2 done in 13571.9 s
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-compression-grid\har-grid-tinyhar-fold2-uni-2080-per-subject-metrics.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-compression-grid\har-grid-tinyhar-fold2-uni-2080-per-subject-class-lci.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-compression-grid\har-grid-tinyhar-fold2-uni-2080-per-group-class-lci.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-compression-grid\har-grid-tinyhar-fold2-uni-2080-models.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-compression-grid\har-grid-tinyhar-fold2-uni-2080-finetune-history.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-compression-grid\har-grid-tinyhar-fold2-uni-2080-shap-48-segments.npz
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-compression-grid\har-grid-tinyhar-fold2-uni-2080-config.json
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-compression-grid\logs\har-grid-tinyhar-fold2-uni-2080-20261121-224347.log
