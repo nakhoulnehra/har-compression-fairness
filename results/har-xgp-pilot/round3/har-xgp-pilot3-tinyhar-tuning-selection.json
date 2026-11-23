@@ -1,0 +1,44 @@
+{
+ "selected": {
+  "50pct": {
+   "no_finetune": {
+    "beta": 0.5,
+    "r": null
+   },
+   "finetune": {
+    "beta": 0.3,
+    "r": 0.25
+   }
+  },
+  "70pct": {
+   "no_finetune": {
+    "beta": 0.1,
+    "r": null
+   },
+   "finetune": {
+    "beta": 0.1,
+    "r": 0.25
+   }
+  },
+  "90pct": {
+   "no_finetune": {
+    "beta": 0.1,
+    "r": null
+   },
+   "finetune": {
+    "beta": 0.1,
+    "r": 0.5
+   }
+  }
+ },
+ "rule": "Phase 1, per scenario and level: B_set = the highest mean F1 on that window set among the scenario's baselines (no_finetune: l1, snip, l1_recon; finetune: l1, l1_kd, snip_kd, l1_kdaug at both r). Eligible configuration: mean F1_normal >= B_normal - 1 pt and mean F1_older_like >= B_older_like - 1 pt. Selected = the eligible configuration with the highest mean FA-LCI_val (mean over folds 0, 1 and seeds of each run's min(LCI_normal, LCI_older_like)); ties within 0.005 -> smaller beta, then smaller r. None eligible -> no configuration at that level (flagged, no fallback), and phase 2 skips it.",
+ "disclosure": "The round-3 design was informed by the Step 9A test-set analysis (posture-class drift: without fine-tuning, older adults' LCI fell more in standing at 70%, sitting at 90% and lying at 50%; the accuracy gap widens at 90%). All round-3 tuning and selection use HARTH inner-validation windows of folds 0 and 1 and their older-like copies only; HAR70+ and the folds' test subjects are never loaded.",
+ "folds": [
+  0,
+  1
+ ],
+ "analyzed_at": "2026-11-23T12:20:33+02:00",
+ "smoke": false,
+ "git_commit": "6f5cac038b74342a5ff710c0638a2c5ae49b518d",
+ "git_dirty": false
+}
