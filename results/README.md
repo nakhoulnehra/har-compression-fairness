@@ -373,6 +373,17 @@ XGP pilot round 3: the final, validation-only design of XGP, made after Step 9A 
 - What: the same table for fold 1 (S014, S018, S024).
 - Key numbers: 6,163 windows; 300 explain windows; rotation angles −15.0 to 15.0°; 459 calibration windows (70 / 70 / 64 / 45 / 70 / 70 / 70); 5,704 F1 windows. Stairs in the F1 set: 42 up, 42 down (explain only).
 
+### har-xgp-pilot3-tinyhar-fold1-tuning-nakhoul-3050-{runs, per-subject-lci, finetune-history, prune-steps}.csv, logs/
+- What: phase 1 (tuning) on fold 1, nakhoul-3050, `--curve-seeds 0`; τ_1 = 0.583 and ceiling 0.892 from nakhoul-3050's noise floor. Inner-val windows (S014, S018, S024), 300 normal + 300 older-like explain windows.
+- Status: complete, 135 / 135 planned runs (204 rows with the epoch-2 / 5 curve rows). It ran in 3 sessions with `--resume` (2026-11-22 15:20 → 2026-11-23 10:21). The selection rule runs later with `--analyze --phase tuning`, after fold 0; the numbers below are fold-1 descriptives only.
+- Key numbers (FA-LCI_val, mean of seeds 0–2, fine-tuned at 20 epochs): l1_kd / best l1_kdaug / best xgp_ft:
+  - 50%: 0.823 / 0.834 / **0.842** (β 0.1, r 0.5);
+  - 70%: 0.807 / 0.801 / **0.837** (β 0.1, r 0.5);
+  - 90%: 0.566 / 0.577 / **0.671** (β 0.5, r 0.25); β 0.1, r 0.5 gives 0.664.
+  - snip_kd: 0.764 / 0.669 / 0.271; plain l1 (CE): 0.767 / 0.742 / 0.527.
+  - Older-like F1 at 90%: l1_kd 0.634; xgp_ft 0.69–0.70, except β 0.3, r 0.25 at 0.603.
+- Key numbers without fine-tuning (FA-LCI_val), l1 / l1_recon / best xgp (mean of 3 seeds): 50% 0.497 / 0.819 / 0.867; 70% 0.423 / 0.720 / 0.730 (β 0.1); 90% 0.243 / 0.413 / 0.475 (β 0.5). snip: 0.412 / 0.258 / 0.156.
+
 ## har-xgp-pilot-smoke/round3/
 **Git-ignored, local only: a pipeline check, not results.** The full chain ran with `--smoke` on 2026-11-22 (LenovoP330-01, CPU): prepare, tuning on folds 0 and 1 (`--curve-seeds 0`), tuning analysis, ablation on folds 0 and 1, final analysis. It was rerun after the rotation amendment. Phase 1 takes ≈ 10–13 s per fold and phase 2 ≈ 14 s. In the rerun, the no-fine-tuning scenario had no eligible configuration, so the no-fallback path (skip, with the reason recorded in the decision) was exercised as well.
 

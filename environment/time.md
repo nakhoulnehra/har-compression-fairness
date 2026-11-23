@@ -287,3 +287,16 @@ Estimate of the real runs per fold, from pilot round 2's GPU timings (SHAP ≈ 8
 | Phase 2: 4 starts × 3 seeds × 3 levels + 7 fine-tuned ablations × 3 seeds × 3 levels (epoch 20 only) | 36 + 63 | **≈ 3.5 h** |
 
 Phase 1 runs with `--curve-seeds 0` (decided 2026-11-22), so ≈ 6.6 h per fold. The rotation adds well under a second per window set. Folds run in parallel (fold 0 on uni-2080, fold 1 on nakhoul-3050), so wall clock ≈ 6.6 h + 3.5 h on the slower machine. Not measured yet; replace with the real times after the runs.
+
+### Fold 1 phase 1 on nakhoul-3050 (RTX 3050 Ti Laptop, cuda, 2026-11-22/23), complete
+- Complete in 3 sessions, **≈ 10 h 08 min wall clock** in total: 15:20–20:07 (4 h 47 min, throttled, stopped by us), 21:11–01:50 (4 h 38 min, stopped by the overnight 01:50 cutoff), 09:38–10:21 (43 min, `phase tuning done in 2607.2 s`). All three used the same command; the second and third added `--resume`.
+- Summed component time over the 135 runs: SHAP 313 min, fine-tuning 255 min, starts (importance + reconstruction steps) 34 min.
+- Not throttled (sessions 2 and 3: GPU at 75–79 °C, about 1,600 MHz): 20-epoch fine-tuning 66–78 s (CE / KD) and 119–151 s (kdaug / xgp_ft); SHAP ≈ 92–97 s per assessment (300 + 300 windows); xgp start ≈ 57 s. The wall clock matched the summed per-run components (ratio 1.00–1.08).
+- With a cool GPU throughout, the whole phase would take ≈ 7.5 h.
+
+Session 1 details (written at the stop):
+- `python -m har.run_xgp_pilot3 --prepare --smoke` + `--phase tuning --folds 1 --smoke --device cuda --machine-name nakhoul-3050`: **37 s** for the tuning smoke.
+- `python -m har.run_xgp_pilot3 --phase tuning --folds 1 --curve-seeds 0 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050`: started 15:20:42, **stopped by us at 20:07** (GPU heat), 4 h 47 min. Done: level 50% and part of 70%; 18 / 30 no-fine-tuning starts and 34 / 99 fine-tuned runs (≈ 40% of phase 1). Continue with `--resume`.
+- Original-model SHAP (300 + 300 windows): 82 s, the same as on uni-2080.
+- Thermal throttling for the whole run: GPU at 88–92 °C (driver target 87 °C), SM clock 645–735 MHz of 2,100 MHz. Fine-tuning epochs took 10–13 s (≈ 200–260 s per 20-epoch run), about 3× the round-2 KD rate on this machine.
+- Projected phase 1 on this laptop at this rate: ≈ 12 h (≈ 7–8 h left at the stop). Reported per-model times from this machine are throttled; use uni-2080's numbers for the paper's cost comparison.

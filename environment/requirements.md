@@ -282,8 +282,9 @@ python -m har.run_xgp_pilot3 --prepare                                 # -> resu
 # GPU runs (to do): fold 0 on uni-2080, fold 1 on nakhoul-3050; tau_k and the ceiling come from nakhoul-3050's noise floor (in git)
 python -m har.run_xgp_pilot3 --phase tuning --folds 0 --smoke --device cuda --machine-name uni-2080
 python -m har.run_xgp_pilot3 --phase tuning --folds 0 --curve-seeds 0 --device cuda --machine-name uni-2080 --noise-floor-machine nakhoul-3050
-python -m har.run_xgp_pilot3 --phase tuning --folds 1 --smoke --device cuda --machine-name nakhoul-3050
-python -m har.run_xgp_pilot3 --phase tuning --folds 1 --curve-seeds 0 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050
+python -m har.run_xgp_pilot3 --prepare --smoke                         # on nakhoul-3050 first (the smoke pre-registration is local), 2026-11-22
+python -m har.run_xgp_pilot3 --phase tuning --folds 1 --smoke --device cuda --machine-name nakhoul-3050                                       # DONE 2026-11-22, 37 s
+python -m har.run_xgp_pilot3 --phase tuning --folds 1 --curve-seeds 0 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050   # DONE 2026-11-23 (3 sessions, the 2nd and 3rd with --resume)
 python -m har.run_xgp_pilot3 --analyze --phase tuning                  # after both folds' files are merged
 python -m har.run_xgp_pilot3 --phase ablation --folds 0 --device cuda --machine-name uni-2080 --noise-floor-machine nakhoul-3050
 python -m har.run_xgp_pilot3 --phase ablation --folds 1 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050

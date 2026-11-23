@@ -1,0 +1,1493 @@
+=== XGP pilot round 3, fold 1, phase tuning | machine nakhoul-3050 | device cuda NVIDIA GeForce RTX 3050 Ti Laptop GPU | torch 2.7.1+cu118 | started 2026-11-22T21:11:52+02:00 | C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\har\run_xgp_pilot3.py --phase tuning --folds 1 --curve-seeds 0 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050 --resume | resuming, 79 runs done
+    SHAP cache hit har-xgp-pilot3-fold1-original-d2b99893a9677321.npz
+fold 1: train 55552, F1 windows 5704 + 5704 older-like, explain 300 + 300, calibration {'normal': 459, 'older_like': 459} (['S014', 'S018', 'S024']); tau_k 0.5827 (C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-noise-floor\har-noise-floor-tinyhar-fold1-nakhoul-3050-tau.csv), ceiling 0.8924; original SHAP 0.0 s
+
+######## fold 1, phase tuning, level 50%
+
+######## fold 1, phase tuning, level 70%
+
+=== fold 1 ft-l1_kd-70pct-seed0: start l1, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2555  KL 0.0381  val F1 0.7242  acc 0.9036  3.5s
+    ft epoch  2/20  CE 0.2002  KL 0.0151  val F1 0.7276  acc 0.9036  3.1s
+    curve epoch 2: FA-LCI 0.7598, F1 0.7276 / 0.6536
+    ft epoch  3/20  CE 0.1874  KL 0.0133  val F1 0.7414  acc 0.9078  3.3s
+    ft epoch  4/20  CE 0.1857  KL 0.0126  val F1 0.7460  acc 0.9102  3.3s
+    ft epoch  5/20  CE 0.1797  KL 0.0120  val F1 0.7426  acc 0.9090  3.3s
+    curve epoch 5: FA-LCI 0.7886, F1 0.7426 / 0.6585
+    ft epoch  6/20  CE 0.1771  KL 0.0117  val F1 0.7439  acc 0.9106  3.3s
+    ft epoch  7/20  CE 0.1739  KL 0.0114  val F1 0.7454  acc 0.9102  3.3s
+    ft epoch  8/20  CE 0.1740  KL 0.0111  val F1 0.7451  acc 0.9108  3.4s
+    ft epoch  9/20  CE 0.1697  KL 0.0108  val F1 0.7439  acc 0.9099  3.3s
+    ft epoch 10/20  CE 0.1727  KL 0.0106  val F1 0.7536  acc 0.9127  3.3s
+    ft epoch 11/20  CE 0.1709  KL 0.0103  val F1 0.7495  acc 0.9122  3.3s
+    ft epoch 12/20  CE 0.1694  KL 0.0102  val F1 0.7482  acc 0.9111  3.4s
+    ft epoch 13/20  CE 0.1677  KL 0.0101  val F1 0.7473  acc 0.9115  3.4s
+    ft epoch 14/20  CE 0.1692  KL 0.0100  val F1 0.7511  acc 0.9127  3.4s
+    ft epoch 15/20  CE 0.1672  KL 0.0098  val F1 0.7478  acc 0.9108  3.4s
+    ft epoch 16/20  CE 0.1667  KL 0.0096  val F1 0.7513  acc 0.9130  3.7s
+    ft epoch 17/20  CE 0.1669  KL 0.0097  val F1 0.7506  acc 0.9120  3.9s
+    ft epoch 18/20  CE 0.1668  KL 0.0096  val F1 0.7493  acc 0.9116  3.7s
+    ft epoch 19/20  CE 0.1639  KL 0.0095  val F1 0.7541  acc 0.9116  3.6s
+    ft epoch 20/20  CE 0.1636  KL 0.0095  val F1 0.7505  acc 0.9122  3.7s
+    -> FA-LCI 0.8236 (normal 0.8236, older-like 0.8459); F1 0.7505 / 0.6832; 68.4 s
+
+=== fold 1 ft-snip_kd-70pct-seed0: start snip, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 0.7791  KL 0.3255  val F1 0.6752  acc 0.9027  3.3s
+    ft epoch  2/20  CE 0.3789  KL 0.0730  val F1 0.7134  acc 0.9074  3.4s
+    curve epoch 2: FA-LCI 0.5827, F1 0.7134 / 0.6158
+    ft epoch  3/20  CE 0.2992  KL 0.0358  val F1 0.7206  acc 0.9092  3.4s
+    ft epoch  4/20  CE 0.2672  KL 0.0257  val F1 0.7287  acc 0.9118  3.3s
+    ft epoch  5/20  CE 0.2512  KL 0.0218  val F1 0.7118  acc 0.9050  3.3s
+    curve epoch 5: FA-LCI 0.6205, F1 0.7118 / 0.6162
+    ft epoch  6/20  CE 0.2365  KL 0.0197  val F1 0.7312  acc 0.9108  3.3s
+    ft epoch  7/20  CE 0.2231  KL 0.0183  val F1 0.7286  acc 0.9087  3.3s
+    ft epoch  8/20  CE 0.2196  KL 0.0172  val F1 0.7294  acc 0.9099  3.3s
+    ft epoch  9/20  CE 0.2129  KL 0.0163  val F1 0.7355  acc 0.9115  3.4s
+    ft epoch 10/20  CE 0.2115  KL 0.0158  val F1 0.7258  acc 0.9085  3.4s
+    ft epoch 11/20  CE 0.2044  KL 0.0149  val F1 0.7424  acc 0.9080  3.4s
+    ft epoch 12/20  CE 0.2005  KL 0.0147  val F1 0.7282  acc 0.9074  3.5s
+    ft epoch 13/20  CE 0.1995  KL 0.0144  val F1 0.7280  acc 0.9095  3.8s
+    ft epoch 14/20  CE 0.1988  KL 0.0139  val F1 0.7383  acc 0.9085  3.7s
+    ft epoch 15/20  CE 0.1964  KL 0.0136  val F1 0.7361  acc 0.9106  4.8s
+    ft epoch 16/20  CE 0.1943  KL 0.0132  val F1 0.7334  acc 0.9108  4.1s
+    ft epoch 17/20  CE 0.1934  KL 0.0132  val F1 0.7285  acc 0.9055  3.5s
+    ft epoch 18/20  CE 0.1894  KL 0.0128  val F1 0.7282  acc 0.9064  3.8s
+    ft epoch 19/20  CE 0.1869  KL 0.0126  val F1 0.7285  acc 0.9059  3.7s
+    ft epoch 20/20  CE 0.1868  KL 0.0125  val F1 0.7319  acc 0.9092  3.6s
+    -> FA-LCI 0.6634 (normal 0.6634, older-like 0.7039); F1 0.7319 / 0.6417; 71.4 s
+
+=== fold 1 ft-l1_kdaug(r=0.25)-70pct-seed0: start l1, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2822  KL 0.0367  DRO q [0.457, 0.543]  val F1 0.7249  acc 0.9043  6.1s
+    ft epoch  2/20  CE 0.2276  KL 0.0162  DRO q [0.416, 0.584]  val F1 0.7385  acc 0.9080  5.5s
+    curve epoch 2: FA-LCI 0.7532, F1 0.7385 / 0.6922
+    ft epoch  3/20  CE 0.2215  KL 0.0146  DRO q [0.38, 0.62]  val F1 0.7411  acc 0.9087  5.5s
+    ft epoch  4/20  CE 0.2141  KL 0.0137  DRO q [0.347, 0.653]  val F1 0.7442  acc 0.9094  5.6s
+    ft epoch  5/20  CE 0.2087  KL 0.0132  DRO q [0.316, 0.684]  val F1 0.7510  acc 0.9097  6.0s
+    curve epoch 5: FA-LCI 0.7857, F1 0.7510 / 0.6971
+    ft epoch  6/20  CE 0.2072  KL 0.0129  DRO q [0.289, 0.711]  val F1 0.7504  acc 0.9116  5.8s
+    ft epoch  7/20  CE 0.2040  KL 0.0126  DRO q [0.263, 0.737]  val F1 0.7493  acc 0.9127  5.8s
+    ft epoch  8/20  CE 0.2050  KL 0.0122  DRO q [0.24, 0.76]  val F1 0.7529  acc 0.9111  5.6s
+    ft epoch  9/20  CE 0.1994  KL 0.0122  DRO q [0.22, 0.78]  val F1 0.7521  acc 0.9127  5.8s
+    ft epoch 10/20  CE 0.1998  KL 0.0119  DRO q [0.201, 0.799]  val F1 0.7511  acc 0.9116  5.9s
+    ft epoch 11/20  CE 0.2003  KL 0.0116  DRO q [0.183, 0.817]  val F1 0.7504  acc 0.9132  6.4s
+    ft epoch 12/20  CE 0.1963  KL 0.0116  DRO q [0.167, 0.833]  val F1 0.7500  acc 0.9132  6.3s
+    ft epoch 13/20  CE 0.1979  KL 0.0115  DRO q [0.153, 0.847]  val F1 0.7498  acc 0.9132  5.7s
+    ft epoch 14/20  CE 0.1983  KL 0.0114  DRO q [0.141, 0.859]  val F1 0.7492  acc 0.9116  5.5s
+    ft epoch 15/20  CE 0.1939  KL 0.0113  DRO q [0.128, 0.872]  val F1 0.7489  acc 0.9127  5.6s
+    ft epoch 16/20  CE 0.1960  KL 0.0112  DRO q [0.118, 0.882]  val F1 0.7485  acc 0.9129  5.5s
+    ft epoch 17/20  CE 0.1946  KL 0.0112  DRO q [0.108, 0.892]  val F1 0.7553  acc 0.9129  5.5s
+    ft epoch 18/20  CE 0.1946  KL 0.0110  DRO q [0.099, 0.901]  val F1 0.7515  acc 0.9130  5.2s
+    ft epoch 19/20  CE 0.1933  KL 0.0110  DRO q [0.091, 0.909]  val F1 0.7502  acc 0.9104  5.1s
+    ft epoch 20/20  CE 0.1936  KL 0.0109  DRO q [0.084, 0.916]  val F1 0.7491  acc 0.9101  5.2s
+    -> FA-LCI 0.8156 (normal 0.8156, older-like 0.8174); F1 0.7491 / 0.7090; 113.6 s
+
+=== fold 1 ft-l1_kdaug(r=0.5)-70pct-seed0: start l1, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.3052  KL 0.0347  DRO q [0.446, 0.554]  val F1 0.7304  acc 0.9050  7.0s
+    ft epoch  2/20  CE 0.2543  KL 0.0161  DRO q [0.396, 0.604]  val F1 0.7411  acc 0.9071  6.3s
+    curve epoch 2: FA-LCI 0.7571, F1 0.7411 / 0.6833
+    ft epoch  3/20  CE 0.2426  KL 0.0145  DRO q [0.351, 0.649]  val F1 0.7539  acc 0.9108  6.8s
+    ft epoch  4/20  CE 0.2327  KL 0.0135  DRO q [0.309, 0.691]  val F1 0.7532  acc 0.9111  6.7s
+    ft epoch  5/20  CE 0.2265  KL 0.0131  DRO q [0.273, 0.727]  val F1 0.7486  acc 0.9108  6.7s
+    curve epoch 5: FA-LCI 0.7465, F1 0.7486 / 0.6894
+    ft epoch  6/20  CE 0.2256  KL 0.0127  DRO q [0.239, 0.761]  val F1 0.7564  acc 0.9134  6.7s
+    ft epoch  7/20  CE 0.2224  KL 0.0124  DRO q [0.211, 0.789]  val F1 0.7566  acc 0.9129  6.7s
+    ft epoch  8/20  CE 0.2184  KL 0.0120  DRO q [0.186, 0.814]  val F1 0.7544  acc 0.9125  6.8s
+    ft epoch  9/20  CE 0.2183  KL 0.0118  DRO q [0.164, 0.836]  val F1 0.7543  acc 0.9106  6.8s
+    ft epoch 10/20  CE 0.2188  KL 0.0117  DRO q [0.145, 0.855]  val F1 0.7531  acc 0.9115  6.7s
+    ft epoch 11/20  CE 0.2140  KL 0.0115  DRO q [0.128, 0.872]  val F1 0.7552  acc 0.9139  6.8s
+    ft epoch 12/20  CE 0.2131  KL 0.0115  DRO q [0.113, 0.887]  val F1 0.7535  acc 0.9125  6.9s
+    ft epoch 13/20  CE 0.2108  KL 0.0114  DRO q [0.099, 0.901]  val F1 0.7550  acc 0.9136  6.8s
+    ft epoch 14/20  CE 0.2115  KL 0.0113  DRO q [0.088, 0.912]  val F1 0.7558  acc 0.9108  7.2s
+    ft epoch 15/20  CE 0.2112  KL 0.0113  DRO q [0.078, 0.922]  val F1 0.7521  acc 0.9129  6.9s
+    ft epoch 16/20  CE 0.2092  KL 0.0111  DRO q [0.069, 0.931]  val F1 0.7546  acc 0.9115  6.9s
+    ft epoch 17/20  CE 0.2083  KL 0.0111  DRO q [0.061, 0.939]  val F1 0.7585  acc 0.9150  6.9s
+    ft epoch 18/20  CE 0.2096  KL 0.0110  DRO q [0.054, 0.946]  val F1 0.7572  acc 0.9143  6.9s
+    ft epoch 19/20  CE 0.2078  KL 0.0109  DRO q [0.048, 0.952]  val F1 0.7596  acc 0.9125  7.0s
+    ft epoch 20/20  CE 0.2069  KL 0.0108  DRO q [0.043, 0.957]  val F1 0.7561  acc 0.9141  7.0s
+    -> FA-LCI 0.7911 (normal 0.7911, older-like 0.8176); F1 0.7561 / 0.7033; 136.4 s
+
+=== fold 1 ft-xgp_ft(beta=0.1,r=0.25)-70pct-seed0: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2160  KL 0.0145  DRO q [0.461, 0.539]  val F1 0.7598  acc 0.9157  5.6s
+    ft epoch  2/20  CE 0.2039  KL 0.0116  DRO q [0.424, 0.576]  val F1 0.7616  acc 0.9160  5.6s
+    curve epoch 2: FA-LCI 0.8062, F1 0.7616 / 0.7112
+    ft epoch  3/20  CE 0.2023  KL 0.0113  DRO q [0.389, 0.611]  val F1 0.7596  acc 0.9150  5.6s
+    ft epoch  4/20  CE 0.1985  KL 0.0110  DRO q [0.358, 0.642]  val F1 0.7588  acc 0.9150  5.6s
+    ft epoch  5/20  CE 0.1959  KL 0.0108  DRO q [0.328, 0.672]  val F1 0.7605  acc 0.9153  5.6s
+    curve epoch 5: FA-LCI 0.8078, F1 0.7605 / 0.7049
+    ft epoch  6/20  CE 0.1962  KL 0.0108  DRO q [0.3, 0.7]  val F1 0.7556  acc 0.9141  5.7s
+    ft epoch  7/20  CE 0.1950  KL 0.0107  DRO q [0.273, 0.727]  val F1 0.7572  acc 0.9148  5.6s
+    ft epoch  8/20  CE 0.1952  KL 0.0105  DRO q [0.249, 0.751]  val F1 0.7566  acc 0.9141  5.6s
+    ft epoch  9/20  CE 0.1906  KL 0.0106  DRO q [0.228, 0.772]  val F1 0.7570  acc 0.9134  5.6s
+    ft epoch 10/20  CE 0.1910  KL 0.0104  DRO q [0.208, 0.792]  val F1 0.7564  acc 0.9130  5.7s
+    ft epoch 11/20  CE 0.1915  KL 0.0102  DRO q [0.189, 0.811]  val F1 0.7531  acc 0.9125  5.6s
+    ft epoch 12/20  CE 0.1888  KL 0.0103  DRO q [0.171, 0.829]  val F1 0.7573  acc 0.9143  5.7s
+    ft epoch 13/20  CE 0.1901  KL 0.0102  DRO q [0.156, 0.844]  val F1 0.7572  acc 0.9144  5.7s
+    ft epoch 14/20  CE 0.1901  KL 0.0102  DRO q [0.143, 0.857]  val F1 0.7577  acc 0.9141  5.8s
+    ft epoch 15/20  CE 0.1869  KL 0.0102  DRO q [0.129, 0.871]  val F1 0.7576  acc 0.9139  5.7s
+    ft epoch 16/20  CE 0.1883  KL 0.0102  DRO q [0.118, 0.882]  val F1 0.7584  acc 0.9146  5.7s
+    ft epoch 17/20  CE 0.1875  KL 0.0102  DRO q [0.108, 0.892]  val F1 0.7612  acc 0.9155  5.7s
+    ft epoch 18/20  CE 0.1882  KL 0.0100  DRO q [0.098, 0.902]  val F1 0.7599  acc 0.9155  5.7s
+    ft epoch 19/20  CE 0.1860  KL 0.0100  DRO q [0.089, 0.911]  val F1 0.7596  acc 0.9146  5.7s
+    ft epoch 20/20  CE 0.1868  KL 0.0099  DRO q [0.081, 0.919]  val F1 0.7559  acc 0.9125  5.9s
+    -> FA-LCI 0.8072 (normal 0.8072, older-like 0.8534); F1 0.7559 / 0.7141; 113.6 s
+
+=== fold 1 ft-xgp_ft(beta=0.1,r=0.5)-70pct-seed0: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2379  KL 0.0143  DRO q [0.451, 0.549]  val F1 0.7604  acc 0.9137  6.7s
+    ft epoch  2/20  CE 0.2289  KL 0.0119  DRO q [0.406, 0.594]  val F1 0.7564  acc 0.9143  6.8s
+    curve epoch 2: FA-LCI 0.8070, F1 0.7564 / 0.6966
+    ft epoch  3/20  CE 0.2228  KL 0.0114  DRO q [0.362, 0.638]  val F1 0.7634  acc 0.9155  7.0s
+    ft epoch  4/20  CE 0.2203  KL 0.0111  DRO q [0.322, 0.678]  val F1 0.7630  acc 0.9150  7.1s
+    ft epoch  5/20  CE 0.2149  KL 0.0110  DRO q [0.286, 0.714]  val F1 0.7514  acc 0.9122  6.8s
+    curve epoch 5: FA-LCI 0.8280, F1 0.7514 / 0.7039
+    ft epoch  6/20  CE 0.2155  KL 0.0108  DRO q [0.251, 0.749]  val F1 0.7602  acc 0.9151  6.7s
+    ft epoch  7/20  CE 0.2137  KL 0.0107  DRO q [0.223, 0.777]  val F1 0.7583  acc 0.9144  6.8s
+    ft epoch  8/20  CE 0.2116  KL 0.0105  DRO q [0.197, 0.803]  val F1 0.7586  acc 0.9141  6.8s
+    ft epoch  9/20  CE 0.2106  KL 0.0104  DRO q [0.174, 0.826]  val F1 0.7585  acc 0.9132  6.9s
+    ft epoch 10/20  CE 0.2118  KL 0.0104  DRO q [0.153, 0.847]  val F1 0.7588  acc 0.9139  6.8s
+    ft epoch 11/20  CE 0.2079  KL 0.0103  DRO q [0.135, 0.865]  val F1 0.7644  acc 0.9158  6.8s
+    ft epoch 12/20  CE 0.2075  KL 0.0104  DRO q [0.118, 0.882]  val F1 0.7555  acc 0.9139  6.8s
+    ft epoch 13/20  CE 0.2066  KL 0.0103  DRO q [0.104, 0.896]  val F1 0.7561  acc 0.9134  6.8s
+    ft epoch 14/20  CE 0.2069  KL 0.0102  DRO q [0.092, 0.908]  val F1 0.7616  acc 0.9144  6.9s
+    ft epoch 15/20  CE 0.2062  KL 0.0103  DRO q [0.081, 0.919]  val F1 0.7561  acc 0.9132  6.8s
+    ft epoch 16/20  CE 0.2043  KL 0.0101  DRO q [0.071, 0.929]  val F1 0.7541  acc 0.9125  6.9s
+    ft epoch 17/20  CE 0.2043  KL 0.0101  DRO q [0.063, 0.937]  val F1 0.7573  acc 0.9148  6.9s
+    ft epoch 18/20  CE 0.2054  KL 0.0101  DRO q [0.055, 0.945]  val F1 0.7559  acc 0.9155  7.0s
+    ft epoch 19/20  CE 0.2042  KL 0.0100  DRO q [0.049, 0.951]  val F1 0.7575  acc 0.9151  7.1s
+    ft epoch 20/20  CE 0.2028  KL 0.0099  DRO q [0.043, 0.957]  val F1 0.7558  acc 0.9137  7.2s
+    -> FA-LCI 0.8313 (normal 0.8313, older-like 0.8819); F1 0.7558 / 0.7115; 137.5 s
+
+=== fold 1 ft-xgp_ft(beta=0.3,r=0.25)-70pct-seed0: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2160  KL 0.0147  DRO q [0.461, 0.539]  val F1 0.7637  acc 0.9167  5.7s
+    ft epoch  2/20  CE 0.2047  KL 0.0115  DRO q [0.423, 0.577]  val F1 0.7643  acc 0.9167  5.6s
+    curve epoch 2: FA-LCI 0.7594, F1 0.7643 / 0.7087
+    ft epoch  3/20  CE 0.2032  KL 0.0113  DRO q [0.388, 0.612]  val F1 0.7606  acc 0.9148  5.7s
+    ft epoch  4/20  CE 0.1987  KL 0.0111  DRO q [0.357, 0.643]  val F1 0.7633  acc 0.9157  5.6s
+    ft epoch  5/20  CE 0.1963  KL 0.0109  DRO q [0.327, 0.673]  val F1 0.7646  acc 0.9165  5.8s
+    curve epoch 5: FA-LCI 0.7821, F1 0.7646 / 0.7005
+    ft epoch  6/20  CE 0.1963  KL 0.0108  DRO q [0.298, 0.702]  val F1 0.7622  acc 0.9144  5.6s
+    ft epoch  7/20  CE 0.1943  KL 0.0107  DRO q [0.27, 0.73]  val F1 0.7623  acc 0.9150  5.6s
+    ft epoch  8/20  CE 0.1948  KL 0.0105  DRO q [0.246, 0.754]  val F1 0.7648  acc 0.9150  5.6s
+    ft epoch  9/20  CE 0.1911  KL 0.0107  DRO q [0.225, 0.775]  val F1 0.7608  acc 0.9139  5.6s
+    ft epoch 10/20  CE 0.1908  KL 0.0105  DRO q [0.206, 0.794]  val F1 0.7632  acc 0.9143  5.7s
+    ft epoch 11/20  CE 0.1914  KL 0.0103  DRO q [0.186, 0.814]  val F1 0.7636  acc 0.9146  5.7s
+    ft epoch 12/20  CE 0.1883  KL 0.0104  DRO q [0.169, 0.831]  val F1 0.7620  acc 0.9141  5.8s
+    ft epoch 13/20  CE 0.1896  KL 0.0103  DRO q [0.153, 0.847]  val F1 0.7595  acc 0.9141  5.7s
+    ft epoch 14/20  CE 0.1900  KL 0.0102  DRO q [0.141, 0.859]  val F1 0.7621  acc 0.9144  5.7s
+    ft epoch 15/20  CE 0.1865  KL 0.0103  DRO q [0.127, 0.873]  val F1 0.7643  acc 0.9155  5.8s
+    ft epoch 16/20  CE 0.1883  KL 0.0102  DRO q [0.116, 0.884]  val F1 0.7632  acc 0.9148  5.7s
+    ft epoch 17/20  CE 0.1873  KL 0.0102  DRO q [0.106, 0.894]  val F1 0.7629  acc 0.9150  5.8s
+    ft epoch 18/20  CE 0.1880  KL 0.0101  DRO q [0.097, 0.903]  val F1 0.7603  acc 0.9143  5.8s
+    ft epoch 19/20  CE 0.1858  KL 0.0101  DRO q [0.088, 0.912]  val F1 0.7635  acc 0.9148  5.9s
+    ft epoch 20/20  CE 0.1863  KL 0.0100  DRO q [0.08, 0.92]  val F1 0.7601  acc 0.9127  5.9s
+    -> FA-LCI 0.8067 (normal 0.8067, older-like 0.8532); F1 0.7601 / 0.7013; 114.3 s
+
+=== fold 1 ft-xgp_ft(beta=0.3,r=0.5)-70pct-seed0: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2376  KL 0.0144  DRO q [0.452, 0.548]  val F1 0.7606  acc 0.9148  6.7s
+    ft epoch  2/20  CE 0.2284  KL 0.0118  DRO q [0.406, 0.594]  val F1 0.7602  acc 0.9148  6.7s
+    curve epoch 2: FA-LCI 0.7610, F1 0.7602 / 0.6942
+    ft epoch  3/20  CE 0.2230  KL 0.0114  DRO q [0.362, 0.638]  val F1 0.7633  acc 0.9146  6.7s
+    ft epoch  4/20  CE 0.2198  KL 0.0111  DRO q [0.323, 0.677]  val F1 0.7664  acc 0.9153  6.7s
+    ft epoch  5/20  CE 0.2136  KL 0.0110  DRO q [0.286, 0.714]  val F1 0.7619  acc 0.9137  6.8s
+    curve epoch 5: FA-LCI 0.8081, F1 0.7619 / 0.6981
+    ft epoch  6/20  CE 0.2152  KL 0.0108  DRO q [0.252, 0.748]  val F1 0.7638  acc 0.9150  6.7s
+    ft epoch  7/20  CE 0.2131  KL 0.0107  DRO q [0.223, 0.777]  val F1 0.7638  acc 0.9150  6.7s
+    ft epoch  8/20  CE 0.2105  KL 0.0106  DRO q [0.197, 0.803]  val F1 0.7673  acc 0.9151  6.8s
+    ft epoch  9/20  CE 0.2107  KL 0.0104  DRO q [0.174, 0.826]  val F1 0.7631  acc 0.9132  6.7s
+    ft epoch 10/20  CE 0.2107  KL 0.0104  DRO q [0.153, 0.847]  val F1 0.7666  acc 0.9151  6.8s
+    ft epoch 11/20  CE 0.2074  KL 0.0104  DRO q [0.136, 0.864]  val F1 0.7687  acc 0.9164  6.8s
+    ft epoch 12/20  CE 0.2069  KL 0.0104  DRO q [0.119, 0.881]  val F1 0.7618  acc 0.9146  6.9s
+    ft epoch 13/20  CE 0.2056  KL 0.0103  DRO q [0.105, 0.895]  val F1 0.7651  acc 0.9148  6.8s
+    ft epoch 14/20  CE 0.2063  KL 0.0102  DRO q [0.092, 0.908]  val F1 0.7645  acc 0.9153  6.8s
+    ft epoch 15/20  CE 0.2059  KL 0.0103  DRO q [0.081, 0.919]  val F1 0.7639  acc 0.9136  6.9s
+    ft epoch 16/20  CE 0.2036  KL 0.0102  DRO q [0.071, 0.929]  val F1 0.7652  acc 0.9137  6.9s
+    ft epoch 17/20  CE 0.2037  KL 0.0102  DRO q [0.063, 0.937]  val F1 0.7669  acc 0.9157  7.1s
+    ft epoch 18/20  CE 0.2049  KL 0.0101  DRO q [0.055, 0.945]  val F1 0.7654  acc 0.9153  7.1s
+    ft epoch 19/20  CE 0.2040  KL 0.0101  DRO q [0.049, 0.951]  val F1 0.7641  acc 0.9151  7.5s
+    ft epoch 20/20  CE 0.2021  KL 0.0100  DRO q [0.043, 0.957]  val F1 0.7655  acc 0.9146  7.3s
+    -> FA-LCI 0.8520 (normal 0.8532, older-like 0.8520); F1 0.7655 / 0.7071; 137.5 s
+
+=== fold 1 ft-xgp_ft(beta=0.5,r=0.25)-70pct-seed0: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2162  KL 0.0158  DRO q [0.461, 0.539]  val F1 0.7666  acc 0.9173  5.7s
+    ft epoch  2/20  CE 0.2047  KL 0.0115  DRO q [0.424, 0.576]  val F1 0.7700  acc 0.9181  5.6s
+    curve epoch 2: FA-LCI 0.7817, F1 0.7700 / 0.7108
+    ft epoch  3/20  CE 0.2035  KL 0.0112  DRO q [0.389, 0.611]  val F1 0.7686  acc 0.9169  5.6s
+    ft epoch  4/20  CE 0.1984  KL 0.0110  DRO q [0.357, 0.643]  val F1 0.7646  acc 0.9165  5.6s
+    ft epoch  5/20  CE 0.1966  KL 0.0108  DRO q [0.327, 0.673]  val F1 0.7678  acc 0.9169  5.6s
+    curve epoch 5: FA-LCI 0.7819, F1 0.7678 / 0.7076
+    ft epoch  6/20  CE 0.1962  KL 0.0108  DRO q [0.298, 0.702]  val F1 0.7670  acc 0.9160  5.6s
+    ft epoch  7/20  CE 0.1938  KL 0.0107  DRO q [0.27, 0.73]  val F1 0.7659  acc 0.9160  6.2s
+    ft epoch  8/20  CE 0.1945  KL 0.0105  DRO q [0.245, 0.755]  val F1 0.7643  acc 0.9155  6.4s
+    ft epoch  9/20  CE 0.1908  KL 0.0106  DRO q [0.224, 0.776]  val F1 0.7633  acc 0.9155  6.3s
+    ft epoch 10/20  CE 0.1910  KL 0.0105  DRO q [0.204, 0.796]  val F1 0.7677  acc 0.9158  6.3s
+    ft epoch 11/20  CE 0.1902  KL 0.0103  DRO q [0.185, 0.815]  val F1 0.7631  acc 0.9148  5.8s
+    ft epoch 12/20  CE 0.1878  KL 0.0103  DRO q [0.168, 0.832]  val F1 0.7623  acc 0.9151  5.8s
+    ft epoch 13/20  CE 0.1893  KL 0.0103  DRO q [0.153, 0.847]  val F1 0.7625  acc 0.9143  5.7s
+    ft epoch 14/20  CE 0.1896  KL 0.0102  DRO q [0.14, 0.86]  val F1 0.7610  acc 0.9146  5.8s
+    ft epoch 15/20  CE 0.1863  KL 0.0102  DRO q [0.127, 0.873]  val F1 0.7624  acc 0.9148  5.7s
+    ft epoch 16/20  CE 0.1875  KL 0.0102  DRO q [0.115, 0.885]  val F1 0.7615  acc 0.9144  6.1s
+    ft epoch 17/20  CE 0.1869  KL 0.0102  DRO q [0.105, 0.895]  val F1 0.7635  acc 0.9146  6.0s
+    ft epoch 18/20  CE 0.1879  KL 0.0101  DRO q [0.095, 0.905]  val F1 0.7601  acc 0.9143  6.0s
+    ft epoch 19/20  CE 0.1855  KL 0.0101  DRO q [0.087, 0.913]  val F1 0.7628  acc 0.9134  6.7s
+    ft epoch 20/20  CE 0.1856  KL 0.0100  DRO q [0.079, 0.921]  val F1 0.7611  acc 0.9122  6.6s
+    -> FA-LCI 0.7818 (normal 0.7818, older-like 0.8315); F1 0.7611 / 0.7092; 119.2 s
+
+=== fold 1 ft-xgp_ft(beta=0.5,r=0.5)-70pct-seed0: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2363  KL 0.0152  DRO q [0.453, 0.547]  val F1 0.7611  acc 0.9169  6.7s
+    ft epoch  2/20  CE 0.2271  KL 0.0117  DRO q [0.409, 0.591]  val F1 0.7657  acc 0.9173  6.7s
+    curve epoch 2: FA-LCI 0.7831, F1 0.7657 / 0.7021
+    ft epoch  3/20  CE 0.2221  KL 0.0113  DRO q [0.365, 0.635]  val F1 0.7696  acc 0.9176  6.9s
+    ft epoch  4/20  CE 0.2191  KL 0.0110  DRO q [0.326, 0.674]  val F1 0.7660  acc 0.9162  7.2s
+    ft epoch  5/20  CE 0.2137  KL 0.0109  DRO q [0.289, 0.711]  val F1 0.7616  acc 0.9137  7.0s
+    curve epoch 5: FA-LCI 0.8053, F1 0.7616 / 0.7033
+    ft epoch  6/20  CE 0.2146  KL 0.0108  DRO q [0.255, 0.745]  val F1 0.7630  acc 0.9155  6.7s
+    ft epoch  7/20  CE 0.2123  KL 0.0106  DRO q [0.227, 0.773]  val F1 0.7609  acc 0.9150  6.7s
+    ft epoch  8/20  CE 0.2103  KL 0.0105  DRO q [0.2, 0.8]  val F1 0.7646  acc 0.9155  6.7s
+    ft epoch  9/20  CE 0.2102  KL 0.0104  DRO q [0.177, 0.823]  val F1 0.7626  acc 0.9153  6.7s
+    ft epoch 10/20  CE 0.2105  KL 0.0104  DRO q [0.156, 0.844]  val F1 0.7636  acc 0.9150  6.8s
+    ft epoch 11/20  CE 0.2067  KL 0.0104  DRO q [0.138, 0.862]  val F1 0.7661  acc 0.9165  6.8s
+    ft epoch 12/20  CE 0.2064  KL 0.0104  DRO q [0.121, 0.879]  val F1 0.7622  acc 0.9148  6.8s
+    ft epoch 13/20  CE 0.2049  KL 0.0103  DRO q [0.107, 0.893]  val F1 0.7599  acc 0.9150  6.8s
+    ft epoch 14/20  CE 0.2055  KL 0.0102  DRO q [0.094, 0.906]  val F1 0.7642  acc 0.9160  6.8s
+    ft epoch 15/20  CE 0.2046  KL 0.0102  DRO q [0.083, 0.917]  val F1 0.7611  acc 0.9144  6.9s
+    ft epoch 16/20  CE 0.2029  KL 0.0101  DRO q [0.073, 0.927]  val F1 0.7631  acc 0.9144  6.9s
+    ft epoch 17/20  CE 0.2032  KL 0.0101  DRO q [0.064, 0.936]  val F1 0.7636  acc 0.9162  7.1s
+    ft epoch 18/20  CE 0.2047  KL 0.0101  DRO q [0.056, 0.944]  val F1 0.7632  acc 0.9164  7.1s
+    ft epoch 19/20  CE 0.2036  KL 0.0100  DRO q [0.05, 0.95]  val F1 0.7654  acc 0.9162  7.1s
+    ft epoch 20/20  CE 0.2021  KL 0.0099  DRO q [0.044, 0.956]  val F1 0.7634  acc 0.9151  7.2s
+    -> FA-LCI 0.8032 (normal 0.8032, older-like 0.8524); F1 0.7634 / 0.7053; 137.8 s
+
+--- start fold1-xgp-70pct-seed1-beta0.1
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.140, n_nonzero 46890, reconstructed
+      prune step 2/5: sparsity 0.280, n_nonzero 39509, reconstructed
+      prune step 3/5: sparsity 0.420, n_nonzero 32130, reconstructed
+      prune step 4/5: sparsity 0.560, n_nonzero 24749, reconstructed
+      prune step 5/5: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp(beta=0.1)-70pct-seed1               FA-LCI 0.7295 (normal 0.7295, older-like 0.7756); F1 0.7576 / 0.6951
+
+--- start fold1-xgp-70pct-seed1-beta0.3
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.140, n_nonzero 46890, reconstructed
+      prune step 2/5: sparsity 0.280, n_nonzero 39509, reconstructed
+      prune step 3/5: sparsity 0.420, n_nonzero 32130, reconstructed
+      prune step 4/5: sparsity 0.560, n_nonzero 24749, reconstructed
+      prune step 5/5: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp(beta=0.3)-70pct-seed1               FA-LCI 0.6922 (normal 0.7305, older-like 0.6922); F1 0.7559 / 0.6883
+
+--- start fold1-xgp-70pct-seed1-beta0.5
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.140, n_nonzero 46890, reconstructed
+      prune step 2/5: sparsity 0.280, n_nonzero 39509, reconstructed
+      prune step 3/5: sparsity 0.420, n_nonzero 32130, reconstructed
+      prune step 4/5: sparsity 0.560, n_nonzero 24749, reconstructed
+      prune step 5/5: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp(beta=0.5)-70pct-seed1               FA-LCI 0.6928 (normal 0.7297, older-like 0.6928); F1 0.7549 / 0.6870
+
+=== fold 1 ft-l1-70pct-seed1: start l1, recipe ce, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2488  val F1 0.7179  acc 0.8988  3.5s
+    ft epoch  2/20  CE 0.1971  val F1 0.7254  acc 0.9025  3.5s
+    ft epoch  3/20  CE 0.1844  val F1 0.7303  acc 0.9046  3.5s
+    ft epoch  4/20  CE 0.1782  val F1 0.7285  acc 0.9057  3.5s
+    ft epoch  5/20  CE 0.1727  val F1 0.7354  acc 0.9074  3.5s
+    ft epoch  6/20  CE 0.1721  val F1 0.7406  acc 0.9076  3.5s
+    ft epoch  7/20  CE 0.1687  val F1 0.7383  acc 0.9071  3.5s
+    ft epoch  8/20  CE 0.1657  val F1 0.7429  acc 0.9102  3.5s
+    ft epoch  9/20  CE 0.1641  val F1 0.7341  acc 0.9067  3.6s
+    ft epoch 10/20  CE 0.1608  val F1 0.7434  acc 0.9090  3.5s
+    ft epoch 11/20  CE 0.1607  val F1 0.7420  acc 0.9095  3.5s
+    ft epoch 12/20  CE 0.1586  val F1 0.7418  acc 0.9102  3.6s
+    ft epoch 13/20  CE 0.1573  val F1 0.7431  acc 0.9099  3.6s
+    ft epoch 14/20  CE 0.1555  val F1 0.7456  acc 0.9123  3.6s
+    ft epoch 15/20  CE 0.1544  val F1 0.7272  acc 0.9055  3.6s
+    ft epoch 16/20  CE 0.1525  val F1 0.7400  acc 0.9106  3.6s
+    ft epoch 17/20  CE 0.1497  val F1 0.7330  acc 0.9095  3.6s
+    ft epoch 18/20  CE 0.1504  val F1 0.7378  acc 0.9101  3.6s
+    ft epoch 19/20  CE 0.1490  val F1 0.7374  acc 0.9113  3.6s
+    ft epoch 20/20  CE 0.1480  val F1 0.7418  acc 0.9125  3.7s
+    -> FA-LCI 0.7561 (normal 0.7561, older-like 0.7769); F1 0.7418 / 0.6759; 71.1 s
+
+=== fold 1 ft-l1_kd-70pct-seed1: start l1, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2541  KL 0.0377  val F1 0.7277  acc 0.9039  3.8s
+    ft epoch  2/20  CE 0.2023  KL 0.0151  val F1 0.7290  acc 0.9039  3.8s
+    ft epoch  3/20  CE 0.1904  KL 0.0132  val F1 0.7393  acc 0.9060  3.8s
+    ft epoch  4/20  CE 0.1844  KL 0.0126  val F1 0.7367  acc 0.9092  3.8s
+    ft epoch  5/20  CE 0.1799  KL 0.0121  val F1 0.7437  acc 0.9090  3.8s
+    ft epoch  6/20  CE 0.1808  KL 0.0116  val F1 0.7425  acc 0.9083  3.8s
+    ft epoch  7/20  CE 0.1780  KL 0.0114  val F1 0.7451  acc 0.9104  3.9s
+    ft epoch  8/20  CE 0.1756  KL 0.0111  val F1 0.7478  acc 0.9120  3.9s
+    ft epoch  9/20  CE 0.1735  KL 0.0107  val F1 0.7434  acc 0.9108  3.8s
+    ft epoch 10/20  CE 0.1716  KL 0.0107  val F1 0.7508  acc 0.9120  3.8s
+    ft epoch 11/20  CE 0.1713  KL 0.0104  val F1 0.7513  acc 0.9134  3.9s
+    ft epoch 12/20  CE 0.1700  KL 0.0102  val F1 0.7559  acc 0.9134  3.9s
+    ft epoch 13/20  CE 0.1686  KL 0.0102  val F1 0.7530  acc 0.9120  3.9s
+    ft epoch 14/20  CE 0.1678  KL 0.0099  val F1 0.7553  acc 0.9132  3.9s
+    ft epoch 15/20  CE 0.1685  KL 0.0099  val F1 0.7486  acc 0.9106  4.0s
+    ft epoch 16/20  CE 0.1662  KL 0.0097  val F1 0.7492  acc 0.9106  4.0s
+    ft epoch 17/20  CE 0.1639  KL 0.0096  val F1 0.7499  acc 0.9120  4.1s
+    ft epoch 18/20  CE 0.1648  KL 0.0095  val F1 0.7463  acc 0.9106  4.1s
+    ft epoch 19/20  CE 0.1634  KL 0.0094  val F1 0.7490  acc 0.9116  4.0s
+    ft epoch 20/20  CE 0.1635  KL 0.0093  val F1 0.7510  acc 0.9122  4.1s
+    -> FA-LCI 0.7983 (normal 0.7983, older-like 0.8455); F1 0.7510 / 0.6875; 78.0 s
+
+=== fold 1 ft-snip_kd-70pct-seed1: start snip, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 0.7799  KL 0.3251  val F1 0.6736  acc 0.9011  3.7s
+    ft epoch  2/20  CE 0.3757  KL 0.0727  val F1 0.7171  acc 0.9076  3.8s
+    ft epoch  3/20  CE 0.2969  KL 0.0356  val F1 0.7251  acc 0.9080  3.8s
+    ft epoch  4/20  CE 0.2657  KL 0.0257  val F1 0.7200  acc 0.9083  3.8s
+    ft epoch  5/20  CE 0.2457  KL 0.0217  val F1 0.7285  acc 0.9101  3.8s
+    ft epoch  6/20  CE 0.2382  KL 0.0193  val F1 0.7188  acc 0.9074  3.8s
+    ft epoch  7/20  CE 0.2268  KL 0.0181  val F1 0.7212  acc 0.9080  3.8s
+    ft epoch  8/20  CE 0.2193  KL 0.0170  val F1 0.7358  acc 0.9088  3.8s
+    ft epoch  9/20  CE 0.2118  KL 0.0162  val F1 0.7305  acc 0.9074  3.8s
+    ft epoch 10/20  CE 0.2090  KL 0.0156  val F1 0.7267  acc 0.9073  3.9s
+    ft epoch 11/20  CE 0.2073  KL 0.0152  val F1 0.7366  acc 0.9118  3.9s
+    ft epoch 12/20  CE 0.2022  KL 0.0145  val F1 0.7339  acc 0.9116  3.8s
+    ft epoch 13/20  CE 0.1994  KL 0.0144  val F1 0.7329  acc 0.9090  3.9s
+    ft epoch 14/20  CE 0.1976  KL 0.0139  val F1 0.7328  acc 0.9080  4.0s
+    ft epoch 15/20  CE 0.1964  KL 0.0136  val F1 0.7320  acc 0.9087  4.0s
+    ft epoch 16/20  CE 0.1921  KL 0.0132  val F1 0.7258  acc 0.9060  4.1s
+    ft epoch 17/20  CE 0.1866  KL 0.0130  val F1 0.7262  acc 0.9064  4.1s
+    ft epoch 18/20  CE 0.1897  KL 0.0128  val F1 0.7268  acc 0.9076  4.1s
+    ft epoch 19/20  CE 0.1866  KL 0.0124  val F1 0.7317  acc 0.9071  4.1s
+    ft epoch 20/20  CE 0.1853  KL 0.0123  val F1 0.7293  acc 0.9099  4.1s
+    -> FA-LCI 0.6616 (normal 0.6616, older-like 0.7231); F1 0.7293 / 0.6516; 78.1 s
+
+=== fold 1 ft-l1_kdaug(r=0.25)-70pct-seed1: start l1, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2854  KL 0.0372  DRO q [0.46, 0.54]  val F1 0.7252  acc 0.9043  5.6s
+    ft epoch  2/20  CE 0.2292  KL 0.0162  DRO q [0.42, 0.58]  val F1 0.7312  acc 0.9074  5.6s
+    ft epoch  3/20  CE 0.2209  KL 0.0146  DRO q [0.385, 0.615]  val F1 0.7399  acc 0.9074  5.7s
+    ft epoch  4/20  CE 0.2125  KL 0.0137  DRO q [0.353, 0.647]  val F1 0.7490  acc 0.9104  5.7s
+    ft epoch  5/20  CE 0.2096  KL 0.0132  DRO q [0.322, 0.678]  val F1 0.7486  acc 0.9113  5.8s
+    ft epoch  6/20  CE 0.2061  KL 0.0127  DRO q [0.296, 0.704]  val F1 0.7499  acc 0.9129  5.8s
+    ft epoch  7/20  CE 0.2055  KL 0.0124  DRO q [0.269, 0.731]  val F1 0.7551  acc 0.9153  5.7s
+    ft epoch  8/20  CE 0.2025  KL 0.0121  DRO q [0.248, 0.752]  val F1 0.7560  acc 0.9148  5.8s
+    ft epoch  9/20  CE 0.2016  KL 0.0119  DRO q [0.227, 0.773]  val F1 0.7548  acc 0.9157  5.8s
+    ft epoch 10/20  CE 0.2008  KL 0.0118  DRO q [0.206, 0.794]  val F1 0.7537  acc 0.9139  5.9s
+    ft epoch 11/20  CE 0.1988  KL 0.0115  DRO q [0.187, 0.813]  val F1 0.7534  acc 0.9113  6.0s
+    ft epoch 12/20  CE 0.1984  KL 0.0115  DRO q [0.171, 0.829]  val F1 0.7536  acc 0.9137  6.1s
+    ft epoch 13/20  CE 0.1965  KL 0.0114  DRO q [0.156, 0.844]  val F1 0.7529  acc 0.9136  6.1s
+    ft epoch 14/20  CE 0.1955  KL 0.0112  DRO q [0.143, 0.857]  val F1 0.7531  acc 0.9136  6.2s
+    ft epoch 15/20  CE 0.1952  KL 0.0112  DRO q [0.131, 0.869]  val F1 0.7551  acc 0.9122  6.1s
+    ft epoch 16/20  CE 0.1942  KL 0.0111  DRO q [0.12, 0.88]  val F1 0.7520  acc 0.9137  6.3s
+    ft epoch 17/20  CE 0.1940  KL 0.0111  DRO q [0.11, 0.89]  val F1 0.7562  acc 0.9141  6.2s
+    ft epoch 18/20  CE 0.1936  KL 0.0109  DRO q [0.101, 0.899]  val F1 0.7595  acc 0.9157  6.3s
+    ft epoch 19/20  CE 0.1939  KL 0.0108  DRO q [0.093, 0.907]  val F1 0.7548  acc 0.9137  6.2s
+    ft epoch 20/20  CE 0.1917  KL 0.0109  DRO q [0.086, 0.914]  val F1 0.7556  acc 0.9157  6.2s
+    -> FA-LCI 0.8136 (normal 0.8136, older-like 0.8150); F1 0.7556 / 0.7056; 119.1 s
+
+=== fold 1 ft-l1_kdaug(r=0.5)-70pct-seed1: start l1, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.3022  KL 0.0352  DRO q [0.447, 0.553]  val F1 0.7243  acc 0.9034  6.7s
+    ft epoch  2/20  CE 0.2478  KL 0.0159  DRO q [0.4, 0.6]  val F1 0.7415  acc 0.9074  6.7s
+    ft epoch  3/20  CE 0.2331  KL 0.0143  DRO q [0.358, 0.642]  val F1 0.7454  acc 0.9101  6.8s
+    ft epoch  4/20  CE 0.2313  KL 0.0136  DRO q [0.319, 0.681]  val F1 0.7524  acc 0.9113  6.8s
+    ft epoch  5/20  CE 0.2254  KL 0.0131  DRO q [0.285, 0.715]  val F1 0.7555  acc 0.9134  6.8s
+    ft epoch  6/20  CE 0.2209  KL 0.0127  DRO q [0.255, 0.745]  val F1 0.7564  acc 0.9130  6.9s
+    ft epoch  7/20  CE 0.2192  KL 0.0123  DRO q [0.226, 0.774]  val F1 0.7571  acc 0.9141  7.1s
+    ft epoch  8/20  CE 0.2161  KL 0.0120  DRO q [0.201, 0.799]  val F1 0.7569  acc 0.9141  7.1s
+    ft epoch  9/20  CE 0.2134  KL 0.0118  DRO q [0.18, 0.82]  val F1 0.7570  acc 0.9139  7.3s
+    ft epoch 10/20  CE 0.2144  KL 0.0117  DRO q [0.16, 0.84]  val F1 0.7538  acc 0.9130  7.3s
+    ft epoch 11/20  CE 0.2136  KL 0.0115  DRO q [0.142, 0.858]  val F1 0.7568  acc 0.9130  7.3s
+    ft epoch 12/20  CE 0.2104  KL 0.0114  DRO q [0.127, 0.873]  val F1 0.7526  acc 0.9127  7.3s
+    ft epoch 13/20  CE 0.2103  KL 0.0112  DRO q [0.113, 0.887]  val F1 0.7521  acc 0.9132  7.5s
+    ft epoch 14/20  CE 0.2089  KL 0.0112  DRO q [0.101, 0.899]  val F1 0.7522  acc 0.9116  7.5s
+    ft epoch 15/20  CE 0.2084  KL 0.0111  DRO q [0.09, 0.91]  val F1 0.7568  acc 0.9127  7.5s
+    ft epoch 16/20  CE 0.2084  KL 0.0110  DRO q [0.08, 0.92]  val F1 0.7535  acc 0.9123  7.5s
+    ft epoch 17/20  CE 0.2079  KL 0.0109  DRO q [0.072, 0.928]  val F1 0.7588  acc 0.9146  7.5s
+    ft epoch 18/20  CE 0.2049  KL 0.0108  DRO q [0.065, 0.935]  val F1 0.7572  acc 0.9141  7.5s
+    ft epoch 19/20  CE 0.2061  KL 0.0108  DRO q [0.058, 0.942]  val F1 0.7584  acc 0.9130  7.5s
+    ft epoch 20/20  CE 0.2044  KL 0.0106  DRO q [0.052, 0.948]  val F1 0.7577  acc 0.9143  7.5s
+    -> FA-LCI 0.8188 (normal 0.8212, older-like 0.8188); F1 0.7577 / 0.7106; 144.2 s
+
+=== fold 1 ft-xgp_ft(beta=0.1,r=0.25)-70pct-seed1: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2138  KL 0.0145  DRO q [0.464, 0.536]  val F1 0.7598  acc 0.9130  5.9s
+    ft epoch  2/20  CE 0.2034  KL 0.0116  DRO q [0.428, 0.572]  val F1 0.7600  acc 0.9144  5.9s
+    ft epoch  3/20  CE 0.1995  KL 0.0113  DRO q [0.394, 0.606]  val F1 0.7600  acc 0.9141  5.9s
+    ft epoch  4/20  CE 0.1963  KL 0.0110  DRO q [0.364, 0.636]  val F1 0.7565  acc 0.9136  6.0s
+    ft epoch  5/20  CE 0.1961  KL 0.0109  DRO q [0.334, 0.666]  val F1 0.7570  acc 0.9136  6.0s
+    ft epoch  6/20  CE 0.1949  KL 0.0107  DRO q [0.308, 0.692]  val F1 0.7566  acc 0.9136  6.0s
+    ft epoch  7/20  CE 0.1945  KL 0.0106  DRO q [0.281, 0.719]  val F1 0.7568  acc 0.9137  6.1s
+    ft epoch  8/20  CE 0.1908  KL 0.0105  DRO q [0.259, 0.741]  val F1 0.7620  acc 0.9158  6.3s
+    ft epoch  9/20  CE 0.1921  KL 0.0103  DRO q [0.237, 0.763]  val F1 0.7590  acc 0.9144  6.2s
+    ft epoch 10/20  CE 0.1908  KL 0.0103  DRO q [0.216, 0.784]  val F1 0.7599  acc 0.9141  6.2s
+    ft epoch 11/20  CE 0.1907  KL 0.0103  DRO q [0.197, 0.803]  val F1 0.7610  acc 0.9136  6.3s
+    ft epoch 12/20  CE 0.1898  KL 0.0104  DRO q [0.18, 0.82]  val F1 0.7626  acc 0.9151  6.3s
+    ft epoch 13/20  CE 0.1883  KL 0.0102  DRO q [0.164, 0.836]  val F1 0.7581  acc 0.9144  6.4s
+    ft epoch 14/20  CE 0.1875  KL 0.0101  DRO q [0.15, 0.85]  val F1 0.7615  acc 0.9136  6.4s
+    ft epoch 15/20  CE 0.1884  KL 0.0102  DRO q [0.138, 0.862]  val F1 0.7618  acc 0.9150  6.4s
+    ft epoch 16/20  CE 0.1870  KL 0.0102  DRO q [0.126, 0.874]  val F1 0.7643  acc 0.9162  6.6s
+    ft epoch 17/20  CE 0.1868  KL 0.0101  DRO q [0.115, 0.885]  val F1 0.7620  acc 0.9150  6.5s
+    ft epoch 18/20  CE 0.1860  KL 0.0100  DRO q [0.106, 0.894]  val F1 0.7601  acc 0.9153  6.7s
+    ft epoch 19/20  CE 0.1864  KL 0.0099  DRO q [0.097, 0.903]  val F1 0.7569  acc 0.9137  6.6s
+    ft epoch 20/20  CE 0.1848  KL 0.0100  DRO q [0.089, 0.911]  val F1 0.7604  acc 0.9162  6.6s
+    -> FA-LCI 0.8500 (normal 0.8507, older-like 0.8500); F1 0.7604 / 0.7074; 125.3 s
+
+=== fold 1 ft-xgp_ft(beta=0.1,r=0.5)-70pct-seed1: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2349  KL 0.0143  DRO q [0.454, 0.546]  val F1 0.7579  acc 0.9127  7.0s
+    ft epoch  2/20  CE 0.2218  KL 0.0117  DRO q [0.412, 0.588]  val F1 0.7615  acc 0.9143  7.0s
+    ft epoch  3/20  CE 0.2153  KL 0.0113  DRO q [0.373, 0.627]  val F1 0.7600  acc 0.9134  7.1s
+    ft epoch  4/20  CE 0.2159  KL 0.0112  DRO q [0.334, 0.666]  val F1 0.7578  acc 0.9129  7.1s
+    ft epoch  5/20  CE 0.2118  KL 0.0109  DRO q [0.301, 0.699]  val F1 0.7585  acc 0.9137  7.1s
+    ft epoch  6/20  CE 0.2093  KL 0.0108  DRO q [0.27, 0.73]  val F1 0.7583  acc 0.9123  7.2s
+    ft epoch  7/20  CE 0.2084  KL 0.0107  DRO q [0.241, 0.759]  val F1 0.7613  acc 0.9130  7.3s
+    ft epoch  8/20  CE 0.2060  KL 0.0105  DRO q [0.216, 0.784]  val F1 0.7597  acc 0.9139  7.5s
+    ft epoch  9/20  CE 0.2052  KL 0.0104  DRO q [0.194, 0.806]  val F1 0.7613  acc 0.9151  7.6s
+    ft epoch 10/20  CE 0.2052  KL 0.0105  DRO q [0.174, 0.826]  val F1 0.7582  acc 0.9125  7.6s
+    ft epoch 11/20  CE 0.2052  KL 0.0103  DRO q [0.154, 0.846]  val F1 0.7655  acc 0.9144  7.7s
+    ft epoch 12/20  CE 0.2020  KL 0.0103  DRO q [0.137, 0.863]  val F1 0.7613  acc 0.9141  7.7s
+    ft epoch 13/20  CE 0.2039  KL 0.0102  DRO q [0.122, 0.878]  val F1 0.7624  acc 0.9150  7.8s
+    ft epoch 14/20  CE 0.2016  KL 0.0102  DRO q [0.109, 0.891]  val F1 0.7624  acc 0.9141  7.8s
+    ft epoch 15/20  CE 0.2023  KL 0.0101  DRO q [0.097, 0.903]  val F1 0.7642  acc 0.9144  7.8s
+    ft epoch 16/20  CE 0.2027  KL 0.0101  DRO q [0.086, 0.914]  val F1 0.7631  acc 0.9153  7.9s
+    ft epoch 17/20  CE 0.2024  KL 0.0101  DRO q [0.077, 0.923]  val F1 0.7609  acc 0.9136  7.8s
+    ft epoch 18/20  CE 0.2004  KL 0.0100  DRO q [0.069, 0.931]  val F1 0.7638  acc 0.9151  7.9s
+    ft epoch 19/20  CE 0.2012  KL 0.0100  DRO q [0.061, 0.939]  val F1 0.7602  acc 0.9129  7.8s
+    ft epoch 20/20  CE 0.1992  KL 0.0099  DRO q [0.055, 0.945]  val F1 0.7663  acc 0.9155  8.1s
+    -> FA-LCI 0.8520 (normal 0.8525, older-like 0.8520); F1 0.7663 / 0.7106; 150.7 s
+
+=== fold 1 ft-xgp_ft(beta=0.3,r=0.25)-70pct-seed1: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2135  KL 0.0146  DRO q [0.463, 0.537]  val F1 0.7581  acc 0.9153  5.9s
+    ft epoch  2/20  CE 0.2038  KL 0.0116  DRO q [0.425, 0.575]  val F1 0.7571  acc 0.9157  5.9s
+    ft epoch  3/20  CE 0.2000  KL 0.0113  DRO q [0.392, 0.608]  val F1 0.7575  acc 0.9153  5.9s
+    ft epoch  4/20  CE 0.1970  KL 0.0110  DRO q [0.361, 0.639]  val F1 0.7588  acc 0.9162  5.9s
+    ft epoch  5/20  CE 0.1960  KL 0.0108  DRO q [0.331, 0.669]  val F1 0.7578  acc 0.9144  5.9s
+    ft epoch  6/20  CE 0.1956  KL 0.0107  DRO q [0.305, 0.695]  val F1 0.7624  acc 0.9162  6.0s
+    ft epoch  7/20  CE 0.1946  KL 0.0106  DRO q [0.278, 0.722]  val F1 0.7627  acc 0.9157  6.1s
+    ft epoch  8/20  CE 0.1916  KL 0.0104  DRO q [0.256, 0.744]  val F1 0.7649  acc 0.9174  6.2s
+    ft epoch  9/20  CE 0.1928  KL 0.0103  DRO q [0.235, 0.765]  val F1 0.7612  acc 0.9167  6.3s
+    ft epoch 10/20  CE 0.1914  KL 0.0103  DRO q [0.214, 0.786]  val F1 0.7607  acc 0.9150  6.3s
+    ft epoch 11/20  CE 0.1911  KL 0.0103  DRO q [0.195, 0.805]  val F1 0.7632  acc 0.9155  6.4s
+    ft epoch 12/20  CE 0.1899  KL 0.0103  DRO q [0.178, 0.822]  val F1 0.7656  acc 0.9174  6.4s
+    ft epoch 13/20  CE 0.1883  KL 0.0102  DRO q [0.163, 0.837]  val F1 0.7606  acc 0.9158  6.5s
+    ft epoch 14/20  CE 0.1885  KL 0.0101  DRO q [0.148, 0.852]  val F1 0.7588  acc 0.9141  6.5s
+    ft epoch 15/20  CE 0.1885  KL 0.0102  DRO q [0.136, 0.864]  val F1 0.7609  acc 0.9162  6.4s
+    ft epoch 16/20  CE 0.1871  KL 0.0102  DRO q [0.124, 0.876]  val F1 0.7622  acc 0.9169  6.5s
+    ft epoch 17/20  CE 0.1869  KL 0.0101  DRO q [0.114, 0.886]  val F1 0.7587  acc 0.9144  6.4s
+    ft epoch 18/20  CE 0.1861  KL 0.0100  DRO q [0.104, 0.896]  val F1 0.7633  acc 0.9164  6.5s
+    ft epoch 19/20  CE 0.1858  KL 0.0099  DRO q [0.096, 0.904]  val F1 0.7605  acc 0.9155  6.5s
+    ft epoch 20/20  CE 0.1849  KL 0.0100  DRO q [0.088, 0.912]  val F1 0.7618  acc 0.9162  6.7s
+    -> FA-LCI 0.7850 (normal 0.7850, older-like 0.8263); F1 0.7618 / 0.7074; 125.5 s
+
+=== fold 1 ft-xgp_ft(beta=0.3,r=0.5)-70pct-seed1: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2360  KL 0.0144  DRO q [0.452, 0.548]  val F1 0.7593  acc 0.9155  7.1s
+    ft epoch  2/20  CE 0.2227  KL 0.0116  DRO q [0.41, 0.59]  val F1 0.7614  acc 0.9167  7.2s
+    ft epoch  3/20  CE 0.2157  KL 0.0113  DRO q [0.371, 0.629]  val F1 0.7578  acc 0.9160  7.1s
+    ft epoch  4/20  CE 0.2164  KL 0.0111  DRO q [0.333, 0.667]  val F1 0.7611  acc 0.9162  7.1s
+    ft epoch  5/20  CE 0.2124  KL 0.0109  DRO q [0.299, 0.701]  val F1 0.7593  acc 0.9155  7.1s
+    ft epoch  6/20  CE 0.2096  KL 0.0108  DRO q [0.269, 0.731]  val F1 0.7585  acc 0.9144  7.3s
+    ft epoch  7/20  CE 0.2087  KL 0.0106  DRO q [0.24, 0.76]  val F1 0.7613  acc 0.9153  7.4s
+    ft epoch  8/20  CE 0.2054  KL 0.0105  DRO q [0.215, 0.785]  val F1 0.7622  acc 0.9162  7.5s
+    ft epoch  9/20  CE 0.2052  KL 0.0104  DRO q [0.193, 0.807]  val F1 0.7608  acc 0.9165  7.6s
+    ft epoch 10/20  CE 0.2051  KL 0.0105  DRO q [0.172, 0.828]  val F1 0.7594  acc 0.9153  7.6s
+    ft epoch 11/20  CE 0.2059  KL 0.0103  DRO q [0.153, 0.847]  val F1 0.7620  acc 0.9155  7.7s
+    ft epoch 12/20  CE 0.2024  KL 0.0103  DRO q [0.136, 0.864]  val F1 0.7593  acc 0.9155  7.7s
+    ft epoch 13/20  CE 0.2039  KL 0.0102  DRO q [0.121, 0.879]  val F1 0.7609  acc 0.9160  7.7s
+    ft epoch 14/20  CE 0.2021  KL 0.0102  DRO q [0.108, 0.892]  val F1 0.7608  acc 0.9155  8.0s
+    ft epoch 15/20  CE 0.2022  KL 0.0101  DRO q [0.097, 0.903]  val F1 0.7640  acc 0.9157  7.9s
+    ft epoch 16/20  CE 0.2021  KL 0.0101  DRO q [0.086, 0.914]  val F1 0.7582  acc 0.9151  7.9s
+    ft epoch 17/20  CE 0.2025  KL 0.0101  DRO q [0.076, 0.924]  val F1 0.7603  acc 0.9158  7.8s
+    ft epoch 18/20  CE 0.2006  KL 0.0100  DRO q [0.068, 0.932]  val F1 0.7588  acc 0.9151  7.8s
+    ft epoch 19/20  CE 0.2016  KL 0.0101  DRO q [0.061, 0.939]  val F1 0.7605  acc 0.9146  7.8s
+    ft epoch 20/20  CE 0.1990  KL 0.0099  DRO q [0.054, 0.946]  val F1 0.7608  acc 0.9157  7.8s
+    -> FA-LCI 0.8079 (normal 0.8079, older-like 0.8283); F1 0.7608 / 0.7114; 151.2 s
+
+=== fold 1 ft-xgp_ft(beta=0.5,r=0.25)-70pct-seed1: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2146  KL 0.0156  DRO q [0.464, 0.536]  val F1 0.7614  acc 0.9143  5.9s
+    ft epoch  2/20  CE 0.2053  KL 0.0116  DRO q [0.426, 0.574]  val F1 0.7594  acc 0.9153  5.9s
+    ft epoch  3/20  CE 0.2016  KL 0.0113  DRO q [0.393, 0.607]  val F1 0.7525  acc 0.9134  5.9s
+    ft epoch  4/20  CE 0.1985  KL 0.0110  DRO q [0.362, 0.638]  val F1 0.7582  acc 0.9146  6.0s
+    ft epoch  5/20  CE 0.1968  KL 0.0109  DRO q [0.331, 0.669]  val F1 0.7593  acc 0.9132  5.9s
+    ft epoch  6/20  CE 0.1960  KL 0.0107  DRO q [0.305, 0.695]  val F1 0.7582  acc 0.9137  6.0s
+    ft epoch  7/20  CE 0.1948  KL 0.0106  DRO q [0.279, 0.721]  val F1 0.7609  acc 0.9146  6.1s
+    ft epoch  8/20  CE 0.1921  KL 0.0104  DRO q [0.256, 0.744]  val F1 0.7605  acc 0.9165  6.3s
+    ft epoch  9/20  CE 0.1931  KL 0.0103  DRO q [0.235, 0.765]  val F1 0.7649  acc 0.9160  6.2s
+    ft epoch 10/20  CE 0.1919  KL 0.0103  DRO q [0.214, 0.786]  val F1 0.7630  acc 0.9151  6.3s
+    ft epoch 11/20  CE 0.1912  KL 0.0103  DRO q [0.195, 0.805]  val F1 0.7610  acc 0.9136  6.5s
+    ft epoch 12/20  CE 0.1909  KL 0.0104  DRO q [0.178, 0.822]  val F1 0.7640  acc 0.9158  6.5s
+    ft epoch 13/20  CE 0.1887  KL 0.0102  DRO q [0.162, 0.838]  val F1 0.7632  acc 0.9153  6.4s
+    ft epoch 14/20  CE 0.1893  KL 0.0101  DRO q [0.148, 0.852]  val F1 0.7607  acc 0.9129  6.5s
+    ft epoch 15/20  CE 0.1886  KL 0.0102  DRO q [0.135, 0.865]  val F1 0.7570  acc 0.9157  6.5s
+    ft epoch 16/20  CE 0.1877  KL 0.0102  DRO q [0.123, 0.877]  val F1 0.7635  acc 0.9160  6.4s
+    ft epoch 17/20  CE 0.1876  KL 0.0102  DRO q [0.113, 0.887]  val F1 0.7624  acc 0.9137  6.4s
+    ft epoch 18/20  CE 0.1864  KL 0.0100  DRO q [0.103, 0.897]  val F1 0.7601  acc 0.9150  6.4s
+    ft epoch 19/20  CE 0.1860  KL 0.0099  DRO q [0.095, 0.905]  val F1 0.7631  acc 0.9151  6.6s
+    ft epoch 20/20  CE 0.1860  KL 0.0100  DRO q [0.087, 0.913]  val F1 0.7620  acc 0.9150  8.2s
+    -> FA-LCI 0.8041 (normal 0.8517, older-like 0.8041); F1 0.7620 / 0.7068; 127.2 s
+
+=== fold 1 ft-xgp_ft(beta=0.5,r=0.5)-70pct-seed1: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2384  KL 0.0153  DRO q [0.452, 0.548]  val F1 0.7618  acc 0.9155  6.7s
+    ft epoch  2/20  CE 0.2246  KL 0.0117  DRO q [0.409, 0.591]  val F1 0.7628  acc 0.9164  6.6s
+    ft epoch  3/20  CE 0.2169  KL 0.0114  DRO q [0.369, 0.631]  val F1 0.7597  acc 0.9141  6.6s
+    ft epoch  4/20  CE 0.2166  KL 0.0112  DRO q [0.332, 0.668]  val F1 0.7586  acc 0.9134  6.6s
+    ft epoch  5/20  CE 0.2135  KL 0.0110  DRO q [0.297, 0.703]  val F1 0.7599  acc 0.9134  6.7s
+    ft epoch  6/20  CE 0.2104  KL 0.0109  DRO q [0.267, 0.733]  val F1 0.7611  acc 0.9118  6.8s
+    ft epoch  7/20  CE 0.2096  KL 0.0107  DRO q [0.238, 0.762]  val F1 0.7635  acc 0.9134  6.7s
+    ft epoch  8/20  CE 0.2060  KL 0.0106  DRO q [0.213, 0.787]  val F1 0.7654  acc 0.9143  7.1s
+    ft epoch  9/20  CE 0.2058  KL 0.0105  DRO q [0.191, 0.809]  val F1 0.7662  acc 0.9146  7.1s
+    ft epoch 10/20  CE 0.2060  KL 0.0105  DRO q [0.171, 0.829]  val F1 0.7604  acc 0.9125  6.7s
+    ft epoch 11/20  CE 0.2062  KL 0.0104  DRO q [0.152, 0.848]  val F1 0.7654  acc 0.9134  7.0s
+    ft epoch 12/20  CE 0.2030  KL 0.0103  DRO q [0.135, 0.865]  val F1 0.7621  acc 0.9130  7.0s
+    ft epoch 13/20  CE 0.2041  KL 0.0103  DRO q [0.12, 0.88]  val F1 0.7630  acc 0.9136  6.9s
+    ft epoch 14/20  CE 0.2029  KL 0.0102  DRO q [0.107, 0.893]  val F1 0.7598  acc 0.9130  7.1s
+    ft epoch 15/20  CE 0.2030  KL 0.0102  DRO q [0.095, 0.905]  val F1 0.7627  acc 0.9125  7.6s
+    ft epoch 16/20  CE 0.2034  KL 0.0101  DRO q [0.085, 0.915]  val F1 0.7602  acc 0.9130  7.7s
+    ft epoch 17/20  CE 0.2029  KL 0.0101  DRO q [0.075, 0.925]  val F1 0.7611  acc 0.9129  7.8s
+    ft epoch 18/20  CE 0.2013  KL 0.0100  DRO q [0.068, 0.932]  val F1 0.7622  acc 0.9139  7.1s
+    ft epoch 19/20  CE 0.2023  KL 0.0101  DRO q [0.06, 0.94]  val F1 0.7607  acc 0.9115  7.1s
+    ft epoch 20/20  CE 0.1999  KL 0.0099  DRO q [0.054, 0.946]  val F1 0.7645  acc 0.9139  7.1s
+    -> FA-LCI 0.8059 (normal 0.8534, older-like 0.8059); F1 0.7645 / 0.7156; 140.2 s
+
+--- start fold1-xgp-70pct-seed2-beta0.1
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.140, n_nonzero 46890, reconstructed
+      prune step 2/5: sparsity 0.280, n_nonzero 39509, reconstructed
+      prune step 3/5: sparsity 0.420, n_nonzero 32130, reconstructed
+      prune step 4/5: sparsity 0.560, n_nonzero 24749, reconstructed
+      prune step 5/5: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp(beta=0.1)-70pct-seed2               FA-LCI 0.7304 (normal 0.7304, older-like 0.7517); F1 0.7563 / 0.6927
+
+--- start fold1-xgp-70pct-seed2-beta0.3
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.140, n_nonzero 46890, reconstructed
+      prune step 2/5: sparsity 0.280, n_nonzero 39509, reconstructed
+      prune step 3/5: sparsity 0.420, n_nonzero 32130, reconstructed
+      prune step 4/5: sparsity 0.560, n_nonzero 24749, reconstructed
+      prune step 5/5: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp(beta=0.3)-70pct-seed2               FA-LCI 0.6941 (normal 0.7318, older-like 0.6941); F1 0.7550 / 0.6876
+
+--- start fold1-xgp-70pct-seed2-beta0.5
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.140, n_nonzero 46890, reconstructed
+      prune step 2/5: sparsity 0.280, n_nonzero 39509, reconstructed
+      prune step 3/5: sparsity 0.420, n_nonzero 32130, reconstructed
+      prune step 4/5: sparsity 0.560, n_nonzero 24749, reconstructed
+      prune step 5/5: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp(beta=0.5)-70pct-seed2               FA-LCI 0.6919 (normal 0.7299, older-like 0.6919); F1 0.7534 / 0.6810
+
+=== fold 1 ft-l1-70pct-seed2: start l1, recipe ce, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2466  val F1 0.7134  acc 0.8966  3.2s
+    ft epoch  2/20  CE 0.1965  val F1 0.7265  acc 0.9038  3.2s
+    ft epoch  3/20  CE 0.1843  val F1 0.7302  acc 0.9053  3.3s
+    ft epoch  4/20  CE 0.1791  val F1 0.7368  acc 0.9071  3.3s
+    ft epoch  5/20  CE 0.1739  val F1 0.7358  acc 0.9069  3.3s
+    ft epoch  6/20  CE 0.1689  val F1 0.7363  acc 0.9087  3.3s
+    ft epoch  7/20  CE 0.1675  val F1 0.7418  acc 0.9080  3.3s
+    ft epoch  8/20  CE 0.1658  val F1 0.7374  acc 0.9083  3.4s
+    ft epoch  9/20  CE 0.1639  val F1 0.7382  acc 0.9073  3.3s
+    ft epoch 10/20  CE 0.1606  val F1 0.7419  acc 0.9088  3.3s
+    ft epoch 11/20  CE 0.1603  val F1 0.7443  acc 0.9095  3.3s
+    ft epoch 12/20  CE 0.1588  val F1 0.7477  acc 0.9118  3.3s
+    ft epoch 13/20  CE 0.1561  val F1 0.7415  acc 0.9109  3.3s
+    ft epoch 14/20  CE 0.1519  val F1 0.7376  acc 0.9095  3.3s
+    ft epoch 15/20  CE 0.1542  val F1 0.7370  acc 0.9097  3.4s
+    ft epoch 16/20  CE 0.1527  val F1 0.7402  acc 0.9115  3.3s
+    ft epoch 17/20  CE 0.1521  val F1 0.7459  acc 0.9153  3.3s
+    ft epoch 18/20  CE 0.1515  val F1 0.7448  acc 0.9129  3.3s
+    ft epoch 19/20  CE 0.1506  val F1 0.7416  acc 0.9129  3.3s
+    ft epoch 20/20  CE 0.1480  val F1 0.7398  acc 0.9120  3.3s
+    -> FA-LCI 0.7350 (normal 0.7350, older-like 0.7770); F1 0.7398 / 0.6825; 66.0 s
+
+=== fold 1 ft-l1_kd-70pct-seed2: start l1, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2515  KL 0.0367  val F1 0.7229  acc 0.9036  3.5s
+    ft epoch  2/20  CE 0.2003  KL 0.0152  val F1 0.7309  acc 0.9045  3.6s
+    ft epoch  3/20  CE 0.1898  KL 0.0134  val F1 0.7356  acc 0.9057  3.5s
+    ft epoch  4/20  CE 0.1846  KL 0.0125  val F1 0.7458  acc 0.9095  3.5s
+    ft epoch  5/20  CE 0.1809  KL 0.0120  val F1 0.7456  acc 0.9101  3.6s
+    ft epoch  6/20  CE 0.1773  KL 0.0117  val F1 0.7437  acc 0.9115  3.5s
+    ft epoch  7/20  CE 0.1766  KL 0.0113  val F1 0.7454  acc 0.9104  3.6s
+    ft epoch  8/20  CE 0.1749  KL 0.0111  val F1 0.7433  acc 0.9111  3.6s
+    ft epoch  9/20  CE 0.1732  KL 0.0107  val F1 0.7524  acc 0.9111  3.6s
+    ft epoch 10/20  CE 0.1707  KL 0.0106  val F1 0.7514  acc 0.9123  3.6s
+    ft epoch 11/20  CE 0.1711  KL 0.0104  val F1 0.7525  acc 0.9129  3.6s
+    ft epoch 12/20  CE 0.1700  KL 0.0102  val F1 0.7486  acc 0.9125  3.6s
+    ft epoch 13/20  CE 0.1689  KL 0.0101  val F1 0.7491  acc 0.9116  3.6s
+    ft epoch 14/20  CE 0.1654  KL 0.0099  val F1 0.7481  acc 0.9099  3.7s
+    ft epoch 15/20  CE 0.1671  KL 0.0098  val F1 0.7533  acc 0.9115  3.6s
+    ft epoch 16/20  CE 0.1661  KL 0.0097  val F1 0.7514  acc 0.9125  3.5s
+    ft epoch 17/20  CE 0.1653  KL 0.0098  val F1 0.7536  acc 0.9127  3.6s
+    ft epoch 18/20  CE 0.1655  KL 0.0096  val F1 0.7531  acc 0.9122  3.6s
+    ft epoch 19/20  CE 0.1647  KL 0.0094  val F1 0.7489  acc 0.9106  3.7s
+    ft epoch 20/20  CE 0.1632  KL 0.0094  val F1 0.7531  acc 0.9127  3.6s
+    -> FA-LCI 0.7980 (normal 0.7980, older-like 0.8452); F1 0.7531 / 0.6815; 71.8 s
+
+=== fold 1 ft-snip_kd-70pct-seed2: start snip, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 0.7823  KL 0.3257  val F1 0.6769  acc 0.9009  3.5s
+    ft epoch  2/20  CE 0.3797  KL 0.0730  val F1 0.7136  acc 0.9066  3.5s
+    ft epoch  3/20  CE 0.2940  KL 0.0359  val F1 0.7142  acc 0.9067  3.6s
+    ft epoch  4/20  CE 0.2655  KL 0.0257  val F1 0.7209  acc 0.9074  3.5s
+    ft epoch  5/20  CE 0.2503  KL 0.0218  val F1 0.7272  acc 0.9111  3.5s
+    ft epoch  6/20  CE 0.2350  KL 0.0196  val F1 0.7250  acc 0.9099  3.5s
+    ft epoch  7/20  CE 0.2267  KL 0.0181  val F1 0.7333  acc 0.9090  3.5s
+    ft epoch  8/20  CE 0.2204  KL 0.0172  val F1 0.7337  acc 0.9106  3.6s
+    ft epoch  9/20  CE 0.2152  KL 0.0163  val F1 0.7333  acc 0.9102  3.5s
+    ft epoch 10/20  CE 0.2108  KL 0.0158  val F1 0.7334  acc 0.9109  3.5s
+    ft epoch 11/20  CE 0.2044  KL 0.0152  val F1 0.7344  acc 0.9127  3.7s
+    ft epoch 12/20  CE 0.2024  KL 0.0146  val F1 0.7323  acc 0.9090  3.6s
+    ft epoch 13/20  CE 0.2016  KL 0.0144  val F1 0.7288  acc 0.9104  3.6s
+    ft epoch 14/20  CE 0.1970  KL 0.0139  val F1 0.7246  acc 0.9081  3.6s
+    ft epoch 15/20  CE 0.1971  KL 0.0136  val F1 0.7265  acc 0.9078  3.5s
+    ft epoch 16/20  CE 0.1923  KL 0.0134  val F1 0.7298  acc 0.9095  3.5s
+    ft epoch 17/20  CE 0.1908  KL 0.0132  val F1 0.7323  acc 0.9083  3.5s
+    ft epoch 18/20  CE 0.1916  KL 0.0129  val F1 0.7300  acc 0.9039  3.6s
+    ft epoch 19/20  CE 0.1890  KL 0.0125  val F1 0.7281  acc 0.9029  3.6s
+    ft epoch 20/20  CE 0.1870  KL 0.0125  val F1 0.7351  acc 0.9050  3.6s
+    -> FA-LCI 0.6813 (normal 0.6813, older-like 0.7443); F1 0.7351 / 0.6465; 71.1 s
+
+=== fold 1 ft-l1_kdaug(r=0.25)-70pct-seed2: start l1, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2879  KL 0.0375  DRO q [0.452, 0.548]  val F1 0.7192  acc 0.9027  5.5s
+    ft epoch  2/20  CE 0.2381  KL 0.0162  DRO q [0.407, 0.593]  val F1 0.7319  acc 0.9053  5.5s
+    ft epoch  3/20  CE 0.2283  KL 0.0147  DRO q [0.368, 0.632]  val F1 0.7445  acc 0.9101  5.4s
+    ft epoch  4/20  CE 0.2205  KL 0.0138  DRO q [0.334, 0.666]  val F1 0.7482  acc 0.9120  5.3s
+    ft epoch  5/20  CE 0.2180  KL 0.0132  DRO q [0.302, 0.698]  val F1 0.7496  acc 0.9108  5.0s
+    ft epoch  6/20  CE 0.2111  KL 0.0128  DRO q [0.273, 0.727]  val F1 0.7507  acc 0.9111  5.2s
+    ft epoch  7/20  CE 0.2096  KL 0.0126  DRO q [0.246, 0.754]  val F1 0.7522  acc 0.9101  5.2s
+    ft epoch  8/20  CE 0.2072  KL 0.0124  DRO q [0.223, 0.777]  val F1 0.7534  acc 0.9108  5.3s
+    ft epoch  9/20  CE 0.2062  KL 0.0121  DRO q [0.204, 0.796]  val F1 0.7562  acc 0.9146  5.2s
+    ft epoch 10/20  CE 0.2051  KL 0.0119  DRO q [0.185, 0.815]  val F1 0.7528  acc 0.9137  5.2s
+    ft epoch 11/20  CE 0.2042  KL 0.0117  DRO q [0.168, 0.832]  val F1 0.7499  acc 0.9108  5.0s
+    ft epoch 12/20  CE 0.2042  KL 0.0116  DRO q [0.153, 0.847]  val F1 0.7505  acc 0.9137  5.1s
+    ft epoch 13/20  CE 0.2018  KL 0.0115  DRO q [0.139, 0.861]  val F1 0.7562  acc 0.9141  5.2s
+    ft epoch 14/20  CE 0.2014  KL 0.0113  DRO q [0.127, 0.873]  val F1 0.7573  acc 0.9151  5.2s
+    ft epoch 15/20  CE 0.2018  KL 0.0113  DRO q [0.115, 0.885]  val F1 0.7497  acc 0.9125  5.6s
+    ft epoch 16/20  CE 0.1977  KL 0.0112  DRO q [0.105, 0.895]  val F1 0.7498  acc 0.9120  5.2s
+    ft epoch 17/20  CE 0.1983  KL 0.0111  DRO q [0.095, 0.905]  val F1 0.7565  acc 0.9146  5.5s
+    ft epoch 18/20  CE 0.1973  KL 0.0111  DRO q [0.086, 0.914]  val F1 0.7515  acc 0.9111  5.3s
+    ft epoch 19/20  CE 0.1970  KL 0.0110  DRO q [0.078, 0.922]  val F1 0.7537  acc 0.9141  5.3s
+    ft epoch 20/20  CE 0.1977  KL 0.0109  DRO q [0.072, 0.928]  val F1 0.7485  acc 0.9104  5.3s
+    -> FA-LCI 0.7642 (normal 0.7642, older-like 0.7860); F1 0.7485 / 0.6970; 105.5 s
+
+=== fold 1 ft-l1_kdaug(r=0.5)-70pct-seed2: start l1, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.3028  KL 0.0347  DRO q [0.443, 0.557]  val F1 0.7282  acc 0.9048  5.9s
+    ft epoch  2/20  CE 0.2495  KL 0.0162  DRO q [0.393, 0.607]  val F1 0.7444  acc 0.9081  6.0s
+    ft epoch  3/20  CE 0.2389  KL 0.0145  DRO q [0.349, 0.651]  val F1 0.7459  acc 0.9113  6.0s
+    ft epoch  4/20  CE 0.2302  KL 0.0136  DRO q [0.31, 0.69]  val F1 0.7479  acc 0.9108  6.0s
+    ft epoch  5/20  CE 0.2282  KL 0.0130  DRO q [0.275, 0.725]  val F1 0.7495  acc 0.9127  6.0s
+    ft epoch  6/20  CE 0.2227  KL 0.0127  DRO q [0.245, 0.755]  val F1 0.7551  acc 0.9141  6.0s
+    ft epoch  7/20  CE 0.2208  KL 0.0123  DRO q [0.218, 0.782]  val F1 0.7500  acc 0.9129  6.3s
+    ft epoch  8/20  CE 0.2164  KL 0.0120  DRO q [0.195, 0.805]  val F1 0.7511  acc 0.9129  6.2s
+    ft epoch  9/20  CE 0.2149  KL 0.0118  DRO q [0.173, 0.827]  val F1 0.7503  acc 0.9137  6.2s
+    ft epoch 10/20  CE 0.2147  KL 0.0117  DRO q [0.154, 0.846]  val F1 0.7480  acc 0.9113  7.2s
+    ft epoch 11/20  CE 0.2147  KL 0.0115  DRO q [0.136, 0.864]  val F1 0.7519  acc 0.9129  6.2s
+    ft epoch 12/20  CE 0.2119  KL 0.0114  DRO q [0.121, 0.879]  val F1 0.7509  acc 0.9139  6.2s
+    ft epoch 13/20  CE 0.2104  KL 0.0113  DRO q [0.108, 0.892]  val F1 0.7510  acc 0.9127  6.4s
+    ft epoch 14/20  CE 0.2115  KL 0.0113  DRO q [0.096, 0.904]  val F1 0.7524  acc 0.9130  6.5s
+    ft epoch 15/20  CE 0.2083  KL 0.0110  DRO q [0.086, 0.914]  val F1 0.7489  acc 0.9109  6.4s
+    ft epoch 16/20  CE 0.2096  KL 0.0111  DRO q [0.076, 0.924]  val F1 0.7475  acc 0.9094  6.3s
+    ft epoch 17/20  CE 0.2067  KL 0.0110  DRO q [0.068, 0.932]  val F1 0.7534  acc 0.9120  6.2s
+    ft epoch 18/20  CE 0.2077  KL 0.0109  DRO q [0.061, 0.939]  val F1 0.7509  acc 0.9115  6.3s
+    ft epoch 19/20  CE 0.2063  KL 0.0109  DRO q [0.054, 0.946]  val F1 0.7549  acc 0.9139  6.3s
+    ft epoch 20/20  CE 0.2058  KL 0.0107  DRO q [0.049, 0.951]  val F1 0.7544  acc 0.9129  6.4s
+    -> FA-LCI 0.7921 (normal 0.7941, older-like 0.7921); F1 0.7544 / 0.7064; 125.0 s
+
+=== fold 1 ft-xgp_ft(beta=0.1,r=0.25)-70pct-seed2: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2203  KL 0.0145  DRO q [0.457, 0.543]  val F1 0.7569  acc 0.9146  5.1s
+    ft epoch  2/20  CE 0.2108  KL 0.0116  DRO q [0.416, 0.584]  val F1 0.7592  acc 0.9137  5.1s
+    ft epoch  3/20  CE 0.2059  KL 0.0114  DRO q [0.379, 0.621]  val F1 0.7593  acc 0.9155  5.4s
+    ft epoch  4/20  CE 0.2038  KL 0.0111  DRO q [0.346, 0.654]  val F1 0.7526  acc 0.9144  5.3s
+    ft epoch  5/20  CE 0.2026  KL 0.0109  DRO q [0.314, 0.686]  val F1 0.7600  acc 0.9146  5.4s
+    ft epoch  6/20  CE 0.1981  KL 0.0108  DRO q [0.284, 0.716]  val F1 0.7594  acc 0.9134  6.1s
+    ft epoch  7/20  CE 0.1982  KL 0.0108  DRO q [0.258, 0.742]  val F1 0.7575  acc 0.9132  6.3s
+    ft epoch  8/20  CE 0.1957  KL 0.0107  DRO q [0.234, 0.766]  val F1 0.7564  acc 0.9132  5.4s
+    ft epoch  9/20  CE 0.1943  KL 0.0106  DRO q [0.214, 0.786]  val F1 0.7622  acc 0.9151  5.5s
+    ft epoch 10/20  CE 0.1946  KL 0.0105  DRO q [0.194, 0.806]  val F1 0.7557  acc 0.9153  5.4s
+    ft epoch 11/20  CE 0.1946  KL 0.0104  DRO q [0.177, 0.823]  val F1 0.7586  acc 0.9134  5.3s
+    ft epoch 12/20  CE 0.1944  KL 0.0104  DRO q [0.16, 0.84]  val F1 0.7599  acc 0.9162  5.2s
+    ft epoch 13/20  CE 0.1925  KL 0.0103  DRO q [0.146, 0.854]  val F1 0.7647  acc 0.9173  5.4s
+    ft epoch 14/20  CE 0.1920  KL 0.0103  DRO q [0.132, 0.868]  val F1 0.7616  acc 0.9167  5.8s
+    ft epoch 15/20  CE 0.1925  KL 0.0103  DRO q [0.119, 0.881]  val F1 0.7587  acc 0.9143  5.5s
+    ft epoch 16/20  CE 0.1900  KL 0.0102  DRO q [0.109, 0.891]  val F1 0.7609  acc 0.9157  5.4s
+    ft epoch 17/20  CE 0.1903  KL 0.0102  DRO q [0.098, 0.902]  val F1 0.7618  acc 0.9155  5.6s
+    ft epoch 18/20  CE 0.1895  KL 0.0102  DRO q [0.088, 0.912]  val F1 0.7582  acc 0.9129  5.5s
+    ft epoch 19/20  CE 0.1903  KL 0.0101  DRO q [0.08, 0.92]  val F1 0.7602  acc 0.9157  5.5s
+    ft epoch 20/20  CE 0.1896  KL 0.0100  DRO q [0.073, 0.927]  val F1 0.7602  acc 0.9146  5.5s
+    -> FA-LCI 0.8278 (normal 0.8278, older-like 0.8769); F1 0.7602 / 0.7046; 109.4 s
+
+=== fold 1 ft-xgp_ft(beta=0.1,r=0.5)-70pct-seed2: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2382  KL 0.0144  DRO q [0.453, 0.547]  val F1 0.7570  acc 0.9144  6.1s
+    ft epoch  2/20  CE 0.2242  KL 0.0119  DRO q [0.407, 0.593]  val F1 0.7597  acc 0.9155  6.5s
+    ft epoch  3/20  CE 0.2193  KL 0.0114  DRO q [0.365, 0.635]  val F1 0.7577  acc 0.9134  6.3s
+    ft epoch  4/20  CE 0.2158  KL 0.0112  DRO q [0.326, 0.674]  val F1 0.7581  acc 0.9144  6.3s
+    ft epoch  5/20  CE 0.2163  KL 0.0108  DRO q [0.291, 0.709]  val F1 0.7603  acc 0.9146  6.2s
+    ft epoch  6/20  CE 0.2124  KL 0.0108  DRO q [0.259, 0.741]  val F1 0.7637  acc 0.9151  6.3s
+    ft epoch  7/20  CE 0.2108  KL 0.0107  DRO q [0.231, 0.769]  val F1 0.7592  acc 0.9146  6.4s
+    ft epoch  8/20  CE 0.2073  KL 0.0105  DRO q [0.206, 0.794]  val F1 0.7603  acc 0.9148  6.3s
+    ft epoch  9/20  CE 0.2059  KL 0.0104  DRO q [0.183, 0.817]  val F1 0.7587  acc 0.9151  6.3s
+    ft epoch 10/20  CE 0.2067  KL 0.0104  DRO q [0.162, 0.838]  val F1 0.7591  acc 0.9137  6.3s
+    ft epoch 11/20  CE 0.2065  KL 0.0103  DRO q [0.143, 0.857]  val F1 0.7588  acc 0.9139  6.4s
+    ft epoch 12/20  CE 0.2053  KL 0.0103  DRO q [0.127, 0.873]  val F1 0.7610  acc 0.9164  7.3s
+    ft epoch 13/20  CE 0.2041  KL 0.0103  DRO q [0.113, 0.887]  val F1 0.7580  acc 0.9139  6.5s
+    ft epoch 14/20  CE 0.2047  KL 0.0102  DRO q [0.1, 0.9]  val F1 0.7585  acc 0.9129  6.4s
+    ft epoch 15/20  CE 0.2041  KL 0.0101  DRO q [0.089, 0.911]  val F1 0.7582  acc 0.9139  6.4s
+    ft epoch 16/20  CE 0.2029  KL 0.0101  DRO q [0.078, 0.922]  val F1 0.7580  acc 0.9123  6.5s
+    ft epoch 17/20  CE 0.2020  KL 0.0101  DRO q [0.069, 0.931]  val F1 0.7592  acc 0.9129  6.5s
+    ft epoch 18/20  CE 0.2026  KL 0.0101  DRO q [0.061, 0.939]  val F1 0.7595  acc 0.9148  6.5s
+    ft epoch 19/20  CE 0.2011  KL 0.0101  DRO q [0.055, 0.945]  val F1 0.7571  acc 0.9148  6.7s
+    ft epoch 20/20  CE 0.2009  KL 0.0099  DRO q [0.049, 0.951]  val F1 0.7580  acc 0.9139  6.6s
+    -> FA-LCI 0.8270 (normal 0.8270, older-like 0.8770); F1 0.7580 / 0.7110; 128.7 s
+
+=== fold 1 ft-xgp_ft(beta=0.3,r=0.25)-70pct-seed2: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2199  KL 0.0143  DRO q [0.457, 0.543]  val F1 0.7638  acc 0.9164  5.1s
+    ft epoch  2/20  CE 0.2109  KL 0.0115  DRO q [0.415, 0.585]  val F1 0.7666  acc 0.9167  5.3s
+    ft epoch  3/20  CE 0.2075  KL 0.0113  DRO q [0.377, 0.623]  val F1 0.7655  acc 0.9169  5.3s
+    ft epoch  4/20  CE 0.2040  KL 0.0111  DRO q [0.343, 0.657]  val F1 0.7635  acc 0.9169  5.2s
+    ft epoch  5/20  CE 0.2017  KL 0.0109  DRO q [0.31, 0.69]  val F1 0.7606  acc 0.9164  5.2s
+    ft epoch  6/20  CE 0.1973  KL 0.0108  DRO q [0.28, 0.72]  val F1 0.7674  acc 0.9157  5.3s
+    ft epoch  7/20  CE 0.1980  KL 0.0107  DRO q [0.253, 0.747]  val F1 0.7631  acc 0.9146  5.3s
+    ft epoch  8/20  CE 0.1953  KL 0.0106  DRO q [0.23, 0.77]  val F1 0.7644  acc 0.9160  5.4s
+    ft epoch  9/20  CE 0.1944  KL 0.0105  DRO q [0.209, 0.791]  val F1 0.7689  acc 0.9183  5.4s
+    ft epoch 10/20  CE 0.1954  KL 0.0105  DRO q [0.189, 0.811]  val F1 0.7634  acc 0.9167  5.3s
+    ft epoch 11/20  CE 0.1945  KL 0.0104  DRO q [0.172, 0.828]  val F1 0.7624  acc 0.9148  5.3s
+    ft epoch 12/20  CE 0.1947  KL 0.0103  DRO q [0.156, 0.844]  val F1 0.7641  acc 0.9169  5.3s
+    ft epoch 13/20  CE 0.1930  KL 0.0103  DRO q [0.141, 0.859]  val F1 0.7660  acc 0.9173  5.3s
+    ft epoch 14/20  CE 0.1913  KL 0.0103  DRO q [0.128, 0.872]  val F1 0.7704  acc 0.9187  5.4s
+    ft epoch 15/20  CE 0.1921  KL 0.0102  DRO q [0.115, 0.885]  val F1 0.7637  acc 0.9155  5.5s
+    ft epoch 16/20  CE 0.1896  KL 0.0102  DRO q [0.105, 0.895]  val F1 0.7673  acc 0.9167  5.5s
+    ft epoch 17/20  CE 0.1906  KL 0.0102  DRO q [0.094, 0.906]  val F1 0.7651  acc 0.9169  5.4s
+    ft epoch 18/20  CE 0.1896  KL 0.0102  DRO q [0.085, 0.915]  val F1 0.7630  acc 0.9139  5.4s
+    ft epoch 19/20  CE 0.1898  KL 0.0102  DRO q [0.077, 0.923]  val F1 0.7682  acc 0.9187  5.6s
+    ft epoch 20/20  CE 0.1894  KL 0.0100  DRO q [0.07, 0.93]  val F1 0.7644  acc 0.9151  5.6s
+    -> FA-LCI 0.7827 (normal 0.7827, older-like 0.8540); F1 0.7644 / 0.7071; 107.2 s
+
+=== fold 1 ft-xgp_ft(beta=0.3,r=0.5)-70pct-seed2: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2374  KL 0.0143  DRO q [0.453, 0.547]  val F1 0.7656  acc 0.9171  6.2s
+    ft epoch  2/20  CE 0.2247  KL 0.0118  DRO q [0.406, 0.594]  val F1 0.7650  acc 0.9171  6.2s
+    ft epoch  3/20  CE 0.2197  KL 0.0114  DRO q [0.363, 0.637]  val F1 0.7616  acc 0.9144  7.0s
+    ft epoch  4/20  CE 0.2164  KL 0.0112  DRO q [0.323, 0.677]  val F1 0.7670  acc 0.9165  6.9s
+    ft epoch  5/20  CE 0.2157  KL 0.0108  DRO q [0.289, 0.711]  val F1 0.7639  acc 0.9155  6.5s
+    ft epoch  6/20  CE 0.2122  KL 0.0108  DRO q [0.257, 0.743]  val F1 0.7625  acc 0.9150  6.3s
+    ft epoch  7/20  CE 0.2107  KL 0.0107  DRO q [0.229, 0.771]  val F1 0.7662  acc 0.9160  6.3s
+    ft epoch  8/20  CE 0.2076  KL 0.0105  DRO q [0.204, 0.796]  val F1 0.7613  acc 0.9146  6.4s
+    ft epoch  9/20  CE 0.2060  KL 0.0104  DRO q [0.181, 0.819]  val F1 0.7648  acc 0.9157  6.3s
+    ft epoch 10/20  CE 0.2066  KL 0.0104  DRO q [0.161, 0.839]  val F1 0.7610  acc 0.9139  6.3s
+    ft epoch 11/20  CE 0.2064  KL 0.0103  DRO q [0.142, 0.858]  val F1 0.7583  acc 0.9136  6.4s
+    ft epoch 12/20  CE 0.2055  KL 0.0103  DRO q [0.125, 0.875]  val F1 0.7634  acc 0.9173  6.3s
+    ft epoch 13/20  CE 0.2038  KL 0.0103  DRO q [0.111, 0.889]  val F1 0.7604  acc 0.9143  6.6s
+    ft epoch 14/20  CE 0.2044  KL 0.0102  DRO q [0.099, 0.901]  val F1 0.7576  acc 0.9137  6.7s
+    ft epoch 15/20  CE 0.2038  KL 0.0101  DRO q [0.088, 0.912]  val F1 0.7572  acc 0.9139  6.5s
+    ft epoch 16/20  CE 0.2029  KL 0.0101  DRO q [0.077, 0.923]  val F1 0.7602  acc 0.9134  6.5s
+    ft epoch 17/20  CE 0.2020  KL 0.0101  DRO q [0.068, 0.932]  val F1 0.7625  acc 0.9151  6.5s
+    ft epoch 18/20  CE 0.2026  KL 0.0101  DRO q [0.061, 0.939]  val F1 0.7612  acc 0.9150  6.5s
+    ft epoch 19/20  CE 0.2011  KL 0.0100  DRO q [0.054, 0.946]  val F1 0.7597  acc 0.9157  6.8s
+    ft epoch 20/20  CE 0.2005  KL 0.0099  DRO q [0.048, 0.952]  val F1 0.7594  acc 0.9139  6.7s
+    -> FA-LCI 0.8036 (normal 0.8036, older-like 0.8784); F1 0.7594 / 0.7085; 129.7 s
+
+=== fold 1 ft-xgp_ft(beta=0.5,r=0.25)-70pct-seed2: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2219  KL 0.0154  DRO q [0.457, 0.543]  val F1 0.7623  acc 0.9165  5.2s
+    ft epoch  2/20  CE 0.2107  KL 0.0117  DRO q [0.415, 0.585]  val F1 0.7705  acc 0.9174  5.6s
+    ft epoch  3/20  CE 0.2078  KL 0.0114  DRO q [0.377, 0.623]  val F1 0.7702  acc 0.9171  5.1s
+    ft epoch  4/20  CE 0.2033  KL 0.0111  DRO q [0.344, 0.656]  val F1 0.7659  acc 0.9178  5.2s
+    ft epoch  5/20  CE 0.2023  KL 0.0110  DRO q [0.312, 0.688]  val F1 0.7711  acc 0.9178  5.2s
+    ft epoch  6/20  CE 0.1976  KL 0.0108  DRO q [0.282, 0.718]  val F1 0.7682  acc 0.9173  5.3s
+    ft epoch  7/20  CE 0.1979  KL 0.0108  DRO q [0.255, 0.745]  val F1 0.7698  acc 0.9167  5.9s
+    ft epoch  8/20  CE 0.1951  KL 0.0107  DRO q [0.232, 0.768]  val F1 0.7673  acc 0.9169  5.4s
+    ft epoch  9/20  CE 0.1940  KL 0.0106  DRO q [0.212, 0.788]  val F1 0.7713  acc 0.9181  5.3s
+    ft epoch 10/20  CE 0.1953  KL 0.0105  DRO q [0.191, 0.809]  val F1 0.7671  acc 0.9173  5.4s
+    ft epoch 11/20  CE 0.1947  KL 0.0104  DRO q [0.174, 0.826]  val F1 0.7650  acc 0.9165  5.4s
+    ft epoch 12/20  CE 0.1942  KL 0.0104  DRO q [0.157, 0.843]  val F1 0.7658  acc 0.9171  5.6s
+    ft epoch 13/20  CE 0.1926  KL 0.0104  DRO q [0.143, 0.857]  val F1 0.7706  acc 0.9187  5.6s
+    ft epoch 14/20  CE 0.1916  KL 0.0104  DRO q [0.13, 0.87]  val F1 0.7706  acc 0.9190  5.4s
+    ft epoch 15/20  CE 0.1918  KL 0.0103  DRO q [0.117, 0.883]  val F1 0.7679  acc 0.9171  5.7s
+    ft epoch 16/20  CE 0.1896  KL 0.0103  DRO q [0.106, 0.894]  val F1 0.7703  acc 0.9171  5.6s
+    ft epoch 17/20  CE 0.1911  KL 0.0103  DRO q [0.096, 0.904]  val F1 0.7704  acc 0.9178  5.5s
+    ft epoch 18/20  CE 0.1897  KL 0.0102  DRO q [0.086, 0.914]  val F1 0.7662  acc 0.9137  5.4s
+    ft epoch 19/20  CE 0.1907  KL 0.0102  DRO q [0.078, 0.922]  val F1 0.7713  acc 0.9183  5.5s
+    ft epoch 20/20  CE 0.1894  KL 0.0101  DRO q [0.071, 0.929]  val F1 0.7689  acc 0.9160  5.6s
+    -> FA-LCI 0.8054 (normal 0.8054, older-like 0.8502); F1 0.7689 / 0.7048; 109.1 s
+
+=== fold 1 ft-xgp_ft(beta=0.5,r=0.5)-70pct-seed2: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2392  KL 0.0151  DRO q [0.454, 0.546]  val F1 0.7657  acc 0.9167  6.2s
+    ft epoch  2/20  CE 0.2246  KL 0.0119  DRO q [0.408, 0.592]  val F1 0.7657  acc 0.9173  6.2s
+    ft epoch  3/20  CE 0.2201  KL 0.0114  DRO q [0.365, 0.635]  val F1 0.7662  acc 0.9155  6.2s
+    ft epoch  4/20  CE 0.2170  KL 0.0112  DRO q [0.326, 0.674]  val F1 0.7658  acc 0.9162  6.3s
+    ft epoch  5/20  CE 0.2161  KL 0.0109  DRO q [0.291, 0.709]  val F1 0.7692  acc 0.9162  6.3s
+    ft epoch  6/20  CE 0.2118  KL 0.0108  DRO q [0.26, 0.74]  val F1 0.7676  acc 0.9157  6.4s
+    ft epoch  7/20  CE 0.2108  KL 0.0107  DRO q [0.232, 0.768]  val F1 0.7657  acc 0.9167  6.3s
+    ft epoch  8/20  CE 0.2071  KL 0.0105  DRO q [0.207, 0.793]  val F1 0.7664  acc 0.9162  6.4s
+    ft epoch  9/20  CE 0.2059  KL 0.0105  DRO q [0.184, 0.816]  val F1 0.7621  acc 0.9162  6.3s
+    ft epoch 10/20  CE 0.2073  KL 0.0104  DRO q [0.163, 0.837]  val F1 0.7661  acc 0.9162  6.4s
+    ft epoch 11/20  CE 0.2062  KL 0.0103  DRO q [0.144, 0.856]  val F1 0.7631  acc 0.9148  6.5s
+    ft epoch 12/20  CE 0.2060  KL 0.0103  DRO q [0.128, 0.872]  val F1 0.7651  acc 0.9178  6.4s
+    ft epoch 13/20  CE 0.2037  KL 0.0103  DRO q [0.113, 0.887]  val F1 0.7646  acc 0.9160  6.5s
+    ft epoch 14/20  CE 0.2046  KL 0.0102  DRO q [0.101, 0.899]  val F1 0.7625  acc 0.9144  6.5s
+    ft epoch 15/20  CE 0.2037  KL 0.0101  DRO q [0.089, 0.911]  val F1 0.7678  acc 0.9169  7.0s
+    ft epoch 16/20  CE 0.2030  KL 0.0102  DRO q [0.079, 0.921]  val F1 0.7615  acc 0.9137  6.6s
+    ft epoch 17/20  CE 0.2017  KL 0.0101  DRO q [0.07, 0.93]  val F1 0.7643  acc 0.9160  6.7s
+    ft epoch 18/20  CE 0.2025  KL 0.0101  DRO q [0.062, 0.938]  val F1 0.7658  acc 0.9167  6.7s
+    ft epoch 19/20  CE 0.2010  KL 0.0100  DRO q [0.055, 0.945]  val F1 0.7663  acc 0.9173  6.6s
+    ft epoch 20/20  CE 0.2009  KL 0.0099  DRO q [0.049, 0.951]  val F1 0.7645  acc 0.9155  6.6s
+    -> FA-LCI 0.8268 (normal 0.8268, older-like 0.8507); F1 0.7645 / 0.7059; 129.3 s
+
+######## fold 1, phase tuning, level 90%
+
+--- start fold1-l1-90pct-seed0
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-l1-90pct-seed0                          FA-LCI 0.2426 (normal 0.2477, older-like 0.2426); F1 0.0478 / 0.0518
+
+--- start fold1-snip-90pct-seed0
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-snip-90pct-seed0                        FA-LCI 0.1555 (normal 0.1870, older-like 0.1555); F1 0.0441 / 0.0407
+
+--- start fold1-l1_recon-90pct-seed0
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-l1_recon-90pct-seed0                    FA-LCI 0.4134 (normal 0.4450, older-like 0.4134); F1 0.6001 / 0.5637
+
+--- start fold1-xgp-90pct-seed0-beta0.1
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.180, n_nonzero 44783, reconstructed
+      prune step 2/5: sparsity 0.360, n_nonzero 35294, reconstructed
+      prune step 3/5: sparsity 0.540, n_nonzero 25801, reconstructed
+      prune step 4/5: sparsity 0.720, n_nonzero 16313, reconstructed
+      prune step 5/5: sparsity 0.900, n_nonzero 6821, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp(beta=0.1)-90pct-seed0               FA-LCI 0.4132 (normal 0.4507, older-like 0.4132); F1 0.6326 / 0.5966
+
+--- start fold1-xgp-90pct-seed0-beta0.3
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.180, n_nonzero 44783, reconstructed
+      prune step 2/5: sparsity 0.360, n_nonzero 35294, reconstructed
+      prune step 3/5: sparsity 0.540, n_nonzero 25801, reconstructed
+      prune step 4/5: sparsity 0.720, n_nonzero 16313, reconstructed
+      prune step 5/5: sparsity 0.900, n_nonzero 6821, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp(beta=0.3)-90pct-seed0               FA-LCI 0.4714 (normal 0.4970, older-like 0.4714); F1 0.6800 / 0.6382
+
+--- start fold1-xgp-90pct-seed0-beta0.5
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.180, n_nonzero 44783, reconstructed
+      prune step 2/5: sparsity 0.360, n_nonzero 35294, reconstructed
+      prune step 3/5: sparsity 0.540, n_nonzero 25801, reconstructed
+      prune step 4/5: sparsity 0.720, n_nonzero 16313, reconstructed
+      prune step 5/5: sparsity 0.900, n_nonzero 6821, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp(beta=0.5)-90pct-seed0               FA-LCI 0.4838 (normal 0.4990, older-like 0.4838); F1 0.6737 / 0.6048
+
+=== fold 1 ft-l1-90pct-seed0: start l1, recipe ce, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 1.3429  val F1 0.5164  acc 0.7554  3.2s
+    ft epoch  2/20  CE 0.7855  val F1 0.5734  acc 0.8103  3.1s
+    curve epoch 2: FA-LCI 0.4669, F1 0.5734 / 0.5458
+    ft epoch  3/20  CE 0.5642  val F1 0.6073  acc 0.8448  3.2s
+    ft epoch  4/20  CE 0.4715  val F1 0.6354  acc 0.8612  3.2s
+    ft epoch  5/20  CE 0.4189  val F1 0.6227  acc 0.8475  3.2s
+    curve epoch 5: FA-LCI 0.5012, F1 0.6227 / 0.5824
+    ft epoch  6/20  CE 0.3917  val F1 0.6509  acc 0.8759  3.1s
+    ft epoch  7/20  CE 0.3675  val F1 0.6555  acc 0.8783  3.1s
+    ft epoch  8/20  CE 0.3561  val F1 0.6482  acc 0.8741  3.1s
+    ft epoch  9/20  CE 0.3386  val F1 0.6584  acc 0.8722  3.1s
+    ft epoch 10/20  CE 0.3339  val F1 0.6500  acc 0.8722  3.1s
+    ft epoch 11/20  CE 0.3193  val F1 0.6607  acc 0.8787  3.2s
+    ft epoch 12/20  CE 0.3125  val F1 0.6577  acc 0.8752  3.2s
+    ft epoch 13/20  CE 0.3075  val F1 0.6342  acc 0.8422  3.1s
+    ft epoch 14/20  CE 0.3021  val F1 0.6526  acc 0.8759  3.2s
+    ft epoch 15/20  CE 0.2974  val F1 0.6595  acc 0.8769  3.1s
+    ft epoch 16/20  CE 0.2911  val F1 0.6668  acc 0.8843  3.2s
+    ft epoch 17/20  CE 0.2872  val F1 0.6664  acc 0.8808  3.2s
+    ft epoch 18/20  CE 0.2818  val F1 0.6500  acc 0.8754  3.2s
+    ft epoch 19/20  CE 0.2787  val F1 0.6615  acc 0.8801  3.3s
+    ft epoch 20/20  CE 0.2743  val F1 0.6538  acc 0.8820  3.3s
+    -> FA-LCI 0.5241 (normal 0.5241, older-like 0.5426); F1 0.6538 / 0.6032; 63.6 s
+
+=== fold 1 ft-l1_kd-90pct-seed0: start l1, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 1.5356  KL 0.5982  val F1 0.4426  acc 0.7567  3.4s
+    ft epoch  2/20  CE 1.0889  KL 0.2365  val F1 0.5737  acc 0.9067  3.4s
+    curve epoch 2: FA-LCI 0.4253, F1 0.5737 / 0.5641
+    ft epoch  3/20  CE 0.9032  KL 0.1126  val F1 0.5812  acc 0.9134  3.5s
+    ft epoch  4/20  CE 0.7827  KL 0.0761  val F1 0.6220  acc 0.9130  3.5s
+    ft epoch  5/20  CE 0.6502  KL 0.0609  val F1 0.6536  acc 0.9088  3.6s
+    curve epoch 5: FA-LCI 0.5291, F1 0.6536 / 0.6352
+    ft epoch  6/20  CE 0.5620  KL 0.0515  val F1 0.6679  acc 0.9067  3.4s
+    ft epoch  7/20  CE 0.4950  KL 0.0445  val F1 0.6798  acc 0.9057  3.4s
+    ft epoch  8/20  CE 0.4649  KL 0.0400  val F1 0.6749  acc 0.9038  3.4s
+    ft epoch  9/20  CE 0.4271  KL 0.0368  val F1 0.6781  acc 0.9036  3.5s
+    ft epoch 10/20  CE 0.4167  KL 0.0347  val F1 0.6871  acc 0.9048  3.4s
+    ft epoch 11/20  CE 0.3921  KL 0.0324  val F1 0.6851  acc 0.9016  3.4s
+    ft epoch 12/20  CE 0.3745  KL 0.0307  val F1 0.6857  acc 0.9013  3.4s
+    ft epoch 13/20  CE 0.3693  KL 0.0298  val F1 0.6838  acc 0.8953  3.5s
+    ft epoch 14/20  CE 0.3559  KL 0.0286  val F1 0.6833  acc 0.8990  3.5s
+    ft epoch 15/20  CE 0.3489  KL 0.0276  val F1 0.6811  acc 0.8988  3.5s
+    ft epoch 16/20  CE 0.3398  KL 0.0264  val F1 0.6826  acc 0.8990  3.4s
+    ft epoch 17/20  CE 0.3320  KL 0.0257  val F1 0.6890  acc 0.9011  3.4s
+    ft epoch 18/20  CE 0.3274  KL 0.0250  val F1 0.6736  acc 0.8960  3.4s
+    ft epoch 19/20  CE 0.3199  KL 0.0244  val F1 0.6895  acc 0.8988  3.5s
+    ft epoch 20/20  CE 0.3139  KL 0.0239  val F1 0.6828  acc 0.8992  3.4s
+    -> FA-LCI 0.5674 (normal 0.5674, older-like 0.5750); F1 0.6828 / 0.6363; 69.2 s
+
+=== fold 1 ft-snip_kd-90pct-seed0: start snip, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 1.6579  KL 0.8011  val F1 0.1062  acc 0.2987  3.4s
+    ft epoch  2/20  CE 1.3952  KL 0.4639  val F1 0.3975  acc 0.8050  3.3s
+    curve epoch 2: FA-LCI 0.2294, F1 0.3975 / 0.3986
+    ft epoch  3/20  CE 1.0670  KL 0.2534  val F1 0.5612  acc 0.8948  3.5s
+    ft epoch  4/20  CE 0.9059  KL 0.1491  val F1 0.0507  acc 0.2158  3.3s
+    ft epoch  5/20  CE 0.8218  KL 0.1048  val F1 0.5616  acc 0.8764  3.3s
+    curve epoch 5: FA-LCI 0.3365, F1 0.5616 / 0.4628
+    ft epoch  6/20  CE 0.7590  KL 0.0842  val F1 0.0507  acc 0.2158  3.4s
+    ft epoch  7/20  CE 0.7188  KL 0.0730  val F1 0.0507  acc 0.2158  3.3s
+    ft epoch  8/20  CE 0.6806  KL 0.0654  val F1 0.0507  acc 0.2158  3.3s
+    ft epoch  9/20  CE 0.6302  KL 0.0606  val F1 0.0507  acc 0.2158  3.4s
+    ft epoch 10/20  CE 0.6104  KL 0.0566  val F1 0.0507  acc 0.2158  3.4s
+    ft epoch 11/20  CE 0.5713  KL 0.0526  val F1 0.0515  acc 0.2158  3.4s
+    ft epoch 12/20  CE 0.5348  KL 0.0491  val F1 0.6223  acc 0.8713  3.4s
+    ft epoch 13/20  CE 0.5017  KL 0.0460  val F1 0.6344  acc 0.8736  3.4s
+    ft epoch 14/20  CE 0.4710  KL 0.0431  val F1 0.3293  acc 0.4479  3.4s
+    ft epoch 15/20  CE 0.4495  KL 0.0407  val F1 0.6235  acc 0.8708  3.4s
+    ft epoch 16/20  CE 0.4228  KL 0.0382  val F1 0.0529  acc 0.2148  3.4s
+    ft epoch 17/20  CE 0.4086  KL 0.0367  val F1 0.2949  acc 0.3619  3.4s
+    ft epoch 18/20  CE 0.3943  KL 0.0350  val F1 0.0527  acc 0.2149  3.4s
+    ft epoch 19/20  CE 0.3748  KL 0.0338  val F1 0.1587  acc 0.1930  3.8s
+    ft epoch 20/20  CE 0.3662  KL 0.0328  val F1 0.1117  acc 0.1676  3.8s
+    -> FA-LCI 0.2838 (normal 0.2838, older-like 0.2978); F1 0.1117 / 0.0758; 68.3 s
+
+=== fold 1 ft-l1_kdaug(r=0.25)-90pct-seed0: start l1, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 1.4976  KL 0.5425  DRO q [0.576, 0.424]  val F1 0.5660  acc 0.8610  5.1s
+    ft epoch  2/20  CE 0.9958  KL 0.1799  DRO q [0.616, 0.384]  val F1 0.5869  acc 0.9167  5.2s
+    curve epoch 2: FA-LCI 0.4091, F1 0.5869 / 0.5874
+    ft epoch  3/20  CE 0.8491  KL 0.0883  DRO q [0.641, 0.359]  val F1 0.5959  acc 0.9167  5.1s
+    ft epoch  4/20  CE 0.7173  KL 0.0659  DRO q [0.659, 0.341]  val F1 0.6363  acc 0.9108  5.1s
+    ft epoch  5/20  CE 0.6048  KL 0.0542  DRO q [0.659, 0.341]  val F1 0.6624  acc 0.9041  5.1s
+    curve epoch 5: FA-LCI 0.4993, F1 0.6624 / 0.6372
+    ft epoch  6/20  CE 0.5361  KL 0.0463  DRO q [0.644, 0.356]  val F1 0.6769  acc 0.9076  5.1s
+    ft epoch  7/20  CE 0.4906  KL 0.0413  DRO q [0.621, 0.379]  val F1 0.6854  acc 0.9095  5.1s
+    ft epoch  8/20  CE 0.4608  KL 0.0376  DRO q [0.595, 0.405]  val F1 0.6860  acc 0.9059  5.1s
+    ft epoch  9/20  CE 0.4377  KL 0.0350  DRO q [0.564, 0.436]  val F1 0.6898  acc 0.9062  5.1s
+    ft epoch 10/20  CE 0.4243  KL 0.0334  DRO q [0.536, 0.464]  val F1 0.6935  acc 0.9071  5.1s
+    ft epoch 11/20  CE 0.4064  KL 0.0315  DRO q [0.503, 0.497]  val F1 0.6896  acc 0.9057  5.1s
+    ft epoch 12/20  CE 0.3961  KL 0.0303  DRO q [0.47, 0.53]  val F1 0.7000  acc 0.9081  5.1s
+    ft epoch 13/20  CE 0.3845  KL 0.0294  DRO q [0.436, 0.564]  val F1 0.6970  acc 0.9057  5.2s
+    ft epoch 14/20  CE 0.3832  KL 0.0284  DRO q [0.412, 0.588]  val F1 0.6971  acc 0.9048  5.2s
+    ft epoch 15/20  CE 0.3685  KL 0.0279  DRO q [0.385, 0.615]  val F1 0.6926  acc 0.9036  5.2s
+    ft epoch 16/20  CE 0.3631  KL 0.0271  DRO q [0.362, 0.638]  val F1 0.6905  acc 0.9057  5.1s
+    ft epoch 17/20  CE 0.3586  KL 0.0265  DRO q [0.339, 0.661]  val F1 0.7022  acc 0.9062  5.1s
+    ft epoch 18/20  CE 0.3575  KL 0.0261  DRO q [0.318, 0.682]  val F1 0.6909  acc 0.9048  5.1s
+    ft epoch 19/20  CE 0.3503  KL 0.0256  DRO q [0.3, 0.7]  val F1 0.7035  acc 0.9057  5.2s
+    ft epoch 20/20  CE 0.3472  KL 0.0253  DRO q [0.282, 0.718]  val F1 0.6941  acc 0.9043  5.2s
+    -> FA-LCI 0.5670 (normal 0.5670, older-like 0.5804); F1 0.6941 / 0.6637; 102.6 s
+
+=== fold 1 ft-l1_kdaug(r=0.5)-90pct-seed0: start l1, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 1.4367  KL 0.4905  DRO q [0.572, 0.428]  val F1 0.5761  acc 0.8883  6.1s
+    ft epoch  2/20  CE 0.9510  KL 0.1371  DRO q [0.603, 0.397]  val F1 0.5871  acc 0.9148  6.3s
+    curve epoch 2: FA-LCI 0.4657, F1 0.5871 / 0.5985
+    ft epoch  3/20  CE 0.7873  KL 0.0731  DRO q [0.622, 0.378]  val F1 0.6389  acc 0.9169  6.1s
+    ft epoch  4/20  CE 0.6451  KL 0.0567  DRO q [0.62, 0.38]  val F1 0.6632  acc 0.9137  6.1s
+    ft epoch  5/20  CE 0.5523  KL 0.0467  DRO q [0.595, 0.405]  val F1 0.6661  acc 0.8973  6.1s
+    curve epoch 5: FA-LCI 0.5004, F1 0.6661 / 0.6343
+    ft epoch  6/20  CE 0.5035  KL 0.0410  DRO q [0.553, 0.447]  val F1 0.6726  acc 0.9055  6.1s
+    ft epoch  7/20  CE 0.4707  KL 0.0371  DRO q [0.511, 0.489]  val F1 0.6893  acc 0.9062  6.1s
+    ft epoch  8/20  CE 0.4457  KL 0.0346  DRO q [0.469, 0.531]  val F1 0.6809  acc 0.9029  6.1s
+    ft epoch  9/20  CE 0.4276  KL 0.0325  DRO q [0.425, 0.575]  val F1 0.6854  acc 0.9029  6.1s
+    ft epoch 10/20  CE 0.4187  KL 0.0311  DRO q [0.386, 0.614]  val F1 0.6856  acc 0.9034  6.1s
+    ft epoch 11/20  CE 0.4014  KL 0.0299  DRO q [0.351, 0.649]  val F1 0.6901  acc 0.9066  6.2s
+    ft epoch 12/20  CE 0.3927  KL 0.0289  DRO q [0.316, 0.684]  val F1 0.6868  acc 0.9038  6.2s
+    ft epoch 13/20  CE 0.3849  KL 0.0280  DRO q [0.285, 0.715]  val F1 0.6836  acc 0.8997  6.2s
+    ft epoch 14/20  CE 0.3760  KL 0.0273  DRO q [0.26, 0.74]  val F1 0.6912  acc 0.9002  6.1s
+    ft epoch 15/20  CE 0.3748  KL 0.0268  DRO q [0.236, 0.764]  val F1 0.6875  acc 0.9029  6.2s
+    ft epoch 16/20  CE 0.3648  KL 0.0262  DRO q [0.216, 0.784]  val F1 0.6962  acc 0.9027  6.2s
+    ft epoch 17/20  CE 0.3601  KL 0.0256  DRO q [0.198, 0.802]  val F1 0.6923  acc 0.9023  6.2s
+    ft epoch 18/20  CE 0.3576  KL 0.0252  DRO q [0.183, 0.817]  val F1 0.6933  acc 0.9048  6.1s
+    ft epoch 19/20  CE 0.3512  KL 0.0248  DRO q [0.17, 0.83]  val F1 0.6997  acc 0.9039  6.2s
+    ft epoch 20/20  CE 0.3517  KL 0.0244  DRO q [0.158, 0.842]  val F1 0.7000  acc 0.9076  6.3s
+    -> FA-LCI 0.5471 (normal 0.5471, older-like 0.5775); F1 0.7000 / 0.6615; 123.0 s
+
+=== fold 1 ft-xgp_ft(beta=0.1,r=0.25)-90pct-seed0: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.6979  KL 0.2133  DRO q [0.52, 0.48]  val F1 0.6320  acc 0.8817  5.1s
+    ft epoch  2/20  CE 0.4516  KL 0.0643  DRO q [0.496, 0.504]  val F1 0.5868  acc 0.8455  5.1s
+    curve epoch 2: FA-LCI 0.4778, F1 0.5868 / 0.5688
+    ft epoch  3/20  CE 0.3759  KL 0.0375  DRO q [0.46, 0.54]  val F1 0.7121  acc 0.9099  5.1s
+    ft epoch  4/20  CE 0.3533  KL 0.0305  DRO q [0.424, 0.576]  val F1 0.7113  acc 0.9085  5.1s
+    ft epoch  5/20  CE 0.3351  KL 0.0273  DRO q [0.387, 0.613]  val F1 0.7124  acc 0.9088  5.1s
+    curve epoch 5: FA-LCI 0.5764, F1 0.7124 / 0.6762
+    ft epoch  6/20  CE 0.3250  KL 0.0259  DRO q [0.354, 0.646]  val F1 0.7350  acc 0.9109  5.2s
+    ft epoch  7/20  CE 0.3118  KL 0.0246  DRO q [0.324, 0.676]  val F1 0.7185  acc 0.9092  5.1s
+    ft epoch  8/20  CE 0.3059  KL 0.0236  DRO q [0.298, 0.702]  val F1 0.7269  acc 0.9104  5.1s
+    ft epoch  9/20  CE 0.3011  KL 0.0232  DRO q [0.275, 0.725]  val F1 0.7180  acc 0.9088  5.2s
+    ft epoch 10/20  CE 0.2974  KL 0.0226  DRO q [0.257, 0.743]  val F1 0.7109  acc 0.9071  5.1s
+    ft epoch 11/20  CE 0.2925  KL 0.0222  DRO q [0.235, 0.765]  val F1 0.6798  acc 0.8897  5.2s
+    ft epoch 12/20  CE 0.2899  KL 0.0218  DRO q [0.218, 0.782]  val F1 0.7167  acc 0.9085  5.2s
+    ft epoch 13/20  CE 0.2841  KL 0.0215  DRO q [0.201, 0.799]  val F1 0.7196  acc 0.9087  5.2s
+    ft epoch 14/20  CE 0.2852  KL 0.0210  DRO q [0.188, 0.812]  val F1 0.7093  acc 0.9031  5.2s
+    ft epoch 15/20  CE 0.2779  KL 0.0209  DRO q [0.172, 0.828]  val F1 0.7177  acc 0.9085  5.1s
+    ft epoch 16/20  CE 0.2774  KL 0.0207  DRO q [0.159, 0.841]  val F1 0.7007  acc 0.9016  5.2s
+    ft epoch 17/20  CE 0.2783  KL 0.0205  DRO q [0.147, 0.853]  val F1 0.7357  acc 0.9099  5.2s
+    ft epoch 18/20  CE 0.2753  KL 0.0202  DRO q [0.136, 0.864]  val F1 0.7383  acc 0.9116  5.2s
+    ft epoch 19/20  CE 0.2735  KL 0.0200  DRO q [0.127, 0.873]  val F1 0.7323  acc 0.9113  5.2s
+    ft epoch 20/20  CE 0.2716  KL 0.0198  DRO q [0.119, 0.881]  val F1 0.7244  acc 0.9085  5.1s
+    -> FA-LCI 0.6387 (normal 0.6387, older-like 0.6697); F1 0.7244 / 0.6963; 102.8 s
+
+=== fold 1 ft-xgp_ft(beta=0.1,r=0.5)-90pct-seed0: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.6746  KL 0.1904  DRO q [0.508, 0.492]  val F1 0.6876  acc 0.9050  6.1s
+    ft epoch  2/20  CE 0.4421  KL 0.0521  DRO q [0.465, 0.535]  val F1 0.6942  acc 0.9009  6.1s
+    curve epoch 2: FA-LCI 0.5289, F1 0.6942 / 0.6641
+    ft epoch  3/20  CE 0.3873  KL 0.0332  DRO q [0.416, 0.584]  val F1 0.6922  acc 0.8988  6.1s
+    ft epoch  4/20  CE 0.3596  KL 0.0281  DRO q [0.365, 0.635]  val F1 0.7248  acc 0.9069  6.2s
+    ft epoch  5/20  CE 0.3394  KL 0.0258  DRO q [0.321, 0.679]  val F1 0.7271  acc 0.9081  6.1s
+    curve epoch 5: FA-LCI 0.6245, F1 0.7271 / 0.6586
+    ft epoch  6/20  CE 0.3337  KL 0.0245  DRO q [0.283, 0.717]  val F1 0.7204  acc 0.9095  6.1s
+    ft epoch  7/20  CE 0.3226  KL 0.0237  DRO q [0.252, 0.748]  val F1 0.7395  acc 0.9108  6.0s
+    ft epoch  8/20  CE 0.3127  KL 0.0229  DRO q [0.224, 0.776]  val F1 0.7337  acc 0.9097  6.1s
+    ft epoch  9/20  CE 0.3115  KL 0.0223  DRO q [0.2, 0.8]  val F1 0.7187  acc 0.9053  6.1s
+    ft epoch 10/20  CE 0.3070  KL 0.0217  DRO q [0.178, 0.822]  val F1 0.7234  acc 0.9106  6.2s
+    ft epoch 11/20  CE 0.3016  KL 0.0215  DRO q [0.16, 0.84]  val F1 0.7256  acc 0.9090  6.2s
+    ft epoch 12/20  CE 0.2967  KL 0.0212  DRO q [0.143, 0.857]  val F1 0.7319  acc 0.9102  6.2s
+    ft epoch 13/20  CE 0.2942  KL 0.0208  DRO q [0.128, 0.872]  val F1 0.7344  acc 0.9101  6.1s
+    ft epoch 14/20  CE 0.2898  KL 0.0202  DRO q [0.114, 0.886]  val F1 0.7307  acc 0.9109  6.2s
+    ft epoch 15/20  CE 0.2910  KL 0.0202  DRO q [0.102, 0.898]  val F1 0.7351  acc 0.9104  6.1s
+    ft epoch 16/20  CE 0.2854  KL 0.0198  DRO q [0.092, 0.908]  val F1 0.7446  acc 0.9127  6.2s
+    ft epoch 17/20  CE 0.2838  KL 0.0197  DRO q [0.083, 0.917]  val F1 0.7146  acc 0.9046  6.2s
+    ft epoch 18/20  CE 0.2840  KL 0.0195  DRO q [0.076, 0.924]  val F1 0.7354  acc 0.9108  6.2s
+    ft epoch 19/20  CE 0.2808  KL 0.0192  DRO q [0.068, 0.932]  val F1 0.7225  acc 0.9080  6.3s
+    ft epoch 20/20  CE 0.2784  KL 0.0190  DRO q [0.062, 0.938]  val F1 0.7374  acc 0.9108  6.3s
+    -> FA-LCI 0.6525 (normal 0.6525, older-like 0.6675); F1 0.7374 / 0.7003; 123.0 s
+
+=== fold 1 ft-xgp_ft(beta=0.3,r=0.25)-90pct-seed0: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.7413  KL 0.2060  DRO q [0.53, 0.47]  val F1 0.6877  acc 0.9176  5.0s
+    ft epoch  2/20  CE 0.5195  KL 0.0700  DRO q [0.512, 0.488]  val F1 0.7096  acc 0.9064  5.2s
+    curve epoch 2: FA-LCI 0.5546, F1 0.7096 / 0.6478
+    ft epoch  3/20  CE 0.4090  KL 0.0388  DRO q [0.48, 0.52]  val F1 0.7129  acc 0.9102  5.1s
+    ft epoch  4/20  CE 0.3758  KL 0.0302  DRO q [0.442, 0.558]  val F1 0.7078  acc 0.9151  5.1s
+    ft epoch  5/20  CE 0.3547  KL 0.0270  DRO q [0.403, 0.597]  val F1 0.7227  acc 0.9136  5.1s
+    curve epoch 5: FA-LCI 0.5693, F1 0.7227 / 0.6931
+    ft epoch  6/20  CE 0.3438  KL 0.0253  DRO q [0.366, 0.634]  val F1 0.7169  acc 0.9101  5.1s
+    ft epoch  7/20  CE 0.3259  KL 0.0243  DRO q [0.335, 0.665]  val F1 0.7178  acc 0.9137  5.1s
+    ft epoch  8/20  CE 0.3213  KL 0.0231  DRO q [0.309, 0.691]  val F1 0.7300  acc 0.9151  5.1s
+    ft epoch  9/20  CE 0.3126  KL 0.0226  DRO q [0.282, 0.718]  val F1 0.7268  acc 0.9137  5.1s
+    ft epoch 10/20  CE 0.3090  KL 0.0221  DRO q [0.261, 0.739]  val F1 0.7299  acc 0.9099  5.2s
+    ft epoch 11/20  CE 0.3054  KL 0.0216  DRO q [0.241, 0.759]  val F1 0.7303  acc 0.9127  5.2s
+    ft epoch 12/20  CE 0.3003  KL 0.0212  DRO q [0.223, 0.777]  val F1 0.7327  acc 0.9234  5.2s
+    ft epoch 13/20  CE 0.2941  KL 0.0210  DRO q [0.206, 0.794]  val F1 0.7221  acc 0.9064  5.2s
+    ft epoch 14/20  CE 0.2932  KL 0.0206  DRO q [0.192, 0.808]  val F1 0.7325  acc 0.9125  5.2s
+    ft epoch 15/20  CE 0.2874  KL 0.0204  DRO q [0.177, 0.823]  val F1 0.7337  acc 0.9190  5.2s
+    ft epoch 16/20  CE 0.2870  KL 0.0202  DRO q [0.164, 0.836]  val F1 0.7376  acc 0.9160  5.3s
+    ft epoch 17/20  CE 0.2853  KL 0.0200  DRO q [0.152, 0.848]  val F1 0.7405  acc 0.9169  5.2s
+    ft epoch 18/20  CE 0.2844  KL 0.0197  DRO q [0.142, 0.858]  val F1 0.7409  acc 0.9167  5.2s
+    ft epoch 19/20  CE 0.2811  KL 0.0197  DRO q [0.132, 0.868]  val F1 0.7368  acc 0.9143  5.2s
+    ft epoch 20/20  CE 0.2783  KL 0.0194  DRO q [0.125, 0.875]  val F1 0.7327  acc 0.9102  5.3s
+    -> FA-LCI 0.5903 (normal 0.5989, older-like 0.5903); F1 0.7327 / 0.6939; 103.1 s
+
+=== fold 1 ft-xgp_ft(beta=0.3,r=0.5)-90pct-seed0: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.7160  KL 0.1854  DRO q [0.521, 0.479]  val F1 0.7017  acc 0.9164  6.1s
+    ft epoch  2/20  CE 0.4856  KL 0.0559  DRO q [0.487, 0.513]  val F1 0.7155  acc 0.9178  6.1s
+    curve epoch 2: FA-LCI 0.5709, F1 0.7155 / 0.6791
+    ft epoch  3/20  CE 0.4056  KL 0.0333  DRO q [0.441, 0.559]  val F1 0.7142  acc 0.9095  6.1s
+    ft epoch  4/20  CE 0.3760  KL 0.0277  DRO q [0.394, 0.606]  val F1 0.7132  acc 0.9127  6.3s
+    ft epoch  5/20  CE 0.3575  KL 0.0253  DRO q [0.355, 0.645]  val F1 0.7213  acc 0.9102  6.1s
+    curve epoch 5: FA-LCI 0.5694, F1 0.7213 / 0.6892
+    ft epoch  6/20  CE 0.3423  KL 0.0238  DRO q [0.313, 0.687]  val F1 0.7122  acc 0.9148  6.0s
+    ft epoch  7/20  CE 0.3342  KL 0.0229  DRO q [0.281, 0.719]  val F1 0.7182  acc 0.9090  6.1s
+    ft epoch  8/20  CE 0.3232  KL 0.0222  DRO q [0.252, 0.748]  val F1 0.7325  acc 0.9115  6.1s
+    ft epoch  9/20  CE 0.3189  KL 0.0217  DRO q [0.225, 0.775]  val F1 0.7294  acc 0.9094  6.2s
+    ft epoch 10/20  CE 0.3183  KL 0.0212  DRO q [0.204, 0.796]  val F1 0.7288  acc 0.9118  6.1s
+    ft epoch 11/20  CE 0.3069  KL 0.0209  DRO q [0.184, 0.816]  val F1 0.7312  acc 0.9150  6.1s
+    ft epoch 12/20  CE 0.3051  KL 0.0206  DRO q [0.165, 0.835]  val F1 0.7291  acc 0.9137  6.2s
+    ft epoch 13/20  CE 0.2994  KL 0.0202  DRO q [0.149, 0.851]  val F1 0.7340  acc 0.9143  6.1s
+    ft epoch 14/20  CE 0.2955  KL 0.0198  DRO q [0.134, 0.866]  val F1 0.7306  acc 0.9088  6.3s
+    ft epoch 15/20  CE 0.2976  KL 0.0198  DRO q [0.12, 0.88]  val F1 0.7241  acc 0.9071  6.2s
+    ft epoch 16/20  CE 0.2911  KL 0.0193  DRO q [0.109, 0.891]  val F1 0.7178  acc 0.9023  6.2s
+    ft epoch 17/20  CE 0.2859  KL 0.0192  DRO q [0.099, 0.901]  val F1 0.7412  acc 0.9144  6.2s
+    ft epoch 18/20  CE 0.2880  KL 0.0190  DRO q [0.09, 0.91]  val F1 0.7152  acc 0.9052  6.4s
+    ft epoch 19/20  CE 0.2852  KL 0.0189  DRO q [0.082, 0.918]  val F1 0.7401  acc 0.9143  6.3s
+    ft epoch 20/20  CE 0.2844  KL 0.0187  DRO q [0.075, 0.925]  val F1 0.7378  acc 0.9132  6.2s
+    -> FA-LCI 0.6139 (normal 0.6366, older-like 0.6139); F1 0.7378 / 0.6989; 123.6 s
+
+=== fold 1 ft-xgp_ft(beta=0.5,r=0.25)-90pct-seed0: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.6339  KL 0.2172  DRO q [0.529, 0.471]  val F1 0.7124  acc 0.9146  5.2s
+    ft epoch  2/20  CE 0.4541  KL 0.0754  DRO q [0.524, 0.476]  val F1 0.7264  acc 0.9141  5.1s
+    curve epoch 2: FA-LCI 0.5870, F1 0.7264 / 0.6653
+    ft epoch  3/20  CE 0.3754  KL 0.0399  DRO q [0.499, 0.501]  val F1 0.7313  acc 0.9127  5.1s
+    ft epoch  4/20  CE 0.3423  KL 0.0294  DRO q [0.471, 0.529]  val F1 0.7355  acc 0.9101  5.1s
+    ft epoch  5/20  CE 0.3307  KL 0.0258  DRO q [0.437, 0.563]  val F1 0.7328  acc 0.9083  5.1s
+    curve epoch 5: FA-LCI 0.6192, F1 0.7328 / 0.6757
+    ft epoch  6/20  CE 0.3214  KL 0.0240  DRO q [0.407, 0.593]  val F1 0.7383  acc 0.9109  5.1s
+    ft epoch  7/20  CE 0.3024  KL 0.0229  DRO q [0.376, 0.624]  val F1 0.7368  acc 0.9102  5.1s
+    ft epoch  8/20  CE 0.3027  KL 0.0219  DRO q [0.351, 0.649]  val F1 0.7391  acc 0.9111  5.1s
+    ft epoch  9/20  CE 0.2941  KL 0.0213  DRO q [0.328, 0.672]  val F1 0.7329  acc 0.9087  5.1s
+    ft epoch 10/20  CE 0.2937  KL 0.0207  DRO q [0.305, 0.695]  val F1 0.7372  acc 0.9101  5.2s
+    ft epoch 11/20  CE 0.2869  KL 0.0200  DRO q [0.282, 0.718]  val F1 0.7300  acc 0.9053  5.1s
+    ft epoch 12/20  CE 0.2842  KL 0.0198  DRO q [0.262, 0.738]  val F1 0.7346  acc 0.9087  5.2s
+    ft epoch 13/20  CE 0.2783  KL 0.0194  DRO q [0.244, 0.756]  val F1 0.7303  acc 0.9081  5.2s
+    ft epoch 14/20  CE 0.2798  KL 0.0191  DRO q [0.227, 0.773]  val F1 0.7366  acc 0.9115  5.1s
+    ft epoch 15/20  CE 0.2739  KL 0.0189  DRO q [0.211, 0.789]  val F1 0.7230  acc 0.9034  5.2s
+    ft epoch 16/20  CE 0.2721  KL 0.0185  DRO q [0.197, 0.803]  val F1 0.7359  acc 0.9106  5.2s
+    ft epoch 17/20  CE 0.2713  KL 0.0185  DRO q [0.184, 0.816]  val F1 0.7312  acc 0.9099  5.2s
+    ft epoch 18/20  CE 0.2715  KL 0.0182  DRO q [0.171, 0.829]  val F1 0.7316  acc 0.9099  5.2s
+    ft epoch 19/20  CE 0.2674  KL 0.0179  DRO q [0.159, 0.841]  val F1 0.7332  acc 0.9094  5.3s
+    ft epoch 20/20  CE 0.2653  KL 0.0177  DRO q [0.149, 0.851]  val F1 0.7313  acc 0.9088  5.3s
+    -> FA-LCI 0.6612 (normal 0.6748, older-like 0.6612); F1 0.7313 / 0.6973; 103.1 s
+
+=== fold 1 ft-xgp_ft(beta=0.5,r=0.5)-90pct-seed0: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.6224  KL 0.1963  DRO q [0.519, 0.481]  val F1 0.7209  acc 0.9127  6.1s
+    ft epoch  2/20  CE 0.4374  KL 0.0596  DRO q [0.495, 0.505]  val F1 0.7369  acc 0.9120  6.1s
+    curve epoch 2: FA-LCI 0.6104, F1 0.7369 / 0.6708
+    ft epoch  3/20  CE 0.3734  KL 0.0332  DRO q [0.457, 0.543]  val F1 0.7419  acc 0.9113  8.8s
+    ft epoch  4/20  CE 0.3481  KL 0.0267  DRO q [0.414, 0.586]  val F1 0.7312  acc 0.9074  8.0s
+    ft epoch  5/20  CE 0.3303  KL 0.0242  DRO q [0.376, 0.624]  val F1 0.7320  acc 0.9074  7.0s
+    curve epoch 5: FA-LCI 0.6293, F1 0.7320 / 0.6819
+    ft epoch  6/20  CE 0.3244  KL 0.0229  DRO q [0.338, 0.662]  val F1 0.7373  acc 0.9097  6.1s
+    ft epoch  7/20  CE 0.3161  KL 0.0219  DRO q [0.307, 0.693]  val F1 0.7425  acc 0.9094  6.1s
+    ft epoch  8/20  CE 0.3029  KL 0.0210  DRO q [0.276, 0.724]  val F1 0.7421  acc 0.9109  6.1s
+    ft epoch  9/20  CE 0.3007  KL 0.0205  DRO q [0.248, 0.752]  val F1 0.7381  acc 0.9099  6.3s
+    ft epoch 10/20  CE 0.3012  KL 0.0200  DRO q [0.224, 0.776]  val F1 0.7356  acc 0.9087  6.1s
+    ft epoch 11/20  CE 0.2941  KL 0.0196  DRO q [0.203, 0.797]  val F1 0.7370  acc 0.9064  6.1s
+    ft epoch 12/20  CE 0.2904  KL 0.0192  DRO q [0.183, 0.817]  val F1 0.7396  acc 0.9101  6.1s
+    ft epoch 13/20  CE 0.2839  KL 0.0190  DRO q [0.165, 0.835]  val F1 0.7281  acc 0.9055  6.2s
+    ft epoch 14/20  CE 0.2823  KL 0.0185  DRO q [0.148, 0.852]  val F1 0.7372  acc 0.9081  6.2s
+    ft epoch 15/20  CE 0.2868  KL 0.0185  DRO q [0.133, 0.867]  val F1 0.7162  acc 0.8980  6.2s
+    ft epoch 16/20  CE 0.2787  KL 0.0182  DRO q [0.12, 0.88]  val F1 0.7456  acc 0.9083  6.2s
+    ft epoch 17/20  CE 0.2776  KL 0.0181  DRO q [0.109, 0.891]  val F1 0.7422  acc 0.9115  6.2s
+    ft epoch 18/20  CE 0.2785  KL 0.0178  DRO q [0.099, 0.901]  val F1 0.7434  acc 0.9120  6.2s
+    ft epoch 19/20  CE 0.2729  KL 0.0174  DRO q [0.09, 0.91]  val F1 0.7462  acc 0.9115  6.2s
+    ft epoch 20/20  CE 0.2767  KL 0.0175  DRO q [0.082, 0.918]  val F1 0.7401  acc 0.9104  6.2s
+    -> FA-LCI 0.6648 (normal 0.6648, older-like 0.6670); F1 0.7401 / 0.6936; 128.5 s
+
+--- start fold1-xgp-90pct-seed1-beta0.1
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.180, n_nonzero 44783, reconstructed
+      prune step 2/5: sparsity 0.360, n_nonzero 35294, reconstructed
+      prune step 3/5: sparsity 0.540, n_nonzero 25801, reconstructed
+      prune step 4/5: sparsity 0.720, n_nonzero 16313, reconstructed
+      prune step 5/5: sparsity 0.900, n_nonzero 6821, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp(beta=0.1)-90pct-seed1               FA-LCI 0.4910 (normal 0.4910, older-like 0.4993); F1 0.6162 / 0.5868
+
+--- start fold1-xgp-90pct-seed1-beta0.3
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.180, n_nonzero 44783, reconstructed
+      prune step 2/5: sparsity 0.360, n_nonzero 35294, reconstructed
+      prune step 3/5: sparsity 0.540, n_nonzero 25801, reconstructed
+      prune step 4/5: sparsity 0.720, n_nonzero 16313, reconstructed
+      prune step 5/5: sparsity 0.900, n_nonzero 6821, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp(beta=0.3)-90pct-seed1               FA-LCI 0.4699 (normal 0.5264, older-like 0.4699); F1 0.6972 / 0.6126
+
+--- start fold1-xgp-90pct-seed1-beta0.5
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.180, n_nonzero 44783, reconstructed
+      prune step 2/5: sparsity 0.360, n_nonzero 35294, reconstructed
+      prune step 3/5: sparsity 0.540, n_nonzero 25801, reconstructed
+      prune step 4/5: sparsity 0.720, n_nonzero 16313, reconstructed
+      prune step 5/5: sparsity 0.900, n_nonzero 6821, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp(beta=0.5)-90pct-seed1               FA-LCI 0.4506 (normal 0.4703, older-like 0.4506); F1 0.6727 / 0.6016
+
+=== fold 1 ft-l1-90pct-seed1: start l1, recipe ce, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 1.3430  val F1 0.5262  acc 0.7581  3.2s
+    ft epoch  2/20  CE 0.7842  val F1 0.5797  acc 0.8208  3.2s
+    ft epoch  3/20  CE 0.5622  val F1 0.6057  acc 0.8527  3.2s
+    ft epoch  4/20  CE 0.4672  val F1 0.6252  acc 0.8536  3.1s
+    ft epoch  5/20  CE 0.4187  val F1 0.6384  acc 0.8652  3.1s
+    ft epoch  6/20  CE 0.3911  val F1 0.6513  acc 0.8736  3.2s
+    ft epoch  7/20  CE 0.3701  val F1 0.6320  acc 0.8391  3.2s
+    ft epoch  8/20  CE 0.3545  val F1 0.6571  acc 0.8766  3.2s
+    ft epoch  9/20  CE 0.3402  val F1 0.6630  acc 0.8783  3.2s
+    ft epoch 10/20  CE 0.3308  val F1 0.6555  acc 0.8745  3.2s
+    ft epoch 11/20  CE 0.3221  val F1 0.6617  acc 0.8845  3.2s
+    ft epoch 12/20  CE 0.3168  val F1 0.6562  acc 0.8755  3.2s
+    ft epoch 13/20  CE 0.3113  val F1 0.6530  acc 0.8725  3.2s
+    ft epoch 14/20  CE 0.3022  val F1 0.6641  acc 0.8810  3.2s
+    ft epoch 15/20  CE 0.2971  val F1 0.6529  acc 0.8662  3.2s
+    ft epoch 16/20  CE 0.2891  val F1 0.6488  acc 0.8519  3.2s
+    ft epoch 17/20  CE 0.2848  val F1 0.6673  acc 0.8825  3.2s
+    ft epoch 18/20  CE 0.2848  val F1 0.6553  acc 0.8766  3.3s
+    ft epoch 19/20  CE 0.2769  val F1 0.6642  acc 0.8797  3.2s
+    ft epoch 20/20  CE 0.2748  val F1 0.6479  acc 0.8498  3.2s
+    -> FA-LCI 0.5269 (normal 0.5269, older-like 0.5639); F1 0.6479 / 0.5845; 63.8 s
+
+=== fold 1 ft-l1_kd-90pct-seed1: start l1, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 1.5326  KL 0.5987  val F1 0.4744  acc 0.7845  3.4s
+    ft epoch  2/20  CE 1.0900  KL 0.2364  val F1 0.5889  acc 0.9120  3.4s
+    ft epoch  3/20  CE 0.9090  KL 0.1125  val F1 0.5702  acc 0.9095  3.4s
+    ft epoch  4/20  CE 0.7793  KL 0.0761  val F1 0.6147  acc 0.9143  3.4s
+    ft epoch  5/20  CE 0.6497  KL 0.0610  val F1 0.6548  acc 0.9111  3.4s
+    ft epoch  6/20  CE 0.5592  KL 0.0512  val F1 0.6707  acc 0.9083  3.4s
+    ft epoch  7/20  CE 0.5004  KL 0.0444  val F1 0.6770  acc 0.9059  3.4s
+    ft epoch  8/20  CE 0.4612  KL 0.0399  val F1 0.6764  acc 0.9057  3.5s
+    ft epoch  9/20  CE 0.4269  KL 0.0369  val F1 0.6834  acc 0.9023  3.4s
+    ft epoch 10/20  CE 0.4103  KL 0.0344  val F1 0.6858  acc 0.9053  3.4s
+    ft epoch 11/20  CE 0.3906  KL 0.0325  val F1 0.6916  acc 0.9045  3.4s
+    ft epoch 12/20  CE 0.3797  KL 0.0309  val F1 0.6810  acc 0.8967  3.4s
+    ft epoch 13/20  CE 0.3707  KL 0.0299  val F1 0.6806  acc 0.9015  3.4s
+    ft epoch 14/20  CE 0.3547  KL 0.0284  val F1 0.6782  acc 0.8985  3.4s
+    ft epoch 15/20  CE 0.3470  KL 0.0275  val F1 0.6841  acc 0.8981  3.4s
+    ft epoch 16/20  CE 0.3356  KL 0.0263  val F1 0.6804  acc 0.8980  3.5s
+    ft epoch 17/20  CE 0.3293  KL 0.0258  val F1 0.6838  acc 0.8999  3.5s
+    ft epoch 18/20  CE 0.3293  KL 0.0252  val F1 0.6800  acc 0.8978  3.4s
+    ft epoch 19/20  CE 0.3146  KL 0.0241  val F1 0.6829  acc 0.8992  3.4s
+    ft epoch 20/20  CE 0.3153  KL 0.0236  val F1 0.6804  acc 0.8976  3.5s
+    -> FA-LCI 0.5633 (normal 0.5633, older-like 0.5764); F1 0.6804 / 0.6307; 68.4 s
+
+=== fold 1 ft-snip_kd-90pct-seed1: start snip, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 1.6553  KL 0.8017  val F1 0.2836  acc 0.7265  3.4s
+    ft epoch  2/20  CE 1.3966  KL 0.4642  val F1 0.5227  acc 0.8757  3.3s
+    ft epoch  3/20  CE 1.0631  KL 0.2527  val F1 0.5588  acc 0.8901  3.3s
+    ft epoch  4/20  CE 0.8989  KL 0.1483  val F1 0.5686  acc 0.8953  3.4s
+    ft epoch  5/20  CE 0.8164  KL 0.1050  val F1 0.2014  acc 0.3017  3.4s
+    ft epoch  6/20  CE 0.7567  KL 0.0836  val F1 0.5676  acc 0.8787  3.4s
+    ft epoch  7/20  CE 0.7169  KL 0.0721  val F1 0.5648  acc 0.8717  3.4s
+    ft epoch  8/20  CE 0.6776  KL 0.0650  val F1 0.0511  acc 0.2158  3.4s
+    ft epoch  9/20  CE 0.6337  KL 0.0606  val F1 0.6018  acc 0.8773  3.4s
+    ft epoch 10/20  CE 0.6051  KL 0.0564  val F1 0.5986  acc 0.8738  3.5s
+    ft epoch 11/20  CE 0.5709  KL 0.0528  val F1 0.4630  acc 0.8031  3.4s
+    ft epoch 12/20  CE 0.5387  KL 0.0491  val F1 0.2702  acc 0.3801  3.4s
+    ft epoch 13/20  CE 0.5130  KL 0.0464  val F1 0.1052  acc 0.2330  3.4s
+    ft epoch 14/20  CE 0.4698  KL 0.0429  val F1 0.0515  acc 0.2158  3.4s
+    ft epoch 15/20  CE 0.4467  KL 0.0406  val F1 0.0522  acc 0.2158  3.5s
+    ft epoch 16/20  CE 0.4233  KL 0.0383  val F1 0.2180  acc 0.2174  3.5s
+    ft epoch 17/20  CE 0.4036  KL 0.0366  val F1 0.0532  acc 0.2149  3.4s
+    ft epoch 18/20  CE 0.3907  KL 0.0353  val F1 0.6467  acc 0.8694  3.4s
+    ft epoch 19/20  CE 0.3719  KL 0.0336  val F1 0.6272  acc 0.8641  3.5s
+    ft epoch 20/20  CE 0.3666  KL 0.0328  val F1 0.1945  acc 0.1911  3.4s
+    -> FA-LCI 0.3206 (normal 0.3206, older-like 0.3263); F1 0.1945 / 0.1474; 68.3 s
+
+=== fold 1 ft-l1_kdaug(r=0.25)-90pct-seed1: start l1, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 1.4927  KL 0.5432  DRO q [0.569, 0.431]  val F1 0.5763  acc 0.8617  5.0s
+    ft epoch  2/20  CE 0.9874  KL 0.1806  DRO q [0.61, 0.39]  val F1 0.5873  acc 0.9144  5.1s
+    ft epoch  3/20  CE 0.8442  KL 0.0888  DRO q [0.639, 0.361]  val F1 0.5941  acc 0.9146  5.1s
+    ft epoch  4/20  CE 0.7033  KL 0.0661  DRO q [0.656, 0.344]  val F1 0.6484  acc 0.9160  5.1s
+    ft epoch  5/20  CE 0.6098  KL 0.0548  DRO q [0.653, 0.347]  val F1 0.6716  acc 0.9115  5.1s
+    ft epoch  6/20  CE 0.5274  KL 0.0465  DRO q [0.638, 0.362]  val F1 0.6774  acc 0.9097  5.2s
+    ft epoch  7/20  CE 0.4866  KL 0.0412  DRO q [0.609, 0.391]  val F1 0.6787  acc 0.9080  5.1s
+    ft epoch  8/20  CE 0.4612  KL 0.0381  DRO q [0.58, 0.42]  val F1 0.6845  acc 0.9041  5.2s
+    ft epoch  9/20  CE 0.4357  KL 0.0353  DRO q [0.545, 0.455]  val F1 0.6912  acc 0.9085  5.1s
+    ft epoch 10/20  CE 0.4200  KL 0.0333  DRO q [0.508, 0.492]  val F1 0.6808  acc 0.9039  5.2s
+    ft epoch 11/20  CE 0.4042  KL 0.0320  DRO q [0.474, 0.526]  val F1 0.6858  acc 0.9031  5.2s
+    ft epoch 12/20  CE 0.3943  KL 0.0306  DRO q [0.443, 0.557]  val F1 0.6939  acc 0.9045  5.2s
+    ft epoch 13/20  CE 0.3841  KL 0.0298  DRO q [0.415, 0.585]  val F1 0.6921  acc 0.9067  5.2s
+    ft epoch 14/20  CE 0.3778  KL 0.0290  DRO q [0.384, 0.616]  val F1 0.6920  acc 0.9052  5.2s
+    ft epoch 15/20  CE 0.3694  KL 0.0285  DRO q [0.364, 0.636]  val F1 0.7000  acc 0.9078  5.2s
+    ft epoch 16/20  CE 0.3641  KL 0.0276  DRO q [0.34, 0.66]  val F1 0.6965  acc 0.9064  5.2s
+    ft epoch 17/20  CE 0.3598  KL 0.0271  DRO q [0.322, 0.678]  val F1 0.6982  acc 0.9062  5.3s
+    ft epoch 18/20  CE 0.3557  KL 0.0265  DRO q [0.304, 0.696]  val F1 0.6910  acc 0.9029  5.3s
+    ft epoch 19/20  CE 0.3473  KL 0.0259  DRO q [0.289, 0.711]  val F1 0.7005  acc 0.9066  5.2s
+    ft epoch 20/20  CE 0.3454  KL 0.0255  DRO q [0.275, 0.725]  val F1 0.7026  acc 0.9081  5.2s
+    -> FA-LCI 0.5812 (normal 0.5812, older-like 0.6230); F1 0.7026 / 0.6625; 103.5 s
+
+=== fold 1 ft-l1_kdaug(r=0.5)-90pct-seed1: start l1, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 1.4360  KL 0.4889  DRO q [0.573, 0.427]  val F1 0.5812  acc 0.8871  6.2s
+    ft epoch  2/20  CE 0.9383  KL 0.1368  DRO q [0.598, 0.402]  val F1 0.5880  acc 0.9164  6.1s
+    ft epoch  3/20  CE 0.7707  KL 0.0731  DRO q [0.609, 0.391]  val F1 0.6201  acc 0.9129  6.1s
+    ft epoch  4/20  CE 0.6318  KL 0.0569  DRO q [0.603, 0.397]  val F1 0.6696  acc 0.9127  6.1s
+    ft epoch  5/20  CE 0.5480  KL 0.0470  DRO q [0.581, 0.419]  val F1 0.6772  acc 0.9083  6.1s
+    ft epoch  6/20  CE 0.4960  KL 0.0412  DRO q [0.545, 0.455]  val F1 0.6809  acc 0.9067  6.2s
+    ft epoch  7/20  CE 0.4684  KL 0.0373  DRO q [0.501, 0.499]  val F1 0.6815  acc 0.9041  6.2s
+    ft epoch  8/20  CE 0.4396  KL 0.0345  DRO q [0.46, 0.54]  val F1 0.6895  acc 0.9069  6.2s
+    ft epoch  9/20  CE 0.4230  KL 0.0326  DRO q [0.419, 0.581]  val F1 0.6880  acc 0.9053  6.2s
+    ft epoch 10/20  CE 0.4126  KL 0.0314  DRO q [0.384, 0.616]  val F1 0.6929  acc 0.9059  6.2s
+    ft epoch 11/20  CE 0.4041  KL 0.0301  DRO q [0.348, 0.652]  val F1 0.6843  acc 0.8990  6.2s
+    ft epoch 12/20  CE 0.3879  KL 0.0289  DRO q [0.315, 0.685]  val F1 0.6892  acc 0.9018  6.2s
+    ft epoch 13/20  CE 0.3820  KL 0.0280  DRO q [0.288, 0.712]  val F1 0.6933  acc 0.9038  6.3s
+    ft epoch 14/20  CE 0.3762  KL 0.0272  DRO q [0.265, 0.735]  val F1 0.7002  acc 0.9057  6.2s
+    ft epoch 15/20  CE 0.3677  KL 0.0268  DRO q [0.244, 0.756]  val F1 0.6997  acc 0.9052  6.3s
+    ft epoch 16/20  CE 0.3635  KL 0.0260  DRO q [0.224, 0.776]  val F1 0.6948  acc 0.9004  6.3s
+    ft epoch 17/20  CE 0.3615  KL 0.0255  DRO q [0.205, 0.795]  val F1 0.7044  acc 0.9050  6.3s
+    ft epoch 18/20  CE 0.3543  KL 0.0252  DRO q [0.192, 0.808]  val F1 0.6941  acc 0.9034  6.3s
+    ft epoch 19/20  CE 0.3510  KL 0.0248  DRO q [0.177, 0.823]  val F1 0.6995  acc 0.9055  6.2s
+    ft epoch 20/20  CE 0.3468  KL 0.0244  DRO q [0.165, 0.835]  val F1 0.7034  acc 0.9060  6.3s
+    -> FA-LCI 0.6065 (normal 0.6111, older-like 0.6065); F1 0.7034 / 0.6610; 124.1 s
+
+=== fold 1 ft-xgp_ft(beta=0.1,r=0.25)-90pct-seed1: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.6490  KL 0.2254  DRO q [0.51, 0.49]  val F1 0.6816  acc 0.9022  5.1s
+    ft epoch  2/20  CE 0.4470  KL 0.0637  DRO q [0.478, 0.522]  val F1 0.7165  acc 0.9101  5.2s
+    ft epoch  3/20  CE 0.3725  KL 0.0381  DRO q [0.439, 0.561]  val F1 0.6992  acc 0.8997  5.2s
+    ft epoch  4/20  CE 0.3444  KL 0.0307  DRO q [0.402, 0.598]  val F1 0.7096  acc 0.9031  5.2s
+    ft epoch  5/20  CE 0.3299  KL 0.0279  DRO q [0.366, 0.634]  val F1 0.7110  acc 0.9041  5.1s
+    ft epoch  6/20  CE 0.3162  KL 0.0258  DRO q [0.337, 0.663]  val F1 0.7226  acc 0.9081  5.2s
+    ft epoch  7/20  CE 0.3041  KL 0.0243  DRO q [0.305, 0.695]  val F1 0.7296  acc 0.9109  5.1s
+    ft epoch  8/20  CE 0.2974  KL 0.0235  DRO q [0.28, 0.72]  val F1 0.7252  acc 0.9111  5.2s
+    ft epoch  9/20  CE 0.2946  KL 0.0227  DRO q [0.257, 0.743]  val F1 0.7268  acc 0.9102  5.2s
+    ft epoch 10/20  CE 0.2866  KL 0.0222  DRO q [0.234, 0.766]  val F1 0.7322  acc 0.9109  5.2s
+    ft epoch 11/20  CE 0.2891  KL 0.0218  DRO q [0.216, 0.784]  val F1 0.7326  acc 0.9118  5.3s
+    ft epoch 12/20  CE 0.2834  KL 0.0213  DRO q [0.199, 0.801]  val F1 0.7336  acc 0.9116  5.2s
+    ft epoch 13/20  CE 0.2816  KL 0.0212  DRO q [0.185, 0.815]  val F1 0.7256  acc 0.9083  5.2s
+    ft epoch 14/20  CE 0.2767  KL 0.0207  DRO q [0.171, 0.829]  val F1 0.7271  acc 0.9080  5.2s
+    ft epoch 15/20  CE 0.2777  KL 0.0206  DRO q [0.161, 0.839]  val F1 0.7190  acc 0.9087  5.2s
+    ft epoch 16/20  CE 0.2700  KL 0.0202  DRO q [0.149, 0.851]  val F1 0.7228  acc 0.9074  5.2s
+    ft epoch 17/20  CE 0.2696  KL 0.0202  DRO q [0.141, 0.859]  val F1 0.7332  acc 0.9104  5.2s
+    ft epoch 18/20  CE 0.2701  KL 0.0198  DRO q [0.132, 0.868]  val F1 0.7294  acc 0.9101  5.2s
+    ft epoch 19/20  CE 0.2671  KL 0.0195  DRO q [0.125, 0.875]  val F1 0.7220  acc 0.9073  5.3s
+    ft epoch 20/20  CE 0.2677  KL 0.0195  DRO q [0.118, 0.882]  val F1 0.7293  acc 0.9109  5.2s
+    -> FA-LCI 0.6780 (normal 0.6780, older-like 0.6826); F1 0.7293 / 0.6987; 104.0 s
+
+=== fold 1 ft-xgp_ft(beta=0.1,r=0.5)-90pct-seed1: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.6429  KL 0.1997  DRO q [0.495, 0.505]  val F1 0.7043  acc 0.9071  6.1s
+    ft epoch  2/20  CE 0.4277  KL 0.0515  DRO q [0.446, 0.554]  val F1 0.7180  acc 0.9083  6.1s
+    ft epoch  3/20  CE 0.3692  KL 0.0337  DRO q [0.394, 0.606]  val F1 0.7093  acc 0.9031  6.1s
+    ft epoch  4/20  CE 0.3460  KL 0.0288  DRO q [0.347, 0.653]  val F1 0.7211  acc 0.9078  6.2s
+    ft epoch  5/20  CE 0.3290  KL 0.0260  DRO q [0.31, 0.69]  val F1 0.7268  acc 0.9092  6.1s
+    ft epoch  6/20  CE 0.3125  KL 0.0246  DRO q [0.276, 0.724]  val F1 0.7156  acc 0.9038  6.1s
+    ft epoch  7/20  CE 0.3079  KL 0.0235  DRO q [0.245, 0.755]  val F1 0.7257  acc 0.9095  6.1s
+    ft epoch  8/20  CE 0.2981  KL 0.0225  DRO q [0.219, 0.781]  val F1 0.7265  acc 0.9085  6.1s
+    ft epoch  9/20  CE 0.2971  KL 0.0219  DRO q [0.197, 0.803]  val F1 0.7234  acc 0.9085  6.2s
+    ft epoch 10/20  CE 0.2922  KL 0.0216  DRO q [0.18, 0.82]  val F1 0.7249  acc 0.9087  6.3s
+    ft epoch 11/20  CE 0.2895  KL 0.0210  DRO q [0.162, 0.838]  val F1 0.7198  acc 0.9069  6.2s
+    ft epoch 12/20  CE 0.2829  KL 0.0205  DRO q [0.147, 0.853]  val F1 0.7282  acc 0.9102  6.2s
+    ft epoch 13/20  CE 0.2838  KL 0.0203  DRO q [0.133, 0.867]  val F1 0.7272  acc 0.9092  6.2s
+    ft epoch 14/20  CE 0.2791  KL 0.0200  DRO q [0.122, 0.878]  val F1 0.7310  acc 0.9109  6.2s
+    ft epoch 15/20  CE 0.2768  KL 0.0198  DRO q [0.112, 0.888]  val F1 0.7323  acc 0.9101  6.2s
+    ft epoch 16/20  CE 0.2766  KL 0.0195  DRO q [0.103, 0.897]  val F1 0.7272  acc 0.9090  6.3s
+    ft epoch 17/20  CE 0.2760  KL 0.0192  DRO q [0.094, 0.906]  val F1 0.7291  acc 0.9095  6.2s
+    ft epoch 18/20  CE 0.2718  KL 0.0190  DRO q [0.086, 0.914]  val F1 0.7284  acc 0.9078  6.3s
+    ft epoch 19/20  CE 0.2733  KL 0.0190  DRO q [0.079, 0.921]  val F1 0.7355  acc 0.9074  6.4s
+    ft epoch 20/20  CE 0.2664  KL 0.0184  DRO q [0.073, 0.927]  val F1 0.7292  acc 0.9094  6.4s
+    -> FA-LCI 0.6791 (normal 0.6791, older-like 0.6816); F1 0.7292 / 0.7003; 124.2 s
+
+=== fold 1 ft-xgp_ft(beta=0.3,r=0.25)-90pct-seed1: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.6514  KL 0.2019  DRO q [0.514, 0.486]  val F1 0.7195  acc 0.9204  5.1s
+    ft epoch  2/20  CE 0.4928  KL 0.0668  DRO q [0.494, 0.506]  val F1 0.7132  acc 0.9155  5.1s
+    ft epoch  3/20  CE 0.4121  KL 0.0398  DRO q [0.466, 0.534]  val F1 0.7268  acc 0.9109  5.2s
+    ft epoch  4/20  CE 0.3645  KL 0.0304  DRO q [0.434, 0.566]  val F1 0.7328  acc 0.9115  5.1s
+    ft epoch  5/20  CE 0.3367  KL 0.0266  DRO q [0.399, 0.601]  val F1 0.7345  acc 0.9122  5.4s
+    ft epoch  6/20  CE 0.3224  KL 0.0245  DRO q [0.369, 0.631]  val F1 0.6414  acc 0.8505  5.2s
+    ft epoch  7/20  CE 0.3112  KL 0.0232  DRO q [0.337, 0.663]  val F1 0.7288  acc 0.9130  5.2s
+    ft epoch  8/20  CE 0.3090  KL 0.0223  DRO q [0.309, 0.691]  val F1 0.7420  acc 0.9165  5.2s
+    ft epoch  9/20  CE 0.3025  KL 0.0215  DRO q [0.283, 0.717]  val F1 0.6604  acc 0.8515  5.2s
+    ft epoch 10/20  CE 0.3003  KL 0.0210  DRO q [0.258, 0.742]  val F1 0.7509  acc 0.9134  5.2s
+    ft epoch 11/20  CE 0.2961  KL 0.0205  DRO q [0.238, 0.762]  val F1 0.7182  acc 0.8913  5.2s
+    ft epoch 12/20  CE 0.2933  KL 0.0203  DRO q [0.218, 0.782]  val F1 0.7512  acc 0.9144  5.2s
+    ft epoch 13/20  CE 0.2876  KL 0.0201  DRO q [0.201, 0.799]  val F1 0.7266  acc 0.9099  5.2s
+    ft epoch 14/20  CE 0.2822  KL 0.0195  DRO q [0.183, 0.817]  val F1 0.7065  acc 0.9006  5.2s
+    ft epoch 15/20  CE 0.2852  KL 0.0196  DRO q [0.171, 0.829]  val F1 0.7601  acc 0.9169  5.2s
+    ft epoch 16/20  CE 0.2775  KL 0.0192  DRO q [0.157, 0.843]  val F1 0.7497  acc 0.9132  5.2s
+    ft epoch 17/20  CE 0.2760  KL 0.0191  DRO q [0.146, 0.854]  val F1 0.7417  acc 0.9123  5.3s
+    ft epoch 18/20  CE 0.2762  KL 0.0188  DRO q [0.135, 0.865]  val F1 0.7101  acc 0.8843  5.2s
+    ft epoch 19/20  CE 0.2719  KL 0.0183  DRO q [0.125, 0.875]  val F1 0.6571  acc 0.8508  5.3s
+    ft epoch 20/20  CE 0.2735  KL 0.0184  DRO q [0.118, 0.882]  val F1 0.7549  acc 0.9173  5.3s
+    -> FA-LCI 0.6387 (normal 0.6387, older-like 0.6757); F1 0.7549 / 0.6948; 104.1 s
+
+=== fold 1 ft-xgp_ft(beta=0.3,r=0.5)-90pct-seed1: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.6472  KL 0.1808  DRO q [0.502, 0.498]  val F1 0.7229  acc 0.9211  6.3s
+    ft epoch  2/20  CE 0.4675  KL 0.0543  DRO q [0.468, 0.532]  val F1 0.7278  acc 0.9150  6.2s
+    ft epoch  3/20  CE 0.3949  KL 0.0336  DRO q [0.425, 0.575]  val F1 0.7372  acc 0.9162  6.2s
+    ft epoch  4/20  CE 0.3582  KL 0.0278  DRO q [0.381, 0.619]  val F1 0.6795  acc 0.8697  6.2s
+    ft epoch  5/20  CE 0.3354  KL 0.0246  DRO q [0.345, 0.655]  val F1 0.7394  acc 0.9076  6.1s
+    ft epoch  6/20  CE 0.3241  KL 0.0233  DRO q [0.312, 0.688]  val F1 0.7401  acc 0.9125  6.1s
+    ft epoch  7/20  CE 0.3160  KL 0.0220  DRO q [0.28, 0.72]  val F1 0.7348  acc 0.9115  6.2s
+    ft epoch  8/20  CE 0.3070  KL 0.0213  DRO q [0.251, 0.749]  val F1 0.7434  acc 0.9116  6.2s
+    ft epoch  9/20  CE 0.3023  KL 0.0206  DRO q [0.226, 0.774]  val F1 0.7398  acc 0.9123  6.2s
+    ft epoch 10/20  CE 0.3005  KL 0.0205  DRO q [0.206, 0.794]  val F1 0.7213  acc 0.8892  6.2s
+    ft epoch 11/20  CE 0.2956  KL 0.0199  DRO q [0.184, 0.816]  val F1 0.7365  acc 0.9115  6.2s
+    ft epoch 12/20  CE 0.2871  KL 0.0194  DRO q [0.165, 0.835]  val F1 0.7431  acc 0.9097  6.2s
+    ft epoch 13/20  CE 0.2855  KL 0.0192  DRO q [0.149, 0.851]  val F1 0.7413  acc 0.9116  6.3s
+    ft epoch 14/20  CE 0.2853  KL 0.0190  DRO q [0.135, 0.865]  val F1 0.7261  acc 0.9032  6.2s
+    ft epoch 15/20  CE 0.2831  KL 0.0188  DRO q [0.123, 0.877]  val F1 0.7209  acc 0.9060  6.2s
+    ft epoch 16/20  CE 0.2800  KL 0.0185  DRO q [0.111, 0.889]  val F1 0.7410  acc 0.9106  6.2s
+    ft epoch 17/20  CE 0.2796  KL 0.0182  DRO q [0.101, 0.899]  val F1 0.7359  acc 0.9032  6.3s
+    ft epoch 18/20  CE 0.2763  KL 0.0180  DRO q [0.092, 0.908]  val F1 0.7462  acc 0.9129  6.3s
+    ft epoch 19/20  CE 0.2764  KL 0.0181  DRO q [0.083, 0.917]  val F1 0.7448  acc 0.9071  6.3s
+    ft epoch 20/20  CE 0.2709  KL 0.0177  DRO q [0.077, 0.923]  val F1 0.7490  acc 0.9071  6.4s
+    -> FA-LCI 0.6284 (normal 0.6284, older-like 0.6456); F1 0.7490 / 0.6950; 124.7 s
+
+=== fold 1 ft-xgp_ft(beta=0.5,r=0.25)-90pct-seed1: start xgp, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.6126  KL 0.2328  DRO q [0.514, 0.486]  val F1 0.7199  acc 0.9129  5.1s
+    ft epoch  2/20  CE 0.4370  KL 0.0778  DRO q [0.493, 0.507]  val F1 0.6773  acc 0.8936  5.1s
+    ft epoch  3/20  CE 0.3717  KL 0.0413  DRO q [0.459, 0.541]  val F1 0.7187  acc 0.9067  5.2s
+    ft epoch  4/20  CE 0.3400  KL 0.0302  DRO q [0.425, 0.575]  val F1 0.7368  acc 0.9151  5.2s
+    ft epoch  5/20  CE 0.3277  KL 0.0263  DRO q [0.391, 0.609]  val F1 0.7299  acc 0.9116  5.2s
+    ft epoch  6/20  CE 0.3132  KL 0.0239  DRO q [0.361, 0.639]  val F1 0.7378  acc 0.9118  5.2s
+    ft epoch  7/20  CE 0.3034  KL 0.0229  DRO q [0.329, 0.671]  val F1 0.7366  acc 0.9148  5.2s
+    ft epoch  8/20  CE 0.2995  KL 0.0221  DRO q [0.303, 0.697]  val F1 0.7393  acc 0.9130  5.2s
+    ft epoch  9/20  CE 0.2958  KL 0.0213  DRO q [0.277, 0.723]  val F1 0.7377  acc 0.9136  5.2s
+    ft epoch 10/20  CE 0.2948  KL 0.0207  DRO q [0.253, 0.747]  val F1 0.7436  acc 0.9143  5.2s
+    ft epoch 11/20  CE 0.2925  KL 0.0205  DRO q [0.229, 0.771]  val F1 0.7422  acc 0.9127  5.2s
+    ft epoch 12/20  CE 0.2895  KL 0.0202  DRO q [0.211, 0.789]  val F1 0.7443  acc 0.9143  5.2s
+    ft epoch 13/20  CE 0.2828  KL 0.0198  DRO q [0.193, 0.807]  val F1 0.7414  acc 0.9143  5.2s
+    ft epoch 14/20  CE 0.2805  KL 0.0195  DRO q [0.175, 0.825]  val F1 0.6770  acc 0.8876  5.2s
+    ft epoch 15/20  CE 0.2783  KL 0.0194  DRO q [0.162, 0.838]  val F1 0.7462  acc 0.9139  5.2s
+    ft epoch 16/20  CE 0.2728  KL 0.0190  DRO q [0.147, 0.853]  val F1 0.7307  acc 0.9092  5.2s
+    ft epoch 17/20  CE 0.2753  KL 0.0190  DRO q [0.136, 0.864]  val F1 0.7422  acc 0.9116  5.2s
+    ft epoch 18/20  CE 0.2753  KL 0.0187  DRO q [0.126, 0.874]  val F1 0.7354  acc 0.9101  5.2s
+    ft epoch 19/20  CE 0.2748  KL 0.0184  DRO q [0.117, 0.883]  val F1 0.7418  acc 0.9116  5.3s
+    ft epoch 20/20  CE 0.2705  KL 0.0183  DRO q [0.108, 0.892]  val F1 0.7403  acc 0.9143  5.2s
+    -> FA-LCI 0.6948 (normal 0.6951, older-like 0.6948); F1 0.7403 / 0.7024; 103.7 s
+
+=== fold 1 ft-xgp_ft(beta=0.5,r=0.5)-90pct-seed1: start xgp, recipe kdaug, group DRO, 83328 training windows, E_ft 20
+    ft epoch  1/20  CE 0.6056  KL 0.2097  DRO q [0.502, 0.498]  val F1 0.6489  acc 0.8910  6.1s
+    ft epoch  2/20  CE 0.4228  KL 0.0614  DRO q [0.469, 0.531]  val F1 0.7272  acc 0.9122  6.1s
+    ft epoch  3/20  CE 0.3649  KL 0.0340  DRO q [0.423, 0.577]  val F1 0.7254  acc 0.9102  6.1s
+    ft epoch  4/20  CE 0.3456  KL 0.0274  DRO q [0.379, 0.621]  val F1 0.7345  acc 0.9115  6.2s
+    ft epoch  5/20  CE 0.3313  KL 0.0246  DRO q [0.342, 0.658]  val F1 0.7303  acc 0.9067  6.2s
+    ft epoch  6/20  CE 0.3160  KL 0.0231  DRO q [0.306, 0.694]  val F1 0.7342  acc 0.9101  6.2s
+    ft epoch  7/20  CE 0.3082  KL 0.0219  DRO q [0.271, 0.729]  val F1 0.7369  acc 0.9108  6.2s
+    ft epoch  8/20  CE 0.3050  KL 0.0214  DRO q [0.242, 0.758]  val F1 0.7394  acc 0.9127  6.2s
+    ft epoch  9/20  CE 0.3004  KL 0.0207  DRO q [0.217, 0.783]  val F1 0.7436  acc 0.9157  6.1s
+    ft epoch 10/20  CE 0.2994  KL 0.0206  DRO q [0.196, 0.804]  val F1 0.7384  acc 0.9095  6.2s
+    ft epoch 11/20  CE 0.2947  KL 0.0199  DRO q [0.174, 0.826]  val F1 0.7441  acc 0.9143  6.3s
+    ft epoch 12/20  CE 0.2852  KL 0.0195  DRO q [0.155, 0.845]  val F1 0.7423  acc 0.9143  6.2s
+    ft epoch 13/20  CE 0.2882  KL 0.0194  DRO q [0.139, 0.861]  val F1 0.7391  acc 0.9120  6.2s
+    ft epoch 14/20  CE 0.2856  KL 0.0191  DRO q [0.126, 0.874]  val F1 0.7412  acc 0.9127  6.3s
+    ft epoch 15/20  CE 0.2798  KL 0.0189  DRO q [0.114, 0.886]  val F1 0.7129  acc 0.8995  6.2s
+    ft epoch 16/20  CE 0.2814  KL 0.0187  DRO q [0.102, 0.898]  val F1 0.5485  acc 0.8312  6.4s
+    ft epoch 17/20  CE 0.2798  KL 0.0184  DRO q [0.092, 0.908]  val F1 0.7386  acc 0.9122  6.3s
+    ft epoch 18/20  CE 0.2764  KL 0.0182  DRO q [0.084, 0.916]  val F1 0.7191  acc 0.9050  6.3s
+    ft epoch 19/20  CE 0.2760  KL 0.0183  DRO q [0.075, 0.925]  val F1 0.7376  acc 0.9109  6.3s
+    ft epoch 20/20  CE 0.2744  KL 0.0179  DRO q [0.068, 0.932]  val F1 0.7425  acc 0.9122  6.3s
+    -> FA-LCI 0.6501 (normal 0.6501, older-like 0.6719); F1 0.7425 / 0.6955; 124.1 s
+
+--- start fold1-xgp-90pct-seed2-beta0.1
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.180, n_nonzero 44783, reconstructed
