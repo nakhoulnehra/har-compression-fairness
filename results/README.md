@@ -384,6 +384,14 @@ XGP pilot round 3: the final, validation-only design of XGP, made after Step 9A 
   - Older-like F1 at 90%: l1_kd 0.634; xgp_ft 0.69–0.70, except β 0.3, r 0.25 at 0.603.
 - Key numbers without fine-tuning (FA-LCI_val), l1 / l1_recon / best xgp (mean of 3 seeds): 50% 0.497 / 0.819 / 0.867; 70% 0.423 / 0.720 / 0.730 (β 0.1); 90% 0.243 / 0.413 / 0.475 (β 0.5). snip: 0.412 / 0.258 / 0.156.
 
+### har-xgp-pilot3-tinyhar-fold1-ablation-nakhoul-3050-{runs, per-subject-lci, finetune-history, prune-steps}.csv, -config.json, logs/
+- What: phase 2 (ablations) on fold 1, nakhoul-3050, at the configurations from `har-xgp-pilot3-tinyhar-tuning-selection.json` (no fine-tuning β 0.5 / 0.1 / 0.1; fine-tuned β, r = 0.3, 0.25 / 0.1, 0.25 / 0.1, 0.5 at 50 / 70 / 90%). Same windows, τ_1 and ceiling as phase 1.
+- Status: complete, 36 no-fine-tuning + 63 fine-tuned runs (+ the original row, 100 rows). 2 sessions with `--resume` (2026-11-23 12:50 → 18:27, 19:15 → 21:00). The final rule runs later with `--analyze --phase ablation`, after fold 0; the numbers below are fold-1 descriptives only.
+- Key numbers, FA-LCI_val (mean of seeds 0–2), 50 / 70 / 90%; full XGP from phase 1 at the same configuration for reference:
+  - fine-tuned: full xgp_ft 0.831 / 0.828 / 0.664; no_score 0.847 / 0.812 / 0.661; no_group 0.838 / 0.828 / 0.624; no_iter 0.830 / 0.825 / 0.593; no_recon 0.844 / 0.794 / 0.609; ft_no_aug **0.870** / 0.808 / 0.665; ft_no_dro 0.840 / **0.831** / **0.669**; l1_recon_ft 0.837 / 0.799 / 0.599.
+  - Fine-tuned F1 (normal / older-like) at 90%: full 0.736 / 0.702; ft_no_aug 0.727 / 0.670; ft_no_dro 0.738 / 0.693; no_iter 0.715 / 0.666; l1_recon_ft 0.713 / 0.642. At 50–70% every variant has F1 0.756–0.767 / 0.696–0.713; ft_no_aug's older-like F1 is the lowest (0.696).
+  - no fine-tuning: full xgp 0.867 / 0.730 / 0.455; no_score 0.873 / 0.727 / 0.454; no_group 0.858 / 0.737 / 0.472; no_iter **0.891** / 0.718 / 0.412; no_recon 0.586 / 0.401 / 0.248 (F1 normal 0.684 / 0.267 / 0.041: without reconstruction the model collapses at 70–90%).
+
 ## har-xgp-pilot-smoke/round3/
 **Git-ignored, local only: a pipeline check, not results.** The full chain ran with `--smoke` on 2026-11-22 (LenovoP330-01, CPU): prepare, tuning on folds 0 and 1 (`--curve-seeds 0`), tuning analysis, ablation on folds 0 and 1, final analysis. It was rerun after the rotation amendment. Phase 1 takes ≈ 10–13 s per fold and phase 2 ≈ 14 s. In the rerun, the no-fine-tuning scenario had no eligible configuration, so the no-fallback path (skip, with the reason recorded in the decision) was exercised as well.
 

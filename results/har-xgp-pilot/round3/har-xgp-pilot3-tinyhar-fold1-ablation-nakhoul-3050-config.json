@@ -1,0 +1,171 @@
+{
+ "command_line": [
+  "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\har\\run_xgp_pilot3.py",
+  "--phase",
+  "ablation",
+  "--folds",
+  "1",
+  "--device",
+  "cuda",
+  "--machine-name",
+  "nakhoul-3050",
+  "--noise-floor-machine",
+  "nakhoul-3050",
+  "--resume"
+ ],
+ "machine_name": "nakhoul-3050",
+ "device": {
+  "device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "cuda_version": "11.8",
+  "torch_version": "2.7.1+cu118",
+  "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+  "torch_threads": 8,
+  "python": "3.11.9",
+  "os": "Windows 10"
+ },
+ "git_commit": "106e77406505c66c8e72296490ac3a13334e467b",
+ "git_dirty": false,
+ "code_sha256": "db2be8330a92fde4909c329eeca0e88959d2a0ce99d101133b376d68c4921a95",
+ "fold": 1,
+ "phase": "ablation",
+ "smoke": false,
+ "smoke_sizes": null,
+ "round3": {
+  "folds": [
+   0,
+   1
+  ],
+  "levels": [
+   0.5,
+   0.7,
+   0.9
+  ],
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "betas": [
+   0.1,
+   0.3,
+   0.5
+  ],
+  "rs": [
+   0.25,
+   0.5
+  ],
+  "K": 5,
+  "m_score": 8,
+  "score_batch": 125,
+  "damp": 0.01,
+  "dro_eta": 0.01,
+  "epochs": 20,
+  "lr": 0.0001,
+  "curve_epochs": [
+   2,
+   5
+  ],
+  "cal_per_class": 70,
+  "cal_seed": 44,
+  "explain_per_subject": 100,
+  "nsamples": 200,
+  "shap_seed": 0,
+  "aug_seed_offset": 1000,
+  "f1_tolerance": 0.01,
+  "tie": 0.005,
+  "eps": 1e-12,
+  "baselines": {
+   "no_finetune": [
+    "l1",
+    "snip",
+    "l1_recon"
+   ],
+   "finetune": [
+    "l1",
+    "l1_kd",
+    "snip_kd",
+    "l1_kdaug"
+   ]
+  }
+ },
+ "levels": [
+  0.5,
+  0.7,
+  0.9
+ ],
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "curve_seeds": [
+  0,
+  1,
+  2
+ ],
+ "epochs": 20,
+ "curve_epochs": [
+  2,
+  5
+ ],
+ "nsamples": 200,
+ "n_calibration": {
+  "normal": 459,
+  "older_like": 459
+ },
+ "n_explain": 300,
+ "n_f1_windows": 5704,
+ "tau_k": 0.582721677640067,
+ "tau_source": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\results\\har-noise-floor\\har-noise-floor-tinyhar-fold1-nakhoul-3050-tau.csv",
+ "ceiling": 0.8924310138312194,
+ "ceiling_source": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\results\\har-noise-floor\\har-noise-floor-tinyhar-fold1-nakhoul-3050-group-summary.csv",
+ "weights": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold1-nakhoul-3050.pt",
+ "preregistration_written_at": "2026-11-22T14:21:57+02:00",
+ "selection_used": {
+  "50pct": {
+   "no_finetune": {
+    "beta": 0.5,
+    "r": null
+   },
+   "finetune": {
+    "beta": 0.3,
+    "r": 0.25
+   }
+  },
+  "70pct": {
+   "no_finetune": {
+    "beta": 0.1,
+    "r": null
+   },
+   "finetune": {
+    "beta": 0.1,
+    "r": 0.25
+   }
+  },
+  "90pct": {
+   "no_finetune": {
+    "beta": 0.1,
+    "r": null
+   },
+   "finetune": {
+    "beta": 0.1,
+    "r": 0.5
+   }
+  }
+ },
+ "n_nonzero": {
+  "0.7": [
+   17365
+  ],
+  "0.9": [
+   6821
+  ]
+ },
+ "seconds_fixed": {
+  "shap_original": 0.0261656001675874,
+  "teacher_logits_and_snip": 1.6614405000582337
+ },
+ "seconds_wall_this_invocation": 6283.392176500056,
+ "finished_at": "2026-11-23T21:00:27+02:00"
+}

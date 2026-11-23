@@ -294,6 +294,14 @@ Phase 1 runs with `--curve-seeds 0` (decided 2026-11-22), so ≈ 6.6 h per fold.
 - Not throttled (sessions 2 and 3: GPU at 75–79 °C, about 1,600 MHz): 20-epoch fine-tuning 66–78 s (CE / KD) and 119–151 s (kdaug / xgp_ft); SHAP ≈ 92–97 s per assessment (300 + 300 windows); xgp start ≈ 57 s. The wall clock matched the summed per-run components (ratio 1.00–1.08).
 - With a cool GPU throughout, the whole phase would take ≈ 7.5 h.
 
+### Fold 1 phase 2 (ablation) on nakhoul-3050 (RTX 3050 Ti Laptop, cuda, 2026-11-23), complete
+- `python -m har.run_xgp_pilot3 --phase ablation --folds 1 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050`, then the same with `--resume`.
+- 2 sessions, **≈ 7 h 22 min wall clock**: 12:50–18:27 (5 h 37 min, slow; 40 / 63 fine-tuned runs; stop requested at 17:37, the log kept running to 18:27) and 19:15–21:00 (`phase ablation done in 6283.4 s`, 1 h 45 min; 23 fine-tuned runs + 8 starts).
+- Summed component time over the 99 runs: fine-tuning 256 min, SHAP 153 min, starts (importance + reconstruction) 21 min.
+- Session 1 (slow, likely throttled): 20-epoch fine-tuning 247–257 s (KD), 305–391 s (kdaug / DRO), 15.6–17.5 s per epoch; ≈ 8.5 min wall per fine-tuned run.
+- Session 2 (fast, GPU ≈ 70 °C, 13–17 W): 4.1 s per epoch for 70% kdaug without DRO (82 s per run, vs 15.6 s per epoch in session 1, ≈ 4× faster); at 90% (r 0.5, 83,328 windows): 67–69 s (KD), 101–141 s (kdaug); ≈ 3 min wall per fine-tuned run.
+- Planned ≈ 3.5 h; at session-2 speed the whole phase would take ≈ 3–3.5 h. Use uni-2080's times for the paper's cost comparison.
+
 Session 1 details (written at the stop):
 - `python -m har.run_xgp_pilot3 --prepare --smoke` + `--phase tuning --folds 1 --smoke --device cuda --machine-name nakhoul-3050`: **37 s** for the tuning smoke.
 - `python -m har.run_xgp_pilot3 --phase tuning --folds 1 --curve-seeds 0 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050`: started 15:20:42, **stopped by us at 20:07** (GPU heat), 4 h 47 min. Done: level 50% and part of 70%; 18 / 30 no-fine-tuning starts and 34 / 99 fine-tuned runs (≈ 40% of phase 1). Continue with `--resume`.

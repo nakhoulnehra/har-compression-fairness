@@ -1,0 +1,1315 @@
+=== XGP pilot round 3, fold 1, phase ablation | machine nakhoul-3050 | device cuda NVIDIA GeForce RTX 3050 Ti Laptop GPU | torch 2.7.1+cu118 | started 2026-11-23T12:50:17+02:00 | C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\har\run_xgp_pilot3.py --phase ablation --folds 1 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050
+    SHAP cache hit har-xgp-pilot3-fold1-original-d2b99893a9677321.npz
+fold 1: train 55552, F1 windows 5704 + 5704 older-like, explain 300 + 300, calibration {'normal': 459, 'older_like': 459} (['S014', 'S018', 'S024']); tau_k 0.5827 (C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\results\har-noise-floor\har-noise-floor-tinyhar-fold1-nakhoul-3050-tau.csv), ceiling 0.8924; original SHAP 0.0 s
+
+######## fold 1, phase ablation, level 50%
+
+--- start fold1-xgp_no_score-50pct-seed0
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.100, n_nonzero 49001, reconstructed
+      prune step 2/5: sparsity 0.200, n_nonzero 43727, reconstructed
+      prune step 3/5: sparsity 0.300, n_nonzero 38457, reconstructed
+      prune step 4/5: sparsity 0.400, n_nonzero 33183, reconstructed
+      prune step 5/5: sparsity 0.500, n_nonzero 27911, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_score-50pct-seed0                FA-LCI 0.8726 (normal 0.8726, older-like 0.9023); F1 0.7538 / 0.6922
+
+--- start fold1-xgp_no_group-50pct-seed0-beta0.5
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.100, n_nonzero 49001, reconstructed
+      prune step 2/5: sparsity 0.200, n_nonzero 43727, reconstructed
+      prune step 3/5: sparsity 0.300, n_nonzero 38457, reconstructed
+      prune step 4/5: sparsity 0.400, n_nonzero 33183, reconstructed
+      prune step 5/5: sparsity 0.500, n_nonzero 27911, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_group(beta=0.5)-50pct-seed0      FA-LCI 0.8500 (normal 0.8500, older-like 0.8746); F1 0.7633 / 0.6872
+
+--- start fold1-xgp_no_iter-50pct-seed0-beta0.5
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/1: sparsity 0.500, n_nonzero 27911, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_iter(beta=0.5)-50pct-seed0       FA-LCI 0.8991 (normal 0.8991, older-like 0.9043); F1 0.7669 / 0.6983
+
+--- start fold1-xgp_no_recon-50pct-seed0-beta0.5
+      prune step 1/5: sparsity 0.100, n_nonzero 49001
+      prune step 2/5: sparsity 0.200, n_nonzero 43727
+      prune step 3/5: sparsity 0.300, n_nonzero 38457
+      prune step 4/5: sparsity 0.400, n_nonzero 33183
+      prune step 5/5: sparsity 0.500, n_nonzero 27911
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_recon(beta=0.5)-50pct-seed0      FA-LCI 0.5987 (normal 0.5987, older-like 0.6129); F1 0.7126 / 0.6142
+
+=== fold 1 ft-xgp_no_score_ft(r=0.25)-50pct-seed0: start xgp_no_score, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1982  KL 0.0110  DRO q [0.46, 0.54]  val F1 0.7675  acc 0.9188  5.8s
+    ft epoch  2/20  CE 0.1913  KL 0.0104  DRO q [0.426, 0.574]  val F1 0.7662  acc 0.9176  5.2s
+    ft epoch  3/20  CE 0.1900  KL 0.0102  DRO q [0.393, 0.607]  val F1 0.7642  acc 0.9169  5.5s
+    ft epoch  4/20  CE 0.1873  KL 0.0101  DRO q [0.362, 0.638]  val F1 0.7644  acc 0.9173  5.8s
+    ft epoch  5/20  CE 0.1849  KL 0.0099  DRO q [0.334, 0.666]  val F1 0.7618  acc 0.9162  5.7s
+    ft epoch  6/20  CE 0.1841  KL 0.0099  DRO q [0.307, 0.693]  val F1 0.7636  acc 0.9160  6.9s
+    ft epoch  7/20  CE 0.1836  KL 0.0098  DRO q [0.281, 0.719]  val F1 0.7596  acc 0.9155  7.0s
+    ft epoch  8/20  CE 0.1837  KL 0.0097  DRO q [0.257, 0.743]  val F1 0.7646  acc 0.9160  6.9s
+    ft epoch  9/20  CE 0.1799  KL 0.0098  DRO q [0.237, 0.763]  val F1 0.7588  acc 0.9137  7.0s
+    ft epoch 10/20  CE 0.1799  KL 0.0097  DRO q [0.217, 0.783]  val F1 0.7627  acc 0.9146  7.2s
+    ft epoch 11/20  CE 0.1804  KL 0.0095  DRO q [0.198, 0.802]  val F1 0.7582  acc 0.9143  7.0s
+    ft epoch 12/20  CE 0.1786  KL 0.0095  DRO q [0.182, 0.818]  val F1 0.7616  acc 0.9155  7.1s
+    ft epoch 13/20  CE 0.1794  KL 0.0095  DRO q [0.166, 0.834]  val F1 0.7592  acc 0.9151  7.0s
+    ft epoch 14/20  CE 0.1801  KL 0.0094  DRO q [0.153, 0.847]  val F1 0.7599  acc 0.9134  7.0s
+    ft epoch 15/20  CE 0.1772  KL 0.0095  DRO q [0.139, 0.861]  val F1 0.7625  acc 0.9158  7.0s
+    ft epoch 16/20  CE 0.1776  KL 0.0094  DRO q [0.128, 0.872]  val F1 0.7608  acc 0.9144  8.1s
+    ft epoch 17/20  CE 0.1771  KL 0.0095  DRO q [0.117, 0.883]  val F1 0.7671  acc 0.9167  10.2s
+    ft epoch 18/20  CE 0.1778  KL 0.0093  DRO q [0.107, 0.893]  val F1 0.7643  acc 0.9153  9.9s
+    ft epoch 19/20  CE 0.1764  KL 0.0094  DRO q [0.098, 0.902]  val F1 0.7648  acc 0.9150  10.0s
+    ft epoch 20/20  CE 0.1770  KL 0.0092  DRO q [0.09, 0.91]  val F1 0.7616  acc 0.9122  9.9s
+    -> FA-LCI 0.8388 (normal 0.8394, older-like 0.8388); F1 0.7616 / 0.7071; 146.1 s
+
+--- start fold1-xgp_no_group-50pct-seed0-beta0.3
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.100, n_nonzero 49001, reconstructed
+      prune step 2/5: sparsity 0.200, n_nonzero 43727, reconstructed
+      prune step 3/5: sparsity 0.300, n_nonzero 38457, reconstructed
+      prune step 4/5: sparsity 0.400, n_nonzero 33183, reconstructed
+      prune step 5/5: sparsity 0.500, n_nonzero 27911, reconstructed
+
+=== fold 1 ft-xgp_no_group_ft(beta=0.3,r=0.25)-50pct-seed0: start xgp_no_group, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1976  KL 0.0108  DRO q [0.461, 0.539]  val F1 0.7662  acc 0.9180  7.0s
+    ft epoch  2/20  CE 0.1909  KL 0.0102  DRO q [0.427, 0.573]  val F1 0.7708  acc 0.9185  9.2s
+    ft epoch  3/20  CE 0.1900  KL 0.0101  DRO q [0.394, 0.606]  val F1 0.7639  acc 0.9167  11.0s
+    ft epoch  4/20  CE 0.1869  KL 0.0100  DRO q [0.364, 0.636]  val F1 0.7630  acc 0.9160  12.0s
+    ft epoch  5/20  CE 0.1847  KL 0.0099  DRO q [0.336, 0.664]  val F1 0.7639  acc 0.9165  17.3s
+    ft epoch  6/20  CE 0.1841  KL 0.0099  DRO q [0.309, 0.691]  val F1 0.7673  acc 0.9173  17.4s
+    ft epoch  7/20  CE 0.1833  KL 0.0098  DRO q [0.283, 0.717]  val F1 0.7620  acc 0.9158  17.5s
+    ft epoch  8/20  CE 0.1834  KL 0.0096  DRO q [0.259, 0.741]  val F1 0.7685  acc 0.9169  17.3s
+    ft epoch  9/20  CE 0.1800  KL 0.0098  DRO q [0.239, 0.761]  val F1 0.7646  acc 0.9160  17.3s
+    ft epoch 10/20  CE 0.1800  KL 0.0096  DRO q [0.219, 0.781]  val F1 0.7651  acc 0.9160  17.3s
+    ft epoch 11/20  CE 0.1805  KL 0.0095  DRO q [0.2, 0.8]  val F1 0.7621  acc 0.9157  17.3s
+    ft epoch 12/20  CE 0.1786  KL 0.0095  DRO q [0.183, 0.817]  val F1 0.7621  acc 0.9148  17.3s
+    ft epoch 13/20  CE 0.1793  KL 0.0095  DRO q [0.168, 0.832]  val F1 0.7657  acc 0.9160  17.3s
+    ft epoch 14/20  CE 0.1801  KL 0.0094  DRO q [0.155, 0.845]  val F1 0.7648  acc 0.9151  17.3s
+    ft epoch 15/20  CE 0.1771  KL 0.0095  DRO q [0.141, 0.859]  val F1 0.7672  acc 0.9160  17.3s
+    ft epoch 16/20  CE 0.1777  KL 0.0094  DRO q [0.129, 0.871]  val F1 0.7667  acc 0.9153  17.3s
+    ft epoch 17/20  CE 0.1770  KL 0.0094  DRO q [0.119, 0.881]  val F1 0.7705  acc 0.9164  17.3s
+    ft epoch 18/20  CE 0.1779  KL 0.0093  DRO q [0.109, 0.891]  val F1 0.7691  acc 0.9160  17.3s
+    ft epoch 19/20  CE 0.1761  KL 0.0094  DRO q [0.099, 0.901]  val F1 0.7685  acc 0.9157  17.4s
+    ft epoch 20/20  CE 0.1771  KL 0.0092  DRO q [0.091, 0.909]  val F1 0.7648  acc 0.9130  17.3s
+    -> FA-LCI 0.8386 (normal 0.8431, older-like 0.8386); F1 0.7648 / 0.7088; 316.3 s
+
+--- start fold1-xgp_no_iter-50pct-seed0-beta0.3
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/1: sparsity 0.500, n_nonzero 27911, reconstructed
+
+=== fold 1 ft-xgp_no_iter_ft(beta=0.3,r=0.25)-50pct-seed0: start xgp_no_iter, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1984  KL 0.0108  DRO q [0.461, 0.539]  val F1 0.7659  acc 0.9178  15.8s
+    ft epoch  2/20  CE 0.1914  KL 0.0102  DRO q [0.426, 0.574]  val F1 0.7663  acc 0.9174  17.3s
+    ft epoch  3/20  CE 0.1905  KL 0.0102  DRO q [0.392, 0.608]  val F1 0.7624  acc 0.9160  17.3s
+    ft epoch  4/20  CE 0.1883  KL 0.0101  DRO q [0.362, 0.638]  val F1 0.7649  acc 0.9165  17.3s
+    ft epoch  5/20  CE 0.1854  KL 0.0099  DRO q [0.334, 0.666]  val F1 0.7639  acc 0.9165  17.7s
+    ft epoch  6/20  CE 0.1849  KL 0.0099  DRO q [0.306, 0.694]  val F1 0.7632  acc 0.9158  17.3s
+    ft epoch  7/20  CE 0.1840  KL 0.0098  DRO q [0.28, 0.72]  val F1 0.7613  acc 0.9162  17.3s
+    ft epoch  8/20  CE 0.1844  KL 0.0097  DRO q [0.257, 0.743]  val F1 0.7606  acc 0.9150  17.4s
+    ft epoch  9/20  CE 0.1807  KL 0.0098  DRO q [0.236, 0.764]  val F1 0.7615  acc 0.9155  17.3s
+    ft epoch 10/20  CE 0.1810  KL 0.0096  DRO q [0.217, 0.783]  val F1 0.7640  acc 0.9158  17.3s
+    ft epoch 11/20  CE 0.1811  KL 0.0095  DRO q [0.198, 0.802]  val F1 0.7579  acc 0.9146  17.3s
+    ft epoch 12/20  CE 0.1791  KL 0.0095  DRO q [0.181, 0.819]  val F1 0.7613  acc 0.9144  17.3s
+    ft epoch 13/20  CE 0.1797  KL 0.0095  DRO q [0.165, 0.835]  val F1 0.7600  acc 0.9143  17.3s
+    ft epoch 14/20  CE 0.1805  KL 0.0094  DRO q [0.152, 0.848]  val F1 0.7596  acc 0.9146  17.4s
+    ft epoch 15/20  CE 0.1774  KL 0.0095  DRO q [0.139, 0.861]  val F1 0.7600  acc 0.9151  17.8s
+    ft epoch 16/20  CE 0.1786  KL 0.0094  DRO q [0.127, 0.873]  val F1 0.7632  acc 0.9158  17.7s
+    ft epoch 17/20  CE 0.1777  KL 0.0095  DRO q [0.116, 0.884]  val F1 0.7684  acc 0.9173  17.3s
+    ft epoch 18/20  CE 0.1785  KL 0.0093  DRO q [0.106, 0.894]  val F1 0.7667  acc 0.9160  17.7s
+    ft epoch 19/20  CE 0.1770  KL 0.0094  DRO q [0.097, 0.903]  val F1 0.7669  acc 0.9148  18.4s
+    ft epoch 20/20  CE 0.1773  KL 0.0092  DRO q [0.089, 0.911]  val F1 0.7592  acc 0.9127  17.3s
+    -> FA-LCI 0.8385 (normal 0.8644, older-like 0.8385); F1 0.7592 / 0.7071; 347.8 s
+
+--- start fold1-xgp_no_recon-50pct-seed0-beta0.3
+      prune step 1/5: sparsity 0.100, n_nonzero 49001
+      prune step 2/5: sparsity 0.200, n_nonzero 43727
+      prune step 3/5: sparsity 0.300, n_nonzero 38457
+      prune step 4/5: sparsity 0.400, n_nonzero 33183
+      prune step 5/5: sparsity 0.500, n_nonzero 27911
+
+=== fold 1 ft-xgp_no_recon_ft(beta=0.3,r=0.25)-50pct-seed0: start xgp_no_recon, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2076  KL 0.0123  DRO q [0.456, 0.544]  val F1 0.7623  acc 0.9158  17.5s
+    ft epoch  2/20  CE 0.1943  KL 0.0109  DRO q [0.42, 0.58]  val F1 0.7600  acc 0.9148  17.5s
+    ft epoch  3/20  CE 0.1939  KL 0.0106  DRO q [0.387, 0.613]  val F1 0.7591  acc 0.9146  18.0s
+    ft epoch  4/20  CE 0.1902  KL 0.0105  DRO q [0.357, 0.643]  val F1 0.7607  acc 0.9157  17.9s
+    ft epoch  5/20  CE 0.1872  KL 0.0102  DRO q [0.328, 0.672]  val F1 0.7592  acc 0.9153  17.7s
+    ft epoch  6/20  CE 0.1872  KL 0.0102  DRO q [0.301, 0.699]  val F1 0.7638  acc 0.9162  18.0s
+    ft epoch  7/20  CE 0.1856  KL 0.0101  DRO q [0.275, 0.725]  val F1 0.7624  acc 0.9155  17.6s
+    ft epoch  8/20  CE 0.1858  KL 0.0099  DRO q [0.252, 0.748]  val F1 0.7660  acc 0.9171  17.7s
+    ft epoch  9/20  CE 0.1825  KL 0.0100  DRO q [0.232, 0.768]  val F1 0.7614  acc 0.9150  17.4s
+    ft epoch 10/20  CE 0.1821  KL 0.0099  DRO q [0.213, 0.787]  val F1 0.7652  acc 0.9151  17.4s
+    ft epoch 11/20  CE 0.1827  KL 0.0097  DRO q [0.194, 0.806]  val F1 0.7598  acc 0.9141  17.4s
+    ft epoch 12/20  CE 0.1807  KL 0.0098  DRO q [0.177, 0.823]  val F1 0.7613  acc 0.9146  17.7s
+    ft epoch 13/20  CE 0.1808  KL 0.0097  DRO q [0.162, 0.838]  val F1 0.7626  acc 0.9150  19.4s
+    ft epoch 14/20  CE 0.1819  KL 0.0096  DRO q [0.149, 0.851]  val F1 0.7633  acc 0.9148  18.9s
+    ft epoch 15/20  CE 0.1785  KL 0.0097  DRO q [0.136, 0.864]  val F1 0.7639  acc 0.9151  18.2s
+    ft epoch 16/20  CE 0.1799  KL 0.0096  DRO q [0.124, 0.876]  val F1 0.7658  acc 0.9153  18.7s
+    ft epoch 17/20  CE 0.1789  KL 0.0096  DRO q [0.114, 0.886]  val F1 0.7637  acc 0.9158  18.9s
+    ft epoch 18/20  CE 0.1794  KL 0.0095  DRO q [0.104, 0.896]  val F1 0.7645  acc 0.9151  18.6s
+    ft epoch 19/20  CE 0.1782  KL 0.0096  DRO q [0.095, 0.905]  val F1 0.7677  acc 0.9148  18.1s
+    ft epoch 20/20  CE 0.1784  KL 0.0094  DRO q [0.087, 0.913]  val F1 0.7648  acc 0.9132  18.0s
+    -> FA-LCI 0.8141 (normal 0.8607, older-like 0.8141); F1 0.7648 / 0.7163; 360.6 s
+
+=== fold 1 ft-xgp_ft_no_aug(beta=0.3)-50pct-seed0: start xgp, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1656  KL 0.0101  val F1 0.7678  acc 0.9162  12.1s
+    ft epoch  2/20  CE 0.1616  KL 0.0096  val F1 0.7657  acc 0.9160  12.6s
+    ft epoch  3/20  CE 0.1578  KL 0.0093  val F1 0.7636  acc 0.9164  12.6s
+    ft epoch  4/20  CE 0.1592  KL 0.0092  val F1 0.7663  acc 0.9160  12.6s
+    ft epoch  5/20  CE 0.1562  KL 0.0090  val F1 0.7706  acc 0.9178  12.6s
+    ft epoch  6/20  CE 0.1557  KL 0.0090  val F1 0.7671  acc 0.9165  12.6s
+    ft epoch  7/20  CE 0.1538  KL 0.0089  val F1 0.7657  acc 0.9155  12.6s
+    ft epoch  8/20  CE 0.1530  KL 0.0087  val F1 0.7666  acc 0.9160  12.6s
+    ft epoch  9/20  CE 0.1514  KL 0.0086  val F1 0.7681  acc 0.9151  12.9s
+    ft epoch 10/20  CE 0.1552  KL 0.0086  val F1 0.7667  acc 0.9164  13.0s
+    ft epoch 11/20  CE 0.1543  KL 0.0084  val F1 0.7634  acc 0.9158  13.3s
+    ft epoch 12/20  CE 0.1532  KL 0.0085  val F1 0.7634  acc 0.9146  13.8s
+    ft epoch 13/20  CE 0.1527  KL 0.0084  val F1 0.7625  acc 0.9141  12.9s
+    ft epoch 14/20  CE 0.1535  KL 0.0083  val F1 0.7650  acc 0.9157  12.7s
+    ft epoch 15/20  CE 0.1525  KL 0.0082  val F1 0.7595  acc 0.9134  12.6s
+    ft epoch 16/20  CE 0.1526  KL 0.0081  val F1 0.7639  acc 0.9137  12.6s
+    ft epoch 17/20  CE 0.1537  KL 0.0082  val F1 0.7662  acc 0.9153  13.2s
+    ft epoch 18/20  CE 0.1528  KL 0.0082  val F1 0.7624  acc 0.9136  13.1s
+    ft epoch 19/20  CE 0.1506  KL 0.0081  val F1 0.7676  acc 0.9148  13.6s
+    ft epoch 20/20  CE 0.1499  KL 0.0081  val F1 0.7633  acc 0.9141  12.9s
+    -> FA-LCI 0.8685 (normal 0.8734, older-like 0.8685); F1 0.7633 / 0.6933; 256.7 s
+
+=== fold 1 ft-xgp_ft_no_dro(beta=0.3,r=0.25)-50pct-seed0: start xgp, recipe kdaug, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1984  KL 0.0105  val F1 0.7670  acc 0.9180  15.8s
+    ft epoch  2/20  CE 0.1911  KL 0.0099  val F1 0.7662  acc 0.9160  15.6s
+    ft epoch  3/20  CE 0.1904  KL 0.0097  val F1 0.7672  acc 0.9174  16.3s
+    ft epoch  4/20  CE 0.1872  KL 0.0096  val F1 0.7643  acc 0.9155  17.1s
+    ft epoch  5/20  CE 0.1848  KL 0.0093  val F1 0.7635  acc 0.9148  16.0s
+    ft epoch  6/20  CE 0.1841  KL 0.0094  val F1 0.7655  acc 0.9157  15.9s
+    ft epoch  7/20  CE 0.1830  KL 0.0092  val F1 0.7596  acc 0.9144  16.1s
+    ft epoch  8/20  CE 0.1831  KL 0.0091  val F1 0.7699  acc 0.9153  16.7s
+    ft epoch  9/20  CE 0.1798  KL 0.0091  val F1 0.7651  acc 0.9160  17.0s
+    ft epoch 10/20  CE 0.1796  KL 0.0090  val F1 0.7686  acc 0.9165  17.3s
+    ft epoch 11/20  CE 0.1790  KL 0.0088  val F1 0.7651  acc 0.9153  16.6s
+    ft epoch 12/20  CE 0.1773  KL 0.0088  val F1 0.7635  acc 0.9151  16.0s
+    ft epoch 13/20  CE 0.1779  KL 0.0087  val F1 0.7633  acc 0.9141  15.6s
+    ft epoch 14/20  CE 0.1779  KL 0.0086  val F1 0.7651  acc 0.9143  15.7s
+    ft epoch 15/20  CE 0.1756  KL 0.0087  val F1 0.7672  acc 0.9164  16.2s
+    ft epoch 16/20  CE 0.1759  KL 0.0086  val F1 0.7654  acc 0.9146  15.8s
+    ft epoch 17/20  CE 0.1746  KL 0.0086  val F1 0.7616  acc 0.9137  15.7s
+    ft epoch 18/20  CE 0.1751  KL 0.0084  val F1 0.7718  acc 0.9165  16.3s
+    ft epoch 19/20  CE 0.1736  KL 0.0085  val F1 0.7714  acc 0.9160  15.7s
+    ft epoch 20/20  CE 0.1740  KL 0.0084  val F1 0.7680  acc 0.9160  15.7s
+    -> FA-LCI 0.8408 (normal 0.8503, older-like 0.8408); F1 0.7680 / 0.7045; 322.9 s
+
+=== fold 1 ft-l1_recon_ft(r=0.25)-50pct-seed0: start l1_recon, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1990  KL 0.0111  DRO q [0.46, 0.54]  val F1 0.7661  acc 0.9181  17.3s
+    ft epoch  2/20  CE 0.1920  KL 0.0104  DRO q [0.424, 0.576]  val F1 0.7652  acc 0.9176  17.3s
+    ft epoch  3/20  CE 0.1909  KL 0.0103  DRO q [0.391, 0.609]  val F1 0.7596  acc 0.9164  18.2s
+    ft epoch  4/20  CE 0.1882  KL 0.0102  DRO q [0.361, 0.639]  val F1 0.7617  acc 0.9167  18.1s
+    ft epoch  5/20  CE 0.1856  KL 0.0100  DRO q [0.332, 0.668]  val F1 0.7616  acc 0.9157  17.5s
+    ft epoch  6/20  CE 0.1847  KL 0.0100  DRO q [0.305, 0.695]  val F1 0.7611  acc 0.9155  17.1s
+    ft epoch  7/20  CE 0.1843  KL 0.0099  DRO q [0.279, 0.721]  val F1 0.7590  acc 0.9157  18.8s
+    ft epoch  8/20  CE 0.1846  KL 0.0097  DRO q [0.256, 0.744]  val F1 0.7576  acc 0.9146  22.9s
+    ft epoch  9/20  CE 0.1809  KL 0.0099  DRO q [0.235, 0.765]  val F1 0.7544  acc 0.9136  20.4s
+    ft epoch 10/20  CE 0.1810  KL 0.0097  DRO q [0.216, 0.784]  val F1 0.7636  acc 0.9150  17.3s
+    ft epoch 11/20  CE 0.1813  KL 0.0096  DRO q [0.197, 0.803]  val F1 0.7529  acc 0.9137  17.5s
+    ft epoch 12/20  CE 0.1792  KL 0.0096  DRO q [0.18, 0.82]  val F1 0.7560  acc 0.9143  17.3s
+    ft epoch 13/20  CE 0.1800  KL 0.0095  DRO q [0.165, 0.835]  val F1 0.7580  acc 0.9139  18.4s
+    ft epoch 14/20  CE 0.1807  KL 0.0095  DRO q [0.152, 0.848]  val F1 0.7550  acc 0.9144  22.8s
+    ft epoch 15/20  CE 0.1779  KL 0.0096  DRO q [0.139, 0.861]  val F1 0.7604  acc 0.9153  20.9s
+    ft epoch 16/20  CE 0.1788  KL 0.0095  DRO q [0.127, 0.873]  val F1 0.7600  acc 0.9148  17.1s
+    ft epoch 17/20  CE 0.1782  KL 0.0095  DRO q [0.117, 0.883]  val F1 0.7630  acc 0.9155  17.1s
+    ft epoch 18/20  CE 0.1789  KL 0.0094  DRO q [0.107, 0.893]  val F1 0.7581  acc 0.9141  17.1s
+    ft epoch 19/20  CE 0.1776  KL 0.0095  DRO q [0.097, 0.903]  val F1 0.7616  acc 0.9144  17.1s
+    ft epoch 20/20  CE 0.1779  KL 0.0093  DRO q [0.089, 0.911]  val F1 0.7551  acc 0.9111  17.1s
+    -> FA-LCI 0.8381 (normal 0.8428, older-like 0.8381); F1 0.7551 / 0.7081; 367.6 s
+
+--- start fold1-xgp_no_score-50pct-seed1
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.100, n_nonzero 49001, reconstructed
+      prune step 2/5: sparsity 0.200, n_nonzero 43727, reconstructed
+      prune step 3/5: sparsity 0.300, n_nonzero 38457, reconstructed
+      prune step 4/5: sparsity 0.400, n_nonzero 33183, reconstructed
+      prune step 5/5: sparsity 0.500, n_nonzero 27911, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_score-50pct-seed1                FA-LCI 0.8726 (normal 0.8726, older-like 0.9023); F1 0.7538 / 0.6922
+
+--- start fold1-xgp_no_group-50pct-seed1-beta0.5
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.100, n_nonzero 49001, reconstructed
+      prune step 2/5: sparsity 0.200, n_nonzero 43727, reconstructed
+      prune step 3/5: sparsity 0.300, n_nonzero 38457, reconstructed
+      prune step 4/5: sparsity 0.400, n_nonzero 33183, reconstructed
+      prune step 5/5: sparsity 0.500, n_nonzero 27911, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_group(beta=0.5)-50pct-seed1      FA-LCI 0.8751 (normal 0.8755, older-like 0.8751); F1 0.7629 / 0.6911
+
+--- start fold1-xgp_no_iter-50pct-seed1-beta0.5
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/1: sparsity 0.500, n_nonzero 27911, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_iter(beta=0.5)-50pct-seed1       FA-LCI 0.8739 (normal 0.8739, older-like 0.9043); F1 0.7625 / 0.6976
+
+--- start fold1-xgp_no_recon-50pct-seed1-beta0.5
+      prune step 1/5: sparsity 0.100, n_nonzero 49001
+      prune step 2/5: sparsity 0.200, n_nonzero 43727
+      prune step 3/5: sparsity 0.300, n_nonzero 38457
+      prune step 4/5: sparsity 0.400, n_nonzero 33183
+      prune step 5/5: sparsity 0.500, n_nonzero 27911
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_recon(beta=0.5)-50pct-seed1      FA-LCI 0.5776 (normal 0.5776, older-like 0.6235); F1 0.6730 / 0.5778
+
+=== fold 1 ft-xgp_no_score_ft(r=0.25)-50pct-seed1: start xgp_no_score, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1976  KL 0.0109  DRO q [0.462, 0.538]  val F1 0.7672  acc 0.9160  18.4s
+    ft epoch  2/20  CE 0.1913  KL 0.0104  DRO q [0.428, 0.572]  val F1 0.7659  acc 0.9178  19.7s
+    ft epoch  3/20  CE 0.1890  KL 0.0102  DRO q [0.397, 0.603]  val F1 0.7619  acc 0.9164  18.4s
+    ft epoch  4/20  CE 0.1863  KL 0.0100  DRO q [0.367, 0.633]  val F1 0.7634  acc 0.9169  18.9s
+    ft epoch  5/20  CE 0.1853  KL 0.0099  DRO q [0.338, 0.662]  val F1 0.7636  acc 0.9151  17.8s
+    ft epoch  6/20  CE 0.1849  KL 0.0098  DRO q [0.313, 0.687]  val F1 0.7614  acc 0.9150  18.4s
+    ft epoch  7/20  CE 0.1840  KL 0.0097  DRO q [0.288, 0.712]  val F1 0.7621  acc 0.9151  24.4s
+    ft epoch  8/20  CE 0.1816  KL 0.0096  DRO q [0.265, 0.735]  val F1 0.7648  acc 0.9180  23.1s
+    ft epoch  9/20  CE 0.1824  KL 0.0094  DRO q [0.244, 0.756]  val F1 0.7616  acc 0.9164  19.3s
+    ft epoch 10/20  CE 0.1812  KL 0.0095  DRO q [0.224, 0.776]  val F1 0.7624  acc 0.9162  17.5s
+    ft epoch 11/20  CE 0.1807  KL 0.0095  DRO q [0.205, 0.795]  val F1 0.7613  acc 0.9141  18.0s
+    ft epoch 12/20  CE 0.1803  KL 0.0096  DRO q [0.188, 0.812]  val F1 0.7674  acc 0.9160  18.1s
+    ft epoch 13/20  CE 0.1787  KL 0.0094  DRO q [0.172, 0.828]  val F1 0.7653  acc 0.9160  17.8s
+    ft epoch 14/20  CE 0.1786  KL 0.0093  DRO q [0.158, 0.842]  val F1 0.7576  acc 0.9127  18.5s
+    ft epoch 15/20  CE 0.1782  KL 0.0094  DRO q [0.145, 0.855]  val F1 0.7614  acc 0.9169  22.4s
+    ft epoch 16/20  CE 0.1780  KL 0.0094  DRO q [0.133, 0.867]  val F1 0.7618  acc 0.9164  25.0s
+    ft epoch 17/20  CE 0.1775  KL 0.0093  DRO q [0.122, 0.878]  val F1 0.7569  acc 0.9129  22.4s
+    ft epoch 18/20  CE 0.1762  KL 0.0093  DRO q [0.113, 0.887]  val F1 0.7574  acc 0.9141  17.3s
+    ft epoch 19/20  CE 0.1763  KL 0.0092  DRO q [0.104, 0.896]  val F1 0.7586  acc 0.9146  17.4s
+    ft epoch 20/20  CE 0.1757  KL 0.0093  DRO q [0.096, 0.904]  val F1 0.7570  acc 0.9143  18.0s
+    -> FA-LCI 0.8370 (normal 0.8934, older-like 0.8370); F1 0.7570 / 0.7064; 390.7 s
+
+--- start fold1-xgp_no_group-50pct-seed1-beta0.3
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.100, n_nonzero 49001, reconstructed
+      prune step 2/5: sparsity 0.200, n_nonzero 43727, reconstructed
+      prune step 3/5: sparsity 0.300, n_nonzero 38457, reconstructed
+      prune step 4/5: sparsity 0.400, n_nonzero 33183, reconstructed
+      prune step 5/5: sparsity 0.500, n_nonzero 27911, reconstructed
+
+=== fold 1 ft-xgp_no_group_ft(beta=0.3,r=0.25)-50pct-seed1: start xgp_no_group, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1966  KL 0.0107  DRO q [0.463, 0.537]  val F1 0.7628  acc 0.9146  8.3s
+    ft epoch  2/20  CE 0.1916  KL 0.0102  DRO q [0.428, 0.572]  val F1 0.7611  acc 0.9167  10.9s
+    ft epoch  3/20  CE 0.1889  KL 0.0101  DRO q [0.397, 0.603]  val F1 0.7542  acc 0.9151  10.9s
+    ft epoch  4/20  CE 0.1863  KL 0.0100  DRO q [0.367, 0.633]  val F1 0.7618  acc 0.9167  17.6s
+    ft epoch  5/20  CE 0.1854  KL 0.0099  DRO q [0.338, 0.662]  val F1 0.7573  acc 0.9130  17.9s
+    ft epoch  6/20  CE 0.1847  KL 0.0098  DRO q [0.313, 0.687]  val F1 0.7588  acc 0.9132  17.4s
+    ft epoch  7/20  CE 0.1843  KL 0.0097  DRO q [0.287, 0.713]  val F1 0.7577  acc 0.9139  17.5s
+    ft epoch  8/20  CE 0.1814  KL 0.0096  DRO q [0.265, 0.735]  val F1 0.7636  acc 0.9174  18.0s
+    ft epoch  9/20  CE 0.1824  KL 0.0094  DRO q [0.243, 0.757]  val F1 0.7639  acc 0.9160  17.3s
+    ft epoch 10/20  CE 0.1810  KL 0.0095  DRO q [0.223, 0.777]  val F1 0.7625  acc 0.9144  17.3s
+    ft epoch 11/20  CE 0.1807  KL 0.0094  DRO q [0.204, 0.796]  val F1 0.7607  acc 0.9132  17.3s
+    ft epoch 12/20  CE 0.1803  KL 0.0095  DRO q [0.187, 0.813]  val F1 0.7655  acc 0.9157  17.6s
+    ft epoch 13/20  CE 0.1786  KL 0.0094  DRO q [0.171, 0.829]  val F1 0.7606  acc 0.9143  17.9s
+    ft epoch 14/20  CE 0.1785  KL 0.0093  DRO q [0.156, 0.844]  val F1 0.7594  acc 0.9123  19.4s
+    ft epoch 15/20  CE 0.1781  KL 0.0094  DRO q [0.144, 0.856]  val F1 0.7617  acc 0.9157  18.4s
+    ft epoch 16/20  CE 0.1781  KL 0.0094  DRO q [0.132, 0.868]  val F1 0.7629  acc 0.9162  18.0s
+    ft epoch 17/20  CE 0.1774  KL 0.0094  DRO q [0.121, 0.879]  val F1 0.7600  acc 0.9144  17.5s
+    ft epoch 18/20  CE 0.1758  KL 0.0093  DRO q [0.111, 0.889]  val F1 0.7630  acc 0.9157  17.3s
+    ft epoch 19/20  CE 0.1762  KL 0.0092  DRO q [0.103, 0.897]  val F1 0.7621  acc 0.9146  17.3s
+    ft epoch 20/20  CE 0.1754  KL 0.0092  DRO q [0.095, 0.905]  val F1 0.7617  acc 0.9157  17.5s
+    -> FA-LCI 0.8366 (normal 0.8631, older-like 0.8366); F1 0.7617 / 0.7094; 331.3 s
+
+--- start fold1-xgp_no_iter-50pct-seed1-beta0.3
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/1: sparsity 0.500, n_nonzero 27911, reconstructed
+
+=== fold 1 ft-xgp_no_iter_ft(beta=0.3,r=0.25)-50pct-seed1: start xgp_no_iter, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1960  KL 0.0107  DRO q [0.464, 0.536]  val F1 0.7578  acc 0.9143  10.5s
+    ft epoch  2/20  CE 0.1912  KL 0.0102  DRO q [0.429, 0.571]  val F1 0.7561  acc 0.9148  16.6s
+    ft epoch  3/20  CE 0.1886  KL 0.0101  DRO q [0.398, 0.602]  val F1 0.7544  acc 0.9150  13.7s
+    ft epoch  4/20  CE 0.1858  KL 0.0100  DRO q [0.369, 0.631]  val F1 0.7613  acc 0.9169  11.5s
+    ft epoch  5/20  CE 0.1853  KL 0.0099  DRO q [0.339, 0.661]  val F1 0.7538  acc 0.9132  11.1s
+    ft epoch  6/20  CE 0.1843  KL 0.0098  DRO q [0.315, 0.685]  val F1 0.7582  acc 0.9143  11.4s
+    ft epoch  7/20  CE 0.1840  KL 0.0097  DRO q [0.289, 0.711]  val F1 0.7583  acc 0.9144  17.9s
+    ft epoch  8/20  CE 0.1810  KL 0.0096  DRO q [0.267, 0.733]  val F1 0.7622  acc 0.9169  17.8s
+    ft epoch  9/20  CE 0.1825  KL 0.0094  DRO q [0.246, 0.754]  val F1 0.7624  acc 0.9158  17.8s
+    ft epoch 10/20  CE 0.1809  KL 0.0095  DRO q [0.225, 0.775]  val F1 0.7588  acc 0.9151  17.5s
+    ft epoch 11/20  CE 0.1805  KL 0.0095  DRO q [0.206, 0.794]  val F1 0.7594  acc 0.9141  18.2s
+    ft epoch 12/20  CE 0.1804  KL 0.0096  DRO q [0.189, 0.811]  val F1 0.7644  acc 0.9160  18.9s
+    ft epoch 13/20  CE 0.1782  KL 0.0095  DRO q [0.174, 0.826]  val F1 0.7597  acc 0.9150  18.2s
+    ft epoch 14/20  CE 0.1783  KL 0.0094  DRO q [0.159, 0.841]  val F1 0.7589  acc 0.9144  17.5s
+    ft epoch 15/20  CE 0.1780  KL 0.0094  DRO q [0.146, 0.854]  val F1 0.7603  acc 0.9162  17.4s
+    ft epoch 16/20  CE 0.1777  KL 0.0094  DRO q [0.134, 0.866]  val F1 0.7600  acc 0.9158  14.8s
+    ft epoch 17/20  CE 0.1773  KL 0.0094  DRO q [0.123, 0.877]  val F1 0.7585  acc 0.9144  16.9s
+    ft epoch 18/20  CE 0.1761  KL 0.0093  DRO q [0.114, 0.886]  val F1 0.7592  acc 0.9144  15.5s
+    ft epoch 19/20  CE 0.1760  KL 0.0092  DRO q [0.105, 0.895]  val F1 0.7595  acc 0.9148  13.5s
+    ft epoch 20/20  CE 0.1753  KL 0.0092  DRO q [0.097, 0.903]  val F1 0.7592  acc 0.9150  13.5s
+    -> FA-LCI 0.8368 (normal 0.8930, older-like 0.8368); F1 0.7592 / 0.7081; 310.2 s
+
+--- start fold1-xgp_no_recon-50pct-seed1-beta0.3
+      prune step 1/5: sparsity 0.100, n_nonzero 49001
+      prune step 2/5: sparsity 0.200, n_nonzero 43727
+      prune step 3/5: sparsity 0.300, n_nonzero 38457
+      prune step 4/5: sparsity 0.400, n_nonzero 33183
+      prune step 5/5: sparsity 0.500, n_nonzero 27911
+
+=== fold 1 ft-xgp_no_recon_ft(beta=0.3,r=0.25)-50pct-seed1: start xgp_no_recon, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2039  KL 0.0120  DRO q [0.46, 0.54]  val F1 0.7577  acc 0.9125  10.2s
+    ft epoch  2/20  CE 0.1940  KL 0.0108  DRO q [0.425, 0.575]  val F1 0.7611  acc 0.9153  14.6s
+    ft epoch  3/20  CE 0.1899  KL 0.0105  DRO q [0.394, 0.606]  val F1 0.7615  acc 0.9151  14.2s
+    ft epoch  4/20  CE 0.1871  KL 0.0103  DRO q [0.365, 0.635]  val F1 0.7654  acc 0.9169  17.2s
+    ft epoch  5/20  CE 0.1870  KL 0.0102  DRO q [0.335, 0.665]  val F1 0.7635  acc 0.9143  17.2s
+    ft epoch  6/20  CE 0.1857  KL 0.0101  DRO q [0.31, 0.69]  val F1 0.7631  acc 0.9148  17.2s
+    ft epoch  7/20  CE 0.1843  KL 0.0099  DRO q [0.285, 0.715]  val F1 0.7646  acc 0.9164  17.0s
+    ft epoch  8/20  CE 0.1821  KL 0.0098  DRO q [0.263, 0.737]  val F1 0.7653  acc 0.9162  14.3s
+    ft epoch  9/20  CE 0.1832  KL 0.0096  DRO q [0.242, 0.758]  val F1 0.7623  acc 0.9162  14.3s
+    ft epoch 10/20  CE 0.1822  KL 0.0097  DRO q [0.222, 0.778]  val F1 0.7620  acc 0.9148  14.2s
+    ft epoch 11/20  CE 0.1816  KL 0.0097  DRO q [0.203, 0.797]  val F1 0.7633  acc 0.9141  14.8s
+    ft epoch 12/20  CE 0.1813  KL 0.0097  DRO q [0.186, 0.814]  val F1 0.7671  acc 0.9162  14.7s
+    ft epoch 13/20  CE 0.1791  KL 0.0096  DRO q [0.171, 0.829]  val F1 0.7615  acc 0.9148  14.5s
+    ft epoch 14/20  CE 0.1794  KL 0.0095  DRO q [0.156, 0.844]  val F1 0.7607  acc 0.9141  15.0s
+    ft epoch 15/20  CE 0.1793  KL 0.0096  DRO q [0.143, 0.857]  val F1 0.7618  acc 0.9155  17.4s
+    ft epoch 16/20  CE 0.1785  KL 0.0095  DRO q [0.132, 0.868]  val F1 0.7564  acc 0.9141  17.7s
+    ft epoch 17/20  CE 0.1783  KL 0.0095  DRO q [0.121, 0.879]  val F1 0.7617  acc 0.9153  17.2s
+    ft epoch 18/20  CE 0.1772  KL 0.0094  DRO q [0.111, 0.889]  val F1 0.7647  acc 0.9151  17.7s
+    ft epoch 19/20  CE 0.1771  KL 0.0093  DRO q [0.103, 0.897]  val F1 0.7611  acc 0.9146  17.2s
+    ft epoch 20/20  CE 0.1760  KL 0.0094  DRO q [0.095, 0.905]  val F1 0.7605  acc 0.9153  17.2s
+    -> FA-LCI 0.8585 (normal 0.8586, older-like 0.8585); F1 0.7605 / 0.7051; 313.9 s
+
+=== fold 1 ft-xgp_ft_no_aug(beta=0.3)-50pct-seed1: start xgp, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1639  KL 0.0100  val F1 0.7612  acc 0.9151  6.5s
+    ft epoch  2/20  CE 0.1632  KL 0.0096  val F1 0.7634  acc 0.9150  9.6s
+    ft epoch  3/20  CE 0.1600  KL 0.0092  val F1 0.7607  acc 0.9143  12.7s
+    ft epoch  4/20  CE 0.1578  KL 0.0092  val F1 0.7603  acc 0.9144  12.9s
+    ft epoch  5/20  CE 0.1564  KL 0.0091  val F1 0.7652  acc 0.9155  12.5s
+    ft epoch  6/20  CE 0.1576  KL 0.0089  val F1 0.7607  acc 0.9144  13.0s
+    ft epoch  7/20  CE 0.1562  KL 0.0089  val F1 0.7594  acc 0.9134  12.5s
+    ft epoch  8/20  CE 0.1559  KL 0.0087  val F1 0.7606  acc 0.9146  12.5s
+    ft epoch  9/20  CE 0.1551  KL 0.0086  val F1 0.7606  acc 0.9141  12.5s
+    ft epoch 10/20  CE 0.1542  KL 0.0086  val F1 0.7637  acc 0.9153  12.9s
+    ft epoch 11/20  CE 0.1538  KL 0.0086  val F1 0.7639  acc 0.9153  12.9s
+    ft epoch 12/20  CE 0.1539  KL 0.0084  val F1 0.7636  acc 0.9165  13.4s
+    ft epoch 13/20  CE 0.1519  KL 0.0085  val F1 0.7614  acc 0.9134  12.6s
+    ft epoch 14/20  CE 0.1521  KL 0.0083  val F1 0.7624  acc 0.9141  12.9s
+    ft epoch 15/20  CE 0.1532  KL 0.0083  val F1 0.7599  acc 0.9132  13.2s
+    ft epoch 16/20  CE 0.1515  KL 0.0082  val F1 0.7570  acc 0.9116  12.6s
+    ft epoch 17/20  CE 0.1496  KL 0.0082  val F1 0.7613  acc 0.9132  12.6s
+    ft epoch 18/20  CE 0.1509  KL 0.0082  val F1 0.7623  acc 0.9125  13.1s
+    ft epoch 19/20  CE 0.1499  KL 0.0080  val F1 0.7617  acc 0.9127  13.0s
+    ft epoch 20/20  CE 0.1496  KL 0.0080  val F1 0.7645  acc 0.9144  12.7s
+    -> FA-LCI 0.8678 (normal 0.8730, older-like 0.8678); F1 0.7645 / 0.6963; 246.7 s
+
+=== fold 1 ft-xgp_ft_no_dro(beta=0.3,r=0.25)-50pct-seed1: start xgp, recipe kdaug, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1962  KL 0.0104  val F1 0.7673  acc 0.9155  8.1s
+    ft epoch  2/20  CE 0.1912  KL 0.0099  val F1 0.7661  acc 0.9183  13.7s
+    ft epoch  3/20  CE 0.1882  KL 0.0097  val F1 0.7593  acc 0.9146  15.6s
+    ft epoch  4/20  CE 0.1850  KL 0.0096  val F1 0.7623  acc 0.9160  15.6s
+    ft epoch  5/20  CE 0.1844  KL 0.0094  val F1 0.7644  acc 0.9146  15.6s
+    ft epoch  6/20  CE 0.1837  KL 0.0093  val F1 0.7619  acc 0.9162  15.6s
+    ft epoch  7/20  CE 0.1828  KL 0.0092  val F1 0.7631  acc 0.9158  15.6s
+    ft epoch  8/20  CE 0.1802  KL 0.0091  val F1 0.7605  acc 0.9144  15.6s
+    ft epoch  9/20  CE 0.1805  KL 0.0089  val F1 0.7653  acc 0.9164  15.8s
+    ft epoch 10/20  CE 0.1799  KL 0.0089  val F1 0.7624  acc 0.9148  15.7s
+    ft epoch 11/20  CE 0.1789  KL 0.0088  val F1 0.7620  acc 0.9137  15.7s
+    ft epoch 12/20  CE 0.1786  KL 0.0089  val F1 0.7639  acc 0.9157  15.7s
+    ft epoch 13/20  CE 0.1766  KL 0.0087  val F1 0.7677  acc 0.9153  15.7s
+    ft epoch 14/20  CE 0.1766  KL 0.0086  val F1 0.7586  acc 0.9127  15.7s
+    ft epoch 15/20  CE 0.1763  KL 0.0087  val F1 0.7602  acc 0.9136  15.7s
+    ft epoch 16/20  CE 0.1763  KL 0.0086  val F1 0.7602  acc 0.9158  15.7s
+    ft epoch 17/20  CE 0.1748  KL 0.0086  val F1 0.7633  acc 0.9144  15.9s
+    ft epoch 18/20  CE 0.1739  KL 0.0085  val F1 0.7628  acc 0.9144  15.9s
+    ft epoch 19/20  CE 0.1739  KL 0.0084  val F1 0.7635  acc 0.9143  15.9s
+    ft epoch 20/20  CE 0.1724  KL 0.0084  val F1 0.7666  acc 0.9165  15.9s
+    -> FA-LCI 0.8390 (normal 0.8743, older-like 0.8390); F1 0.7666 / 0.7042; 304.8 s
+
+=== fold 1 ft-l1_recon_ft(r=0.25)-50pct-seed1: start l1_recon, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1977  KL 0.0110  DRO q [0.463, 0.537]  val F1 0.7644  acc 0.9150  9.4s
+    ft epoch  2/20  CE 0.1922  KL 0.0104  DRO q [0.428, 0.572]  val F1 0.7594  acc 0.9169  12.5s
+    ft epoch  3/20  CE 0.1897  KL 0.0103  DRO q [0.397, 0.603]  val F1 0.7579  acc 0.9164  17.0s
+    ft epoch  4/20  CE 0.1867  KL 0.0101  DRO q [0.367, 0.633]  val F1 0.7644  acc 0.9173  17.0s
+    ft epoch  5/20  CE 0.1862  KL 0.0100  DRO q [0.338, 0.662]  val F1 0.7612  acc 0.9151  17.6s
+    ft epoch  6/20  CE 0.1853  KL 0.0099  DRO q [0.313, 0.687]  val F1 0.7608  acc 0.9155  17.3s
+    ft epoch  7/20  CE 0.1846  KL 0.0098  DRO q [0.288, 0.712]  val F1 0.7574  acc 0.9153  17.6s
+    ft epoch  8/20  CE 0.1821  KL 0.0097  DRO q [0.266, 0.734]  val F1 0.7653  acc 0.9181  17.4s
+    ft epoch  9/20  CE 0.1833  KL 0.0095  DRO q [0.244, 0.756]  val F1 0.7622  acc 0.9162  17.2s
+    ft epoch 10/20  CE 0.1820  KL 0.0095  DRO q [0.224, 0.776]  val F1 0.7631  acc 0.9165  17.2s
+    ft epoch 11/20  CE 0.1813  KL 0.0095  DRO q [0.206, 0.794]  val F1 0.7544  acc 0.9125  17.6s
+    ft epoch 12/20  CE 0.1815  KL 0.0096  DRO q [0.188, 0.812]  val F1 0.7650  acc 0.9167  17.4s
+    ft epoch 13/20  CE 0.1791  KL 0.0095  DRO q [0.173, 0.827]  val F1 0.7605  acc 0.9160  17.6s
+    ft epoch 14/20  CE 0.1798  KL 0.0094  DRO q [0.158, 0.842]  val F1 0.7592  acc 0.9139  17.7s
+    ft epoch 15/20  CE 0.1790  KL 0.0095  DRO q [0.145, 0.855]  val F1 0.7579  acc 0.9155  17.3s
+    ft epoch 16/20  CE 0.1786  KL 0.0095  DRO q [0.133, 0.867]  val F1 0.7573  acc 0.9157  17.2s
+    ft epoch 17/20  CE 0.1784  KL 0.0094  DRO q [0.122, 0.878]  val F1 0.7615  acc 0.9144  17.1s
+    ft epoch 18/20  CE 0.1771  KL 0.0093  DRO q [0.113, 0.887]  val F1 0.7602  acc 0.9150  17.1s
+    ft epoch 19/20  CE 0.1773  KL 0.0092  DRO q [0.104, 0.896]  val F1 0.7574  acc 0.9150  17.2s
+    ft epoch 20/20  CE 0.1761  KL 0.0093  DRO q [0.096, 0.904]  val F1 0.7588  acc 0.9146  17.3s
+    -> FA-LCI 0.8356 (normal 0.8919, older-like 0.8356); F1 0.7588 / 0.7054; 333.6 s
+
+--- start fold1-xgp_no_score-50pct-seed2
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.100, n_nonzero 49001, reconstructed
+      prune step 2/5: sparsity 0.200, n_nonzero 43727, reconstructed
+      prune step 3/5: sparsity 0.300, n_nonzero 38457, reconstructed
+      prune step 4/5: sparsity 0.400, n_nonzero 33183, reconstructed
+      prune step 5/5: sparsity 0.500, n_nonzero 27911, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_score-50pct-seed2                FA-LCI 0.8726 (normal 0.8726, older-like 0.9023); F1 0.7538 / 0.6922
+
+--- start fold1-xgp_no_group-50pct-seed2-beta0.5
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.100, n_nonzero 49001, reconstructed
+      prune step 2/5: sparsity 0.200, n_nonzero 43727, reconstructed
+      prune step 3/5: sparsity 0.300, n_nonzero 38457, reconstructed
+      prune step 4/5: sparsity 0.400, n_nonzero 33183, reconstructed
+      prune step 5/5: sparsity 0.500, n_nonzero 27911, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_group(beta=0.5)-50pct-seed2      FA-LCI 0.8501 (normal 0.8501, older-like 0.8751); F1 0.7621 / 0.6942
+
+--- start fold1-xgp_no_iter-50pct-seed2-beta0.5
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/1: sparsity 0.500, n_nonzero 27911, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_iter(beta=0.5)-50pct-seed2       FA-LCI 0.8991 (normal 0.8991, older-like 0.9042); F1 0.7604 / 0.6989
+
+--- start fold1-xgp_no_recon-50pct-seed2-beta0.5
+      prune step 1/5: sparsity 0.100, n_nonzero 49001
+      prune step 2/5: sparsity 0.200, n_nonzero 43727
+      prune step 3/5: sparsity 0.300, n_nonzero 38457
+      prune step 4/5: sparsity 0.400, n_nonzero 33183
+      prune step 5/5: sparsity 0.500, n_nonzero 27911
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_recon(beta=0.5)-50pct-seed2      FA-LCI 0.5811 (normal 0.5811, older-like 0.6362); F1 0.6677 / 0.5768
+
+=== fold 1 ft-xgp_no_score_ft(r=0.25)-50pct-seed2: start xgp_no_score, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2027  KL 0.0110  DRO q [0.457, 0.543]  val F1 0.7650  acc 0.9162  8.2s
+    ft epoch  2/20  CE 0.1975  KL 0.0104  DRO q [0.418, 0.582]  val F1 0.7658  acc 0.9157  12.7s
+    ft epoch  3/20  CE 0.1945  KL 0.0104  DRO q [0.381, 0.619]  val F1 0.7705  acc 0.9185  17.6s
+    ft epoch  4/20  CE 0.1920  KL 0.0101  DRO q [0.348, 0.652]  val F1 0.7641  acc 0.9173  17.4s
+    ft epoch  5/20  CE 0.1905  KL 0.0100  DRO q [0.317, 0.683]  val F1 0.7655  acc 0.9178  18.1s
+    ft epoch  6/20  CE 0.1870  KL 0.0099  DRO q [0.289, 0.711]  val F1 0.7692  acc 0.9178  18.5s
+    ft epoch  7/20  CE 0.1880  KL 0.0099  DRO q [0.263, 0.737]  val F1 0.7702  acc 0.9176  17.9s
+    ft epoch  8/20  CE 0.1854  KL 0.0098  DRO q [0.24, 0.76]  val F1 0.7643  acc 0.9158  17.9s
+    ft epoch  9/20  CE 0.1841  KL 0.0097  DRO q [0.22, 0.78]  val F1 0.7714  acc 0.9192  17.5s
+    ft epoch 10/20  CE 0.1851  KL 0.0096  DRO q [0.2, 0.8]  val F1 0.7681  acc 0.9180  17.3s
+    ft epoch 11/20  CE 0.1843  KL 0.0096  DRO q [0.183, 0.817]  val F1 0.7646  acc 0.9167  17.3s
+    ft epoch 12/20  CE 0.1840  KL 0.0096  DRO q [0.166, 0.834]  val F1 0.7649  acc 0.9171  17.3s
+    ft epoch 13/20  CE 0.1830  KL 0.0096  DRO q [0.152, 0.848]  val F1 0.7700  acc 0.9183  17.8s
+    ft epoch 14/20  CE 0.1822  KL 0.0095  DRO q [0.138, 0.862]  val F1 0.7695  acc 0.9187  17.5s
+    ft epoch 15/20  CE 0.1832  KL 0.0095  DRO q [0.125, 0.875]  val F1 0.7691  acc 0.9171  17.6s
+    ft epoch 16/20  CE 0.1807  KL 0.0095  DRO q [0.114, 0.886]  val F1 0.7708  acc 0.9176  17.6s
+    ft epoch 17/20  CE 0.1812  KL 0.0094  DRO q [0.103, 0.897]  val F1 0.7700  acc 0.9180  17.6s
+    ft epoch 18/20  CE 0.1805  KL 0.0094  DRO q [0.094, 0.906]  val F1 0.7664  acc 0.9144  17.7s
+    ft epoch 19/20  CE 0.1809  KL 0.0094  DRO q [0.085, 0.915]  val F1 0.7675  acc 0.9178  17.8s
+    ft epoch 20/20  CE 0.1800  KL 0.0093  DRO q [0.078, 0.922]  val F1 0.7655  acc 0.9160  17.5s
+    -> FA-LCI 0.8637 (normal 0.8647, older-like 0.8637); F1 0.7655 / 0.7031; 339.0 s
+
+--- start fold1-xgp_no_group-50pct-seed2-beta0.3
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.100, n_nonzero 49001, reconstructed
+      prune step 2/5: sparsity 0.200, n_nonzero 43727, reconstructed
+      prune step 3/5: sparsity 0.300, n_nonzero 38457, reconstructed
+      prune step 4/5: sparsity 0.400, n_nonzero 33183, reconstructed
+      prune step 5/5: sparsity 0.500, n_nonzero 27911, reconstructed
+
+=== fold 1 ft-xgp_no_group_ft(beta=0.3,r=0.25)-50pct-seed2: start xgp_no_group, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2017  KL 0.0107  DRO q [0.458, 0.542]  val F1 0.7650  acc 0.9178  15.2s
+    ft epoch  2/20  CE 0.1965  KL 0.0103  DRO q [0.419, 0.581]  val F1 0.7642  acc 0.9153  17.3s
+    ft epoch  3/20  CE 0.1938  KL 0.0102  DRO q [0.383, 0.617]  val F1 0.7680  acc 0.9171  17.3s
+    ft epoch  4/20  CE 0.1911  KL 0.0100  DRO q [0.351, 0.649]  val F1 0.7652  acc 0.9171  17.3s
+    ft epoch  5/20  CE 0.1900  KL 0.0099  DRO q [0.32, 0.68]  val F1 0.7637  acc 0.9162  17.3s
+    ft epoch  6/20  CE 0.1865  KL 0.0098  DRO q [0.292, 0.708]  val F1 0.7663  acc 0.9157  17.3s
+    ft epoch  7/20  CE 0.1874  KL 0.0098  DRO q [0.266, 0.734]  val F1 0.7685  acc 0.9157  17.3s
+    ft epoch  8/20  CE 0.1849  KL 0.0098  DRO q [0.243, 0.757]  val F1 0.7643  acc 0.9150  17.3s
+    ft epoch  9/20  CE 0.1836  KL 0.0097  DRO q [0.223, 0.777]  val F1 0.7694  acc 0.9171  17.6s
+    ft epoch 10/20  CE 0.1850  KL 0.0096  DRO q [0.203, 0.797]  val F1 0.7680  acc 0.9176  18.1s
+    ft epoch 11/20  CE 0.1843  KL 0.0095  DRO q [0.185, 0.815]  val F1 0.7658  acc 0.9162  18.2s
+    ft epoch 12/20  CE 0.1837  KL 0.0095  DRO q [0.168, 0.832]  val F1 0.7647  acc 0.9169  18.5s
+    ft epoch 13/20  CE 0.1827  KL 0.0095  DRO q [0.154, 0.846]  val F1 0.7701  acc 0.9167  17.7s
+    ft epoch 14/20  CE 0.1825  KL 0.0094  DRO q [0.14, 0.86]  val F1 0.7696  acc 0.9180  17.9s
+    ft epoch 15/20  CE 0.1832  KL 0.0094  DRO q [0.127, 0.873]  val F1 0.7670  acc 0.9164  18.3s
+    ft epoch 16/20  CE 0.1804  KL 0.0094  DRO q [0.116, 0.884]  val F1 0.7694  acc 0.9167  17.7s
+    ft epoch 17/20  CE 0.1809  KL 0.0094  DRO q [0.105, 0.895]  val F1 0.7739  acc 0.9194  17.7s
+    ft epoch 18/20  CE 0.1805  KL 0.0093  DRO q [0.095, 0.905]  val F1 0.7663  acc 0.9143  17.7s
+    ft epoch 19/20  CE 0.1812  KL 0.0094  DRO q [0.086, 0.914]  val F1 0.7691  acc 0.9169  17.7s
+    ft epoch 20/20  CE 0.1800  KL 0.0092  DRO q [0.079, 0.921]  val F1 0.7678  acc 0.9164  17.6s
+    -> FA-LCI 0.8392 (normal 0.8392, older-like 0.8633); F1 0.7678 / 0.7074; 351.1 s
+
+--- start fold1-xgp_no_iter-50pct-seed2-beta0.3
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/1: sparsity 0.500, n_nonzero 27911, reconstructed
+
+=== fold 1 ft-xgp_no_iter_ft(beta=0.3,r=0.25)-50pct-seed2: start xgp_no_iter, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2026  KL 0.0107  DRO q [0.458, 0.542]  val F1 0.7636  acc 0.9171  17.1s
+    ft epoch  2/20  CE 0.1972  KL 0.0103  DRO q [0.419, 0.581]  val F1 0.7623  acc 0.9150  17.2s
+    ft epoch  3/20  CE 0.1935  KL 0.0102  DRO q [0.382, 0.618]  val F1 0.7658  acc 0.9174  17.2s
+    ft epoch  4/20  CE 0.1913  KL 0.0100  DRO q [0.35, 0.65]  val F1 0.7655  acc 0.9176  17.5s
+    ft epoch  5/20  CE 0.1905  KL 0.0099  DRO q [0.319, 0.681]  val F1 0.7648  acc 0.9165  17.2s
+    ft epoch  6/20  CE 0.1867  KL 0.0098  DRO q [0.291, 0.709]  val F1 0.7651  acc 0.9155  17.6s
+    ft epoch  7/20  CE 0.1881  KL 0.0098  DRO q [0.264, 0.736]  val F1 0.7670  acc 0.9151  17.2s
+    ft epoch  8/20  CE 0.1859  KL 0.0098  DRO q [0.241, 0.759]  val F1 0.7660  acc 0.9155  17.3s
+    ft epoch  9/20  CE 0.1841  KL 0.0097  DRO q [0.221, 0.779]  val F1 0.7696  acc 0.9176  17.6s
+    ft epoch 10/20  CE 0.1851  KL 0.0096  DRO q [0.201, 0.799]  val F1 0.7671  acc 0.9176  17.6s
+    ft epoch 11/20  CE 0.1849  KL 0.0096  DRO q [0.183, 0.817]  val F1 0.7635  acc 0.9155  19.4s
+    ft epoch 12/20  CE 0.1843  KL 0.0095  DRO q [0.167, 0.833]  val F1 0.7643  acc 0.9158  20.2s
+    ft epoch 13/20  CE 0.1830  KL 0.0096  DRO q [0.152, 0.848]  val F1 0.7664  acc 0.9167  19.0s
+    ft epoch 14/20  CE 0.1832  KL 0.0095  DRO q [0.139, 0.861]  val F1 0.7648  acc 0.9167  17.8s
+    ft epoch 15/20  CE 0.1834  KL 0.0094  DRO q [0.126, 0.874]  val F1 0.7580  acc 0.9144  18.5s
+    ft epoch 16/20  CE 0.1809  KL 0.0095  DRO q [0.115, 0.885]  val F1 0.7639  acc 0.9150  18.2s
+    ft epoch 17/20  CE 0.1815  KL 0.0094  DRO q [0.104, 0.896]  val F1 0.7701  acc 0.9174  17.6s
+    ft epoch 18/20  CE 0.1809  KL 0.0094  DRO q [0.094, 0.906]  val F1 0.7659  acc 0.9141  18.4s
+    ft epoch 19/20  CE 0.1813  KL 0.0094  DRO q [0.086, 0.914]  val F1 0.7640  acc 0.9160  19.0s
+    ft epoch 20/20  CE 0.1804  KL 0.0093  DRO q [0.078, 0.922]  val F1 0.7639  acc 0.9148  18.5s
+    -> FA-LCI 0.8133 (normal 0.8133, older-like 0.8627); F1 0.7639 / 0.7039; 360.1 s
+
+--- start fold1-xgp_no_recon-50pct-seed2-beta0.3
+      prune step 1/5: sparsity 0.100, n_nonzero 49001
+      prune step 2/5: sparsity 0.200, n_nonzero 43727
+      prune step 3/5: sparsity 0.300, n_nonzero 38457
+      prune step 4/5: sparsity 0.400, n_nonzero 33183
+      prune step 5/5: sparsity 0.500, n_nonzero 27911
+
+=== fold 1 ft-xgp_no_recon_ft(beta=0.3,r=0.25)-50pct-seed2: start xgp_no_recon, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2113  KL 0.0125  DRO q [0.452, 0.548]  val F1 0.7530  acc 0.9116  17.2s
+    ft epoch  2/20  CE 0.2000  KL 0.0110  DRO q [0.412, 0.588]  val F1 0.7549  acc 0.9122  17.3s
+    ft epoch  3/20  CE 0.1957  KL 0.0108  DRO q [0.377, 0.623]  val F1 0.7602  acc 0.9151  17.3s
+    ft epoch  4/20  CE 0.1927  KL 0.0105  DRO q [0.345, 0.655]  val F1 0.7591  acc 0.9157  17.3s
+    ft epoch  5/20  CE 0.1917  KL 0.0103  DRO q [0.315, 0.685]  val F1 0.7575  acc 0.9148  17.3s
+    ft epoch  6/20  CE 0.1885  KL 0.0101  DRO q [0.287, 0.713]  val F1 0.7608  acc 0.9150  17.3s
+    ft epoch  7/20  CE 0.1897  KL 0.0101  DRO q [0.261, 0.739]  val F1 0.7662  acc 0.9151  17.7s
+    ft epoch  8/20  CE 0.1861  KL 0.0101  DRO q [0.238, 0.762]  val F1 0.7593  acc 0.9153  17.5s
+    ft epoch  9/20  CE 0.1856  KL 0.0099  DRO q [0.218, 0.782]  val F1 0.7663  acc 0.9162  18.0s
+    ft epoch 10/20  CE 0.1860  KL 0.0098  DRO q [0.199, 0.801]  val F1 0.7668  acc 0.9164  17.5s
+    ft epoch 11/20  CE 0.1858  KL 0.0098  DRO q [0.181, 0.819]  val F1 0.7574  acc 0.9143  17.7s
+    ft epoch 12/20  CE 0.1852  KL 0.0098  DRO q [0.165, 0.835]  val F1 0.7627  acc 0.9158  17.4s
+    ft epoch 13/20  CE 0.1843  KL 0.0098  DRO q [0.151, 0.849]  val F1 0.7631  acc 0.9148  17.3s
+    ft epoch 14/20  CE 0.1839  KL 0.0097  DRO q [0.138, 0.862]  val F1 0.7639  acc 0.9169  17.4s
+    ft epoch 15/20  CE 0.1840  KL 0.0096  DRO q [0.125, 0.875]  val F1 0.7613  acc 0.9144  18.1s
+    ft epoch 16/20  CE 0.1812  KL 0.0097  DRO q [0.114, 0.886]  val F1 0.7669  acc 0.9164  18.7s
+    ft epoch 17/20  CE 0.1823  KL 0.0096  DRO q [0.104, 0.896]  val F1 0.7678  acc 0.9185  18.5s
+    ft epoch 18/20  CE 0.1816  KL 0.0096  DRO q [0.094, 0.906]  val F1 0.7649  acc 0.9153  18.1s
+    ft epoch 19/20  CE 0.1817  KL 0.0096  DRO q [0.085, 0.915]  val F1 0.7616  acc 0.9171  17.5s
+    ft epoch 20/20  CE 0.1810  KL 0.0095  DRO q [0.078, 0.922]  val F1 0.7667  acc 0.9171  17.5s
+    -> FA-LCI 0.8604 (normal 0.8606, older-like 0.8604); F1 0.7667 / 0.7062; 352.7 s
+
+=== fold 1 ft-xgp_ft_no_aug(beta=0.3)-50pct-seed2: start xgp, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1638  KL 0.0101  val F1 0.7633  acc 0.9158  8.0s
+    ft epoch  2/20  CE 0.1630  KL 0.0097  val F1 0.7648  acc 0.9153  12.8s
+    ft epoch  3/20  CE 0.1582  KL 0.0094  val F1 0.7621  acc 0.9157  12.8s
+    ft epoch  4/20  CE 0.1582  KL 0.0091  val F1 0.7637  acc 0.9160  12.6s
+    ft epoch  5/20  CE 0.1570  KL 0.0091  val F1 0.7622  acc 0.9146  12.6s
+    ft epoch  6/20  CE 0.1552  KL 0.0090  val F1 0.7677  acc 0.9171  12.6s
+    ft epoch  7/20  CE 0.1550  KL 0.0088  val F1 0.7648  acc 0.9143  12.7s
+    ft epoch  8/20  CE 0.1553  KL 0.0088  val F1 0.7641  acc 0.9167  12.9s
+    ft epoch  9/20  CE 0.1548  KL 0.0086  val F1 0.7643  acc 0.9134  12.9s
+    ft epoch 10/20  CE 0.1535  KL 0.0086  val F1 0.7592  acc 0.9144  12.6s
+    ft epoch 11/20  CE 0.1531  KL 0.0085  val F1 0.7649  acc 0.9158  12.6s
+    ft epoch 12/20  CE 0.1528  KL 0.0084  val F1 0.7640  acc 0.9158  12.6s
+    ft epoch 13/20  CE 0.1525  KL 0.0083  val F1 0.7606  acc 0.9148  12.6s
+    ft epoch 14/20  CE 0.1512  KL 0.0083  val F1 0.7636  acc 0.9144  12.6s
+    ft epoch 15/20  CE 0.1525  KL 0.0082  val F1 0.7604  acc 0.9130  12.6s
+    ft epoch 16/20  CE 0.1512  KL 0.0083  val F1 0.7620  acc 0.9137  12.6s
+    ft epoch 17/20  CE 0.1511  KL 0.0083  val F1 0.7592  acc 0.9139  12.6s
+    ft epoch 18/20  CE 0.1518  KL 0.0082  val F1 0.7633  acc 0.9146  12.6s
+    ft epoch 19/20  CE 0.1510  KL 0.0081  val F1 0.7570  acc 0.9122  12.6s
+    ft epoch 20/20  CE 0.1502  KL 0.0081  val F1 0.7645  acc 0.9139  12.6s
+    -> FA-LCI 0.8729 (normal 0.8729, older-like 0.8932); F1 0.7645 / 0.6969; 248.5 s
+
+=== fold 1 ft-xgp_ft_no_dro(beta=0.3,r=0.25)-50pct-seed2: start xgp, recipe kdaug, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2024  KL 0.0104  val F1 0.7631  acc 0.9158  14.7s
+    ft epoch  2/20  CE 0.1963  KL 0.0099  val F1 0.7628  acc 0.9146  15.6s
+    ft epoch  3/20  CE 0.1938  KL 0.0098  val F1 0.7700  acc 0.9171  15.6s
+    ft epoch  4/20  CE 0.1906  KL 0.0096  val F1 0.7676  acc 0.9173  15.7s
+    ft epoch  5/20  CE 0.1890  KL 0.0094  val F1 0.7655  acc 0.9157  15.7s
+    ft epoch  6/20  CE 0.1862  KL 0.0093  val F1 0.7693  acc 0.9169  15.6s
+    ft epoch  7/20  CE 0.1869  KL 0.0092  val F1 0.7685  acc 0.9157  15.7s
+    ft epoch  8/20  CE 0.1844  KL 0.0091  val F1 0.7667  acc 0.9157  15.6s
+    ft epoch  9/20  CE 0.1826  KL 0.0090  val F1 0.7675  acc 0.9157  15.7s
+    ft epoch 10/20  CE 0.1835  KL 0.0090  val F1 0.7677  acc 0.9171  15.6s
+    ft epoch 11/20  CE 0.1828  KL 0.0089  val F1 0.7687  acc 0.9167  15.7s
+    ft epoch 12/20  CE 0.1819  KL 0.0088  val F1 0.7646  acc 0.9167  15.7s
+    ft epoch 13/20  CE 0.1807  KL 0.0088  val F1 0.7655  acc 0.9148  15.7s
+    ft epoch 14/20  CE 0.1799  KL 0.0087  val F1 0.7685  acc 0.9165  15.7s
+    ft epoch 15/20  CE 0.1813  KL 0.0087  val F1 0.7689  acc 0.9165  15.7s
+    ft epoch 16/20  CE 0.1782  KL 0.0087  val F1 0.7672  acc 0.9144  15.6s
+    ft epoch 17/20  CE 0.1781  KL 0.0086  val F1 0.7711  acc 0.9171  15.6s
+    ft epoch 18/20  CE 0.1778  KL 0.0085  val F1 0.7653  acc 0.9144  15.6s
+    ft epoch 19/20  CE 0.1765  KL 0.0085  val F1 0.7636  acc 0.9137  15.6s
+    ft epoch 20/20  CE 0.1765  KL 0.0084  val F1 0.7678  acc 0.9141  15.6s
+    -> FA-LCI 0.8416 (normal 0.8416, older-like 0.8960); F1 0.7678 / 0.7052; 312.0 s
+
+=== fold 1 ft-l1_recon_ft(r=0.25)-50pct-seed2: start l1_recon, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2033  KL 0.0111  DRO q [0.457, 0.543]  val F1 0.7611  acc 0.9151  10.0s
+    ft epoch  2/20  CE 0.1978  KL 0.0105  DRO q [0.417, 0.583]  val F1 0.7635  acc 0.9144  17.0s
+    ft epoch  3/20  CE 0.1942  KL 0.0104  DRO q [0.381, 0.619]  val F1 0.7653  acc 0.9169  17.0s
+    ft epoch  4/20  CE 0.1922  KL 0.0102  DRO q [0.348, 0.652]  val F1 0.7597  acc 0.9164  17.0s
+    ft epoch  5/20  CE 0.1907  KL 0.0100  DRO q [0.318, 0.682]  val F1 0.7583  acc 0.9150  17.0s
+    ft epoch  6/20  CE 0.1873  KL 0.0099  DRO q [0.29, 0.71]  val F1 0.7645  acc 0.9157  17.1s
+    ft epoch  7/20  CE 0.1882  KL 0.0100  DRO q [0.263, 0.737]  val F1 0.7656  acc 0.9158  17.0s
+    ft epoch  8/20  CE 0.1860  KL 0.0099  DRO q [0.24, 0.76]  val F1 0.7640  acc 0.9148  17.0s
+    ft epoch  9/20  CE 0.1847  KL 0.0097  DRO q [0.22, 0.78]  val F1 0.7651  acc 0.9160  17.0s
+    ft epoch 10/20  CE 0.1853  KL 0.0097  DRO q [0.2, 0.8]  val F1 0.7636  acc 0.9169  17.0s
+    ft epoch 11/20  CE 0.1852  KL 0.0096  DRO q [0.183, 0.817]  val F1 0.7597  acc 0.9148  17.1s
+    ft epoch 12/20  CE 0.1848  KL 0.0096  DRO q [0.166, 0.834]  val F1 0.7633  acc 0.9164  17.1s
+    ft epoch 13/20  CE 0.1833  KL 0.0096  DRO q [0.151, 0.849]  val F1 0.7629  acc 0.9167  17.3s
+    ft epoch 14/20  CE 0.1830  KL 0.0095  DRO q [0.138, 0.862]  val F1 0.7630  acc 0.9178  17.2s
+    ft epoch 15/20  CE 0.1836  KL 0.0095  DRO q [0.125, 0.875]  val F1 0.7575  acc 0.9139  17.3s
+    ft epoch 16/20  CE 0.1813  KL 0.0095  DRO q [0.114, 0.886]  val F1 0.7643  acc 0.9157  17.3s
+    ft epoch 17/20  CE 0.1815  KL 0.0095  DRO q [0.103, 0.897]  val F1 0.7672  acc 0.9174  17.2s
+    ft epoch 18/20  CE 0.1807  KL 0.0094  DRO q [0.094, 0.906]  val F1 0.7650  acc 0.9132  17.2s
+    ft epoch 19/20  CE 0.1816  KL 0.0095  DRO q [0.085, 0.915]  val F1 0.7614  acc 0.9164  17.2s
+    ft epoch 20/20  CE 0.1805  KL 0.0093  DRO q [0.078, 0.922]  val F1 0.7644  acc 0.9162  17.1s
+    -> FA-LCI 0.8381 (normal 0.8381, older-like 0.8880); F1 0.7644 / 0.7031; 335.4 s
+
+######## fold 1, phase ablation, level 70%
+
+--- start fold1-xgp_no_score-70pct-seed0
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.140, n_nonzero 46890, reconstructed
+      prune step 2/5: sparsity 0.280, n_nonzero 39509, reconstructed
+      prune step 3/5: sparsity 0.420, n_nonzero 32130, reconstructed
+      prune step 4/5: sparsity 0.560, n_nonzero 24749, reconstructed
+      prune step 5/5: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_score-70pct-seed0                FA-LCI 0.7268 (normal 0.7268, older-like 0.7679); F1 0.7493 / 0.6866
+
+--- start fold1-xgp_no_group-70pct-seed0-beta0.1
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.140, n_nonzero 46890, reconstructed
+      prune step 2/5: sparsity 0.280, n_nonzero 39509, reconstructed
+      prune step 3/5: sparsity 0.420, n_nonzero 32130, reconstructed
+      prune step 4/5: sparsity 0.560, n_nonzero 24749, reconstructed
+      prune step 5/5: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_group(beta=0.1)-70pct-seed0      FA-LCI 0.7299 (normal 0.7299, older-like 0.7532); F1 0.7530 / 0.7007
+
+--- start fold1-xgp_no_iter-70pct-seed0-beta0.1
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/1: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_iter(beta=0.1)-70pct-seed0       FA-LCI 0.7052 (normal 0.7052, older-like 0.7258); F1 0.7523 / 0.6947
+
+--- start fold1-xgp_no_recon-70pct-seed0-beta0.1
+      prune step 1/5: sparsity 0.140, n_nonzero 46890
+      prune step 2/5: sparsity 0.280, n_nonzero 39509
+      prune step 3/5: sparsity 0.420, n_nonzero 32130
+      prune step 4/5: sparsity 0.560, n_nonzero 24749
+      prune step 5/5: sparsity 0.700, n_nonzero 17365
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_recon(beta=0.1)-70pct-seed0      FA-LCI 0.3851 (normal 0.4212, older-like 0.3851); F1 0.2791 / 0.2062
+
+=== fold 1 ft-xgp_no_score_ft(r=0.25)-70pct-seed0: start xgp_no_score, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2168  KL 0.0155  DRO q [0.459, 0.541]  val F1 0.7597  acc 0.9144  8.1s
+    ft epoch  2/20  CE 0.2060  KL 0.0121  DRO q [0.42, 0.58]  val F1 0.7591  acc 0.9148  18.5s
+    ft epoch  3/20  CE 0.2042  KL 0.0117  DRO q [0.385, 0.615]  val F1 0.7600  acc 0.9144  18.5s
+    ft epoch  4/20  CE 0.2002  KL 0.0114  DRO q [0.352, 0.648]  val F1 0.7568  acc 0.9143  17.7s
+    ft epoch  5/20  CE 0.1987  KL 0.0111  DRO q [0.321, 0.679]  val F1 0.7591  acc 0.9146  17.6s
+    ft epoch  6/20  CE 0.1975  KL 0.0111  DRO q [0.292, 0.708]  val F1 0.7583  acc 0.9139  18.7s
+    ft epoch  7/20  CE 0.1960  KL 0.0109  DRO q [0.265, 0.735]  val F1 0.7556  acc 0.9136  18.0s
+    ft epoch  8/20  CE 0.1970  KL 0.0107  DRO q [0.24, 0.76]  val F1 0.7564  acc 0.9141  17.8s
+    ft epoch  9/20  CE 0.1917  KL 0.0108  DRO q [0.219, 0.781]  val F1 0.7567  acc 0.9143  17.5s
+    ft epoch 10/20  CE 0.1926  KL 0.0106  DRO q [0.199, 0.801]  val F1 0.7560  acc 0.9134  17.5s
+    ft epoch 11/20  CE 0.1936  KL 0.0104  DRO q [0.18, 0.82]  val F1 0.7549  acc 0.9127  17.4s
+    ft epoch 12/20  CE 0.1905  KL 0.0105  DRO q [0.163, 0.837]  val F1 0.7556  acc 0.9136  17.4s
+    ft epoch 13/20  CE 0.1916  KL 0.0104  DRO q [0.148, 0.852]  val F1 0.7565  acc 0.9139  17.3s
+    ft epoch 14/20  CE 0.1917  KL 0.0103  DRO q [0.135, 0.865]  val F1 0.7540  acc 0.9127  17.5s
+    ft epoch 15/20  CE 0.1885  KL 0.0104  DRO q [0.122, 0.878]  val F1 0.7574  acc 0.9137  17.7s
+    ft epoch 16/20  CE 0.1897  KL 0.0103  DRO q [0.111, 0.889]  val F1 0.7571  acc 0.9141  17.3s
+    ft epoch 17/20  CE 0.1884  KL 0.0103  DRO q [0.101, 0.899]  val F1 0.7576  acc 0.9150  17.3s
+    ft epoch 18/20  CE 0.1900  KL 0.0102  DRO q [0.092, 0.908]  val F1 0.7584  acc 0.9148  17.3s
+    ft epoch 19/20  CE 0.1880  KL 0.0102  DRO q [0.084, 0.916]  val F1 0.7579  acc 0.9136  17.3s
+    ft epoch 20/20  CE 0.1883  KL 0.0101  DRO q [0.076, 0.924]  val F1 0.7584  acc 0.9116  18.2s
+    -> FA-LCI 0.8045 (normal 0.8045, older-like 0.8766); F1 0.7584 / 0.7060; 344.8 s
+
+=== fold 1 ft-xgp_no_group_ft(beta=0.1,r=0.25)-70pct-seed0: start xgp_no_group, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2176  KL 0.0149  DRO q [0.46, 0.54]  val F1 0.7613  acc 0.9173  12.5s
+    ft epoch  2/20  CE 0.2064  KL 0.0118  DRO q [0.422, 0.578]  val F1 0.7584  acc 0.9158  17.3s
+    ft epoch  3/20  CE 0.2034  KL 0.0113  DRO q [0.387, 0.613]  val F1 0.7541  acc 0.9144  17.3s
+    ft epoch  4/20  CE 0.1992  KL 0.0111  DRO q [0.355, 0.645]  val F1 0.7546  acc 0.9139  17.3s
+    ft epoch  5/20  CE 0.1967  KL 0.0109  DRO q [0.325, 0.675]  val F1 0.7569  acc 0.9151  17.6s
+    ft epoch  6/20  CE 0.1966  KL 0.0109  DRO q [0.297, 0.703]  val F1 0.7566  acc 0.9146  17.7s
+    ft epoch  7/20  CE 0.1946  KL 0.0108  DRO q [0.269, 0.731]  val F1 0.7520  acc 0.9129  18.6s
+    ft epoch  8/20  CE 0.1948  KL 0.0106  DRO q [0.245, 0.755]  val F1 0.7581  acc 0.9139  17.5s
+    ft epoch  9/20  CE 0.1905  KL 0.0107  DRO q [0.224, 0.776]  val F1 0.7538  acc 0.9127  17.4s
+    ft epoch 10/20  CE 0.1912  KL 0.0105  DRO q [0.205, 0.795]  val F1 0.7563  acc 0.9132  17.4s
+    ft epoch 11/20  CE 0.1913  KL 0.0103  DRO q [0.185, 0.815]  val F1 0.7517  acc 0.9115  17.4s
+    ft epoch 12/20  CE 0.1885  KL 0.0104  DRO q [0.168, 0.832]  val F1 0.7534  acc 0.9125  17.4s
+    ft epoch 13/20  CE 0.1897  KL 0.0103  DRO q [0.153, 0.847]  val F1 0.7540  acc 0.9127  17.4s
+    ft epoch 14/20  CE 0.1901  KL 0.0103  DRO q [0.14, 0.86]  val F1 0.7579  acc 0.9127  17.5s
+    ft epoch 15/20  CE 0.1869  KL 0.0103  DRO q [0.126, 0.874]  val F1 0.7580  acc 0.9137  17.6s
+    ft epoch 16/20  CE 0.1882  KL 0.0102  DRO q [0.115, 0.885]  val F1 0.7556  acc 0.9130  18.0s
+    ft epoch 17/20  CE 0.1875  KL 0.0103  DRO q [0.105, 0.895]  val F1 0.7565  acc 0.9141  18.3s
+    ft epoch 18/20  CE 0.1887  KL 0.0101  DRO q [0.096, 0.904]  val F1 0.7587  acc 0.9139  18.0s
+    ft epoch 19/20  CE 0.1863  KL 0.0101  DRO q [0.087, 0.913]  val F1 0.7564  acc 0.9125  17.8s
+    ft epoch 20/20  CE 0.1867  KL 0.0101  DRO q [0.079, 0.921]  val F1 0.7587  acc 0.9123  18.5s
+    -> FA-LCI 0.8311 (normal 0.8311, older-like 0.8832); F1 0.7587 / 0.7111; 348.6 s
+
+=== fold 1 ft-xgp_no_iter_ft(beta=0.1,r=0.25)-70pct-seed0: start xgp_no_iter, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2191  KL 0.0150  DRO q [0.459, 0.541]  val F1 0.7643  acc 0.9174  10.3s
+    ft epoch  2/20  CE 0.2070  KL 0.0120  DRO q [0.42, 0.58]  val F1 0.7598  acc 0.9164  17.4s
+    ft epoch  3/20  CE 0.2052  KL 0.0116  DRO q [0.385, 0.615]  val F1 0.7592  acc 0.9153  17.3s
+    ft epoch  4/20  CE 0.1999  KL 0.0114  DRO q [0.353, 0.647]  val F1 0.7582  acc 0.9160  17.3s
+    ft epoch  5/20  CE 0.1975  KL 0.0111  DRO q [0.323, 0.677]  val F1 0.7599  acc 0.9164  17.3s
+    ft epoch  6/20  CE 0.1973  KL 0.0111  DRO q [0.294, 0.706]  val F1 0.7584  acc 0.9151  17.3s
+    ft epoch  7/20  CE 0.1950  KL 0.0110  DRO q [0.267, 0.733]  val F1 0.7583  acc 0.9158  17.3s
+    ft epoch  8/20  CE 0.1963  KL 0.0108  DRO q [0.243, 0.757]  val F1 0.7603  acc 0.9155  17.3s
+    ft epoch  9/20  CE 0.1919  KL 0.0109  DRO q [0.222, 0.778]  val F1 0.7588  acc 0.9157  17.3s
+    ft epoch 10/20  CE 0.1923  KL 0.0107  DRO q [0.203, 0.797]  val F1 0.7583  acc 0.9146  17.3s
+    ft epoch 11/20  CE 0.1928  KL 0.0105  DRO q [0.183, 0.817]  val F1 0.7536  acc 0.9134  17.3s
+    ft epoch 12/20  CE 0.1901  KL 0.0106  DRO q [0.166, 0.834]  val F1 0.7533  acc 0.9134  17.3s
+    ft epoch 13/20  CE 0.1906  KL 0.0105  DRO q [0.151, 0.849]  val F1 0.7554  acc 0.9144  17.3s
+    ft epoch 14/20  CE 0.1911  KL 0.0104  DRO q [0.138, 0.862]  val F1 0.7556  acc 0.9146  17.3s
+    ft epoch 15/20  CE 0.1878  KL 0.0105  DRO q [0.125, 0.875]  val F1 0.7560  acc 0.9148  17.3s
+    ft epoch 16/20  CE 0.1899  KL 0.0104  DRO q [0.114, 0.886]  val F1 0.7581  acc 0.9153  17.3s
+    ft epoch 17/20  CE 0.1887  KL 0.0104  DRO q [0.104, 0.896]  val F1 0.7598  acc 0.9157  17.3s
+    ft epoch 18/20  CE 0.1895  KL 0.0103  DRO q [0.094, 0.906]  val F1 0.7595  acc 0.9155  17.3s
+    ft epoch 19/20  CE 0.1873  KL 0.0103  DRO q [0.086, 0.914]  val F1 0.7624  acc 0.9155  17.3s
+    ft epoch 20/20  CE 0.1874  KL 0.0102  DRO q [0.078, 0.922]  val F1 0.7586  acc 0.9144  17.3s
+    -> FA-LCI 0.8274 (normal 0.8274, older-like 0.8490); F1 0.7586 / 0.7183; 339.6 s
+
+=== fold 1 ft-xgp_no_recon_ft(beta=0.1,r=0.25)-70pct-seed0: start xgp_no_recon, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2636  KL 0.0317  DRO q [0.457, 0.543]  val F1 0.7405  acc 0.9069  8.9s
+    ft epoch  2/20  CE 0.2220  KL 0.0152  DRO q [0.416, 0.584]  val F1 0.7499  acc 0.9099  17.3s
+    ft epoch  3/20  CE 0.2176  KL 0.0139  DRO q [0.379, 0.621]  val F1 0.7472  acc 0.9109  17.3s
+    ft epoch  4/20  CE 0.2098  KL 0.0131  DRO q [0.347, 0.653]  val F1 0.7493  acc 0.9125  17.3s
+    ft epoch  5/20  CE 0.2056  KL 0.0126  DRO q [0.317, 0.683]  val F1 0.7518  acc 0.9127  17.3s
+    ft epoch  6/20  CE 0.2046  KL 0.0125  DRO q [0.289, 0.711]  val F1 0.7510  acc 0.9123  17.3s
+    ft epoch  7/20  CE 0.2018  KL 0.0122  DRO q [0.264, 0.736]  val F1 0.7513  acc 0.9118  17.3s
+    ft epoch  8/20  CE 0.2030  KL 0.0119  DRO q [0.241, 0.759]  val F1 0.7538  acc 0.9125  17.3s
+    ft epoch  9/20  CE 0.1976  KL 0.0119  DRO q [0.221, 0.779]  val F1 0.7523  acc 0.9123  17.3s
+    ft epoch 10/20  CE 0.1977  KL 0.0117  DRO q [0.203, 0.797]  val F1 0.7516  acc 0.9118  17.3s
+    ft epoch 11/20  CE 0.1979  KL 0.0114  DRO q [0.185, 0.815]  val F1 0.7499  acc 0.9122  17.3s
+    ft epoch 12/20  CE 0.1953  KL 0.0114  DRO q [0.169, 0.831]  val F1 0.7512  acc 0.9118  17.3s
+    ft epoch 13/20  CE 0.1963  KL 0.0113  DRO q [0.155, 0.845]  val F1 0.7574  acc 0.9146  17.3s
+    ft epoch 14/20  CE 0.1965  KL 0.0113  DRO q [0.143, 0.857]  val F1 0.7540  acc 0.9123  17.3s
+    ft epoch 15/20  CE 0.1926  KL 0.0112  DRO q [0.13, 0.87]  val F1 0.7555  acc 0.9125  17.3s
+    ft epoch 16/20  CE 0.1946  KL 0.0111  DRO q [0.12, 0.88]  val F1 0.7528  acc 0.9130  17.3s
+    ft epoch 17/20  CE 0.1930  KL 0.0111  DRO q [0.11, 0.89]  val F1 0.7639  acc 0.9141  17.3s
+    ft epoch 18/20  CE 0.1932  KL 0.0109  DRO q [0.101, 0.899]  val F1 0.7565  acc 0.9130  17.3s
+    ft epoch 19/20  CE 0.1919  KL 0.0109  DRO q [0.093, 0.907]  val F1 0.7595  acc 0.9123  17.3s
+    ft epoch 20/20  CE 0.1921  KL 0.0108  DRO q [0.085, 0.915]  val F1 0.7580  acc 0.9109  17.3s
+    -> FA-LCI 0.7972 (normal 0.8426, older-like 0.7972); F1 0.7580 / 0.7091; 337.7 s
+
+=== fold 1 ft-xgp_ft_no_aug(beta=0.1)-70pct-seed0: start xgp, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1845  KL 0.0138  val F1 0.7597  acc 0.9130  6.9s
+    ft epoch  2/20  CE 0.1738  KL 0.0109  val F1 0.7545  acc 0.9122  11.8s
+    ft epoch  3/20  CE 0.1692  KL 0.0104  val F1 0.7545  acc 0.9125  12.6s
+    ft epoch  4/20  CE 0.1695  KL 0.0101  val F1 0.7532  acc 0.9116  12.6s
+    ft epoch  5/20  CE 0.1668  KL 0.0100  val F1 0.7516  acc 0.9118  12.6s
+    ft epoch  6/20  CE 0.1659  KL 0.0099  val F1 0.7538  acc 0.9132  12.6s
+    ft epoch  7/20  CE 0.1635  KL 0.0098  val F1 0.7526  acc 0.9120  12.6s
+    ft epoch  8/20  CE 0.1629  KL 0.0096  val F1 0.7549  acc 0.9122  12.6s
+    ft epoch  9/20  CE 0.1606  KL 0.0094  val F1 0.7550  acc 0.9116  12.6s
+    ft epoch 10/20  CE 0.1640  KL 0.0094  val F1 0.7595  acc 0.9132  12.6s
+    ft epoch 11/20  CE 0.1635  KL 0.0092  val F1 0.7555  acc 0.9129  12.6s
+    ft epoch 12/20  CE 0.1621  KL 0.0092  val F1 0.7561  acc 0.9127  12.7s
+    ft epoch 13/20  CE 0.1614  KL 0.0091  val F1 0.7573  acc 0.9134  12.6s
+    ft epoch 14/20  CE 0.1620  KL 0.0090  val F1 0.7581  acc 0.9134  12.6s
+    ft epoch 15/20  CE 0.1612  KL 0.0089  val F1 0.7498  acc 0.9106  12.6s
+    ft epoch 16/20  CE 0.1612  KL 0.0088  val F1 0.7547  acc 0.9118  12.6s
+    ft epoch 17/20  CE 0.1621  KL 0.0089  val F1 0.7561  acc 0.9129  12.6s
+    ft epoch 18/20  CE 0.1614  KL 0.0088  val F1 0.7528  acc 0.9115  12.6s
+    ft epoch 19/20  CE 0.1589  KL 0.0087  val F1 0.7618  acc 0.9127  12.6s
+    ft epoch 20/20  CE 0.1586  KL 0.0088  val F1 0.7526  acc 0.9113  12.6s
+    -> FA-LCI 0.8083 (normal 0.8083, older-like 0.8299); F1 0.7526 / 0.6957; 245.1 s
+
+=== fold 1 ft-xgp_ft_no_dro(beta=0.1,r=0.25)-70pct-seed0: start xgp, recipe kdaug, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2155  KL 0.0141  val F1 0.7597  acc 0.9157  9.1s
+    ft epoch  2/20  CE 0.2030  KL 0.0112  val F1 0.7598  acc 0.9146  15.6s
+    ft epoch  3/20  CE 0.2017  KL 0.0109  val F1 0.7570  acc 0.9153  15.6s
+    ft epoch  4/20  CE 0.1976  KL 0.0106  val F1 0.7610  acc 0.9157  15.5s
+    ft epoch  5/20  CE 0.1952  KL 0.0103  val F1 0.7563  acc 0.9136  15.6s
+    ft epoch  6/20  CE 0.1954  KL 0.0102  val F1 0.7559  acc 0.9125  15.6s
+    ft epoch  7/20  CE 0.1942  KL 0.0101  val F1 0.7551  acc 0.9134  15.6s
+    ft epoch  8/20  CE 0.1936  KL 0.0099  val F1 0.7563  acc 0.9122  15.6s
+    ft epoch  9/20  CE 0.1896  KL 0.0099  val F1 0.7576  acc 0.9144  15.6s
+    ft epoch 10/20  CE 0.1899  KL 0.0097  val F1 0.7569  acc 0.9137  15.6s
+    ft epoch 11/20  CE 0.1895  KL 0.0095  val F1 0.7564  acc 0.9130  15.6s
+    ft epoch 12/20  CE 0.1873  KL 0.0095  val F1 0.7544  acc 0.9130  15.6s
+    ft epoch 13/20  CE 0.1885  KL 0.0094  val F1 0.7564  acc 0.9139  15.6s
+    ft epoch 14/20  CE 0.1874  KL 0.0093  val F1 0.7577  acc 0.9111  15.6s
+    ft epoch 15/20  CE 0.1855  KL 0.0094  val F1 0.7573  acc 0.9132  15.6s
+    ft epoch 16/20  CE 0.1857  KL 0.0092  val F1 0.7579  acc 0.9137  15.6s
+    ft epoch 17/20  CE 0.1845  KL 0.0093  val F1 0.7541  acc 0.9129  15.7s
+    ft epoch 18/20  CE 0.1848  KL 0.0091  val F1 0.7624  acc 0.9151  15.6s
+    ft epoch 19/20  CE 0.1834  KL 0.0091  val F1 0.7620  acc 0.9134  15.6s
+    ft epoch 20/20  CE 0.1833  KL 0.0090  val F1 0.7584  acc 0.9146  15.6s
+    -> FA-LCI 0.8296 (normal 0.8335, older-like 0.8296); F1 0.7584 / 0.7052; 305.8 s
+
+=== fold 1 ft-l1_recon_ft(r=0.25)-70pct-seed0: start l1_recon, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2229  KL 0.0164  DRO q [0.455, 0.545]  val F1 0.7558  acc 0.9148  7.9s
+    ft epoch  2/20  CE 0.2098  KL 0.0126  DRO q [0.415, 0.585]  val F1 0.7563  acc 0.9151  13.1s
+    ft epoch  3/20  CE 0.2074  KL 0.0121  DRO q [0.38, 0.62]  val F1 0.7561  acc 0.9137  16.7s
+    ft epoch  4/20  CE 0.2025  KL 0.0118  DRO q [0.347, 0.653]  val F1 0.7529  acc 0.9118  17.0s
+    ft epoch  5/20  CE 0.2008  KL 0.0115  DRO q [0.316, 0.684]  val F1 0.7560  acc 0.9146  17.0s
+    ft epoch  6/20  CE 0.1996  KL 0.0114  DRO q [0.287, 0.713]  val F1 0.7543  acc 0.9137  17.0s
+    ft epoch  7/20  CE 0.1973  KL 0.0113  DRO q [0.26, 0.74]  val F1 0.7575  acc 0.9160  17.1s
+    ft epoch  8/20  CE 0.1985  KL 0.0111  DRO q [0.236, 0.764]  val F1 0.7567  acc 0.9144  17.0s
+    ft epoch  9/20  CE 0.1937  KL 0.0111  DRO q [0.216, 0.784]  val F1 0.7543  acc 0.9151  17.1s
+    ft epoch 10/20  CE 0.1947  KL 0.0109  DRO q [0.196, 0.804]  val F1 0.7540  acc 0.9132  17.1s
+    ft epoch 11/20  CE 0.1949  KL 0.0107  DRO q [0.177, 0.823]  val F1 0.7520  acc 0.9129  17.0s
+    ft epoch 12/20  CE 0.1917  KL 0.0107  DRO q [0.16, 0.84]  val F1 0.7534  acc 0.9143  17.0s
+    ft epoch 13/20  CE 0.1923  KL 0.0106  DRO q [0.146, 0.854]  val F1 0.7528  acc 0.9129  17.0s
+    ft epoch 14/20  CE 0.1934  KL 0.0106  DRO q [0.133, 0.867]  val F1 0.7532  acc 0.9132  17.0s
+    ft epoch 15/20  CE 0.1893  KL 0.0107  DRO q [0.12, 0.88]  val F1 0.7550  acc 0.9151  17.0s
+    ft epoch 16/20  CE 0.1914  KL 0.0105  DRO q [0.11, 0.89]  val F1 0.7548  acc 0.9148  17.0s
+    ft epoch 17/20  CE 0.1899  KL 0.0106  DRO q [0.1, 0.9]  val F1 0.7578  acc 0.9146  17.0s
+    ft epoch 18/20  CE 0.1913  KL 0.0104  DRO q [0.091, 0.909]  val F1 0.7565  acc 0.9146  17.1s
+    ft epoch 19/20  CE 0.1891  KL 0.0104  DRO q [0.083, 0.917]  val F1 0.7607  acc 0.9148  17.0s
+    ft epoch 20/20  CE 0.1890  KL 0.0103  DRO q [0.076, 0.924]  val F1 0.7559  acc 0.9129  17.0s
+    -> FA-LCI 0.8002 (normal 0.8002, older-like 0.8471); F1 0.7559 / 0.7108; 327.4 s
+
+--- start fold1-xgp_no_score-70pct-seed1
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.140, n_nonzero 46890, reconstructed
+      prune step 2/5: sparsity 0.280, n_nonzero 39509, reconstructed
+      prune step 3/5: sparsity 0.420, n_nonzero 32130, reconstructed
+      prune step 4/5: sparsity 0.560, n_nonzero 24749, reconstructed
+      prune step 5/5: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_score-70pct-seed1                FA-LCI 0.7268 (normal 0.7268, older-like 0.7679); F1 0.7493 / 0.6866
+
+--- start fold1-xgp_no_group-70pct-seed1-beta0.1
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.140, n_nonzero 46890, reconstructed
+      prune step 2/5: sparsity 0.280, n_nonzero 39509, reconstructed
+      prune step 3/5: sparsity 0.420, n_nonzero 32130, reconstructed
+      prune step 4/5: sparsity 0.560, n_nonzero 24749, reconstructed
+      prune step 5/5: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_group(beta=0.1)-70pct-seed1      FA-LCI 0.7510 (normal 0.7516, older-like 0.7510); F1 0.7609 / 0.6971
+
+--- start fold1-xgp_no_iter-70pct-seed1-beta0.1
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/1: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_iter(beta=0.1)-70pct-seed1       FA-LCI 0.7244 (normal 0.7438, older-like 0.7244); F1 0.7548 / 0.6964
+
+--- start fold1-xgp_no_recon-70pct-seed1-beta0.1
+      prune step 1/5: sparsity 0.140, n_nonzero 46890
+      prune step 2/5: sparsity 0.280, n_nonzero 39509
+      prune step 3/5: sparsity 0.420, n_nonzero 32130
+      prune step 4/5: sparsity 0.560, n_nonzero 24749
+      prune step 5/5: sparsity 0.700, n_nonzero 17365
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_recon(beta=0.1)-70pct-seed1      FA-LCI 0.4054 (normal 0.4372, older-like 0.4054); F1 0.2598 / 0.2003
+
+=== fold 1 ft-xgp_no_score_ft(r=0.25)-70pct-seed1: start xgp_no_score, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2151  KL 0.0154  DRO q [0.461, 0.539]  val F1 0.7588  acc 0.9132  8.1s
+    ft epoch  2/20  CE 0.2061  KL 0.0121  DRO q [0.423, 0.577]  val F1 0.7605  acc 0.9150  13.4s
+    ft epoch  3/20  CE 0.2011  KL 0.0116  DRO q [0.388, 0.612]  val F1 0.7585  acc 0.9141  17.3s
+    ft epoch  4/20  CE 0.1979  KL 0.0113  DRO q [0.357, 0.643]  val F1 0.7587  acc 0.9153  17.3s
+    ft epoch  5/20  CE 0.1974  KL 0.0110  DRO q [0.326, 0.674]  val F1 0.7576  acc 0.9137  17.3s
+    ft epoch  6/20  CE 0.1954  KL 0.0109  DRO q [0.3, 0.7]  val F1 0.7588  acc 0.9143  17.3s
+    ft epoch  7/20  CE 0.1965  KL 0.0108  DRO q [0.273, 0.727]  val F1 0.7549  acc 0.9129  17.3s
+    ft epoch  8/20  CE 0.1931  KL 0.0106  DRO q [0.25, 0.75]  val F1 0.7597  acc 0.9148  17.3s
+    ft epoch  9/20  CE 0.1937  KL 0.0104  DRO q [0.229, 0.771]  val F1 0.7572  acc 0.9143  17.3s
+    ft epoch 10/20  CE 0.1927  KL 0.0104  DRO q [0.208, 0.792]  val F1 0.7571  acc 0.9136  17.3s
+    ft epoch 11/20  CE 0.1921  KL 0.0104  DRO q [0.189, 0.811]  val F1 0.7563  acc 0.9127  17.3s
+    ft epoch 12/20  CE 0.1926  KL 0.0104  DRO q [0.172, 0.828]  val F1 0.7597  acc 0.9144  17.3s
+    ft epoch 13/20  CE 0.1894  KL 0.0103  DRO q [0.157, 0.843]  val F1 0.7573  acc 0.9136  17.3s
+    ft epoch 14/20  CE 0.1893  KL 0.0102  DRO q [0.143, 0.857]  val F1 0.7535  acc 0.9109  17.3s
+    ft epoch 15/20  CE 0.1889  KL 0.0103  DRO q [0.131, 0.869]  val F1 0.7592  acc 0.9143  17.3s
+    ft epoch 16/20  CE 0.1886  KL 0.0103  DRO q [0.119, 0.881]  val F1 0.7590  acc 0.9139  17.3s
+    ft epoch 17/20  CE 0.1881  KL 0.0102  DRO q [0.108, 0.892]  val F1 0.7578  acc 0.9129  17.3s
+    ft epoch 18/20  CE 0.1874  KL 0.0101  DRO q [0.099, 0.901]  val F1 0.7554  acc 0.9129  17.3s
+    ft epoch 19/20  CE 0.1879  KL 0.0100  DRO q [0.091, 0.909]  val F1 0.7581  acc 0.9132  17.3s
+    ft epoch 20/20  CE 0.1859  KL 0.0100  DRO q [0.084, 0.916]  val F1 0.7569  acc 0.9141  17.3s
+    -> FA-LCI 0.8279 (normal 0.8279, older-like 0.8494); F1 0.7569 / 0.7040; 332.7 s
+
+=== fold 1 ft-xgp_no_group_ft(beta=0.1,r=0.25)-70pct-seed1: start xgp_no_group, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2158  KL 0.0146  DRO q [0.463, 0.537]  val F1 0.7609  acc 0.9144  8.1s
+    ft epoch  2/20  CE 0.2046  KL 0.0117  DRO q [0.426, 0.574]  val F1 0.7557  acc 0.9146  13.9s
+    ft epoch  3/20  CE 0.2000  KL 0.0113  DRO q [0.392, 0.608]  val F1 0.7584  acc 0.9144  17.3s
+    ft epoch  4/20  CE 0.1966  KL 0.0110  DRO q [0.36, 0.64]  val F1 0.7594  acc 0.9158  17.3s
+    ft epoch  5/20  CE 0.1958  KL 0.0109  DRO q [0.33, 0.67]  val F1 0.7599  acc 0.9146  17.3s
+    ft epoch  6/20  CE 0.1947  KL 0.0107  DRO q [0.304, 0.696]  val F1 0.7540  acc 0.9141  17.3s
+    ft epoch  7/20  CE 0.1946  KL 0.0106  DRO q [0.277, 0.723]  val F1 0.7543  acc 0.9139  17.3s
+    ft epoch  8/20  CE 0.1914  KL 0.0105  DRO q [0.254, 0.746]  val F1 0.7549  acc 0.9164  17.3s
+    ft epoch  9/20  CE 0.1922  KL 0.0103  DRO q [0.233, 0.767]  val F1 0.7562  acc 0.9150  17.3s
+    ft epoch 10/20  CE 0.1909  KL 0.0103  DRO q [0.211, 0.789]  val F1 0.7613  acc 0.9141  17.3s
+    ft epoch 11/20  CE 0.1907  KL 0.0103  DRO q [0.192, 0.808]  val F1 0.7584  acc 0.9130  17.3s
+    ft epoch 12/20  CE 0.1898  KL 0.0104  DRO q [0.175, 0.825]  val F1 0.7627  acc 0.9148  17.3s
+    ft epoch 13/20  CE 0.1879  KL 0.0102  DRO q [0.159, 0.841]  val F1 0.7594  acc 0.9146  17.3s
+    ft epoch 14/20  CE 0.1883  KL 0.0101  DRO q [0.145, 0.855]  val F1 0.7603  acc 0.9137  17.3s
+    ft epoch 15/20  CE 0.1882  KL 0.0102  DRO q [0.133, 0.867]  val F1 0.7604  acc 0.9151  17.3s
+    ft epoch 16/20  CE 0.1871  KL 0.0102  DRO q [0.121, 0.879]  val F1 0.7610  acc 0.9151  17.3s
+    ft epoch 17/20  CE 0.1868  KL 0.0101  DRO q [0.11, 0.89]  val F1 0.7610  acc 0.9146  17.3s
+    ft epoch 18/20  CE 0.1863  KL 0.0100  DRO q [0.101, 0.899]  val F1 0.7582  acc 0.9151  17.3s
+    ft epoch 19/20  CE 0.1866  KL 0.0099  DRO q [0.093, 0.907]  val F1 0.7614  acc 0.9141  17.3s
+    ft epoch 20/20  CE 0.1847  KL 0.0100  DRO q [0.085, 0.915]  val F1 0.7599  acc 0.9155  17.3s
+    -> FA-LCI 0.8264 (normal 0.8264, older-like 0.8295); F1 0.7599 / 0.7093; 333.4 s
+
+=== fold 1 ft-xgp_no_iter_ft(beta=0.1,r=0.25)-70pct-seed1: start xgp_no_iter, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2180  KL 0.0151  DRO q [0.462, 0.538]  val F1 0.7583  acc 0.9150  7.9s
+    ft epoch  2/20  CE 0.2069  KL 0.0119  DRO q [0.425, 0.575]  val F1 0.7560  acc 0.9144  16.0s
+    ft epoch  3/20  CE 0.2017  KL 0.0116  DRO q [0.391, 0.609]  val F1 0.7545  acc 0.9134  17.2s
+    ft epoch  4/20  CE 0.1989  KL 0.0113  DRO q [0.361, 0.639]  val F1 0.7570  acc 0.9153  17.2s
+    ft epoch  5/20  CE 0.1989  KL 0.0111  DRO q [0.331, 0.669]  val F1 0.7585  acc 0.9150  17.6s
+    ft epoch  6/20  CE 0.1960  KL 0.0110  DRO q [0.305, 0.695]  val F1 0.7573  acc 0.9151  17.8s
+    ft epoch  7/20  CE 0.1961  KL 0.0108  DRO q [0.278, 0.722]  val F1 0.7586  acc 0.9162  19.0s
+    ft epoch  8/20  CE 0.1935  KL 0.0107  DRO q [0.256, 0.744]  val F1 0.7611  acc 0.9173  20.0s
+    ft epoch  9/20  CE 0.1943  KL 0.0105  DRO q [0.235, 0.765]  val F1 0.7582  acc 0.9164  19.3s
+    ft epoch 10/20  CE 0.1929  KL 0.0105  DRO q [0.213, 0.787]  val F1 0.7566  acc 0.9158  17.5s
+    ft epoch 11/20  CE 0.1927  KL 0.0104  DRO q [0.194, 0.806]  val F1 0.7576  acc 0.9146  17.4s
+    ft epoch 12/20  CE 0.1913  KL 0.0105  DRO q [0.177, 0.823]  val F1 0.7591  acc 0.9162  17.4s
+    ft epoch 13/20  CE 0.1901  KL 0.0104  DRO q [0.161, 0.839]  val F1 0.7553  acc 0.9148  17.5s
+    ft epoch 14/20  CE 0.1901  KL 0.0103  DRO q [0.147, 0.853]  val F1 0.7549  acc 0.9136  17.6s
+    ft epoch 15/20  CE 0.1896  KL 0.0103  DRO q [0.134, 0.866]  val F1 0.7565  acc 0.9155  17.6s
+    ft epoch 16/20  CE 0.1884  KL 0.0103  DRO q [0.122, 0.878]  val F1 0.7588  acc 0.9169  17.7s
+    ft epoch 17/20  CE 0.1884  KL 0.0103  DRO q [0.112, 0.888]  val F1 0.7547  acc 0.9137  17.3s
+    ft epoch 18/20  CE 0.1880  KL 0.0102  DRO q [0.103, 0.897]  val F1 0.7565  acc 0.9153  17.4s
+    ft epoch 19/20  CE 0.1883  KL 0.0100  DRO q [0.094, 0.906]  val F1 0.7565  acc 0.9146  17.3s
+    ft epoch 20/20  CE 0.1871  KL 0.0101  DRO q [0.087, 0.913]  val F1 0.7564  acc 0.9151  17.3s
+    -> FA-LCI 0.8469 (normal 0.8475, older-like 0.8469); F1 0.7564 / 0.7083; 344.0 s
+
+=== fold 1 ft-xgp_no_recon_ft(beta=0.1,r=0.25)-70pct-seed1: start xgp_no_recon, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2791  KL 0.0330  DRO q [0.454, 0.546]  val F1 0.7352  acc 0.9043  7.2s
+    ft epoch  2/20  CE 0.2250  KL 0.0156  DRO q [0.413, 0.587]  val F1 0.7409  acc 0.9081  8.6s
+    ft epoch  3/20  CE 0.2165  KL 0.0140  DRO q [0.379, 0.621]  val F1 0.7489  acc 0.9113  16.5s
+    ft epoch  4/20  CE 0.2096  KL 0.0132  DRO q [0.348, 0.652]  val F1 0.7553  acc 0.9118  17.5s
+    ft epoch  5/20  CE 0.2073  KL 0.0128  DRO q [0.317, 0.683]  val F1 0.7488  acc 0.9123  17.4s
+    ft epoch  6/20  CE 0.2041  KL 0.0123  DRO q [0.292, 0.708]  val F1 0.7517  acc 0.9136  17.6s
+    ft epoch  7/20  CE 0.2034  KL 0.0120  DRO q [0.266, 0.734]  val F1 0.7522  acc 0.9136  17.4s
+    ft epoch  8/20  CE 0.2000  KL 0.0118  DRO q [0.245, 0.755]  val F1 0.7508  acc 0.9143  17.5s
+    ft epoch  9/20  CE 0.2002  KL 0.0116  DRO q [0.224, 0.776]  val F1 0.7571  acc 0.9150  17.4s
+    ft epoch 10/20  CE 0.1991  KL 0.0115  DRO q [0.203, 0.797]  val F1 0.7573  acc 0.9130  17.4s
+    ft epoch 11/20  CE 0.1968  KL 0.0113  DRO q [0.186, 0.814]  val F1 0.7569  acc 0.9127  17.4s
+    ft epoch 12/20  CE 0.1960  KL 0.0114  DRO q [0.169, 0.831]  val F1 0.7594  acc 0.9143  17.4s
+    ft epoch 13/20  CE 0.1950  KL 0.0112  DRO q [0.155, 0.845]  val F1 0.7561  acc 0.9136  17.3s
+    ft epoch 14/20  CE 0.1937  KL 0.0110  DRO q [0.141, 0.859]  val F1 0.7585  acc 0.9141  17.3s
+    ft epoch 15/20  CE 0.1936  KL 0.0110  DRO q [0.13, 0.87]  val F1 0.7538  acc 0.9129  17.3s
+    ft epoch 16/20  CE 0.1924  KL 0.0110  DRO q [0.119, 0.881]  val F1 0.7576  acc 0.9146  15.7s
+    ft epoch 17/20  CE 0.1922  KL 0.0110  DRO q [0.109, 0.891]  val F1 0.7583  acc 0.9139  17.3s
+    ft epoch 18/20  CE 0.1918  KL 0.0108  DRO q [0.1, 0.9]  val F1 0.7586  acc 0.9148  17.4s
+    ft epoch 19/20  CE 0.1919  KL 0.0107  DRO q [0.092, 0.908]  val F1 0.7588  acc 0.9136  16.0s
+    ft epoch 20/20  CE 0.1903  KL 0.0108  DRO q [0.085, 0.915]  val F1 0.7596  acc 0.9150  17.3s
+    -> FA-LCI 0.7948 (normal 0.8159, older-like 0.7948); F1 0.7596 / 0.7107; 324.9 s
+
+=== fold 1 ft-xgp_ft_no_aug(beta=0.1)-70pct-seed1: start xgp, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1845  KL 0.0141  val F1 0.7529  acc 0.9111  4.5s
+    ft epoch  2/20  CE 0.1750  KL 0.0109  val F1 0.7530  acc 0.9120  7.3s
+    ft epoch  3/20  CE 0.1708  KL 0.0103  val F1 0.7559  acc 0.9118  8.8s
+    ft epoch  4/20  CE 0.1672  KL 0.0102  val F1 0.7559  acc 0.9115  10.7s
+    ft epoch  5/20  CE 0.1661  KL 0.0100  val F1 0.7561  acc 0.9118  11.7s
+    ft epoch  6/20  CE 0.1670  KL 0.0098  val F1 0.7584  acc 0.9122  11.5s
+    ft epoch  7/20  CE 0.1657  KL 0.0098  val F1 0.7534  acc 0.9106  12.5s
+    ft epoch  8/20  CE 0.1658  KL 0.0096  val F1 0.7596  acc 0.9136  11.6s
+    ft epoch  9/20  CE 0.1635  KL 0.0094  val F1 0.7522  acc 0.9104  12.5s
+    ft epoch 10/20  CE 0.1629  KL 0.0094  val F1 0.7573  acc 0.9125  12.5s
+    ft epoch 11/20  CE 0.1628  KL 0.0093  val F1 0.7568  acc 0.9122  12.6s
+    ft epoch 12/20  CE 0.1628  KL 0.0091  val F1 0.7571  acc 0.9134  12.6s
+    ft epoch 13/20  CE 0.1610  KL 0.0092  val F1 0.7563  acc 0.9116  12.6s
+    ft epoch 14/20  CE 0.1606  KL 0.0090  val F1 0.7595  acc 0.9118  12.5s
+    ft epoch 15/20  CE 0.1624  KL 0.0090  val F1 0.7517  acc 0.9099  12.6s
+    ft epoch 16/20  CE 0.1604  KL 0.0089  val F1 0.7539  acc 0.9113  12.6s
+    ft epoch 17/20  CE 0.1578  KL 0.0088  val F1 0.7549  acc 0.9111  12.7s
+    ft epoch 18/20  CE 0.1596  KL 0.0088  val F1 0.7529  acc 0.9104  12.7s
+    ft epoch 19/20  CE 0.1581  KL 0.0087  val F1 0.7547  acc 0.9122  12.6s
+    ft epoch 20/20  CE 0.1586  KL 0.0087  val F1 0.7592  acc 0.9122  12.6s
+    -> FA-LCI 0.8099 (normal 0.8099, older-like 0.8820); F1 0.7592 / 0.6954; 229.9 s
+
+=== fold 1 ft-xgp_ft_no_dro(beta=0.1,r=0.25)-70pct-seed1: start xgp, recipe kdaug, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2131  KL 0.0140  val F1 0.7601  acc 0.9132  6.6s
+    ft epoch  2/20  CE 0.2031  KL 0.0112  val F1 0.7582  acc 0.9143  9.8s
+    ft epoch  3/20  CE 0.1992  KL 0.0109  val F1 0.7610  acc 0.9141  13.7s
+    ft epoch  4/20  CE 0.1955  KL 0.0106  val F1 0.7557  acc 0.9134  12.6s
+    ft epoch  5/20  CE 0.1950  KL 0.0104  val F1 0.7559  acc 0.9116  12.5s
+    ft epoch  6/20  CE 0.1945  KL 0.0103  val F1 0.7591  acc 0.9143  12.5s
+    ft epoch  7/20  CE 0.1933  KL 0.0101  val F1 0.7570  acc 0.9141  14.0s
+    ft epoch  8/20  CE 0.1896  KL 0.0099  val F1 0.7589  acc 0.9137  15.6s
+    ft epoch  9/20  CE 0.1909  KL 0.0097  val F1 0.7572  acc 0.9136  15.6s
+    ft epoch 10/20  CE 0.1894  KL 0.0097  val F1 0.7598  acc 0.9143  15.7s
+    ft epoch 11/20  CE 0.1891  KL 0.0096  val F1 0.7584  acc 0.9120  15.6s
+    ft epoch 12/20  CE 0.1883  KL 0.0096  val F1 0.7616  acc 0.9148  15.8s
+    ft epoch 13/20  CE 0.1864  KL 0.0095  val F1 0.7570  acc 0.9125  15.7s
+    ft epoch 14/20  CE 0.1857  KL 0.0094  val F1 0.7569  acc 0.9120  15.6s
+    ft epoch 15/20  CE 0.1858  KL 0.0094  val F1 0.7566  acc 0.9123  15.7s
+    ft epoch 16/20  CE 0.1854  KL 0.0093  val F1 0.7565  acc 0.9137  15.6s
+    ft epoch 17/20  CE 0.1838  KL 0.0093  val F1 0.7545  acc 0.9120  15.7s
+    ft epoch 18/20  CE 0.1833  KL 0.0091  val F1 0.7558  acc 0.9127  15.6s
+    ft epoch 19/20  CE 0.1832  KL 0.0090  val F1 0.7567  acc 0.9122  15.7s
+    ft epoch 20/20  CE 0.1816  KL 0.0091  val F1 0.7560  acc 0.9134  15.6s
+    -> FA-LCI 0.8538 (normal 0.8545, older-like 0.8538); F1 0.7560 / 0.7026; 285.1 s
+
+=== fold 1 ft-l1_recon_ft(r=0.25)-70pct-seed1: start l1_recon, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2196  KL 0.0162  DRO q [0.461, 0.539]  val F1 0.7510  acc 0.9116  6.9s
+    ft epoch  2/20  CE 0.2092  KL 0.0126  DRO q [0.423, 0.577]  val F1 0.7497  acc 0.9134  10.2s
+    ft epoch  3/20  CE 0.2033  KL 0.0121  DRO q [0.389, 0.611]  val F1 0.7514  acc 0.9137  10.1s
+    ft epoch  4/20  CE 0.2000  KL 0.0117  DRO q [0.359, 0.641]  val F1 0.7554  acc 0.9150  16.5s
+    ft epoch  5/20  CE 0.1996  KL 0.0114  DRO q [0.328, 0.672]  val F1 0.7525  acc 0.9132  15.8s
+    ft epoch  6/20  CE 0.1968  KL 0.0112  DRO q [0.302, 0.698]  val F1 0.7526  acc 0.9137  16.5s
+    ft epoch  7/20  CE 0.1974  KL 0.0111  DRO q [0.276, 0.724]  val F1 0.7562  acc 0.9153  18.1s
+    ft epoch  8/20  CE 0.1945  KL 0.0109  DRO q [0.253, 0.747]  val F1 0.7565  acc 0.9160  17.1s
+    ft epoch  9/20  CE 0.1947  KL 0.0107  DRO q [0.232, 0.768]  val F1 0.7552  acc 0.9153  17.1s
+    ft epoch 10/20  CE 0.1941  KL 0.0107  DRO q [0.211, 0.789]  val F1 0.7561  acc 0.9148  17.1s
+    ft epoch 11/20  CE 0.1936  KL 0.0106  DRO q [0.192, 0.808]  val F1 0.7547  acc 0.9122  17.0s
+    ft epoch 12/20  CE 0.1924  KL 0.0107  DRO q [0.175, 0.825]  val F1 0.7576  acc 0.9144  17.1s
+    ft epoch 13/20  CE 0.1908  KL 0.0105  DRO q [0.16, 0.84]  val F1 0.7538  acc 0.9141  17.1s
+    ft epoch 14/20  CE 0.1910  KL 0.0104  DRO q [0.145, 0.855]  val F1 0.7530  acc 0.9134  17.1s
+    ft epoch 15/20  CE 0.1906  KL 0.0104  DRO q [0.133, 0.867]  val F1 0.7559  acc 0.9155  17.1s
+    ft epoch 16/20  CE 0.1899  KL 0.0105  DRO q [0.121, 0.879]  val F1 0.7590  acc 0.9173  17.1s
+    ft epoch 17/20  CE 0.1897  KL 0.0105  DRO q [0.111, 0.889]  val F1 0.7542  acc 0.9141  17.1s
+    ft epoch 18/20  CE 0.1890  KL 0.0103  DRO q [0.101, 0.899]  val F1 0.7563  acc 0.9143  17.1s
+    ft epoch 19/20  CE 0.1898  KL 0.0102  DRO q [0.093, 0.907]  val F1 0.7545  acc 0.9148  17.1s
+    ft epoch 20/20  CE 0.1880  KL 0.0103  DRO q [0.085, 0.915]  val F1 0.7577  acc 0.9155  17.1s
+    -> FA-LCI 0.7991 (normal 0.7991, older-like 0.8459); F1 0.7577 / 0.7104; 316.0 s
+
+--- start fold1-xgp_no_score-70pct-seed2
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.140, n_nonzero 46890, reconstructed
+      prune step 2/5: sparsity 0.280, n_nonzero 39509, reconstructed
+      prune step 3/5: sparsity 0.420, n_nonzero 32130, reconstructed
+      prune step 4/5: sparsity 0.560, n_nonzero 24749, reconstructed
+      prune step 5/5: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_score-70pct-seed2                FA-LCI 0.7268 (normal 0.7268, older-like 0.7679); F1 0.7493 / 0.6866
+
+--- start fold1-xgp_no_group-70pct-seed2-beta0.1
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/5: sparsity 0.140, n_nonzero 46890, reconstructed
+      prune step 2/5: sparsity 0.280, n_nonzero 39509, reconstructed
+      prune step 3/5: sparsity 0.420, n_nonzero 32130, reconstructed
+      prune step 4/5: sparsity 0.560, n_nonzero 24749, reconstructed
+      prune step 5/5: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_group(beta=0.1)-70pct-seed2      FA-LCI 0.7296 (normal 0.7296, older-like 0.7314); F1 0.7599 / 0.6995
+
+--- start fold1-xgp_no_iter-70pct-seed2-beta0.1
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      prune step 1/1: sparsity 0.700, n_nonzero 17365, reconstructed
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_iter(beta=0.1)-70pct-seed2       FA-LCI 0.7233 (normal 0.7233, older-like 0.7253); F1 0.7593 / 0.6961
+
+--- start fold1-xgp_no_recon-70pct-seed2-beta0.1
+      prune step 1/5: sparsity 0.140, n_nonzero 46890
+      prune step 2/5: sparsity 0.280, n_nonzero 39509
+      prune step 3/5: sparsity 0.420, n_nonzero 32130
+      prune step 4/5: sparsity 0.560, n_nonzero 24749
+      prune step 5/5: sparsity 0.700, n_nonzero 17365
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\nehra\Downloads\LAU\Masters\First Year\Research Methods\Project\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  noft-xgp_no_recon(beta=0.1)-70pct-seed2      FA-LCI 0.4138 (normal 0.4244, older-like 0.4138); F1 0.2634 / 0.2093
+
+=== fold 1 ft-xgp_no_score_ft(r=0.25)-70pct-seed2: start xgp_no_score, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2211  KL 0.0154  DRO q [0.456, 0.544]  val F1 0.7567  acc 0.9115  8.4s
+    ft epoch  2/20  CE 0.2113  KL 0.0121  DRO q [0.414, 0.586]  val F1 0.7556  acc 0.9129  17.3s
+    ft epoch  3/20  CE 0.2077  KL 0.0118  DRO q [0.375, 0.625]  val F1 0.7608  acc 0.9144  17.3s
+    ft epoch  4/20  CE 0.2047  KL 0.0114  DRO q [0.341, 0.659]  val F1 0.7564  acc 0.9139  17.3s
+    ft epoch  5/20  CE 0.2039  KL 0.0111  DRO q [0.309, 0.691]  val F1 0.7578  acc 0.9130  17.3s
+    ft epoch  6/20  CE 0.1989  KL 0.0110  DRO q [0.278, 0.722]  val F1 0.7611  acc 0.9132  17.3s
+    ft epoch  7/20  CE 0.1993  KL 0.0109  DRO q [0.252, 0.748]  val F1 0.7595  acc 0.9132  17.3s
+    ft epoch  8/20  CE 0.1972  KL 0.0108  DRO q [0.228, 0.772]  val F1 0.7554  acc 0.9127  17.3s
+    ft epoch  9/20  CE 0.1954  KL 0.0107  DRO q [0.207, 0.793]  val F1 0.7669  acc 0.9157  17.3s
+    ft epoch 10/20  CE 0.1961  KL 0.0106  DRO q [0.187, 0.813]  val F1 0.7606  acc 0.9146  17.3s
+    ft epoch 11/20  CE 0.1954  KL 0.0106  DRO q [0.17, 0.83]  val F1 0.7568  acc 0.9136  17.3s
+    ft epoch 12/20  CE 0.1956  KL 0.0105  DRO q [0.154, 0.846]  val F1 0.7580  acc 0.9150  17.3s
+    ft epoch 13/20  CE 0.1939  KL 0.0105  DRO q [0.139, 0.861]  val F1 0.7627  acc 0.9164  17.3s
+    ft epoch 14/20  CE 0.1929  KL 0.0104  DRO q [0.126, 0.874]  val F1 0.7618  acc 0.9162  17.3s
+    ft epoch 15/20  CE 0.1935  KL 0.0104  DRO q [0.114, 0.886]  val F1 0.7640  acc 0.9146  17.3s
+    ft epoch 16/20  CE 0.1909  KL 0.0103  DRO q [0.103, 0.897]  val F1 0.7618  acc 0.9150  17.3s
+    ft epoch 17/20  CE 0.1917  KL 0.0103  DRO q [0.093, 0.907]  val F1 0.7608  acc 0.9150  17.3s
+    ft epoch 18/20  CE 0.1913  KL 0.0103  DRO q [0.083, 0.917]  val F1 0.7593  acc 0.9122  17.3s
+    ft epoch 19/20  CE 0.1925  KL 0.0103  DRO q [0.075, 0.925]  val F1 0.7634  acc 0.9160  17.3s
+    ft epoch 20/20  CE 0.1906  KL 0.0101  DRO q [0.068, 0.932]  val F1 0.7611  acc 0.9148  17.3s
+    -> FA-LCI 0.8041 (normal 0.8041, older-like 0.9059); F1 0.7611 / 0.7002; 337.1 s
+
+=== fold 1 ft-xgp_no_group_ft(beta=0.1,r=0.25)-70pct-seed2: start xgp_no_group, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2212  KL 0.0147  DRO q [0.456, 0.544]  val F1 0.7593  acc 0.9153  8.5s
+    ft epoch  2/20  CE 0.2114  KL 0.0117  DRO q [0.413, 0.587]  val F1 0.7566  acc 0.9136  17.3s
+    ft epoch  3/20  CE 0.2068  KL 0.0114  DRO q [0.375, 0.625]  val F1 0.7621  acc 0.9157  17.3s
+    ft epoch  4/20  CE 0.2043  KL 0.0111  DRO q [0.342, 0.658]  val F1 0.7591  acc 0.9151  17.3s
+    ft epoch  5/20  CE 0.2023  KL 0.0110  DRO q [0.309, 0.691]  val F1 0.7596  acc 0.9143  17.3s
+    ft epoch  6/20  CE 0.1982  KL 0.0108  DRO q [0.279, 0.721]  val F1 0.7560  acc 0.9132  17.3s
+    ft epoch  7/20  CE 0.1983  KL 0.0108  DRO q [0.253, 0.747]  val F1 0.7580  acc 0.9144  17.3s
+    ft epoch  8/20  CE 0.1965  KL 0.0107  DRO q [0.229, 0.771]  val F1 0.7577  acc 0.9141  17.3s
+    ft epoch  9/20  CE 0.1948  KL 0.0106  DRO q [0.209, 0.791]  val F1 0.7631  acc 0.9169  17.3s
+    ft epoch 10/20  CE 0.1949  KL 0.0105  DRO q [0.189, 0.811]  val F1 0.7625  acc 0.9158  17.3s
+    ft epoch 11/20  CE 0.1947  KL 0.0105  DRO q [0.171, 0.829]  val F1 0.7577  acc 0.9136  17.3s
+    ft epoch 12/20  CE 0.1947  KL 0.0104  DRO q [0.155, 0.845]  val F1 0.7621  acc 0.9160  17.3s
+    ft epoch 13/20  CE 0.1930  KL 0.0104  DRO q [0.141, 0.859]  val F1 0.7651  acc 0.9176  17.3s
+    ft epoch 14/20  CE 0.1918  KL 0.0103  DRO q [0.128, 0.872]  val F1 0.7655  acc 0.9169  17.3s
+    ft epoch 15/20  CE 0.1924  KL 0.0103  DRO q [0.115, 0.885]  val F1 0.7604  acc 0.9144  17.3s
+    ft epoch 16/20  CE 0.1898  KL 0.0103  DRO q [0.105, 0.895]  val F1 0.7630  acc 0.9160  17.3s
+    ft epoch 17/20  CE 0.1911  KL 0.0102  DRO q [0.094, 0.906]  val F1 0.7668  acc 0.9173  17.3s
+    ft epoch 18/20  CE 0.1899  KL 0.0102  DRO q [0.085, 0.915]  val F1 0.7596  acc 0.9129  17.3s
+    ft epoch 19/20  CE 0.1897  KL 0.0102  DRO q [0.077, 0.923]  val F1 0.7630  acc 0.9165  17.3s
+    ft epoch 20/20  CE 0.1893  KL 0.0101  DRO q [0.07, 0.93]  val F1 0.7635  acc 0.9157  17.3s
+    -> FA-LCI 0.8266 (normal 0.8266, older-like 0.8288); F1 0.7635 / 0.7036; 337.2 s
+
+=== fold 1 ft-xgp_no_iter_ft(beta=0.1,r=0.25)-70pct-seed2: start xgp_no_iter, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2242  KL 0.0154  DRO q [0.457, 0.543]  val F1 0.7584  acc 0.9157  9.2s
+    ft epoch  2/20  CE 0.2134  KL 0.0120  DRO q [0.415, 0.585]  val F1 0.7598  acc 0.9155  13.6s
+    ft epoch  3/20  CE 0.2090  KL 0.0117  DRO q [0.377, 0.623]  val F1 0.7608  acc 0.9158  17.3s
+    ft epoch  4/20  CE 0.2057  KL 0.0113  DRO q [0.344, 0.656]  val F1 0.7557  acc 0.9151  17.3s
+    ft epoch  5/20  CE 0.2044  KL 0.0112  DRO q [0.311, 0.689]  val F1 0.7577  acc 0.9157  17.4s
+    ft epoch  6/20  CE 0.2003  KL 0.0110  DRO q [0.282, 0.718]  val F1 0.7570  acc 0.9157  17.3s
+    ft epoch  7/20  CE 0.2001  KL 0.0109  DRO q [0.255, 0.745]  val F1 0.7621  acc 0.9164  17.3s
+    ft epoch  8/20  CE 0.1984  KL 0.0109  DRO q [0.231, 0.769]  val F1 0.7604  acc 0.9176  17.3s
+    ft epoch  9/20  CE 0.1968  KL 0.0108  DRO q [0.211, 0.789]  val F1 0.7652  acc 0.9188  17.3s
+    ft epoch 10/20  CE 0.1971  KL 0.0107  DRO q [0.191, 0.809]  val F1 0.7601  acc 0.9164  17.3s
+    ft epoch 11/20  CE 0.1974  KL 0.0106  DRO q [0.173, 0.827]  val F1 0.7575  acc 0.9160  17.3s
+    ft epoch 12/20  CE 0.1965  KL 0.0106  DRO q [0.157, 0.843]  val F1 0.7588  acc 0.9165  17.3s
+    ft epoch 13/20  CE 0.1953  KL 0.0106  DRO q [0.142, 0.858]  val F1 0.7596  acc 0.9174  17.3s
+    ft epoch 14/20  CE 0.1939  KL 0.0104  DRO q [0.129, 0.871]  val F1 0.7626  acc 0.9180  17.3s
+    ft epoch 15/20  CE 0.1951  KL 0.0104  DRO q [0.116, 0.884]  val F1 0.7606  acc 0.9164  17.3s
+    ft epoch 16/20  CE 0.1915  KL 0.0104  DRO q [0.105, 0.895]  val F1 0.7582  acc 0.9167  17.3s
+    ft epoch 17/20  CE 0.1926  KL 0.0104  DRO q [0.095, 0.905]  val F1 0.7623  acc 0.9171  17.3s
+    ft epoch 18/20  CE 0.1920  KL 0.0103  DRO q [0.086, 0.914]  val F1 0.7616  acc 0.9151  17.3s
+    ft epoch 19/20  CE 0.1920  KL 0.0103  DRO q [0.078, 0.922]  val F1 0.7638  acc 0.9187  17.3s
+    ft epoch 20/20  CE 0.1917  KL 0.0102  DRO q [0.07, 0.93]  val F1 0.7618  acc 0.9165  17.3s
+    -> FA-LCI 0.8015 (normal 0.8015, older-like 0.8215); F1 0.7618 / 0.7118; 334.5 s
+
+=== fold 1 ft-xgp_no_recon_ft(beta=0.1,r=0.25)-70pct-seed2: start xgp_no_recon, recipe kdaug, group DRO, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2958  KL 0.0346  DRO q [0.455, 0.545]  val F1 0.7341  acc 0.9038  8.9s
+    ft epoch  2/20  CE 0.2374  KL 0.0159  DRO q [0.41, 0.59]  val F1 0.7391  acc 0.9052  17.3s
+    ft epoch  3/20  CE 0.2271  KL 0.0143  DRO q [0.372, 0.628]  val F1 0.7442  acc 0.9102  17.3s
+    ft epoch  4/20  CE 0.2185  KL 0.0134  DRO q [0.339, 0.661]  val F1 0.7414  acc 0.9122  17.3s
+    ft epoch  5/20  CE 0.2161  KL 0.0129  DRO q [0.307, 0.693]  val F1 0.7469  acc 0.9122  17.3s
+    ft epoch  6/20  CE 0.2094  KL 0.0126  DRO q [0.279, 0.721]  val F1 0.7460  acc 0.9111  17.3s
+    ft epoch  7/20  CE 0.2083  KL 0.0124  DRO q [0.252, 0.748]  val F1 0.7521  acc 0.9118  17.3s
+    ft epoch  8/20  CE 0.2050  KL 0.0121  DRO q [0.229, 0.771]  val F1 0.7490  acc 0.9115  17.3s
+    ft epoch  9/20  CE 0.2041  KL 0.0119  DRO q [0.21, 0.79]  val F1 0.7564  acc 0.9137  17.3s
+    ft epoch 10/20  CE 0.2038  KL 0.0117  DRO q [0.19, 0.81]  val F1 0.7539  acc 0.9134  17.3s
+    ft epoch 11/20  CE 0.2025  KL 0.0116  DRO q [0.173, 0.827]  val F1 0.7549  acc 0.9120  17.3s
+    ft epoch 12/20  CE 0.2024  KL 0.0114  DRO q [0.157, 0.843]  val F1 0.7493  acc 0.9146  17.3s
+    ft epoch 13/20  CE 0.1996  KL 0.0114  DRO q [0.143, 0.857]  val F1 0.7559  acc 0.9155  17.3s
+    ft epoch 14/20  CE 0.1997  KL 0.0112  DRO q [0.13, 0.87]  val F1 0.7614  acc 0.9164  17.3s
+    ft epoch 15/20  CE 0.1995  KL 0.0112  DRO q [0.118, 0.882]  val F1 0.7530  acc 0.9130  17.3s
+    ft epoch 16/20  CE 0.1954  KL 0.0111  DRO q [0.108, 0.892]  val F1 0.7561  acc 0.9139  17.3s
+    ft epoch 17/20  CE 0.1971  KL 0.0111  DRO q [0.098, 0.902]  val F1 0.7572  acc 0.9143  17.3s
+    ft epoch 18/20  CE 0.1964  KL 0.0110  DRO q [0.088, 0.912]  val F1 0.7545  acc 0.9125  17.3s
+    ft epoch 19/20  CE 0.1963  KL 0.0109  DRO q [0.081, 0.919]  val F1 0.7635  acc 0.9169  17.4s
+    ft epoch 20/20  CE 0.1956  KL 0.0108  DRO q [0.074, 0.926]  val F1 0.7570  acc 0.9130  17.3s
+    -> FA-LCI 0.7889 (normal 0.7923, older-like 0.7889); F1 0.7570 / 0.7059; 337.8 s
+
+=== fold 1 ft-xgp_ft_no_aug(beta=0.1)-70pct-seed2: start xgp, recipe kd, 55552 training windows, E_ft 20
+    ft epoch  1/20  CE 0.1842  KL 0.0138  val F1 0.7501  acc 0.9115  9.1s
+    ft epoch  2/20  CE 0.1746  KL 0.0110  val F1 0.7505  acc 0.9115  12.6s
+    ft epoch  3/20  CE 0.1699  KL 0.0105  val F1 0.7517  acc 0.9122  12.6s
+    ft epoch  4/20  CE 0.1697  KL 0.0101  val F1 0.7565  acc 0.9130  12.6s
+    ft epoch  5/20  CE 0.1673  KL 0.0100  val F1 0.7562  acc 0.9122  12.6s
+    ft epoch  6/20  CE 0.1658  KL 0.0099  val F1 0.7550  acc 0.9139  12.6s
+    ft epoch  7/20  CE 0.1648  KL 0.0097  val F1 0.7540  acc 0.9113  12.6s
+    ft epoch  8/20  CE 0.1652  KL 0.0096  val F1 0.7563  acc 0.9127  12.6s
+    ft epoch  9/20  CE 0.1642  KL 0.0094  val F1 0.7535  acc 0.9109  12.6s
+    ft epoch 10/20  CE 0.1629  KL 0.0094  val F1 0.7517  acc 0.9115  12.6s
+    ft epoch 11/20  CE 0.1621  KL 0.0093  val F1 0.7543  acc 0.9129  12.6s
+    ft epoch 12/20  CE 0.1624  KL 0.0091  val F1 0.7592  acc 0.9132  12.6s
+    ft epoch 13/20  CE 0.1615  KL 0.0091  val F1 0.7535  acc 0.9115  12.6s
+    ft epoch 14/20  CE 0.1604  KL 0.0090  val F1 0.7519  acc 0.9102  12.6s
+    ft epoch 15/20  CE 0.1610  KL 0.0089  val F1 0.7534  acc 0.9113  12.6s
+    ft epoch 16/20  CE 0.1600  KL 0.0089  val F1 0.7513  acc 0.9108  12.6s
+    ft epoch 17/20  CE 0.1596  KL 0.0089  val F1 0.7574  acc 0.9136  12.6s
+    ft epoch 18/20  CE 0.1607  KL 0.0088  val F1 0.7573  acc 0.9130  12.6s
+    ft epoch 19/20  CE 0.1599  KL 0.0087  val F1 0.7559  acc 0.9123  12.6s
+    ft epoch 20/20  CE 0.1590  KL 0.0087  val F1 0.7563  acc 0.9123  12.6s
+    -> FA-LCI 0.8053 (normal 0.8053, older-like 0.8814); F1 0.7563 / 0.6966; 248.1 s
+
+=== fold 1 ft-xgp_ft_no_dro(beta=0.1,r=0.25)-70pct-seed2: start xgp, recipe kdaug, 69440 training windows, E_ft 20
+    ft epoch  1/20  CE 0.2206  KL 0.0140  val F1 0.7548  acc 0.9136  11.3s
+    ft epoch  2/20  CE 0.2098  KL 0.0112  val F1 0.7564  acc 0.9129  15.6s
+    ft epoch  3/20  CE 0.2059  KL 0.0110  val F1 0.7590  acc 0.9148  15.6s
+    ft epoch  4/20  CE 0.2031  KL 0.0106  val F1 0.7590  acc 0.9153  15.6s
+    ft epoch  5/20  CE 0.2017  KL 0.0104  val F1 0.7601  acc 0.9143  15.6s
+    ft epoch  6/20  CE 0.1977  KL 0.0102  val F1 0.7583  acc 0.9134  15.6s
+    ft epoch  7/20  CE 0.1975  KL 0.0101  val F1 0.7576  acc 0.9123  15.7s
+    ft epoch  8/20  CE 0.1950  KL 0.0100  val F1 0.7552  acc 0.9127  15.6s
+    ft epoch  9/20  CE 0.1934  KL 0.0099  val F1 0.7590  acc 0.9125  15.6s
+    ft epoch 10/20  CE 0.1932  KL 0.0098  val F1 0.7623  acc 0.9155  15.6s
+    ft epoch 11/20  CE 0.1929  KL 0.0097  val F1 0.7556  acc 0.9130  16.2s
