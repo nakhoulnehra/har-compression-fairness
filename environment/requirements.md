@@ -292,3 +292,45 @@ python -m har.run_xgp_pilot3 --analyze --phase ablation                # -> deci
 python -m har.run_compression_grid --folds 0 1 3 --recheck-head --machine-name nakhoul-3050   # 9A head column fix, on nakhoul-3050
 python -m har.run_compression_grid --folds 2 3 4 --recheck-head --machine-name uni-2080       # on uni-2080
 ```
+
+### XGP pilot round 4 (final round; plan 2.5 (b), "Round 4 pre-registration" with amendment 1; code 2026-11-23, LenovoP330-01 CPU)
+- Code: `har/xgp4.py`, `har/run_xgp_pilot4.py`; tests `har/tests/test_xgp4.py` (22). Round 3's files are only imported, never changed.
+- Amendment 1 (same day, before `--prepare`):
+  - no synthetic older-like data;
+  - XGP groups = subjects (default of `xgp4.default_groups`);
+  - worst-group importance (k = 3);
+  - group DRO for the XGP candidates, plus `*_kd_dro` controls for every baseline;
+  - validation on real inner-val windows only (LCI_val, worst-subject LCI_val, F1_val).
+- No new packages (torch 2.7.1, numpy, pandas, scipy as before).
+
+```bash
+python -m pytest har/tests lci/tests                                   # 270/270 passed (45 s)
+# CPU smoke (LenovoP330-01; old-design smoke outputs and smoke checkpoints deleted first):
+python -m har.run_xgp_pilot4 --prepare --smoke                         # -> results/har-xgp-pilot-smoke/round4/ (git-ignored), 5 s
+python -m har.run_xgp_pilot4 --mode unstructured --folds 0 1 --smoke   # 66 s
+python -m har.run_xgp_pilot4 --mode structured --folds 0 1 --smoke     # 34 s
+python -m har.run_xgp_pilot4 --analyze --mode unstructured --smoke
+python -m har.run_xgp_pilot4 --analyze --mode structured --smoke
+python -m har.run_xgp_pilot4 --latency --smoke                         # 5 s
+# --- GPU runs (to do), in this order ---
+# 1. round 3 must be decided first (nakhoul-3050):
+python -m har.run_xgp_pilot3 --phase ablation --folds 1 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050
+python -m har.run_xgp_pilot3 --analyze --phase ablation                # -> round3 decision.json; commit it, then: git tag xgp-round3-final
+# 2. round-4 pre-registration (CPU, any machine, after the tag; refuses without it):
+python -m har.run_xgp_pilot4 --prepare                                 # -> results/har-xgp-pilot/round4/ prereg + tables; commit, pull on both GPUs
+# 3. optional GPU smoke (needs round 3's smoke decision on that machine: the round-3 smoke chain above, then):
+python -m har.run_xgp_pilot4 --prepare --smoke
+python -m har.run_xgp_pilot4 --mode unstructured --folds 0 --smoke --device cuda --machine-name uni-2080
+# 4. real runs, one unstructured fold + one structured fold per GPU (each GPU runs the unstructured fold it ran in round 3):
+#    uni-2080
+python -m har.run_xgp_pilot4 --mode unstructured --folds 0 --device cuda --machine-name uni-2080 --noise-floor-machine nakhoul-3050
+python -m har.run_xgp_pilot4 --mode structured --folds 1 --device cuda --machine-name uni-2080 --noise-floor-machine nakhoul-3050
+#    nakhoul-3050
+python -m har.run_xgp_pilot4 --mode unstructured --folds 1 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050
+python -m har.run_xgp_pilot4 --mode structured --folds 0 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050
+# 5. CPU latency (Aya's laptop; optionally each GPU machine's CPU), any time after step 2:
+python -m har.run_xgp_pilot4 --latency --machine-name Aya
+# 6. after both machines' files are merged:
+python -m har.run_xgp_pilot4 --analyze --mode unstructured             # -> har-xgp-pilot4-tinyhar-unstructured-decision.json
+python -m har.run_xgp_pilot4 --analyze --mode structured               # -> har-xgp-pilot4-tinyhar-structured-decision.json
+```

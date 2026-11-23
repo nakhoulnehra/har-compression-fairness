@@ -428,6 +428,156 @@ Written 2026-11-22, before any round-3 code existed and before any round-3 run.
 - **Machines:** `--folds` and `--machine-name` split the work. Fold 0 runs on uni-2080 and fold 1 on nakhoul-3050; both have the checkpoints. τ_k and the inner-val ceiling come from nakhoul-3050's fold-0 and fold-1 noise-floor files, which are in git.
 - **Cost estimate** (from round 2: ≈ 80 s of SHAP per assessed model and 40–70 s per 20-epoch KD run): phase 1 ≈ 6.5 h per fold with `--curve-seeds 0` (≈ 9.5 h with the curve on every seed); phase 2 ≈ 3.5 h per fold. The rotation costs well under a second per window set.
 
+#### Round 4 pre-registration (final round)
+
+Written 2026-11-23, before any round-4 code or run. It is based on the design review (`plan/round4-design-review.md`) and the decisions taken on it the same day.
+
+`--prepare` copies these rules into `results/har-xgp-pilot/round4/har-xgp-pilot4-tinyhar-preregistration.json`. The JSON also records:
+- the SHA-256 of the round-4 window tables;
+- the SHA-256 of round 3's `decision.json`;
+- the commit of the tag `xgp-round3-final`.
+
+`--prepare` refuses to run before round 3's decision exists.
+
+Code: `har/xgp4.py`, `har/run_xgp_pilot4.py`, `har/tests/test_xgp4.py`. Output: `results/har-xgp-pilot/round4/` (prefix `har-xgp-pilot4-tinyhar-`). Round 3's files and outputs are never edited: round 4 only imports from `har/xgp3.py`, `har/run_xgp_pilot3.py`, `har/augment.py` and `har/compression.py`.
+
+**Amendment 1 (2026-11-23, before `--prepare` and before any round-4 run; the text below is the amended version).**
+- **Change:**
+  - All synthetic older-like data is removed from round 4: from the calibration set, the score, the budgets, the fine-tuning and the validation windows.
+  - XGP becomes group-agnostic and dataset-agnostic. It takes an optional group label per calibration and training window; the default group is the subject, which every wearable dataset has.
+  - The importance uses worst-group emphasis: the mean of the k = 3 worst groups.
+  - Fine-tuning uses group DRO over the same groups [Sagawa et al., ICLR 2020, Algorithm 1], and every baseline gets the same DRO as a control (`*_kd_dro`).
+  - No HAR70+ or age information is used by the method or by the selection.
+  - Older vs general and walking-aid vs not are evaluation-only groups, used in 9B (FA-LCI, gap, safe rate on the test grid).
+  - Validation uses real inner-val windows only: LCI_val, worst-subject LCI_val and F1_val. The selection rules are restated on these metrics.
+- **Reason:**
+  - The older-like proxy added nothing in round 3 (finding 2 below: LCI_older-like ≥ LCI_normal in most rows, `xgp_no_group` ≈ `xgp`, and DRO over normal / older-like did not help).
+  - The method must not depend on one dataset's groups.
+- **Superseded:**
+  - the older-like copies of the calibration set (seed 47);
+  - recipe R\* (round 3's fine-tuning recipe for every method);
+  - FA-LCI_val and the two window sets in rules 2–6;
+  - the round-3 F1 / explain window split (round 4 calibrates on training windows, so all inner-val windows are free for F1).
+- **Unchanged:** everything else (levels, β, the 3 × 2 design, the budgets and their bounds, the structured design, the latency protocol, PTQ, the budget curve, the rule thresholds), and round 3 itself.
+
+- **Disclosure (into the paper in substance).**
+  - The round-4 design was informed by:
+    - round 3's validation results (folds 0–1);
+    - a read-only validation diagnostic of the per-layer importance at θ0 (folds 0–1, round-3 calibration windows);
+    - the Step 9A test-set analysis, as round 3 was.
+  - All round-4 tuning and selection use HARTH inner-validation windows only (folds 0 and 1). HAR70+ and the folds' test subjects are never loaded.
+  - The new baseline-only settings (95%, KD on 5% of the data, pruning + PTQ, structured pruning: "9A-ext") run on the test grid **in 9B, after this decision**, so they cannot change round 4.
+- **Findings that motivate the design** (review §0):
+  1. Round 3's gain comes mostly from the layer-wise reconstruction: `l1_recon` ≈ `xgp` without fine-tuning, and `xgp_no_recon` collapses (fold 0).
+  2. The group-aware parts had no measurable effect: LCI_older-like ≥ LCI_normal in most rows, so FA-LCI_val ≈ LCI_normal; `xgp_no_group` ≈ `xgp`; DRO did not help at 90%.
+  3. Uniform sparsity starves the convolutions and over-provisions the LSTM.
+     - The convs carry 50–56% of the raw importance on 22.6% of the prunable weights. `convs.0` carries ≈ 7% on 0.27%.
+     - The LSTM carries 20–24% on 47.6%.
+     - The reconstruction residual is largest in `convs.0` (0.46 at 90%), and the LSTM and attention projections are not reconstructed.
+  4. Filter-level importance is uncorrelated with filter L1 norm in the convs (Spearman −0.09 to 0.27), against 0.40–0.75 between I and |w| within tensors. The explanation score can therefore change structured choices far more than unstructured ones.
+  5. XGP's fine-tuned margin grows with sparsity and with a smaller fine-tuning budget. `l1_recon` starts were not on round 3's budget curve.
+- **Common to every round-4 method.**
+  - **Groups**: an optional group label per window, and **the subject by default** (`xgp4.default_groups`). Round 4 uses the default: the fold's 15 HARTH training subjects. Age, HAR70+, walking-aid status and synthetic data are never inputs.
+  - **Calibration set (score, budgets, reconstruction)**: up to 10 windows per (group, class) cell of the fold's **HARTH training windows**, without replacement (`xgp4.calibration_pick`, seed 46), saved by window ID with the group.
+    - This is about 980 windows (≈ 100 non-empty cells per fold), the same count as round 3's 490 + 490.
+    - The calibration is off inner val, which resolves round 3's caveat.
+  - **XGP importance (worst-group emphasis)**:
+    - per group g, the class-balanced alignment objective J_g = Σ_{i ∈ g} w_i ⟨A_θ(x_i), sg(A_θ0(x_i))⟩, with w_i = 1 / (C_g · n_{g, c(i)}), so that each class present in g weighs equally;
+    - the EG attributions are round 3's (48 segments, m = 8, the same draws for both models, EG seeds (2s, 2s + 1); target = the original model's predicted class);
+    - I_g(w) = |w · ∂J_g/∂w|, the first-order change in J_g when w is removed, averaged over the EG seeds and layer-normalised (I_g / mean_layer I_g);
+    - **I(w) = the mean of the k = 3 largest I_g(w) over the groups**, i.e. the groups whose explanations pruning w would change most (k = 1 is round 3's max over groups; k ≥ G is the mean);
+    - k = 3 of 15 (the worst 20%) is fixed a priori and not tuned;
+    - one backward pass per group (15 per EG seed), so the cost is the same as round 3's 14 per-class calls.
+  - **Iterative pruning and reconstruction**: every pruning start except the plain `l1` reference uses K = 5 nested steps with the round-3 ridge reconstruction after each step (`layerwise_reconstruct`, damp 0.01, on the calibration windows). Methods therefore differ only in budgets and selection.
+    - There is no LSTM or attention reconstruction (decided).
+    - `l1` (one-shot, no reconstruction) and its fine-tuned version are kept as the 9A reference.
+  - **Fine-tuning recipes** (E_ft = 20, Adam lr 1e-4, batch 256, KD as in 9A):
+    - baselines: plain KD (the 9A recipe);
+    - every XGP candidate: KD + **group DRO over the training subjects** [Sagawa et al. 2020, Algorithm 1: batch loss Σ_g q_g l_g over the groups in the batch, q_g ← q_g exp(η l_g), η = 0.01, q uniform at the start; `finetune(groups=…, dro_eta=0.01)`];
+    - **DRO controls**: every baseline is also fine-tuned with the same KD + DRO: `l1_kd_dro`, `l1_recon_kd_dro`, `lamp_recon_kd_dro`; structured `l1_filter_kd_dro`, `l1_filter_recon_kd_dro`, `taylor_recon_kd_dro`. A gain that DRO alone explains therefore cannot count for XGP.
+  - **Regimes**:
+    - (i) no fine-tuning;
+    - (ii) KD 100%: all the fold's training windows;
+    - (iii) KD 5%: a fixed subset of the training windows. Per (subject, class) cell, max(1, round(0.05 n)) windows without replacement, seed 48, saved by window ID. The teacher logits are taken on the subset only; 20 epochs, so about 1/20 of the steps. The DRO groups are the subset's subjects.
+  - Seeds 0, 1, 2 (seed = the batch-order seed and the EG seeds (2s, 2s + 1) of the score). Folds 0 and 1.
+  - **Validation windows and metrics (real inner-val windows only)**:
+    - F1_val: pooled 7-class macro-F1 on **every** inner-val window of the fold;
+    - LCI_val: the mean, over the fold's 3 inner-val subjects, of the per-subject LCI on round 3's explain windows (`select_explain_windows`, 100 per subject; the normal windows only, so it is round 3's LCI_normal set);
+    - worst-subject LCI_val: the minimum of those per-subject LCIs;
+    - also reported: ρ, Jaccard, retention, accuracy.
+    - SHAP is as in round 3 (GradientExplainer, nsamples 200, SHAP seed 0, target = the original model's predicted class, background = the fold's 100 HARTH windows).
+    - The inner-val subjects are in neither the calibration set nor the training set, so LCI_val measures how explanations are preserved for **unseen people**.
+  - **Evaluation-only groups (9B, test grid)**: older vs general (FA-LCI, gap) and walking-aid vs not, plus the safe rate. They are never used by the method or the selection.
+- **Unstructured mode (`--mode unstructured`)**: levels 80 / 90 / 95% (KD 5%: 90 / 95% only), β = 0.1 (round 3's selection at 90% in both scenarios; asserted against round 3's selection file).
+  - The 3 × 2 design (budget × selection), all K = 5 + reconstruction:
+
+    | budget ↓ / selection → | L1 (β = 0) | XGP keep-score (β = 0.1, the worst-group importance above) |
+    |---|---|---|
+    | uniform (round 3) | `l1_recon` | `xgp` |
+    | LAMP (Lee et al., ICLR 2021) | `lamp_recon` | `xgp_lamp` |
+    | XGP budgets | `l1_xb_recon` | `xgp_xb` |
+
+  - **XGP budgets.**
+    - At θ0, per group g, take the raw I_g summed per tensor and turn it into a share across tensors. The share is the mean of the k = 3 largest group shares per tensor, renormalised. EG seeds (2s, 2s + 1); fixed before step 1 and not recomputed.
+    - keep_l = clip(λ · share_l, lo_l, hi_l), with λ set so that Σ keep_l = the uniform total (water-filling), then integer rounding by largest remainder.
+    - **LAMP budgets**: LAMP scores w_u² / Σ_{v ≥ u} w_v² (ascending order within the tensor), global top-N, giving per-tensor counts. These then pass through the same bounds and water-filling.
+    - **Bounds, identical for LAMP and XGP budgets**:
+      - lo_l = max(⌈0.02 n_l⌉, rows_l);
+      - **every tensor that the reconstruction does not refit (the LSTM `weight_ih` / `weight_hh`, the attention `in_proj_weight` / `out_proj.weight`) keeps at least its uniform count**, so it is never pruned more than under uniform sparsity at that level (decided);
+      - hi_l = n_l.
+    - In budgeted runs, each output row keeps its highest-scoring surviving weight at every step (≥ 1 weight per row). Uniform runs are exactly round 3's rule (no floor).
+    - Total n_nonzero is identical for every method within a level (asserted).
+  - **References**: `l1` (one-shot, no reconstruction) and **`xgp_r3`**, round 3's frozen final per scenario.
+    - `xgp_r3` is round 3's method exactly as frozen: its own calibration set, variant, β, r and recipe, including its older-like calibration copies and augmentation. This is the only place older-like data appears in round 4, and only inside round 3's fixed method. It is scored with the round-4 metrics.
+    - At 80% and 95% it uses round 3's configuration at the nearest round-3 level (90% for both; ties go to the higher level).
+    - Without fine-tuning it is the no_finetune final; under KD 100% and KD 5% it is the finetune final (KD 5% uses its recipe on the 5% subset).
+    - If round 3 froze no final in a scenario, there is no `xgp_r3` there.
+  - Budget curve: 2 / 5 / 20 epochs, all seeds, at 90 and 95%, KD 100%, for `l1_recon`, `lamp_recon`, `xgp` and `xgp_xb`, each from its own reconstructed start.
+  - PTQ: `ptq_symmetric` at 4 bits on the KD-100% finals of `l1_recon`, `lamp_recon`, `xgp` and `xgp_xb` at 90 and 95%, all seeds, plus 8 bits at 90% for seed 0. Reported, not part of the rules.
+- **Structured mode (`--mode structured`)**: whole output filters of `convs.0`, `convs.3` and `convs.6` are removed, together with the matching input channels of the next conv. Nothing else: no LSTM hidden units, the head's input is unchanged, and `convs.9` is not structured because its filters are the transformer's d_model.
+  - Levels: 50% and 75% of the 28 filters in each of the three layers, so 14 and 7 kept.
+  - Schedule: K = 5 nested steps (round(level · k/5 · 28) removed per layer at step k), rescoring on the current model and reconstructing after each step, for every structured method. Widths, params and FLOPs are identical across methods by construction.
+  - Filter scores (the filter's own conv weights only, on the current model):
+    - **`l1_filter_recon`**: Σ |W_f| [Li et al., ICLR 2017, Sec 3.1];
+    - **`taylor_recon`**: the mean over the 10 SNIP batches (256 training windows each, seed 42) of (Σ_{w ∈ f} w · ∂L/∂w)², where L is the class-weighted CE [Molchanov et al., CVPR 2019, the first-order Taylor criterion for a parameter group];
+    - **`xgp_s`**: Σ_{w ∈ f} I(w), with I the worst-group importance above. β_S = 1: pure explanation importance, fixed a priori, no tuning. It is fine-tuned with KD + DRO, like the unstructured candidates.
+  - Reference: `l1_filter` (Li et al.: one-shot, no reconstruction).
+  - Budget curve: 2 / 5 / 20 epochs, all seeds, both levels, for `l1_filter_recon`, `taylor_recon` and `xgp_s`.
+  - PTQ4 on their KD-100% finals at 75%, all seeds; PTQ8 at 75% for seed 0.
+  - **CPU latency** (`--latency`, CPU only, Aya's laptop and each GPU machine's CPU):
+    - each level's physically sliced TinyHAR against the dense model;
+    - widths only matter, so one sliced model per level;
+    - 1 thread and the default thread count, batch 1 and 256, 20 warm-up runs, median (p10, p90) of 200 runs;
+    - also n_params and MACs (our count).
+- **Pre-registered rules** (`--analyze --mode …`, per mode and regime; amended by Amendment 1). Levels are the mode's levels in that regime. Means are over folds 0–1 × seeds 0–2 (6 paired runs; a deterministic start counts as the same value for every seed). All metrics are on real inner-val windows.
+  1. **Baselines**:
+     - unstructured: `l1`, `l1_recon`, `lamp_recon`;
+     - structured: `l1_filter`, `l1_filter_recon`, `taylor_recon`;
+     - in the fine-tuned regimes (KD 100%, KD 5%), also their DRO controls (`*_kd_dro`).
+
+     B_F1 = the highest mean F1_val among them, per level.
+  2. **Eligible** = mean F1_val ≥ B_F1 − 1 pt **at every level**.
+  3. **Round-4 final**:
+     - unstructured candidates: `xgp`, `l1_xb_recon`, `xgp_lamp`, `xgp_xb`; structured candidate: `xgp_s`;
+     - final = the eligible candidate with the highest mean LCI_val averaged over the levels;
+     - ties within 0.005 → the earlier one in that order;
+     - none eligible → no round-4 final in that regime.
+  4. **"Beats" (one rule for both uses)**: A beats B in a regime if:
+     - (a) the mean over levels and runs of LCI_val(A) − LCI_val(B) is **≥ 0.02**;
+     - (b) A is higher in **≥ 5 of the 6 paired (fold, seed) runs**, each run's LCI_val averaged over the levels;
+     - (c) at every level, mean F1_val of A ≥ mean F1_val of B − 1 pt;
+     - (d) the mean worst-subject LCI_val of A (over the levels) ≥ B's − 0.01, so the tail is not traded for the mean.
+  5. **Replacement (unstructured; per regime)**:
+     - round 4's final replaces round 3's final only if it **beats `xgp_r3`** (rule 4, with `xgp_r3` scored with these metrics);
+     - otherwise **round 3 is final** in that regime, and round 4 is reported as a disclosed, unsuccessful round;
+     - if round 3 has no final in that regime, round 4's final is adopted if it exists (rules 2–3).
+  6. **Claim against the baselines (both modes)**: the paper may say "XGP beats the baselines" in a regime only if the adopted final beats (rule 4) the baseline with the highest mean LCI_val there, DRO controls included. Otherwise the claim is "matches the best baseline at the same size".
+  7. **Structured**: `xgp_s` is frozen as the structured XGP if it is eligible (rule 2). The structured track is an addition and does not replace round 3. It enters 9B only if both of these hold:
+     - its pilot finished, with all regimes and both folds;
+     - its decision exists by the decision day (27 Nov, morning).
+  8. Every method's seed SD (per fold and pooled) is reported next to its mean. Unfinished regimes are analysed in the order no fine-tuning → KD 100% → KD 5%, and a regime with missing runs has no round-4 decision (round 3 stays final there).
+  - Sources to verify before submission (PDFs not in `papers/` on this machine): Lee et al. 2021 (LAMP, the score definition); Li et al. 2017 (Sec 3.1); Molchanov et al. 2019 (the group Taylor criterion, Eq. 8 / Sec 3); Sagawa et al. 2020 (group DRO, Algorithm 1, η_q); Evci et al. 2020 (ERK, mentioned only).
+
 *Round 1 (2026-11-20/21, superseded by round 2 for the method design):*
 - **Keep-score** per weight: `score(w) = (1 − β) · |w| / mean_layer|w| + β · I(w) / mean_layer I(w)`. A tensor whose I is all zero keeps only the |w| term. With β = 0 it ranks exactly like L1 (tested).
 - **Importance:** `I(w) = | w · ∂/∂w Σ_i ⟨ A_θ(x_i), sg(A_θ0(x_i)) ⟩ |` at θ0. This is a first-order (Taylor) estimate of how much removing `w` changes the alignment of the model's explanation with the original explanation.

@@ -1,0 +1,229 @@
+{
+ "what": "XGP pilot round 4 (final round, validation only); pre-registered before any run",
+ "written_at": "2026-11-23T23:56:42+02:00",
+ "git_commit": "feb798853636e614751f43e4c07bb8f16274a482",
+ "git_dirty": true,
+ "code_sha256": "e506fd0c9341b2b54e3a3930d67b7182db35b55bdf894923129ca1fbdfa9ba7d",
+ "smoke": false,
+ "disclosure": "The round-4 design was informed by round 3's validation results (folds 0-1), a read-only validation diagnostic of per-layer importance at theta0, and the Step 9A test-set analysis (as round 3). All round-4 tuning and selection use real HARTH inner-validation windows of folds 0 and 1 only; HAR70+, the folds' test subjects, synthetic older-like data and age information are never used by the method or the selection. The 9A-ext baseline-only settings run on the test grid in 9B, after this decision, and cannot change it.",
+ "amendment": "Amendment 1 (2026-11-23, before --prepare and before any round-4 run): all synthetic older-like data removed from round 4; XGP is group-agnostic (optional group label per window, default = subject): importance = mean of the k = 3 worst groups, fine-tuning = group DRO over the training subjects, every baseline gets the same DRO as a control (*_kd_dro); validation = LCI_val, worst-subject LCI_val and F1_val on real inner-val windows; older vs general and walking-aid vs not are evaluation-only in 9B. Reason: the older-like proxy added nothing in round 3, and the method must not depend on one dataset's groups.",
+ "rules": "Per mode and regime (no_finetune, kd100, kd5), levels = the mode's levels in that regime, means over folds 0-1 x seeds 0-2 (6 paired runs; deterministic starts count once per seed). Metrics on real inner-val windows only. 1 Baselines: unstructured l1, l1_recon, lamp_recon; structured l1_filter, l1_filter_recon, taylor_recon; in the fine-tuned regimes also their DRO controls (*_kd_dro). B_F1 = the highest mean F1_val among them per level. 2 Eligible = mean F1_val >= B_F1 - 1 pt at every level. 3 Final: unstructured candidates xgp, l1_xb_recon, xgp_lamp, xgp_xb (tie order), structured xgp_s; the eligible candidate with the highest mean LCI_val over levels, ties within 0.005 -> earlier in order; none -> no final. 4 A beats B iff (a) mean LCI_val gain (over levels and runs) >= 0.02, (b) A higher in >= 5 of 6 paired (fold, seed) runs (each run averaged over levels), (c) at every level mean F1_val of A >= mean F1_val of B - 1 pt, (d) mean worst-subject LCI_val of A (over levels) >= B's - 0.01. 5 Replacement (unstructured, per regime): round 4's final replaces round 3's (xgp_r3, scored with these metrics) only if it beats it; otherwise round 3 is final there; with no round-3 final there, round 4's final is adopted if it exists. 6 Claim: 'beats the baselines' only if the adopted final beats the baseline (DRO controls included) with the highest mean LCI_val. 7 Structured: xgp_s frozen if eligible; enters 9B only if its pilot finished and was decided by 27 Nov morning. 8 Seed SD per method reported; a regime with missing runs has no round-4 decision (round 3 stays final).",
+ "round4": {
+  "folds": [
+   0,
+   1
+  ],
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "levels_u": [
+   0.8,
+   0.9,
+   0.95
+  ],
+  "levels_u_kd5": [
+   0.9,
+   0.95
+  ],
+  "levels_s": [
+   0.5,
+   0.75
+  ],
+  "beta_u": 0.1,
+  "beta_s": 1.0,
+  "K": 5,
+  "m_score": 8,
+  "score_batch": 125,
+  "damp": 0.01,
+  "epochs": 20,
+  "lr": 0.0001,
+  "curve_epochs": [
+   2,
+   5
+  ],
+  "curve_levels_u": [
+   0.9,
+   0.95
+  ],
+  "cal_per_cell": 10,
+  "cal_seed": 46,
+  "kd5_fraction": 0.05,
+  "kd5_seed": 48,
+  "top_k": 3,
+  "floor_frac": 0.02,
+  "taylor_batches": 10,
+  "taylor_batch_size": 256,
+  "taylor_seed": 42,
+  "ptq_levels_u": [
+   0.9,
+   0.95
+  ],
+  "ptq_levels_s": [
+   0.75
+  ],
+  "ptq8_level_u": 0.9,
+  "ptq8_level_s": 0.75,
+  "nsamples": 200,
+  "shap_seed": 0,
+  "dro_eta": 0.01,
+  "gain": 0.02,
+  "min_better": 5,
+  "f1_tolerance": 0.01,
+  "wsl_tolerance": 0.01,
+  "tie": 0.005,
+  "latency": {
+   "threads": [
+    1,
+    null
+   ],
+   "batches": [
+    1,
+    256
+   ],
+   "warmup": 20,
+   "reps": 200
+  }
+ },
+ "groups": "subject (default of har/xgp4.default_groups); no age / HAR70+ / synthetic data",
+ "u_cells": {
+  "l1_recon": [
+   "uniform",
+   "l1"
+  ],
+  "xgp": [
+   "uniform",
+   "xgp"
+  ],
+  "lamp_recon": [
+   "lamp",
+   "l1"
+  ],
+  "xgp_lamp": [
+   "lamp",
+   "xgp"
+  ],
+  "l1_xb_recon": [
+   "xb",
+   "l1"
+  ],
+  "xgp_xb": [
+   "xb",
+   "xgp"
+  ]
+ },
+ "s_methods": {
+  "l1_filter_recon": "l1",
+  "taylor_recon": "taylor",
+  "xgp_s": "xgp"
+ },
+ "u_dro_controls": {
+  "l1_kd_dro": "l1",
+  "l1_recon_kd_dro": "l1_recon",
+  "lamp_recon_kd_dro": "lamp_recon"
+ },
+ "s_dro_controls": {
+  "l1_filter_kd_dro": "l1_filter",
+  "l1_filter_recon_kd_dro": "l1_filter_recon",
+  "taylor_recon_kd_dro": "taylor_recon"
+ },
+ "recipes": {
+  "baselines": {
+   "recipe": "kd",
+   "r": null,
+   "dro": false
+  },
+  "candidates_and_dro_controls": {
+   "recipe": "kd",
+   "r": null,
+   "dro": true,
+   "dro_groups": "subject",
+   "dro_eta": 0.01
+  }
+ },
+ "round3_decision_file": "results\\har-xgp-pilot\\round3\\har-xgp-pilot3-tinyhar-decision.json",
+ "round3_decision_sha256": "572e1052b26363850fb0bf91e7de7b879991060e54ca2aa04e0272ec4ad5cc25",
+ "round3_tag": "xgp-round3-final",
+ "round3_tag_commit": "feb798853636e614751f43e4c07bb8f16274a482",
+ "xgp_r3_recipe_by_level": {
+  "80pct": {
+   "start": "xgp",
+   "recipe": "kdaug",
+   "r": 0.5,
+   "dro": false,
+   "source": "round 3 finetune final xgp_ft_no_dro at 90pct"
+  },
+  "90pct": {
+   "start": "xgp",
+   "recipe": "kdaug",
+   "r": 0.5,
+   "dro": false,
+   "source": "round 3 finetune final xgp_ft_no_dro at 90pct"
+  },
+  "95pct": {
+   "start": "xgp",
+   "recipe": "kdaug",
+   "r": 0.5,
+   "dro": false,
+   "source": "round 3 finetune final xgp_ft_no_dro at 90pct"
+  }
+ },
+ "folds": [
+  0,
+  1
+ ],
+ "windows": {
+  "0": {
+   "n_train": 51451,
+   "n_calibration": 978,
+   "n_groups": 15,
+   "calibration_per_group_min_max": [
+    36,
+    70
+   ],
+   "calibration_per_class": {
+    "0": 150,
+    "1": 140,
+    "2": 127,
+    "3": 141,
+    "4": 150,
+    "5": 140,
+    "6": 130
+   },
+   "n_kd5": 2583,
+   "kd5_fraction_actual": 0.0502031058677188
+  },
+  "1": {
+   "n_train": 55552,
+   "n_calibration": 967,
+   "n_groups": 15,
+   "calibration_per_group_min_max": [
+    36,
+    70
+   ],
+   "calibration_per_class": {
+    "0": 150,
+    "1": 140,
+    "2": 136,
+    "3": 141,
+    "4": 150,
+    "5": 140,
+    "6": 110
+   },
+   "n_kd5": 2782,
+   "kd5_fraction_actual": 0.05007920506912442
+  }
+ },
+ "sha256_tables": {
+  "0": {
+   "calibration": "59a998d283868d6baefa2f58dfba5669327e5a4c46a693298cce0680e96bd27e",
+   "kd5": "d51a8a7c91bdaf6bf0c9b8d407a99fb0c2e74cc929ae2e27c1be44bba58b45c2"
+  },
+  "1": {
+   "calibration": "796aead474f10f33fd683944a743819620c2e68e3765bb9ed6b28c5067f04af0",
+   "kd5": "e822fa97ea3ec137ae92729fafd6f1083d22ea78c0c881b7a5fb98ad09562bca"
+  }
+ },
+ "plan": "plan/HAR_IMPLEMENTATION.md, Section 2.5 (b), 'Round 4 pre-registration'"
+}

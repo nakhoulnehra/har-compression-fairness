@@ -395,6 +395,38 @@ XGP pilot round 3: the final, validation-only design of XGP, made after Step 9A 
 ## har-xgp-pilot-smoke/round3/
 **Git-ignored, local only: a pipeline check, not results.** The full chain ran with `--smoke` on 2026-11-22 (LenovoP330-01, CPU): prepare, tuning on folds 0 and 1 (`--curve-seeds 0`), tuning analysis, ablation on folds 0 and 1, final analysis. It was rerun after the rotation amendment. Phase 1 takes ≈ 10–13 s per fold and phase 2 ≈ 14 s. In the rerun, the no-fine-tuning scenario had no eligible configuration, so the no-fallback path (skip, with the reason recorded in the decision) was exercised as well.
 
+## har-xgp-pilot/round4/
+XGP pilot round 4, the final round (plan 2.5 (b), "Round 4 pre-registration", written 2026-11-23 before any round-4 code, with amendment 1 the same day before `--prepare`). Folds 0 and 1, HARTH only, HAR70+ never loaded, no synthetic older-like data. `python -m har.run_xgp_pilot4`.
+- **Disclosure:** the design was informed by round 3's validation results, a read-only per-layer importance diagnostic and 9A (as in round 3).
+- **Design:**
+  - XGP's groups are the subjects (15 training subjects per fold).
+  - Importance: the mean of the 3 worst groups.
+  - Fine-tuning: group DRO over the subjects for the XGP candidates, plain KD for the baselines, plus a KD + DRO control per baseline (`*_kd_dro`).
+  - Metrics are on real inner-val windows: LCI_val, worst-subject LCI_val, F1_val.
+- **No files yet.** `--prepare` runs after round 3's decision and the tag `xgp-round3-final`. It writes:
+  - `har-xgp-pilot4-tinyhar-preregistration.json`;
+  - per fold, `-fold{k}-calibration-train-windows-by-subject-class.csv` and `-fold{k}-kd5pct-train-window-ids.csv`.
+- **Checked on the real training windows (not written):**
+
+  | | Fold 0 | Fold 1 |
+  |---|---|---|
+  | Calibration windows (≤ 10 per subject × class) | 978 | 967 |
+  | Calibration windows per subject | 36–70 | 36–70 |
+  | KD-5% subset | 2,583 of 51,451 (5.0%) | 2,782 of 55,552 (5.0%) |
+  | F1 windows (all inner val) | 7,709 | 6,163 |
+- The GPU runs write `-fold{k}-{unstructured|structured}-{machine}-{runs, per-subject-lci, finetune-history, prune-steps, budgets}.csv` and `-config.json`. The runs table has the columns `lci`, `worst_subject_lci`, `f1`, `dro` and `dro_groups`.
+- `--analyze` writes `-{mode}-decision.json`, `-decision-table.csv`, `-summary-mean-sd.csv`, `-summary-per-fold-seed-sd.csv`, `-budget-curve-mean-sd.csv` and `-ptq-mean-sd.csv`.
+- `--latency` writes `-structured-latency-cpu-{machine}.csv`.
+
+## har-xgp-pilot-smoke/round4/
+**Git-ignored, local only: a pipeline check, not results.** The full round-4 chain (amended design) ran with `--smoke` on 2026-11-23 (LenovoP330-01, CPU), on round 3's smoke decision: prepare, unstructured and structured on folds 0 and 1, both analyses, latency. The old-design smoke files were deleted first. Unstructured ≈ 33 s per fold, structured ≈ 17 s per fold.
+- Calibration: 162 / 165 windows in 15 subject groups (2 per cell).
+- Every level had one n_nonzero across all methods.
+- XGP budgets kept `convs.0` dense (140 of 140, against 14 under uniform) and cut `fusion` (568 against 941). The LSTM and attention `in_proj` stayed exactly at their uniform counts (the cap binds).
+- DRO over 15 subjects ran for every candidate and `*_kd_dro` control. The controls entered the baseline set in KD 100% / KD 5%; in structured KD 5% one of them (`l1_filter_recon_kd_dro`) was selected as the best baseline.
+- Structured at 50%: 46,237 params instead of 54,273, MACs 0.997 M instead of 1.965 M. At batch 1 the latency was not lower (≈ 1.0 ms). The real latency comes from `--latency` on Aya's laptop.
+- Smoke decisions mean nothing.
+
 ## har-noise-floor-smoke/
 **Git-ignored, local only: a pipeline check, not results.** `python -m har.run_noise_floor --folds 0 --smoke` (Step 8) writes here: seeds 1–3 retrained for 1 epoch on 600 windows, 3 explain windows per subject (3 HAR70+ subjects), nsamples 20. The file names match the real ones (`har-noise-floor-tinyhar-fold0-<machine>-{per-subject-lci, group-summary, tau, retrained-models}.csv`, `-config.json`). Its τ_0 (0.07) means nothing. Passed on Aya CPU on 2026-11-20 (24.8 s wall clock; a rerun reuses the cached checkpoints and SHAP).
 

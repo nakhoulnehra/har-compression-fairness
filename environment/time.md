@@ -308,3 +308,35 @@ Session 1 details (written at the stop):
 - Original-model SHAP (300 + 300 windows): 82 s, the same as on uni-2080.
 - Thermal throttling for the whole run: GPU at 88–92 °C (driver target 87 °C), SM clock 645–735 MHz of 2,100 MHz. Fine-tuning epochs took 10–13 s (≈ 200–260 s per 20-epoch run), about 3× the round-2 KD rate on this machine.
 - Projected phase 1 on this laptop at this rate: ≈ 12 h (≈ 7–8 h left at the stop). Reported per-model times from this machine are throttled; use uni-2080's numbers for the paper's cost comparison.
+
+## XGP pilot round 4 code (LenovoP330-01, CPU, 2026-11-23; amendment 1 the same day)
+
+machine: LenovoP330-01, torch 2.7.1+cu118, CPU only
+commands ran / time taken to finish:
+- `python -m pytest har/tests lci/tests`: **45 s** (270/270 passed; 22 in `test_xgp4.py`).
+- Smoke chain (`--smoke`, folds 0 and 1, amended design): `--prepare` 5 s; unstructured 66 s (≈ 33 s per fold); structured 34 s (≈ 17 s per fold); both analyses < 5 s; `--latency` 5 s.
+- (First design, superseded by amendment 1: unstructured smoke 54 s, structured 29 s.)
+- Read-only per-layer importance diagnostic for the design review (EG m = 8, one EG seed, 426 / 459 calibration windows per group): ≈ 11 s per fold.
+
+Estimate of the real runs (amended design), from round 3's uni-2080 timings:
+- SHAP: ≈ 90 s per assessment on 300 + 300 windows, so ≈ 45 s on the 300 real explain windows. Round 4 has no older-like copies.
+- XGP start (K = 5 importance + reconstruction): ≈ 57 s. The importance has the same cost as round 3: ≈ 980 calibration windows in 15 per-group backward passes, against round 3's 14 per-class calls.
+- L1 / LAMP iterative + reconstruction: a few s.
+- 20-epoch KD: ≈ 40–50 s (≈ 55 s with DRO over 15 subjects; `xgp_r3` with round 3's aug ≈ 80 s).
+- KD 5%: ≈ 5 s.
+
+| Mode, per fold | Assessments | Estimate (uni-2080) |
+|---|---|---|
+| Unstructured: no fine-tuning (3 deterministic + 4 seeded cells + xgp_r3) × 3 levels | 54 | 0.9 h incl. starts |
+| Unstructured: KD 100% (l1 + 6 cells + 3 DRO controls + xgp_r3) × 3 seeds × 3 levels | 99 | 2.7 h |
+| Unstructured: curve 2 / 5 epochs (4 methods × 3 seeds × 90 / 95%) | 48 | 0.6 h |
+| Unstructured: PTQ4 (4 methods × 3 seeds × 90 / 95%) + PTQ8 (90%, seed 0) | 28 | 0.35 h |
+| Unstructured: KD 5% (11 methods × 3 seeds × 90 / 95%) | 66 | 0.9 h |
+| **Unstructured total** | **295** | **≈ 6–6.5 h per fold** |
+| Structured: no fine-tuning (3 deterministic + xgp_s × 3 seeds) × 2 levels | 12 | 0.2 h |
+| Structured: KD 100% + KD 5% (7 methods incl. 3 DRO controls × 3 seeds × 2 levels each) | 84 | 1.7 h |
+| Structured: curve (3 methods × 3 seeds × 2 levels × 2) + PTQ4 / PTQ8 at 75% | 36 + 12 | 0.6 h |
+| **Structured total** | **144** | **≈ 2.5–2.7 h per fold** |
+| **Per GPU (one unstructured fold + one structured fold)** | 439 | **≈ 8.5–9.2 h; nakhoul-3050 ≈ 11–12 h if it throttles (× 1.3)** |
+
+SHAP is ≈ 60% of the time. Not measured yet; replace with the real times after the runs.

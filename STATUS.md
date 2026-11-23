@@ -1,5 +1,5 @@
 # Status
-Current step: XGP pilot round 3 (final design, validation only), code done 2026-11-22; GPU runs next, then 9B.
+Current step: XGP round 4 (final round, validation only): pre-registered and coded 2026-11-23, amended the same day before `--prepare` (no synthetic older-like data; group-agnostic XGP, groups = subjects); tests + CPU smoke pass; GPU runs wait for round 3's decision. Decision day 27 Nov (morning); presentation 3 Dec; then 9B (with the 9A-ext baseline rows).
 Order (decided 2026-11-21): measure drift and unfairness with existing methods first (9A: RQ1, RQ2, RQ0) ✔, then design XGP's final version for the observed drift (round 3; validation-only tuning; disclosed in the paper), then 9B adds XGP to the same grid.
 Done:
 - 1–5 setup, plan, data, model choice (TinyHAR frozen), baseline gap (older −10.9 pts, p < 0.001)
@@ -12,14 +12,38 @@ Done:
   - **`--prepare` rerun for real** → `results/har-xgp-pilot/round3/` pre-registration (with the `amended` note) + window tables with the rotation parameters (fold 0's explain windows and s, a = round 2's).
 - 9A head check fixed: `head_unpruned` = no mask and no zeroed head weight (the old "head unchanged" test was False for every fine-tuned row, because the head trains). `--recheck-head` rewrites the column of finished folds from the checkpoints (needs each GPU machine's checkpoints).
 
-Next (exact commands in environment/requirements.md, round 3 block):
-1. Pull. Smoke on each GPU: uni-2080 `python -m har.run_xgp_pilot3 --phase tuning --folds 0 --smoke --device cuda --machine-name uni-2080`; nakhoul-3050 the same with `--folds 1 --machine-name nakhoul-3050`.
-2. Phase 1: uni-2080 `python -m har.run_xgp_pilot3 --phase tuning --folds 0 --curve-seeds 0 --device cuda --machine-name uni-2080 --noise-floor-machine nakhoul-3050`; nakhoul-3050 `python -m har.run_xgp_pilot3 --phase tuning --folds 1 --curve-seeds 0 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050` (≈ 6.6 h each). The 2 / 5-epoch curve points are taken for seed 0 only; the full budget curve goes to 9B. Commit both folds' files; the pruned-start checkpoints stay local.
-3. `python -m har.run_xgp_pilot3 --analyze --phase tuning` → `har-xgp-pilot3-tinyhar-tuning-selection.json`; commit it, pull it on both GPUs.
-4. Phase 2: the same two commands with `--phase ablation` (≈ 3.5 h each).
-5. `python -m har.run_xgp_pilot3 --analyze --phase ablation` → `har-xgp-pilot3-tinyhar-decision.json`. Exit 2 = no eligible candidate for a scenario → XGP not frozen there; stop and review (no fallback).
-6. 9A head column: `python -m har.run_compression_grid --folds 0 1 3 --recheck-head --machine-name nakhoul-3050` and `--folds 2 3 4 --recheck-head --machine-name uni-2080`.
-7. Register the final XGP in `run_compression_grid` (one scorer + method entry) → 9B.
+- **Round 3 progress:** phase 1 for both folds, the tuning selection and phase 2 for fold 0 are done (committed). Phase 2 for fold 1 and `decision.json` are still to do.
+- **Round 4 (2026-11-23):**
+  - Design review: `plan/round4-design-review.md`. Decisions taken on it:
+    - B adopted (3 × 2: uniform / LAMP / XGP budgets × L1 / XGP selection, all K = 5 + reconstruction);
+    - C adopted, conv filters only (`convs.0/3/6`; no LSTM units, head input unchanged), with baselines filter-L1 + recon and Taylor (Molchanov 2019) + recon, and CPU latency;
+    - A dropped, except calibration on training windows;
+    - no LSTM / attention reconstruction; XGP and LAMP budgets are capped so those tensors are never pruned more than under uniform;
+    - D and E as proposed;
+    - 9A-ext merged into 9B;
+    - round-3 reference row `xgp_r3`.
+  - Pre-registration written into the plan first (2.5 (b), "Round 4 pre-registration"), then code: `har/xgp4.py`, `har/run_xgp_pilot4.py`, tests `har/tests/test_xgp4.py`. Round 3's files are unchanged and only imported.
+  - **Amendment 1 (2026-11-23, before `--prepare`)**: all synthetic older-like data removed from round 4. The reason: the proxy added nothing in round 3, and the method must not depend on one dataset's groups.
+    - XGP is group-agnostic: an optional group label per window, with the subject as the default (15 training subjects per fold).
+    - Calibration: ≤ 10 training windows per (subject, class) cell, ≈ 980 windows.
+    - Importance: the mean of the k = 3 worst groups' layer-normalised I_g. I_g comes from one class-balanced alignment objective per group.
+    - Fine-tuning: XGP candidates use KD + group DRO over the training subjects (Sagawa 2020, η 0.01); baselines use plain KD, and each baseline also gets a KD + DRO control (`l1_kd_dro`, `l1_recon_kd_dro`, `lamp_recon_kd_dro`; structured `*_kd_dro`).
+    - Validation uses real inner-val windows only: F1_val on all of them; LCI_val and worst-subject LCI_val on round 3's explain windows.
+    - Older vs general and walking-aid are evaluation-only, in 9B.
+    - `xgp_r3` stays round 3's method as it was, including its own older-like data, and is scored with the round-4 metrics.
+  - Rule: round 4 replaces round 3 per regime only if it **beats** `xgp_r3`. "Beats" means all of these: mean LCI_val gain ≥ 0.02; higher in ≥ 5 of 6 paired (fold, seed) runs; F1_val within 1 pt at every level; mean worst-subject LCI_val ≥ the other method's − 0.01. The same rule decides the "beats the best baseline" claim, and the DRO controls count as baselines.
+  - 270/270 tests pass (22 in `test_xgp4.py`). The CPU smoke chain passes (both modes, both analyses, latency).
+
+Next (exact commands in environment/requirements.md, round 4 block; times in environment/time.md):
+1. nakhoul-3050: round-3 phase 2 for fold 1, `python -m har.run_xgp_pilot3 --phase ablation --folds 1 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050` (≈ 3.5 h; ≈ 4.5 h if throttled).
+2. Merge, then `python -m har.run_xgp_pilot3 --analyze --phase ablation` → round-3 `decision.json`; commit, then `git tag xgp-round3-final` (we tag).
+3. `python -m har.run_xgp_pilot4 --prepare` (CPU, seconds; refuses before the decision and the tag) → commit, pull on both GPUs.
+4. uni-2080: `python -m har.run_xgp_pilot4 --mode unstructured --folds 0 --device cuda --machine-name uni-2080 --noise-floor-machine nakhoul-3050`, then `--mode structured --folds 1` (same flags). Estimate ≈ 6–6.5 h + ≈ 2.5–2.7 h ≈ 8.5–9.2 h.
+5. nakhoul-3050: `python -m har.run_xgp_pilot4 --mode unstructured --folds 1 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050`, then `--mode structured --folds 0` (same flags). Estimate ≈ 8.5–9.2 h; ≈ 11–12 h if throttled. A GPU smoke first needs round 3's smoke chain on that machine (requirements.md).
+6. Aya's laptop: `python -m har.run_xgp_pilot4 --latency --machine-name Aya` (about a minute).
+7. `python -m har.run_xgp_pilot4 --analyze --mode unstructured` and `--mode structured` → decisions. Structured enters 9B only if finished and decided by 27 Nov morning.
+8. 9A head column: `python -m har.run_compression_grid --folds 0 1 3 --recheck-head --machine-name nakhoul-3050` and `--folds 2 3 4 --recheck-head --machine-name uni-2080`.
+9. Register the adopted XGP (round 3 or 4 per regime), plus the 9A-ext baselines (l1_recon, LAMP + recon, 95%, KD 5%, PTQ4 on pruned models, structured baselines if structured is in), in `run_compression_grid` → 9B.
 
 ## Decisions since the plan (short)
 - RQ0–RQ3 written into the plan (top of the file), 2026-11-21.
@@ -44,6 +68,12 @@ Next (exact commands in environment/requirements.md, round 3 block):
 - Step 6 GPU fixes: (1) `har/run_sanity_walking_aid.py` no longer sets `CUDA_VISIBLE_DEVICES=""` at import (it hid the GPU from `time_har_components`); `har/tests/test_time_har_components.py` checks the import leaves it unchanged. (2) `eg_attributions`, `shap_target_class` and `snip_scores_from_batches` (every gradient taken with the model in eval mode) run with `torch.backends.cudnn.flags(enabled=False)`: cuDNN's RNN backward only runs in training mode, so gradients through TinyHAR's LSTM in eval mode failed on CUDA. **Our method's loss (keep-score I(w), L_cons) must do the same** (go through `eg_attributions`, or wrap its own gradients in both `sdpa_kernel(SDPBackend.MATH)` and `cudnn.flags(enabled=False)`). No effect on CPU.
 
 ## Open issues
+- Round 4: the LAMP, Li et al. 2017 and Molchanov et al. 2019 PDFs are not in `papers/` (the folder is absent on LenovoP330-01); verify the cited sections before submission. Structured pruning at 50% removes only ≈ 15% of the parameters (the convs are 22.6% of the weights) but ≈ 49% of the MACs; batch-1 CPU latency may not drop (smoke: ≈ 1.0 ms dense and sliced).
+- Round 4's `xgp_r3` at 80% / 95% uses round 3's 90% configuration (nearest level, pre-registered); round 3 never ran there.
+- Round 4 (amendment 1):
+  - β = 0.1 comes from round 3's tuning with the older-like group score; it is kept fixed (not retuned) for the subject-group score.
+  - Worst-subject LCI_val is a minimum over only 3 inner-val subjects per fold, which is noisy, so it is a non-inferiority guard (−0.01), not the primary metric.
+  - `xgp_r3` still uses round 3's older-like copies internally (it is round 3's frozen method).
 - Round 3: the older-like proxy now rotates each sensor by up to 15° (amendment), so posture windows change. It is still a generic orientation perturbation, not a model of older adults' postures. If 9A's posture drift has another cause, the proxy misses it (limitation note in the plan).
 - Round 3: calibration windows come from the same 3 inner-val subjects as the evaluation windows (disjoint windows), so XGP's inner-val numbers may be slightly optimistic against baselines that never see inner-val. 9B's test numbers are not affected. Stairs F1 in round 3 rests on 42–45 explain windows per stairs class (calibration took the rest).
 - Round 3: SparseGPT / OBC / Sagawa / Um et al. / gait-ageing PDFs are not in `papers/`; verify the cited sections and tables before submission.
