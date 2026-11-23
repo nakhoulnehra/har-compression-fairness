@@ -1,0 +1,179 @@
+{
+ "decision": {
+  "no_finetune": {
+   "final": "xgp_no_score",
+   "components": [
+    "group",
+    "iter",
+    "recon"
+   ],
+   "config_by_level": {
+    "50pct": {
+     "beta": 0.5,
+     "r": null
+    },
+    "70pct": {
+     "beta": 0.1,
+     "r": null
+    },
+    "90pct": {
+     "beta": 0.1,
+     "r": null
+    }
+   },
+   "best_baseline_f1_by_level": {
+    "50pct": {
+     "f1_normal": 0.7690737020440475,
+     "f1_older_like": 0.6515040011248446
+    },
+    "70pct": {
+     "f1_normal": 0.7431590944487922,
+     "f1_older_like": 0.6448392510663826
+    },
+    "90pct": {
+     "f1_normal": 0.6135459684717111,
+     "f1_older_like": 0.5623626873783829
+    }
+   },
+   "final_vs_best_baseline_fa_lci (descriptive)": {
+    "50pct": {
+     "final_method_id": "xgp_no_score",
+     "best_baseline_by_fa_lci": "l1_recon",
+     "diff_fa_lci": 0.027016298910461534,
+     "diff_by_fold": {
+      "0": 0.000932113162937509,
+      "1": 0.05310048465798567
+     }
+    },
+    "70pct": {
+     "final_method_id": "xgp_no_score",
+     "best_baseline_by_fa_lci": "l1_recon",
+     "diff_fa_lci": 0.0044433448072113135,
+     "diff_by_fold": {
+      "0": 0.0025739896580118105,
+      "1": 0.006312699956410817
+     }
+    },
+    "90pct": {
+     "final_method_id": "xgp_no_score",
+     "best_baseline_by_fa_lci": "l1_recon",
+     "diff_fa_lci": 0.019452416663331418,
+     "diff_by_fold": {
+      "0": -0.0013867165397928316,
+      "1": 0.0402915498664555
+     }
+    }
+   }
+  },
+  "finetune": {
+   "final": "xgp_ft_no_dro",
+   "components": [
+    "score",
+    "group",
+    "iter",
+    "recon",
+    "aug"
+   ],
+   "config_by_level": {
+    "50pct": {
+     "beta": 0.3,
+     "r": 0.25
+    },
+    "70pct": {
+     "beta": 0.1,
+     "r": 0.25
+    },
+    "90pct": {
+     "beta": 0.1,
+     "r": 0.5
+    }
+   },
+   "best_baseline_f1_by_level": {
+    "50pct": {
+     "f1_normal": 0.7679502331696274,
+     "f1_older_like": 0.6704809834377294
+    },
+    "70pct": {
+     "f1_normal": 0.7549290611297271,
+     "f1_older_like": 0.6643322120446282
+    },
+    "90pct": {
+     "f1_normal": 0.6896728723998421,
+     "f1_older_like": 0.6439651417122906
+    }
+   },
+   "final_vs_best_baseline_fa_lci (descriptive)": {
+    "50pct": {
+     "final_method_id": "xgp_ft_no_dro(beta=0.3,r=0.25)",
+     "best_baseline_by_fa_lci": "l1_kdaug(r=0.25)",
+     "diff_fa_lci": 0.0027735006025259024,
+     "diff_by_fold": {
+      "0": -0.0005255614712358359,
+      "1": 0.006072562676288085
+     }
+    },
+    "70pct": {
+     "final_method_id": "xgp_ft_no_dro(beta=0.1,r=0.25)",
+     "best_baseline_by_fa_lci": "l1_kdaug(r=0.5)",
+     "diff_fa_lci": 0.018694904467303597,
+     "diff_by_fold": {
+      "0": 0.007363406607613143,
+      "1": 0.03002640232699383
+     }
+    },
+    "90pct": {
+     "final_method_id": "xgp_ft_no_dro(beta=0.1,r=0.5)",
+     "best_baseline_by_fa_lci": "l1_kdaug(r=0.25)",
+     "diff_fa_lci": 0.08558036261638058,
+     "diff_by_fold": {
+      "0": 0.07883665064128953,
+      "1": 0.09232407459147163
+     }
+    }
+   }
+  }
+ },
+ "selection_phase1": {
+  "50pct": {
+   "no_finetune": {
+    "beta": 0.5,
+    "r": null
+   },
+   "finetune": {
+    "beta": 0.3,
+    "r": 0.25
+   }
+  },
+  "70pct": {
+   "no_finetune": {
+    "beta": 0.1,
+    "r": null
+   },
+   "finetune": {
+    "beta": 0.1,
+    "r": 0.25
+   }
+  },
+  "90pct": {
+   "no_finetune": {
+    "beta": 0.1,
+    "r": null
+   },
+   "finetune": {
+    "beta": 0.1,
+    "r": 0.5
+   }
+  }
+ },
+ "rule_phase1": "Phase 1, per scenario and level: B_set = the highest mean F1 on that window set among the scenario's baselines (no_finetune: l1, snip, l1_recon; finetune: l1, l1_kd, snip_kd, l1_kdaug at both r). Eligible configuration: mean F1_normal >= B_normal - 1 pt and mean F1_older_like >= B_older_like - 1 pt. Selected = the eligible configuration with the highest mean FA-LCI_val (mean over folds 0, 1 and seeds of each run's min(LCI_normal, LCI_older_like)); ties within 0.005 -> smaller beta, then smaller r. None eligible -> no configuration at that level (flagged, no fallback), and phase 2 skips it.",
+ "rule_final": "Phase 2, per scenario: candidates = the full XGP and its single-component ablations, each at the selected per-level configuration; eligible = eligible (same F1 rule) at every level; final = the eligible candidate with the highest FA-LCI_val averaged over levels; ties within 0.005 -> fewer components, then the higher FA-LCI. No candidate eligible -> XGP not frozen for that scenario: report and stop. Components: no_finetune full = 4 (score, group, iter, recon), finetune full = 6 (+ aug, + dro); no_aug removes aug and dro.",
+ "disclosure": "The round-3 design was informed by the Step 9A test-set analysis (posture-class drift: without fine-tuning, older adults' LCI fell more in standing at 70%, sitting at 90% and lying at 50%; the accuracy gap widens at 90%). All round-3 tuning and selection use HARTH inner-validation windows of folds 0 and 1 and their older-like copies only; HAR70+ and the folds' test subjects are never loaded.",
+ "folds": [
+  0,
+  1
+ ],
+ "analyzed_at": "2026-11-23T22:56:03+02:00",
+ "smoke": false,
+ "git_commit": "19df2d79c58a3798540e5b786cd31026464b0773",
+ "git_dirty": true
+}
