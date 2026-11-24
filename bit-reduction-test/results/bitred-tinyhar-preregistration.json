@@ -1,0 +1,159 @@
+{
+ "question": "Below 4 bits, does weight-only quantization of the frozen TinyHAR lose explanation consistency (LCI) faster than accuracy, and does a mixed-precision bit allocation driven by measured explanation sensitivity (XGQ) keep LCI higher than accuracy-driven allocations (ZeroQ-style KL, HAWQ-style Hessian) at the same storage size, without losing F1?",
+ "design": {
+  "explain_per_subject": 100,
+  "lci_cal_per_class": 20,
+  "lci_cal_seed": 47,
+  "nsamples": 200,
+  "shap_seed": 0,
+  "k": 10,
+  "omega": 0.5
+ },
+ "smoke_overrides": {},
+ "bit_options": [
+  2,
+  3,
+  4,
+  8
+ ],
+ "sens_bits": [
+  2,
+  3,
+  4,
+  8
+ ],
+ "probe_bits": [
+  8,
+  4,
+  3,
+  2
+ ],
+ "methods": [
+  "xgq",
+  "zeroq_kl",
+  "hawq"
+ ],
+ "budgets": [
+  "3bit",
+  "2.5bit",
+  "2.25bit"
+ ],
+ "budget_fraction_of_2to3bit_gap": {
+  "3bit": 1.0,
+  "2.5bit": 0.5,
+  "2.25bit": 0.25
+ },
+ "hutchinson": {
+  "n_iter": 100,
+  "seed": 49
+ },
+ "folds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "granularity_mixed": "channel",
+ "noise_floor_machine": {
+  "0": "nakhoul-3050",
+  "1": "nakhoul-3050",
+  "2": "uni-2080",
+  "3": "uni-2080",
+  "4": "uni-2080"
+ },
+ "rules": {
+  "R1_headroom": "At b in {3, 2}: explanation headroom exists at b bits iff the mean over folds of LCI_val(uniform-channel-4bit) - LCI_val(uniform-channel-b bit) >= 0.05.",
+  "R2_beats": "XGQ beats a comparator M at budget B iff all hold over the folds: (a) mean LCI_val gain >= 0.02; (b) LCI_val strictly higher in >= ceil(0.8 * n_folds) folds (an identical allocation counts as not higher); (c) mean F1_val >= M's - 0.01; (d) mean worst-subject LCI_val >= M's - 0.01.",
+  "R3_claim": "XGQ beats existing allocation at B iff it beats every comparator at B: zeroq_kl, hawq, and (3bit budget only) the uniform per-channel 3-bit model of the same size. The contribution is supported iff R3 holds at >= 1 budget whose bit width has headroom under R1 (3bit -> 3; 2.5bit -> 3 or 2; 2.25bit -> 2). Otherwise it is reported as not supported; nothing is retuned.",
+  "R4_no_tuning": "No method has a hyperparameter chosen on inner-val. Bit options, budgets, calibration windows, Hutchinson iterations and seeds are fixed in advance; every fold is reported."
+ },
+ "window_hashes": {
+  "0": {
+   "explain": "e03e919a8393ca7ab1be3582495288836a5b8c97ade08cfe0241a0026bafd49f",
+   "f1": "09d1dd0ea3d6fb617c4cd4cf2f4cf092bc8a9e450a88212b3518aac454306752",
+   "calibration": "256f8e0535387710f8d87da34973d9ca0b450ee2b40ee58540e2e09cb1528e45",
+   "lci_calibration": "4556c118dd1ac315613a8481f55b62e4ec408c631fd1729f334aaed0204962c4",
+   "n_explain": 300,
+   "n_f1": 7709,
+   "n_calibration": 978,
+   "n_lci_calibration": 140,
+   "inner_val_subjects": [
+    "S010",
+    "S020",
+    "S021"
+   ],
+   "n_train_subjects": 15
+  },
+  "1": {
+   "explain": "ea8a81dc90a3fe7610c54b488ec2bc6bbf266e6ca0f04099785d3fa362a23703",
+   "f1": "3e657c65407631751d48678ccb6322b8ec1fcc3ed7900db9ce49f09a7e56095e",
+   "calibration": "dd07918600fa55ef5203e9089bb115ce14e6bd2a9bd88ed334c04d5afb2bfec7",
+   "lci_calibration": "cceab7d223a3d1d952436d165bbe5b397b0f549163a5d0f0ea932acfbdd14213",
+   "n_explain": 300,
+   "n_f1": 6163,
+   "n_calibration": 967,
+   "n_lci_calibration": 140,
+   "inner_val_subjects": [
+    "S014",
+    "S018",
+    "S024"
+   ],
+   "n_train_subjects": 15
+  },
+  "2": {
+   "explain": "968f11d7577688f256603323b767f227828ddb02c4fa94a08d4c5e744daf3bb0",
+   "f1": "fae7a2b3e06d7e5847e4ddbed43b5604540dc24dcfe181c250f7ffd96419481c",
+   "calibration": "fa6ea71f048045b3d86a92b154888cc999678391ba561a29f8c14a63d5bd4bd3",
+   "lci_calibration": "110bd8eabf10e308068fdb140c3aa0be533ca89e35bad7f81aad7d204e3b44c8",
+   "n_explain": 300,
+   "n_f1": 7389,
+   "n_calibration": 917,
+   "n_lci_calibration": 140,
+   "inner_val_subjects": [
+    "S013",
+    "S019",
+    "S022"
+   ],
+   "n_train_subjects": 14
+  },
+  "3": {
+   "explain": "9419422914b8126c5742d9ecaeda4959033c22f6b480701147edd41afa6bd21a",
+   "f1": "800030fb672d2fd134535cdf59339970382655c4e265312efec727c80b2805b1",
+   "calibration": "83131e4e15a195c67884e97e004a0d88ab7fb5033a36f1aba1fbfd5349772fa3",
+   "lci_calibration": "b7f8eb80c4be3e49d6f5390775c021686f9f1a008387b77cf325af05ec84559c",
+   "n_explain": 300,
+   "n_f1": 6274,
+   "n_calibration": 958,
+   "n_lci_calibration": 140,
+   "inner_val_subjects": [
+    "S017",
+    "S022",
+    "S024"
+   ],
+   "n_train_subjects": 15
+  },
+  "4": {
+   "explain": "92ce55c18ca6bb363e6d800cb013c01659d7f5bd0fee9a722f381f1aae5c9bc7",
+   "f1": "2f75546ecd2ed91bac190c13869154156f4110a51ccd5414b69afa58222c057f",
+   "calibration": "945adb5eecb863bfcf7c35480b79034fa47cb392f337bdbd2d6e0a5d83f79de2",
+   "lci_calibration": "20e22b7afcf432653a6fac27eb55b1fc8b0ffb337f6f1050c00e0ddbeae0ea8d",
+   "n_explain": 300,
+   "n_f1": 6682,
+   "n_calibration": 937,
+   "n_lci_calibration": 140,
+   "inner_val_subjects": [
+    "S012",
+    "S016",
+    "S024"
+   ],
+   "n_train_subjects": 14
+  }
+ },
+ "written_at": "2026-11-24T21:15:39+02:00",
+ "git_commit": "fec6286f55ffb6d9d853061f01d6ffbc0774beaa",
+ "git_dirty": false,
+ "bitred_code_sha256": "49479951e548c6d838293b53f3bcc57f99141d33faa83d81639dfbeca4449860",
+ "har_code_sha256": "22304bfe4ba829592ceab726265de18920bcbae8179c8e7e5f4311066d3d93af",
+ "har70plus_loaded": false
+}

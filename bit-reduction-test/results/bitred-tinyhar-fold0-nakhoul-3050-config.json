@@ -1,0 +1,181 @@
+{
+ "command": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\bit-reduction-test\\bitred\\run.py --folds 0 --device cuda --machine-name nakhoul-3050",
+ "fold": 0,
+ "machine_name": "nakhoul-3050",
+ "device": "cuda",
+ "gpu_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+ "cuda_version": "11.8",
+ "torch_version": "2.7.1+cu118",
+ "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+ "torch_threads": 8,
+ "python": "3.11.9",
+ "os": "Windows 10",
+ "git_commit": "fec6286f55ffb6d9d853061f01d6ffbc0774beaa",
+ "git_dirty": false,
+ "bitred_code_sha256": "49479951e548c6d838293b53f3bcc57f99141d33faa83d81639dfbeca4449860",
+ "har_code_sha256": "22304bfe4ba829592ceab726265de18920bcbae8179c8e7e5f4311066d3d93af",
+ "preregistration_written_at": "2026-11-24T21:15:39+02:00",
+ "design": {
+  "explain_per_subject": 100,
+  "lci_cal_per_class": 20,
+  "lci_cal_seed": 47,
+  "nsamples": 200,
+  "shap_seed": 0,
+  "k": 10,
+  "omega": 0.5
+ },
+ "smoke_overrides": {},
+ "bit_options": [
+  2,
+  3,
+  4,
+  8
+ ],
+ "sens_bits": [
+  2,
+  3,
+  4,
+  8
+ ],
+ "probe_bits": [
+  8,
+  4,
+  3,
+  2
+ ],
+ "methods": [
+  "xgq",
+  "zeroq_kl",
+  "hawq"
+ ],
+ "budgets": [
+  "3bit",
+  "2.5bit",
+  "2.25bit"
+ ],
+ "budget_fraction_of_2to3bit_gap": {
+  "3bit": 1.0,
+  "2.5bit": 0.5,
+  "2.25bit": 0.25
+ },
+ "hutchinson": {
+  "n_iter": 100,
+  "seed": 49
+ },
+ "folds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "granularity_mixed": "channel",
+ "noise_floor_machine": {
+  "0": "nakhoul-3050",
+  "1": "nakhoul-3050",
+  "2": "uni-2080",
+  "3": "uni-2080",
+  "4": "uni-2080"
+ },
+ "rules": {
+  "R1_headroom": "At b in {3, 2}: explanation headroom exists at b bits iff the mean over folds of LCI_val(uniform-channel-4bit) - LCI_val(uniform-channel-b bit) >= 0.05.",
+  "R2_beats": "XGQ beats a comparator M at budget B iff all hold over the folds: (a) mean LCI_val gain >= 0.02; (b) LCI_val strictly higher in >= ceil(0.8 * n_folds) folds (an identical allocation counts as not higher); (c) mean F1_val >= M's - 0.01; (d) mean worst-subject LCI_val >= M's - 0.01.",
+  "R3_claim": "XGQ beats existing allocation at B iff it beats every comparator at B: zeroq_kl, hawq, and (3bit budget only) the uniform per-channel 3-bit model of the same size. The contribution is supported iff R3 holds at >= 1 budget whose bit width has headroom under R1 (3bit -> 3; 2.5bit -> 3 or 2; 2.25bit -> 2). Otherwise it is reported as not supported; nothing is retuned.",
+  "R4_no_tuning": "No method has a hyperparameter chosen on inner-val. Bit options, budgets, calibration windows, Hutchinson iterations and seeds are fixed in advance; every fold is reported."
+ },
+ "window_hashes": {
+  "explain": "e03e919a8393ca7ab1be3582495288836a5b8c97ade08cfe0241a0026bafd49f",
+  "f1": "09d1dd0ea3d6fb617c4cd4cf2f4cf092bc8a9e450a88212b3518aac454306752",
+  "calibration": "256f8e0535387710f8d87da34973d9ca0b450ee2b40ee58540e2e09cb1528e45",
+  "lci_calibration": "4556c118dd1ac315613a8481f55b62e4ec408c631fd1729f334aaed0204962c4",
+  "n_explain": 300,
+  "n_f1": 7709,
+  "n_calibration": 978,
+  "n_lci_calibration": 140,
+  "inner_val_subjects": [
+   "S010",
+   "S020",
+   "S021"
+  ],
+  "n_train_subjects": 15
+ },
+ "calibration_matches_round4_table": true,
+ "checkpoint": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold0-nakhoul-3050.pt",
+ "tau_k": 0.659347126693845,
+ "tau_source": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\results\\har-noise-floor\\har-noise-floor-tinyhar-fold0-nakhoul-3050-tau.csv",
+ "ceiling": 0.9455042425573076,
+ "ceiling_source": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\results\\har-noise-floor\\har-noise-floor-tinyhar-fold0-nakhoul-3050-group-summary.csv",
+ "budgets_bits": {
+  "3bit": 222612,
+  "2.5bit": 196054,
+  "2.25bit": 182775
+ },
+ "budgets_kb": {
+  "3bit": 27.17431640625,
+  "2.5bit": 23.932373046875,
+  "2.25bit": 22.3114013671875
+ },
+ "tensors": {
+  "backbone.convs.0.weight": {
+   "numel": 140,
+   "rows": 28
+  },
+  "backbone.convs.3.weight": {
+   "numel": 3920,
+   "rows": 28
+  },
+  "backbone.convs.6.weight": {
+   "numel": 3920,
+   "rows": 28
+  },
+  "backbone.convs.9.weight": {
+   "numel": 3920,
+   "rows": 28
+  },
+  "backbone.channel_attn.self_attn.in_proj_weight": {
+   "numel": 2352,
+   "rows": 84
+  },
+  "backbone.channel_attn.self_attn.out_proj.weight": {
+   "numel": 784,
+   "rows": 28
+  },
+  "backbone.channel_attn.linear1.weight": {
+   "numel": 1568,
+   "rows": 56
+  },
+  "backbone.channel_attn.linear2.weight": {
+   "numel": 1568,
+   "rows": 28
+  },
+  "backbone.fusion.0.weight": {
+   "numel": 9408,
+   "rows": 56
+  },
+  "backbone.lstm.weight_ih_l0": {
+   "numel": 12544,
+   "rows": 224
+  },
+  "backbone.lstm.weight_hh_l0": {
+   "numel": 12544,
+   "rows": 224
+  },
+  "backbone.attn_score.weight": {
+   "numel": 56,
+   "rows": 1
+  },
+  "backbone.head.weight": {
+   "numel": 392,
+   "rows": 7
+  }
+ },
+ "seconds": {
+  "shap_original": 58.60228849994019,
+  "kl_sensitivity": 0.9109579001087695,
+  "hessian_traces": 65.75167070003226,
+  "lci_sensitivity_loop": 1052.319413599791,
+  "fold_wall": 1880.7504058000632
+ },
+ "har70plus_loaded": false,
+ "finished_at": "2026-11-24T21:50:48+02:00"
+}

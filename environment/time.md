@@ -340,3 +340,7 @@ Estimate of the real runs (amended design), from round 3's uni-2080 timings:
 | **Per GPU (one unstructured fold + one structured fold)** | 439 | **≈ 8.5–9.2 h; nakhoul-3050 ≈ 11–12 h if it throttles (× 1.3)** |
 
 SHAP is ≈ 60% of the time. Not measured yet; replace with the real times after the runs.
+
+## Bit-reduction test (bit-reduction-test/)
+- Tests 7 s; smoke fold 0: 26 s CPU (nakhoul-3050 laptop), 18 s CUDA; `--prepare` (5 folds, window hashes only) ≈ 15 s.
+- Estimate of the real run: ≈ 12,500 SHAP windows per fold (original 300 + 140, probe 7 × 300, sensitivities 52 × 140, allocations 9 × 300) at ≈ 0.14–0.15 s per window ≈ 30–40 min per fold; Hutchinson (100 iterations on ≈ 980 windows) + KL ≈ 2 min. 5 folds ≈ 2.5–3.4 h on one GPU, ≈ 1.5–2 h split over two. Not measured yet; replace with the config files' `seconds` after the runs.

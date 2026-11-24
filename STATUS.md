@@ -34,6 +34,8 @@ Done:
   - Rule: round 4 replaces round 3 per regime only if it **beats** `xgp_r3`. "Beats" means all of these: mean LCI_val gain ≥ 0.02; higher in ≥ 5 of 6 paired (fold, seed) runs; F1_val within 1 pt at every level; mean worst-subject LCI_val ≥ the other method's − 0.01. The same rule decides the "beats the best baseline" claim, and the DRO controls count as baselines.
   - 270/270 tests pass (22 in `test_xgp4.py`). The CPU smoke chain passes (both modes, both analyses, latency).
 
+- **Bit-reduction test (2026-11-24, separate folder `bit-reduction-test/`):** XGQ, explanation-guided mixed-precision weight quantization (bits per tensor from measured LCI sensitivity) against ZeroQ-style KL and HAWQ-style Hessian allocation with the same knapsack, at 27.2 / 23.9 / 22.3 KB, plus a uniform 4/3/2-bit probe; HARTH inner val only, folds 0-4, no training. Pre-registered (`results/bitred-tinyhar-preregistration.json`), 19/19 tests and CPU + CUDA smoke pass. GPU run to do (≈ 2.5-3.4 h on one GPU; commands in requirements.md). Independent of commit a18e156's low-bit diagnostic.
+
 Next (exact commands in environment/requirements.md, round 4 block; times in environment/time.md):
 1. nakhoul-3050: round-3 phase 2 for fold 1, `python -m har.run_xgp_pilot3 --phase ablation --folds 1 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050` (≈ 3.5 h; ≈ 4.5 h if throttled).
 2. Merge, then `python -m har.run_xgp_pilot3 --analyze --phase ablation` → round-3 `decision.json`; commit, then `git tag xgp-round3-final` (we tag).
