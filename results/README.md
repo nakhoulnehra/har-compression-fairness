@@ -585,3 +585,42 @@ Written by `python -m har.run_compression_grid --analyze` (committed in eb09f83)
 #### [har-grid-a-analysis-config.json](har-compression-grid-analysis/har-grid-a-analysis-config.json)
 - What: the folds and machines, bootstrap settings, metrics, τ_k per fold (0.659 / 0.583 / 0.630 / 0.624 / 0.613; global τ = min = 0.583) and the per-fold acceptance checks.
 - Key numbers: n_nonzero is identical per level, E_ft is met, and ptq8 ρ > 0.99 with accuracy within 0.5 pt in every fold. `head_unpruned_all` is false in every fold; that is the old head check's bug, fixed 2026-11-22. Rerun `--recheck-head` on each GPU machine, then `--analyze`, to refresh it.
+
+## har-diagnostic-low-bit-smoke/
+**Git-ignored, local only: a pipeline check, not results.** `python -m har.run_diagnostic_low_bit --folds 0 --smoke` then `--analyze --smoke --n-boot 500` (LenovoP330-01 CPU, 2026-11-24): 21 models in 17 s, `--resume` skipped all 21 (0.3 s), the analysis wrote all 10 tables in 2 s. It uses the 9A smoke protocol (600 training windows, 3 explain windows per subject, nsamples 20, K = 2) and the smoke τ_0 (0.06), so its LCI values mean nothing.
+
+## har-diagnostic-low-bit/ (low-bit diagnostic: baselines only, frozen TinyHAR, no retraining; code 2026-11-24, GPU/CPU runs to do)
+Question: below ≈ 30 KB, does the best existing compression silently break explanations, or hurt one group more? There are 21 models per fold, none fine-tuned:
+- the original;
+- per-channel symmetric PTQ (`ptq_pc4/3/2`, every weight tensor plus the head);
+- round 4's `lamp_recon` at 90 / 95% (LAMP budgets, K = 5, ridge reconstruction on round 4's calibration windows) in fp32, and the same models + `ptq_pc4`;
+- 13 single-layer models `layer2bit:<tensor>` (only that tensor at 2 bits).
+
+Windows, SHAP, LCI, accuracy / F1, faithfulness and τ_k are the same as 9A (τ_k from the committed noise floor: folds 0–1 nakhoul-3050, 2–4 uni-2080).
+
+**Sizes** are deterministic. Values are at their bit width, plus one fp32 scale per row; the "+ bitmask" figure adds 1 bit per position of each pruned tensor. KB = 1024 B; the original is 212.0 KB.
+
+| Setting | Size | + bitmask | ≤ 30 KB? |
+|---|---|---|---|
+| ptq_pc4 | 33.7 | — | no |
+| ptq_pc3 | 27.2 | — | yes |
+| ptq_pc2 | 20.7 | — | yes |
+| lamp_recon 90% (fp32) | 26.6 | 33.1 | without the bitmask only |
+| lamp_recon 95% (fp32) | 16.3 | 22.8 | yes |
+| lamp_recon 90% + 4-bit | 10.5 | 16.9 | yes |
+| lamp_recon 95% + 4-bit | 9.2 | 15.6 | yes |
+
+fp32 scales cost 3.2 KB and the fp32 biases and norms ≈ 4.6 KB, so per-channel 4-bit alone is just above 30 KB.
+
+**No real files yet.** Per fold and machine: `har-diag-lowbit-tinyhar-fold{k}-{machine}-{per-subject-metrics, per-subject-class-lci, per-group-class-lci, models}.csv`, `-config.json`, `logs/`. The `-shap-48-segments.npz` file stays local. `--analyze` writes `har-diag-lowbit-a-*.csv`:
+- `headline-per-setting`: one row per setting. It holds the size; validation (LCI_val, worst-subject LCI_val, F1_val, folds below τ_k, silent breaks); and test accuracy / non-stair F1 / LCI / AOPC per group (general, older, walking-aid, other older). It also holds the older − general gaps with CIs, the walking-aid − other-older gaps, the gap of the accuracy / F1 drop vs the original (does compression cost one group more), FA-LCI with CI, the share of subjects below τ_k, and `silent_break_test`.
+- `validation-inner-val-per-fold`, `validation-inner-val-summary`.
+- `test-fa-lci-bootstrap-ci`, `test-group-summary-gaps-bootstrap-ci`, `test-safe-explanation-rate` (with `share_below_*` = 1 − safe), `test-stairs-and-pooled-f1-per-group`, `test-per-class-lci-drift`, `test-per-subject-pooled-over-folds`.
+- `layer-sensitivity-2bit`: per tensor, the LCI drop (validation and per test group), its share of the full ptq_pc2 drop, the LCI gap with CI and the accuracy drop, ranked.
+- `analysis-config.json`.
+
+**Silent break**:
+- validation: LCI_val < τ_k with the F1_val drop ≤ 1 pt (per fold);
+- test: FA-LCI < τ = min_k τ_k with the accuracy drop ≤ 1 pt in both groups.
+
+Fill in the key numbers after the runs.

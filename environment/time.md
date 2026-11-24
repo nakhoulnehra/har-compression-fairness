@@ -340,3 +340,25 @@ Estimate of the real runs (amended design), from round 3's uni-2080 timings:
 | **Per GPU (one unstructured fold + one structured fold)** | 439 | **≈ 8.5–9.2 h; nakhoul-3050 ≈ 11–12 h if it throttles (× 1.3)** |
 
 SHAP is ≈ 60% of the time. Not measured yet; replace with the real times after the runs.
+
+## Low-bit diagnostic code (LenovoP330-01, CPU, 2026-11-24)
+
+commands ran / time taken to finish:
+- `python -m pytest har/tests lci/tests`: **45 s** (281/281 passed; 11 new in `test_diagnostic_low_bit.py`).
+- `python -m har.run_diagnostic_low_bit --folds 0 --smoke`: **17 s** for 21 models, 23 s wall clock with imports. `--resume` with everything done: 0.3 s. `--analyze --smoke --n-boot 500`: 2 s.
+
+Estimate of the real runs per fold, from earlier timings: 9A SHAP is ≈ 0.13–0.14 s per window on the GPUs, and the TinyHAR CPU benchmark is 0.08 s per window on Aya's laptop (10 threads). Nothing is fine-tuned.
+
+| Part, per fold | Count | GPU (either) | CPU (Aya) |
+|---|---|---|---|
+| SHAP, ≈ 765 explain windows (90 inner val + 120–150 general + 540 older) | 20 models (the original is a cache hit where that fold's noise floor ran; +1 otherwise) | ≈ 35 min | ≈ 20 min |
+| Accuracy on ≈ 25K windows + deletion faithfulness | 21 models | ≈ 3 min | ≈ 5 min |
+| LAMP + reconstruction starts (K = 5, ≈ 980 calibration windows) | 2 | ≈ 1 min | ≈ 1–2 min |
+| **Total per fold** | | **≈ 40 min** | **≈ 25–30 min** |
+
+- Two GPUs: folds 0, 1 on nakhoul-3050 ≈ 1.3 h; folds 2, 3, 4 on uni-2080 ≈ 2 h.
+- One CPU, 5 folds: ≈ 2–2.5 h. Upper bound ≈ 2× (the CPU figure is a scratch benchmark, not a grid run).
+- `--no-layer-sensitivity` (8 models per fold): ≈ 1/3 of the time.
+- `--analyze` with 10,000 bootstrap draws: a few minutes (≈ 21 settings × 14 metrics).
+
+Not measured yet; replace with the real times after the runs.

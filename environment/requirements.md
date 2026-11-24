@@ -334,3 +334,25 @@ python -m har.run_xgp_pilot4 --latency --machine-name Aya
 python -m har.run_xgp_pilot4 --analyze --mode unstructured             # -> har-xgp-pilot4-tinyhar-unstructured-decision.json
 python -m har.run_xgp_pilot4 --analyze --mode structured               # -> har-xgp-pilot4-tinyhar-structured-decision.json
 ```
+
+### Low-bit diagnostic (baselines only, frozen TinyHAR, no retraining; code 2026-11-24, LenovoP330-01 CPU)
+- Code: `har/run_diagnostic_low_bit.py`; `ptq_per_channel` and `low_bit_size` in `har/compression.py`; tests `har/tests/test_diagnostic_low_bit.py` (11). `FoldStore` and `load_fold_files` in `har/run_compression_grid.py` gained a `prefix` argument (default unchanged).
+- It reuses 9A's `Context` / `assess` and round 4's `lamp_recon` pieces (`bounded_budget`, `iterative_prune_budget`, `layerwise_reconstruct`, `calibration_table`), which are not changed. τ_k comes from the committed noise-floor files (folds 0–1 nakhoul-3050, 2–4 uni-2080), so any machine can run any fold.
+- No new packages.
+
+```bash
+python -m pytest har/tests lci/tests                                    # 281/281 passed (45 s)
+python -m har.run_diagnostic_low_bit --folds 0 --smoke --machine-name LenovoP330-01   # 17 s, 21 models
+python -m har.run_diagnostic_low_bit --folds 0 --smoke --resume --machine-name LenovoP330-01   # 0.3 s, all skipped
+python -m har.run_diagnostic_low_bit --analyze --smoke --n-boot 500     # 2 s
+# --- real runs (to do); a GPU smoke first on each GPU machine:
+python -m har.run_diagnostic_low_bit --folds 0 --smoke --device cuda --machine-name <machine>
+#   option A, two GPUs in parallel:
+python -m har.run_diagnostic_low_bit --folds 0 1 --device cuda --machine-name nakhoul-3050
+python -m har.run_diagnostic_low_bit --folds 2 3 4 --device cuda --machine-name uni-2080
+#   option B, one CPU machine (e.g. Aya's laptop):
+python -m har.run_diagnostic_low_bit --folds 0 1 2 3 4 --machine-name Aya
+#   then, after the files are merged:
+python -m har.run_diagnostic_low_bit --analyze
+# --resume continues an interrupted fold; --no-layer-sensitivity runs only the 8 main models per fold
+```

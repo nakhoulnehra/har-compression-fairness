@@ -393,8 +393,8 @@ class FoldStore:
 
     TABLES = ("per-subject-metrics", "per-subject-class-lci", "per-group-class-lci", "models", "finetune-history")
 
-    def __init__(self, out: Path, k: int, machine: str, resume: bool, smoke: bool):
-        self.base = f"har-grid-tinyhar-fold{k}-{machine}"
+    def __init__(self, out: Path, k: int, machine: str, resume: bool, smoke: bool, prefix: str = "har-grid-tinyhar"):
+        self.base = f"{prefix}-fold{k}-{machine}"
         self.paths = {t: out / f"{self.base}-{t}.csv" for t in self.TABLES}
         self.npz = out / f"{self.base}-shap-48-segments.npz"
         self.config = out / f"{self.base}-config.json"
@@ -916,11 +916,12 @@ METRICS = ["lci", "shap_corr", "jaccard", "lci768", "lci_k16", "retention", "n_s
 TESTED = ["lci", "non_stair_macro_f1", "aopc"]
 
 
-def load_fold_files(src: Path, use_machine: dict[int, str]) -> tuple[dict[str, pd.DataFrame], dict[int, str]]:
+def load_fold_files(src: Path, use_machine: dict[int, str], prefix: str = "har-grid-tinyhar",
+                    tables: Sequence[str] | None = None) -> tuple[dict[str, pd.DataFrame], dict[int, str]]:
     """Concatenate the per-fold tables; a fold present from two machines needs --use-machine k=machine."""
     found = {}
-    for p in sorted(src.glob("har-grid-tinyhar-fold*-models.csv")):
-        stem = p.name[len("har-grid-tinyhar-fold"):-len("-models.csv")]
+    for p in sorted(src.glob(f"{prefix}-fold*-models.csv")):
+        stem = p.name[len(f"{prefix}-fold"):-len("-models.csv")]
         k, machine = stem.split("-", 1)
         found.setdefault(int(k), []).append(machine)
     chosen = {}
@@ -933,15 +934,15 @@ def load_fold_files(src: Path, use_machine: dict[int, str]) -> tuple[dict[str, p
             chosen[k] = ms[0]
         else:
             raise RuntimeError(f"fold {k} has files from {ms}; choose one with --use-machine {k}=<machine>")
-    tables = {}
-    for t in FoldStore.TABLES:
+    out = {}
+    for t in (tables or FoldStore.TABLES):
         parts = []
         for k, m in chosen.items():
-            p = src / f"har-grid-tinyhar-fold{k}-{m}-{t}.csv"
+            p = src / f"{prefix}-fold{k}-{m}-{t}.csv"
             if p.exists() and p.stat().st_size > 2:
                 parts.append(pd.read_csv(p, dtype={"subject": str}))
-        tables[t] = pd.concat(parts, ignore_index=True) if parts else pd.DataFrame()
-    return tables, chosen
+        out[t] = pd.concat(parts, ignore_index=True) if parts else pd.DataFrame()
+    return out, chosen
 
 
 def analyze(args) -> None:

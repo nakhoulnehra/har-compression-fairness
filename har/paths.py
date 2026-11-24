@@ -60,4 +60,7 @@ GRID_SMOKE_DIR = RESULTS_DIR / "har-compression-grid-smoke"
 GRID_ANALYSIS_DIR = RESULTS_DIR / "har-compression-grid-analysis"
 GRID_ANALYSIS_SMOKE_DIR = RESULTS_DIR / "har-compression-grid-analysis-smoke"
 GRID_CKPT_DIR = CHECKPOINT_DIR / "har-compression-grid"
+# Low-bit diagnostic (baselines only, frozen TinyHAR, no retraining): per-fold files and the --analyze tables
+DIAG_LOW_BIT_DIR = RESULTS_DIR / "har-diagnostic-low-bit"
+DIAG_LOW_BIT_SMOKE_DIR = RESULTS_DIR / "har-diagnostic-low-bit-smoke"
 GRID_SMOKE_CKPT_DIR = CHECKPOINT_DIR / "har-compression-grid-smoke"

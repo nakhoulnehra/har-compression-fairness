@@ -6,6 +6,9 @@
     KD, kd_kl_term, kd_loss, predict_logits
                           the shared KD fine-tuning recipe (XGP pilot round 2): every method gets it
     ptq_symmetric         per-tensor symmetric weight PTQ, the primary PTQ            [plan 2.5, Q1]
+    ptq_per_channel, low_bit_size
+                          per-output-channel symmetric PTQ and its storage (values, scales, bitmask), for
+                          the low-bit diagnostic (har/run_diagnostic_low_bit.py)
     snip_scores           SNIP saliency |w * dL/dw| on the trained model             [Lee et al. 2019; plan Q2]
     eg_attributions       differentiable expected-gradients surrogate of SHAP        [plan 2.5]
     attribution_grad_context  math SDPA + cuDNN off, for every gradient through attributions
@@ -359,6 +362,66 @@ def ptq_symmetric(model: nn.Module, bits: int) -> tuple[nn.Module, dict[str, int
             quantized[name] = bits
     q.eval()
     return q, quantized
+
+
+def ptq_per_channel(model: nn.Module, bits: int, only: Iterable[str] | None = None
+                    ) -> tuple[nn.Module, dict[str, int]]:
+    """Per-output-channel symmetric weight-only PTQ (low-bit diagnostic, 2026-11-24) on a deepcopy: the same
+    tensors as ptq_symmetric (every prunable tensor plus the head), or only the tensors named in `only`.
+    Per row r of W reshaped to (out, -1) (conv filter, linear / LSTM gate / attention projection row):
+    s_r = max|W_r| / (2^(b-1) - 1), W_q = clamp(round(W / s_r), -(2^(b-1) - 1), 2^(b-1) - 1) * s_r. A row of
+    zeros stays zero, and pruned weights (0) stay exactly 0, so prune_masks remain valid. Fake quantization
+    (stored as float); biases, normalization parameters and activations untouched.
+    Returns (quantized model in eval mode, {tensor name: bits})."""
+    q = copy.deepcopy(model)
+    qmax = 2 ** (bits - 1) - 1
+    if qmax < 1:
+        raise ValueError(f"bits must be >= 2 for symmetric quantization, got {bits}")
+    names = {n for n, _, _ in prunable_tensors(q, include_head=True)}
+    sel = names if only is None else set(only)
+    if not sel <= names:
+        raise KeyError(f"not quantizable: {sorted(sel - names)}")
+    quantized = {}
+    with torch.no_grad():
+        for name, mod, pname in prunable_tensors(q, include_head=True):
+            if name not in sel:
+                continue
+            w = getattr(mod, pname)
+            W = w.reshape(w.shape[0], -1)
+            s = W.abs().amax(1, keepdim=True) / qmax
+            s = torch.where(s > 0, s, torch.ones_like(s))
+            w.copy_((torch.clamp(torch.round(W / s), -qmax, qmax) * s).reshape(w.shape))
+            quantized[name] = bits
+    q.eval()
+    return q, quantized
+
+
+def low_bit_size(model: nn.Module, quantized: dict[str, int] | None = None, scale_bits: int = 32) -> dict:
+    """Storage of a pruned and / or per-channel quantized model (low-bit diagnostic). Per parameter tensor:
+    stored values = the kept weights for a tensor in `model.prune_masks` (all values otherwise), at `bits`
+    if quantized, else 32; a quantized tensor adds one `scale_bits` scale per output row. KB = 1024 B.
+        size_kb               values + scales (no index overhead, as size_kb_nominal in the plan)
+        size_kb_with_bitmask  + 1 bit per position of every pruned tensor (a simple sparse index)
+        size_kb_dense_fp32    n_params x 4 B;  compression_ratio = dense / size_kb_with_bitmask"""
+    quantized = quantized or {}
+    masks = getattr(model, "prune_masks", None) or {}
+    params = dict(model.named_parameters())
+    if not set(quantized) <= set(params):
+        raise KeyError(f"unknown quantized tensors: {sorted(set(quantized) - set(params))}")
+    values = scales = mask = 0
+    for n, p in params.items():
+        stored = int(masks[n].sum()) if n in masks else p.numel()
+        values += stored * quantized.get(n, 32)
+        if n in quantized:
+            scales += int(p.shape[0]) * scale_bits
+        if n in masks:
+            mask += p.numel()
+    kb = lambda bits: bits / 8 / 1024  # noqa: E731
+    dense = kb(32 * sum(p.numel() for p in params.values()))
+    with_mask = kb(values + scales + mask)
+    return {"size_kb": kb(values + scales), "size_kb_with_bitmask": with_mask, "size_kb_values": kb(values),
+            "size_kb_scales": kb(scales), "size_kb_bitmask": kb(mask), "size_kb_dense_fp32": dense,
+            "compression_ratio": dense / with_mask}
 
 
 def ptq_tulla(model: nn.Module, bits: int) -> tuple[nn.Module, dict[str, int]]:

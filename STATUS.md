@@ -34,6 +34,13 @@ Done:
   - Rule: round 4 replaces round 3 per regime only if it **beats** `xgp_r3`. "Beats" means all of these: mean LCI_val gain ≥ 0.02; higher in ≥ 5 of 6 paired (fold, seed) runs; F1_val within 1 pt at every level; mean worst-subject LCI_val ≥ the other method's − 0.01. The same rule decides the "beats the best baseline" claim, and the DRO controls count as baselines.
   - 270/270 tests pass (22 in `test_xgp4.py`). The CPU smoke chain passes (both modes, both analyses, latency).
 
+- **Low-bit diagnostic (2026-11-24; baselines only, no new method, no retraining):** asks whether, below ≈ 30 KB, the best existing compression silently breaks explanations or hurts one group more.
+  - Models on the frozen TinyHAR: per-channel PTQ at 4 / 3 / 2 bits; round 4's `lamp_recon` at 90 / 95% in fp32 and + 4-bit; per-layer 2-bit sensitivity (13 tensors).
+  - Validation on HARTH inner val, folds 0–4. Test as 9A: older vs general, walking-aid split, bootstrap CIs.
+  - Code: `har/run_diagnostic_low_bit.py`. 281/281 tests pass; the CPU smoke and the analysis pass. Output: `results/har-diagnostic-low-bit/`.
+  - Sizes: ptq_pc4 33.7 KB (just above 30 KB because of the fp32 scales and biases), ptq_pc3 27.2, ptq_pc2 20.7; lamp_recon 90 / 95% + 4-bit 16.9 / 15.6 KB with the bitmask.
+  - GPU / CPU runs to do (commands in requirements.md, "Low-bit diagnostic"; ≈ 40 min per fold on a GPU, ≈ 25–30 min on Aya's CPU).
+
 Next (exact commands in environment/requirements.md, round 4 block; times in environment/time.md):
 1. nakhoul-3050: round-3 phase 2 for fold 1, `python -m har.run_xgp_pilot3 --phase ablation --folds 1 --device cuda --machine-name nakhoul-3050 --noise-floor-machine nakhoul-3050` (≈ 3.5 h; ≈ 4.5 h if throttled).
 2. Merge, then `python -m har.run_xgp_pilot3 --analyze --phase ablation` → round-3 `decision.json`; commit, then `git tag xgp-round3-final` (we tag).
