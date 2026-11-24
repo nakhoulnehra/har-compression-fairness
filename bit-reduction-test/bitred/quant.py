@@ -12,6 +12,9 @@ normalization parameters, gamma and the input-normalization buffers stay float32
 Storage (bits): quantized tensor = numel * b + (rows or 1) * 32 for its float32 scales; every other parameter
 numel * 32. Buffers (input normalization statistics, BatchNorm running statistics) are not counted, as in
 har.compression.size_record. KB = 1024 bytes.
+
+Pruned + quantized (pruned_size_bits): a pruned tensor stores only its kept weights at b bits, its scales, and a
+1-bit-per-position bitmask (numel bits) that says which positions are kept; unpruned tensors as above.
 """
 
 from __future__ import annotations
@@ -108,3 +111,28 @@ def mean_bits(model: nn.Module, bits: Mapping[str, int]) -> float:
     info = tensor_info(model)
     tot = sum(v["numel"] for v in info.values())
     return sum(v["numel"] * min(int(bits.get(n, FLOAT_BITS)), FLOAT_BITS) for n, v in info.items()) / tot
+
+
+def pruned_size_record(model: nn.Module, bits: Mapping[str, int], masks: Mapping[str, torch.Tensor],
+                       granularity: str = "channel") -> dict:
+    """Storage of a pruned (masks = {tensor: bool keep-mask}) and quantized model, in KB:
+    size_kb = kept weights x bits + scales + bitmask + float32 rest; also the parts and the kept-weight count."""
+    info = tensor_info(model)
+    unknown = (set(bits) | set(masks)) - set(info)
+    if unknown:
+        raise KeyError(f"not quantizable: {sorted(unknown)}")
+    values = scales = bitmask = 0
+    for n, v in info.items():
+        b = int(bits.get(n, FLOAT_BITS))
+        kept = int(masks[n].sum()) if n in masks else v["numel"]
+        if n in masks:
+            bitmask += v["numel"]
+        values += kept * min(b, FLOAT_BITS)
+        if b < FLOAT_BITS:
+            scales += (v["rows"] if granularity == "channel" else 1) * SCALE_BITS
+    fixed = fixed_bits(model)
+    kb = 8 * 1024
+    return {"size_kb": (values + scales + bitmask + fixed) / kb, "size_kb_without_bitmask": (values + scales + fixed) / kb,
+            "size_kb_bitmask": bitmask / kb, "size_kb_scales": scales / kb, "size_kb_weight_values": values / kb,
+            "size_kb_float32_rest": fixed / kb,
+            "n_kept_quantizable": sum(int(masks[n].sum()) if n in masks else v["numel"] for n, v in info.items())}

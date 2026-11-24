@@ -7,6 +7,11 @@ updates them with that gradient (STE: d loss / d W := d loss / d Q(W)). The supe
 recipe (har.compression.kd_loss: 0.7 KL(T = 3) T^2 + 0.3 class-weighted CE to the original model's logits), with
 Adam, batch 256 and a seeded batch order, as har.compression.finetune. After training the returned model holds the
 quantized weights (the deployed model). BatchNorm statistics are updated in train mode on the quantized forward.
+
+Pruned models (model.prune_masks, {tensor name: bool keep-mask}): the masks are fixed. They are applied before
+training, the masked gradients are zeroed before every Adam step and the masks are re-applied after it (as
+har.compression.finetune), so pruned weights stay exactly 0; the quantizer maps 0 to 0, so the quantized model keeps
+them at 0 too (asserted at the end).
 """
 
 from __future__ import annotations
@@ -38,6 +43,14 @@ def qat_kd_finetune(model: nn.Module, train: Windows, val: Windows, teacher_logi
     model.to(dev)
     set_seed(seed)
     params = dict(model.named_parameters())
+    masks = {n: m.to(dev) for n, m in (getattr(model, "prune_masks", None) or {}).items()}
+    unknown = set(masks) - set(params)
+    if unknown:
+        raise KeyError(f"masks for unknown tensors: {sorted(unknown)}")
+    mp = [(params[n], m) for n, m in masks.items()]
+    with torch.no_grad():
+        for p, m in mp:
+            p.mul_(m.to(p.dtype))
     qp = [(params[n], int(bits[n])) for n, _, _ in quant_tensors(model) if n in bits and int(bits[n]) < 32]
     Xtr, ytr = torch.from_numpy(train.X).to(dev), torch.from_numpy(train.y).to(dev)
     zt = teacher_logits.to(dev)
@@ -64,7 +77,13 @@ def qat_kd_finetune(model: nn.Module, train: Windows, val: Windows, teacher_logi
             with torch.no_grad():
                 for (p, _), m in zip(qp, masters):
                     p.copy_(m)
+                for p, m in mp:
+                    if p.grad is not None:
+                        p.grad.mul_(m.to(p.grad.dtype))
             opt.step()
+            with torch.no_grad():
+                for p, m in mp:
+                    p.mul_(m.to(p.dtype))
             tot += float(loss.detach()) * len(idx)
             seen += len(idx)
         qm = quantize_model(model, bits, granularity)
@@ -77,4 +96,9 @@ def qat_kd_finetune(model: nn.Module, train: Windows, val: Windows, teacher_logi
         log(f"    QAT epoch {epoch + 1:2d}/{epochs}  loss {tot / max(seen, 1):.4f}  val F1 (quantized) {f1:.4f}  "
             f"acc {acc:.4f}  {dt:.1f}s")
     model.eval()
-    return quantize_model(model, bits, granularity), history
+    qm = quantize_model(model, bits, granularity)
+    qparams = dict(qm.named_parameters())
+    for n, m in masks.items():
+        if torch.any(qparams[n].detach()[~m] != 0):
+            raise RuntimeError(f"{n}: a pruned weight is non-zero after QAT")
+    return qm, history

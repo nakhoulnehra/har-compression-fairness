@@ -349,4 +349,9 @@ python -m bitred.run --prepare                                      # done 2026-
 python -m bitred.run --folds 0 1 2 3 4 --device cuda --machine-name nakhoul-3050
 #   or split: --folds 0 1 2 on nakhoul-3050, --folds 3 4 on uni-2080 (--machine-name uni-2080)
 python -m bitred.run --analyze                                      # after merging
+# --- 2-bit gap test (done, fold 0) and ultra-small gap test (QAT + KD at 15.6-17.5 KB; README "Ultra-small gap test") ---
+python -m bitred.run_qat --fold 0 --device cuda --machine-name nakhoul-3050
+python -m pytest tests                                              # 24/24 passed (8 s, LenovoP330-01 CPU)
+python -m bitred.run_qat_small --fold 0 --smoke --device cpu --machine-name smoke-cpu     # 14 s
+python -m bitred.run_qat_small --fold 0 --device cuda --machine-name nakhoul-3050         # to do (GPU)
 ```

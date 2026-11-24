@@ -109,16 +109,69 @@ method is built for 2 bits, this test asks whether the standard fix for low-bit 
 `bitred-qat2bit-tinyhar-fold0-<m>-{models, per-subject-lci, finetune-history}.csv`, `-decision.json` and
 `-config.json`.
 
+## Ultra-small gap test (added 2026-11-24 after the 2-bit gap test, before running it)
+
+At 20.7 KB, per-channel 2-bit QAT + KD closed the gap. This test pushes the same question to 15–18 KB, where the
+next size reduction needs a coarser quantizer or pruning on top of quantization (`bitred/run_qat_small.py`).
+
+**Settings.** All sizes are honest storage with the bitmask:
+- kept weights × bits;
+- fp32 scales;
+- 1 bit per position for every pruned tensor;
+- fp32 for the 1,157 non-quantized parameters.
+
+| Setting | Start | Quantizer | Size |
+|---|---|---|---|
+| `tensor-2bit` | the frozen TinyHAR | 2-bit, one scale per tensor | 17.5 KB |
+| `lamp_recon90-channel-4bit` | lamp_recon at 90 % sparsity | 4-bit per channel | 16.9 KB |
+| `lamp_recon95-channel-4bit` | lamp_recon at 95 % sparsity | 4-bit per channel | 15.6 KB |
+
+- **lamp_recon** is round 4's baseline, built with its own functions (`har/xgp4.py`, `har/xgp3.py`) and values:
+  - LAMP keep counts (Lee et al. 2021) through `bounded_budget`: floor 2 %, uniform counts for the tensors the
+    reconstruction cannot refit, total = the uniform total;
+  - K = 5 nested magnitude steps (`iterative_prune_budget`, β 0);
+  - after each step, the ridge layer-wise reconstruction (damp 0.01) on round 4's calibration training windows
+    (checked against round 4's committed table);
+  - the head is not pruned, and nothing is trained by gradient before QAT.
+- **QAT:** the 2-bit gap test's recipe unchanged (`bitred/qat.py`: STE, shared KD recipe, Adam, batch 256).
+  - 20 epochs, seed 0, lr 1e-4 and 1e-3, last-epoch model, fold 0 first.
+  - The pruning masks are fixed: masked gradients are zeroed before each step, the masks are re-applied after it,
+    and the runner asserts that every pruned weight is still 0 after quantization.
+- **References** (assessed, not used by the rule): the same model without QAT (`ptq-tensor-2bit`,
+  `lamp_recon9x-ptq-channel-4bit`) and the fp32 pruned starts (`lamp_recon9x-fp32`, 33.1 / 22.8 KB).
+
+**Rule:** the 2-bit gap test's rule (`run_qat.decide`), applied to each setting over its two lrs. It was fixed
+before the run.
+- A run recovers if F1_val ≥ F1_val(original) − 0.03.
+- **Gap** at that size if the best LCI_val among recovering runs is ≤ 0.85.
+- **No gap** if it is > 0.85.
+- **Inconclusive** if no run recovers F1: that size is an accuracy problem first.
+
+`decision.json` lists the verdict per setting and the settings with a gap.
+
+`python -m bitred.run_qat_small --fold 0 --device cuda --machine-name <m>` writes
+`bitred-qat-ultrasmall-tinyhar-fold0-<m>-{models, per-subject-lci, finetune-history, lamp-keep-counts}.csv`,
+`-decision.json` and `-config.json`. Each `-models.csv` row holds:
+- size in KB (with the bitmask, plus its parts);
+- F1, accuracy;
+- LCI, worst-subject LCI, ρ, J.
+
+Estimated time: 6 QAT runs at ≈ 65–70 s of fine-tuning plus ≈ 45 s of SHAP each, and 5 reference and 1 original
+assessments at ≈ 45 s each, so ≈ 15–20 min on a GPU. Smoke: 14 s CPU.
+
 ## Commands (repo `.venv`, run from this folder)
 
 ```
 cd bit-reduction-test
-python -m pytest tests                                             # 19 tests
+python -m pytest tests                                             # 24 tests
 python -m bitred.run --prepare                                     # pre-registration (CPU, seconds); commit it before the runs
 python -m bitred.run --folds 0 1 2 3 4 --device cuda --machine-name nakhoul-3050
 #   or split: nakhoul-3050 --folds 0 1 2, uni-2080 --folds 3 4 (same flags, own --machine-name)
 python -m bitred.run --analyze                                     # after merging; --use-machine k=<m> if a fold ran twice
 # --resume continues an interrupted fold; --smoke writes a pipeline check to results-smoke/ (git-ignored)
+python -m bitred.run_qat --fold 0 --device cuda --machine-name nakhoul-3050         # 2-bit gap test (done)
+python -m bitred.run_qat_small --fold 0 --smoke --device cpu --machine-name smoke-cpu
+python -m bitred.run_qat_small --fold 0 --device cuda --machine-name nakhoul-3050   # ultra-small gap test
 ```
 
 **Time:** about 12,500 SHAP windows per fold (probe 7 × 300, sensitivity 52 × 140, allocation 9 × 300, original). At
@@ -185,3 +238,11 @@ Per fold and machine (`bitred-tinyhar-fold<k>-<machine>-…`):
 - It also beats every allocation above while being smaller (20.7 KB vs 23.9 KB for XGQ's 0.845 / 0.808). So the
   XGQ claim is moot, and folds 1–4 are not worth running.
 - **Caveat:** one fold, last-epoch model; the lr 1e-4 run's per-epoch F1 varies 0.74–0.83.
+
+### `bitred-qat-ultrasmall-tinyhar-fold0-<machine>-*` (ultra-small gap test)
+- Not run yet. Sizes, fixed by construction:
+  - `tensor-2bit`: 17.54 KB;
+  - `lamp_recon90-channel-4bit`: 16.92 KB, of which 6.44 KB bitmask and 3.20 KB scales;
+  - `lamp_recon95-channel-4bit`: 15.64 KB, same bitmask and scales.
+  The bitmask dominates once 90 % of the weights are gone: without it, 10.49 / 9.20 KB.
+- Fill in F1 / LCI / worst-subject LCI and the verdicts after the GPU run.

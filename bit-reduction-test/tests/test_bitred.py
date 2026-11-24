@@ -315,3 +315,80 @@ def test_qat_gradient_is_taken_at_the_quantized_weights():
     step = dict(net.named_parameters())["backbone.head.weight"].detach() - before
     nz = g_exp.abs() > 1e-6
     assert torch.equal(torch.sign(step[nz]), -torch.sign(g_exp[nz]))
+
+
+# ------------------------------------------------------------------------------ ultra-small gap test
+
+def l1_pruned(net, level):
+    from har.compression import l1_scores, prune_by_score
+    return prune_by_score(net, l1_scores(net), level)
+
+
+def test_pruned_size_record_by_hand():
+    from bitred.quant import pruned_size_record
+    from har.xgp4 import uniform_keep_counts
+    net = tinyhar()
+    info = tensor_info(net)
+    rows = sum(v["rows"] for v in info.values())
+    for b, g in ((2, "tensor"), (4, "channel"), (3, "channel")):
+        assert pruned_size_record(net, uniform_bits(net, b), {}, g)["size_kb"] == pytest.approx(
+            size_bits(net, uniform_bits(net, b), g) / 8 / 1024)
+    assert pruned_size_record(net, uniform_bits(net, 2), {}, "tensor")["size_kb"] == pytest.approx(17.5, abs=0.05)
+    pr = l1_pruned(net, 0.9)
+    masks = pr.prune_masks
+    kept = {n: int(m.sum()) for n, m in masks.items()}
+    pos = sum(info[n]["numel"] for n in masks)
+    n_kept = sum(kept.get(n, v["numel"]) for n, v in info.items())
+    s = pruned_size_record(net, uniform_bits(net, 4), masks, "channel")
+    assert s["n_kept_quantizable"] == n_kept
+    assert s["size_kb"] == pytest.approx((n_kept * 4 + rows * 32 + pos + fixed_bits(net)) / 8 / 1024)
+    assert s["size_kb_bitmask"] == pytest.approx(pos / 8 / 1024) and s["size_kb_without_bitmask"] < s["size_kb"]
+    # fp32 pruned (no quantization): kept values at 32 bits, no scales, plus the bitmask
+    f = pruned_size_record(net, {}, masks)
+    assert f["size_kb"] == pytest.approx((n_kept * 32 + pos + fixed_bits(net)) / 8 / 1024) and f["size_kb_scales"] == 0
+    # the README sizes: the uniform total is what LAMP keeps, so the size does not depend on the split
+    for level, kb in ((0.9, 16.9), (0.95, 15.6)):
+        m = l1_pruned(net, level).prune_masks
+        assert sum(int(x.sum()) for x in m.values()) == sum(uniform_keep_counts(net, level).values())
+        assert pruned_size_record(net, uniform_bits(net, 4), m, "channel")["size_kb"] == pytest.approx(kb, abs=0.05)
+    with pytest.raises(KeyError):
+        pruned_size_record(net, {"backbone.gamma": 4}, {})
+
+
+def test_qat_keeps_masks_fixed():
+    from bitred.qat import qat_kd_finetune
+    net = l1_pruned(tinyhar(), 0.9)
+    masks = {n: m.clone() for n, m in net.prune_masks.items()}
+    ref = {n: p.detach().clone() for n, p in net.named_parameters()}
+    tr, va = synthetic_windows(64), synthetic_windows(21, 1)
+    bits = uniform_bits(net, 4)
+    q, _ = qat_kd_finetune(net, tr, va, torch.randn(64, 7), bits, epochs=2, lr=1e-2, batch_size=16, log=lambda s: None)
+    P, Q = dict(net.named_parameters()), dict(q.named_parameters())
+    for n, m in masks.items():
+        assert torch.all(P[n].detach()[~m] == 0) and torch.all(Q[n].detach()[~m] == 0), n
+        assert torch.equal(q.prune_masks[n], m)
+    moved = [n for n, m in masks.items() if not torch.equal(P[n].detach()[m], ref[n][m])]
+    assert len(moved) == len(masks)                                    # kept weights are trained
+    assert not any(n.endswith("head.weight") for n in q.prune_masks)    # head unpruned (4-bit may round some to 0)
+    for n, b in bits.items():
+        assert torch.equal(Q[n].detach(), quantize_weight(P[n].detach(), b, "channel")), n
+
+
+def test_lamp_recon_start_and_settings():
+    from bitred.run_qat_small import SETTINGS, check_masks, lamp_recon_start
+    from har.compression import head_unpruned
+    from har.xgp4 import uniform_keep_counts
+    net0 = tinyhar()
+    before = {n: p.detach().clone() for n, p in net0.named_parameters()}
+    X = torch.from_numpy(synthetic_windows(48).X)
+    net, keep, unrecon, _ = lamp_recon_start(net0, 0.9, X, log=lambda s: None)
+    assert all(torch.equal(p, before[n]) for n, p in net0.named_parameters())       # original untouched
+    assert sum(keep.values()) == sum(uniform_keep_counts(net0, 0.9).values())
+    uni = uniform_keep_counts(net0, 0.9)
+    assert all(keep[n] >= uni[n] for n in unrecon)                                  # protected tensors
+    assert head_unpruned(net)
+    check_masks(net, net.prune_masks, keep)
+    q = quantize_model(net, uniform_bits(net, 4))
+    check_masks(q, net.prune_masks, keep)
+    assert [s["setting"] for s in SETTINGS] == ["tensor-2bit", "lamp_recon90-channel-4bit",
+                                                "lamp_recon95-channel-4bit"]

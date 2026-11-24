@@ -344,3 +344,7 @@ SHAP is ≈ 60% of the time. Not measured yet; replace with the real times after
 ## Bit-reduction test (bit-reduction-test/)
 - Tests 7 s; smoke fold 0: 26 s CPU (nakhoul-3050 laptop), 18 s CUDA; `--prepare` (5 folds, window hashes only) ≈ 15 s.
 - Estimate of the real run: ≈ 12,500 SHAP windows per fold (original 300 + 140, probe 7 × 300, sensitivities 52 × 140, allocations 9 × 300) at ≈ 0.14–0.15 s per window ≈ 30–40 min per fold; Hutchinson (100 iterations on ≈ 980 windows) + KL ≈ 2 min. 5 folds ≈ 2.5–3.4 h on one GPU, ≈ 1.5–2 h split over two. Not measured yet; replace with the config files' `seconds` after the runs.
+- 2-bit gap test (`run_qat`, fold 0, nakhoul-3050): 3.7 min measured (2 QAT runs, ≈ 65 s fine-tuning + ≈ 43 s SHAP each).
+- Ultra-small gap test (`run_qat_small`, fold 0): smoke 14 s CPU (LenovoP330-01). Estimate of the real run: 6 QAT runs
+  (≈ 65–70 s + ≈ 45 s SHAP each) + 6 assessments without QAT (≈ 45 s each) + 2 lamp_recon builds (seconds)
+  ≈ 15–20 min on a GPU. Not measured yet; replace with the config's `seconds` after the run.
