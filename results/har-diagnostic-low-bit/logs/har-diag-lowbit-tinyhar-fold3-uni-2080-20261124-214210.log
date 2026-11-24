@@ -1,0 +1,60 @@
+=== low-bit diagnostic fold 3 | machine uni-2080 | device cuda GeForce RTX 2080 | torch 2.7.1+cu118 | started 2026-11-24T21:42:10+02:00 | C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\har\run_diagnostic_low_bit.py --folds 2 3 4 --device cuda --machine-name uni-2080
+    SHAP cache hit har-noise-floor-fold3-inner_val-d4203a18ca60e236.npz
+    SHAP cache hit har-noise-floor-fold3-general-80535f9ce401fd51.npz
+    SHAP cache hit har-noise-floor-fold3-older-b43f60b0bfb1c716.npz
+fold 3: train 54392 windows, inner val ['S017', 'S022', 'S024'], general ['S013', 'S020', 'S021', 'S023'], older 18 subjects; explain inner_val 90, general 120, older 540; tau_k 0.6237 (C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-noise-floor\har-noise-floor-tinyhar-fold3-uni-2080-tau.csv); ceilings inner_val 0.9129, general 0.9287, older 0.9233; original SHAP 0.0 s
+  original                                               212.0 KB | LCI val 1.0000, general 1.0000, older 1.0000 | acc val 0.9347, general 0.9168, older 0.7222 | 2 s
+  ptq_pc4                                                 33.7 KB | LCI val 0.9053, general 0.9697, older 0.9467 | acc val 0.9348, general 0.9189, older 0.7088 | 129 s
+  ptq_pc3                                                 27.2 KB | LCI val 0.9079, general 0.8887, older 0.9188 | acc val 0.9318, general 0.9090, older 0.7381 | 129 s
+  ptq_pc2                                                 20.7 KB | LCI val 0.6182, general 0.6459, older 0.6308 | acc val 0.8105, general 0.8177, older 0.5075 | 128 s
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      budgeted prune step 1/5: n_nonzero 44782, reconstructed
+      budgeted prune step 2/5: n_nonzero 35294, reconstructed
+      budgeted prune step 3/5: n_nonzero 25800, reconstructed
+      budgeted prune step 4/5: n_nonzero 16312, reconstructed
+      budgeted prune step 5/5: n_nonzero 6821, reconstructed
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  lamp_recon-90pct                                        33.1 KB | LCI val 0.4584, general 0.4751, older 0.4718 | acc val 0.9152, general 0.8833, older 0.7245 | 128 s
+  lamp_recon-90pct-ptq_pc4                                16.9 KB | LCI val 0.4551, general 0.4534, older 0.4667 | acc val 0.9168, general 0.8804, older 0.7095 | 130 s
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+      budgeted prune step 1/5: n_nonzero 44256, reconstructed
+      budgeted prune step 2/5: n_nonzero 34237, reconstructed
+      budgeted prune step 3/5: n_nonzero 24220, reconstructed
+      budgeted prune step 4/5: n_nonzero 14201, reconstructed
+      budgeted prune step 5/5: n_nonzero 4184, reconstructed
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\.venv\Lib\site-packages\torch\nn\modules\rnn.py:1124: UserWarning: RNN module weights are not part of single contiguous chunk of memory. This means they need to be compacted at every call, possibly greatly increasing memory usage. To compact weights again call flatten_parameters(). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\cudnn\RNN.cpp:1481.)
+  result = _VF.lstm(
+  lamp_recon-95pct                                        22.8 KB | LCI val 0.2651, general 0.2703, older 0.2776 | acc val 0.7904, general 0.8509, older 0.6331 | 129 s
+  lamp_recon-95pct-ptq_pc4                                15.6 KB | LCI val 0.2626, general 0.2694, older 0.2751 | acc val 0.7799, general 0.8298, older 0.5743 | 129 s
+  layer2bit-backbone.convs.0.weight                      211.6 KB | LCI val 0.8557, general 0.8468, older 0.7939 | acc val 0.9095, general 0.9015, older 0.7072 | 131 s
+  layer2bit-backbone.convs.3.weight                      197.8 KB | LCI val 0.8177, general 0.8129, older 0.8405 | acc val 0.9254, general 0.8690, older 0.6709 | 131 s
+  layer2bit-backbone.convs.6.weight                      197.8 KB | LCI val 0.8796, general 0.9502, older 0.9186 | acc val 0.9297, general 0.9146, older 0.6716 | 132 s
+  layer2bit-backbone.convs.9.weight                      197.8 KB | LCI val 0.8200, general 0.8570, older 0.8684 | acc val 0.9339, general 0.9048, older 0.6976 | 133 s
+  layer2bit-backbone.channel_attn.self_attn.in_proj_weight   203.7 KB | LCI val 0.9948, general 0.9495, older 0.9455 | acc val 0.9351, general 0.9184, older 0.7181 | 132 s
+  layer2bit-backbone.channel_attn.self_attn.out_proj.weight   209.2 KB | LCI val 0.9363, general 0.9744, older 0.9766 | acc val 0.9354, general 0.9146, older 0.7254 | 132 s
+  layer2bit-backbone.channel_attn.linear1.weight         206.5 KB | LCI val 0.9987, general 0.9758, older 0.9834 | acc val 0.9347, general 0.9168, older 0.7203 | 133 s
+  layer2bit-backbone.channel_attn.linear2.weight         206.4 KB | LCI val 0.9990, general 0.9991, older 0.9786 | acc val 0.9354, general 0.9174, older 0.7229 | 133 s
+  layer2bit-backbone.fusion.0.weight                     177.8 KB | LCI val 0.8583, general 0.8890, older 0.9062 | acc val 0.9372, general 0.9289, older 0.7735 | 132 s
+  layer2bit-backbone.lstm.weight_ih_l0                   166.9 KB | LCI val 0.9486, general 0.9402, older 0.9293 | acc val 0.9310, general 0.9183, older 0.6982 | 128 s
+  layer2bit-backbone.lstm.weight_hh_l0                   166.9 KB | LCI val 0.9313, general 0.9704, older 0.9420 | acc val 0.9324, general 0.9208, older 0.7171 | 102 s
+  layer2bit-backbone.attn_score.weight                   211.8 KB | LCI val 1.0000, general 1.0000, older 1.0000 | acc val 0.9345, general 0.9167, older 0.7225 | 103 s
+  layer2bit-backbone.head.weight                         210.6 KB | LCI val 0.9607, general 0.9940, older 0.9520 | acc val 0.9252, general 0.8884, older 0.6478 | 102 s
+fold 3 done in 2539.1 s
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-diagnostic-low-bit\har-diag-lowbit-tinyhar-fold3-uni-2080-per-subject-metrics.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-diagnostic-low-bit\har-diag-lowbit-tinyhar-fold3-uni-2080-per-subject-class-lci.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-diagnostic-low-bit\har-diag-lowbit-tinyhar-fold3-uni-2080-per-group-class-lci.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-diagnostic-low-bit\har-diag-lowbit-tinyhar-fold3-uni-2080-models.csv
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-diagnostic-low-bit\har-diag-lowbit-tinyhar-fold3-uni-2080-shap-48-segments.npz
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-diagnostic-low-bit\har-diag-lowbit-tinyhar-fold3-uni-2080-config.json
+saved C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-diagnostic-low-bit\logs\har-diag-lowbit-tinyhar-fold3-uni-2080-20261124-214210.log

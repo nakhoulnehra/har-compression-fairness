@@ -1,0 +1,86 @@
+{
+ "command_line": [
+  "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\har\\run_diagnostic_low_bit.py",
+  "--folds",
+  "2",
+  "3",
+  "4",
+  "--device",
+  "cuda",
+  "--machine-name",
+  "uni-2080"
+ ],
+ "machine_name": "uni-2080",
+ "device": {
+  "device": "cuda",
+  "gpu_name": "GeForce RTX 2080",
+  "cuda_version": "11.8",
+  "torch_version": "2.7.1+cu118",
+  "cpu": "Intel64 Family 6 Model 158 Stepping 13, GenuineIntel",
+  "torch_threads": 8,
+  "python": "3.11.9",
+  "os": "Windows 10"
+ },
+ "git_commit": "a18e156d2c05e03196eca60dd3ade35edc739819",
+ "git_dirty": false,
+ "code_sha256": "d05bd0e27a97238e805848f67b576ed6ca7e62a48c98db03a4556c3629317bbc",
+ "fold": 3,
+ "smoke": false,
+ "diag": {
+  "ptq_bits": [
+   4,
+   3,
+   2
+  ],
+  "lamp_levels": [
+   0.9,
+   0.95
+  ],
+  "lamp_ptq_bits": 4,
+  "sens_bits": 2,
+  "K": 5,
+  "damp": 0.01,
+  "cal_per_cell": 10,
+  "cal_seed": 46,
+  "silent_tol": 0.01,
+  "target_kb": 30
+ },
+ "K": 5,
+ "grid_metrics": {
+  "nsamples": 200,
+  "shap_seed": 0,
+  "k": 10,
+  "omega": 0.5
+ },
+ "nsamples": 200,
+ "tau_k": 0.6236971762657825,
+ "tau_source": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\results\\har-noise-floor\\har-noise-floor-tinyhar-fold3-uni-2080-tau.csv",
+ "ceilings": {
+  "inner_val": 0.9128560356687709,
+  "general": 0.9286520945002946,
+  "older": 0.923348154579077
+ },
+ "noise_floor_machine": "uni-2080",
+ "weights": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold3-nakhoul-3050.pt",
+ "n_explain": {
+  "inner_val": 90,
+  "general": 120,
+  "older": 540
+ },
+ "n_eval_windows": {
+  "inner_val": 6274,
+  "general": 8679,
+  "older": 17403
+ },
+ "n_calibration": 958,
+ "calibration_matches_round4_table": null,
+ "layer_sensitivity": true,
+ "seconds_fixed": {
+  "shap_original": 0.027013299986720085,
+  "lamp_recon_90pct_build_seconds": 5.340983300004154,
+  "lamp_recon_95pct_build_seconds": 5.598375999950804
+ },
+ "n_models": 21,
+ "seconds_wall_this_invocation": 2539.068487399956,
+ "finished_at": "2026-11-24T22:24:30+02:00"
+}

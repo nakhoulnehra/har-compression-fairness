@@ -1,0 +1,63 @@
+{
+ "folds_and_machines": {
+  "0": "uni-2080",
+  "1": "uni-2080",
+  "2": "uni-2080",
+  "3": "uni-2080",
+  "4": "uni-2080"
+ },
+ "n_boot": 10000,
+ "metrics": [
+  "lci",
+  "shap_corr",
+  "jaccard",
+  "lci768",
+  "lci_k16",
+  "retention",
+  "n_skipped",
+  "accuracy",
+  "non_stair_macro_f1",
+  "aopc",
+  "random_aopc",
+  "d_accuracy",
+  "d_non_stair_macro_f1",
+  "d_aopc"
+ ],
+ "diag": {
+  "ptq_bits": [
+   4,
+   3,
+   2
+  ],
+  "lamp_levels": [
+   0.9,
+   0.95
+  ],
+  "lamp_ptq_bits": 4,
+  "sens_bits": 2,
+  "K": 5,
+  "damp": 0.01,
+  "cal_per_cell": 10,
+  "cal_seed": 46,
+  "silent_tol": 0.01,
+  "target_kb": 30
+ },
+ "tau_k_by_fold": {
+  "0": 0.659347126693845,
+  "1": 0.582721677640067,
+  "2": 0.629535758601785,
+  "3": 0.6236971762657825,
+  "4": 0.6125386127035136
+ },
+ "tau_global": 0.582721677640067,
+ "silent_break_definitions": {
+  "validation": "per fold: LCI_val < tau_k and pooled 7-class F1_val drop <= 1 pt vs the original",
+  "test": "FA-LCI < tau_global (min_k tau_k) and subject-mean accuracy drop <= 1 pt in both groups"
+ },
+ "smoke": false,
+ "git_commit": "a18e156d2c05e03196eca60dd3ade35edc739819",
+ "git_dirty": false,
+ "code_sha256": "d05bd0e27a97238e805848f67b576ed6ca7e62a48c98db03a4556c3629317bbc",
+ "analyzed_at": "2026-11-24T23:05:22+02:00",
+ "seconds": 6.640133799985051
+}
