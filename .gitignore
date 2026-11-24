@@ -20,3 +20,6 @@ results/har-xgp-pilot-smoke/
 
 # Tool caches
 .pytest_cache/
+results/har-noise-floor-smoke/
+results/har-compression-grid-smoke/
+results/har-compression-grid-analysis-smoke/
