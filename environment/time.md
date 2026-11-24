@@ -347,4 +347,8 @@ SHAP is ≈ 60% of the time. Not measured yet; replace with the real times after
 - 2-bit gap test (`run_qat`, fold 0, nakhoul-3050): 3.7 min measured (2 QAT runs, ≈ 65 s fine-tuning + ≈ 43 s SHAP each).
 - Ultra-small gap test (`run_qat_small`, fold 0): smoke 14 s CPU (LenovoP330-01). Estimate of the real run: 6 QAT runs
   (≈ 65–70 s + ≈ 45 s SHAP each) + 6 assessments without QAT (≈ 45 s each) + 2 lamp_recon builds (seconds)
-  ≈ 15–20 min on a GPU. Not measured yet; replace with the config's `seconds` after the run.
+  ≈ 15–20 min on a GPU. Measured: 13.7 min wall on uni-2080 (QAT ≈ 51–54 s per run, SHAP ≈ 40 s per model,
+  lamp_recon build 3.4 s).
+- Data-regime gap test (`run_qat_regimes`, fold 0): smoke 14 s CPU (LenovoP330-01). Estimate: equal Adam steps
+  (4,020 per run, as the full-data runs), so 16 QAT runs at ≈ 50 s + 24 SHAP assessments at ≈ 40 s ≈ 30–35 min
+  on a GPU. Not measured yet.

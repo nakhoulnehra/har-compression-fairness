@@ -353,5 +353,8 @@ python -m bitred.run --analyze                                      # after merg
 python -m bitred.run_qat --fold 0 --device cuda --machine-name nakhoul-3050
 python -m pytest tests                                              # 24/24 passed (8 s, LenovoP330-01 CPU)
 python -m bitred.run_qat_small --fold 0 --smoke --device cpu --machine-name smoke-cpu     # 14 s
-python -m bitred.run_qat_small --fold 0 --device cuda --machine-name nakhoul-3050         # to do (GPU)
+python -m bitred.run_qat_small --fold 0 --device cuda --machine-name uni-2080             # done 2026-11-24 (13.7 min)
+python -m pytest tests                                              # 27/27 passed (9 s, LenovoP330-01 CPU)
+python -m bitred.run_qat_regimes --fold 0 --smoke --device cpu --machine-name smoke-cpu  # 14 s
+python -m bitred.run_qat_regimes --fold 0 --device cuda --machine-name <m>               # to do (GPU): kd5 + calibration regimes, 4,020 Adam steps each (≈ 30–35 min)
 ```

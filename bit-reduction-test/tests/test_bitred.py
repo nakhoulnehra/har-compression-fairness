@@ -392,3 +392,45 @@ def test_lamp_recon_start_and_settings():
     check_masks(q, net.prune_masks, keep)
     assert [s["setting"] for s in SETTINGS] == ["tensor-2bit", "lamp_recon90-channel-4bit",
                                                 "lamp_recon95-channel-4bit"]
+
+
+def test_regime_runner_settings_and_rule():
+    import bitred.run_qat_regimes as G
+    from bitred.run_qat import GAP, decide
+    assert [s["setting"] for s in G.SETTINGS] == ["channel-2bit", "tensor-2bit", "lamp_recon90-channel-4bit",
+                                                  "lamp_recon95-channel-4bit"]
+    assert G.REGIMES == ("kd5", "calibration") and G.QAT["lrs"] == (1e-4, 1e-3) and G.QAT["epochs"] == 20
+    assert GAP == {"f1_recovered_tol": 0.03, "lci_gap_threshold": 0.85}
+    rows = [{"model_id": "a", "f1": 0.79, "lci": 0.85, "worst_subject_lci": 0.8},
+            {"model_id": "b", "f1": 0.70, "lci": 0.95, "worst_subject_lci": 0.9}]
+    assert decide(rows, 0.818)["verdict"].startswith("gap")            # b does not recover, a is at the threshold
+    assert decide(rows, 0.83)["verdict"].startswith("inconclusive")
+    rows[0]["lci"] = 0.851
+    assert decide(rows, 0.818)["verdict"].startswith("no gap")
+
+
+def test_steps_per_epoch():
+    from bitred.qat import steps_per_epoch
+    assert steps_per_epoch(51451, 256) == 201 and 20 * steps_per_epoch(51451, 256) == 4020    # fold 0 full data
+    assert steps_per_epoch(2583, 256) == 11 and steps_per_epoch(978, 256) == 4               # kd5, calibration
+    assert steps_per_epoch(257, 256) == 1 and steps_per_epoch(258, 256) == 2                  # last batch of 1 skipped
+
+
+def test_qat_step_mode_matches_epoch_mode_and_stops_mid_epoch():
+    from bitred.qat import qat_kd_finetune
+    tr, va = synthetic_windows(40), synthetic_windows(14, 1)
+    zt = torch.randn(40, 7)
+    bits = uniform_bits(tinyhar(), 2)
+    kw = dict(lr=1e-3, batch_size=16, log=lambda s: None)          # 40 windows -> 3 steps per epoch
+    qa, ha = qat_kd_finetune(tinyhar(), tr, va, zt, bits, epochs=2, **kw)
+    qb, hb = qat_kd_finetune(tinyhar(), tr, va, zt, bits, steps=6, eval_every_steps=3, **kw)
+    assert all(torch.equal(a, b) for a, b in zip(qa.state_dict().values(), qb.state_dict().values()))
+    assert [h["step"] for h in ha] == [h["step"] for h in hb] == [3, 6]
+    assert [h["val_f1_quantized"] for h in ha] == [h["val_f1_quantized"] for h in hb]
+    # 7 steps = 2 epochs + 1 step of the third; validated at 3, 6 and the last step
+    _, hc = qat_kd_finetune(tinyhar(), tr, va, zt, bits, steps=7, eval_every_steps=3, **kw)
+    assert [h["step"] for h in hc] == [3, 6, 7] and hc[-1]["epoch"] == pytest.approx(7 / 3)
+    # masks stay fixed over many epochs on a small set
+    net = l1_pruned(tinyhar(), 0.9)
+    q, _ = qat_kd_finetune(net, tr, va, zt, uniform_bits(net, 4), steps=30, eval_every_steps=10, **kw)
+    assert all(torch.all(dict(q.named_parameters())[n].detach()[~m] == 0) for n, m in net.prune_masks.items())

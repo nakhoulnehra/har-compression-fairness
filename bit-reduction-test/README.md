@@ -159,11 +159,78 @@ before the run.
 Estimated time: 6 QAT runs at ≈ 65–70 s of fine-tuning plus ≈ 45 s of SHAP each, and 5 reference and 1 original
 assessments at ≈ 45 s each, so ≈ 15–20 min on a GPU. Smoke: 14 s CPU.
 
+## Data-regime gap test (added 2026-11-25 after the ultra-small gap test, before running it)
+
+The 2-bit and ultra-small gap tests fine-tune on all ≈ 51,450 training windows of the fold. This test asks whether the
+verdicts change when QAT gets only a small share of the training data (`bitred/run_qat_regimes.py`).
+
+**Regimes.** These are the QAT training windows, all HARTH training windows of fold 0. The teacher is the original
+model's logits on the same windows.
+
+| Regime | Windows | Source |
+|---|---|---|
+| `kd5` | 2,583 (5.0 %) | Round 4's 5 % subset: max(1, round(0.05 n)) per (training subject, class), seed 48 (`kd5_table`). Checked against round 4's committed id table. |
+| `calibration` | 978 (1.9 %) | Round 4's calibration set: ≤ 10 per (subject, class), seed 46. These are the same windows lamp_recon's reconstruction uses. Checked against round 4's committed table. |
+
+**Settings:** the ultra-small test's three, plus per-channel 2-bit from the 2-bit test.
+
+| Setting | Size |
+|---|---|
+| `channel-2bit` | 20.7 KB |
+| `tensor-2bit` | 17.5 KB |
+| `lamp_recon90-channel-4bit` | 16.9 KB |
+| `lamp_recon95-channel-4bit` | 15.6 KB |
+
+**Optimisation: equal Adam steps, not equal epochs.** Every QAT run takes the full-data run's number of Adam
+steps: 20 epochs × 201 steps on fold 0's 51,451 training windows = **4,020 steps** at batch 256. The small sets
+therefore get many more epochs:
+
+| Regime | Steps per epoch | Epochs for 4,020 steps |
+|---|---|---|
+| `kd5` | 11 | ≈ 365.5 (the last one stops mid-epoch) |
+| `calibration` | 4 | 1,005 |
+
+- Same lr pair (1e-4, 1e-3), seed 0, and a fresh seeded batch order every epoch.
+- The model after the last step is scored.
+- Validation F1 is logged every 201 steps, 20 points as in the full-data runs. It is only logged, never used to
+  select a model.
+- The step mode (`qat_kd_finetune(steps=…)`) reproduces the epoch mode exactly when the step counts match (tested),
+  so the full-data runs are the same recipe at the same step count.
+
+*Changed 2026-11-25, before any real run of this test.* The first version kept 20 epochs, which means 220 steps on
+`kd5` and 80 on `calibration`. That mixes less data with less optimisation. Equal steps separate data size from
+step count, so a difference from the full-data verdicts can be put down to data size alone.
+
+**Everything else is unchanged:**
+- the lamp_recon starts, built as in the ultra-small test;
+- the QAT recipe (STE, shared KD, Adam, batch 256);
+- masks fixed;
+- scoring on inner val.
+
+The no-QAT references (PTQ models and fp32 pruned starts) are assessed once, since they do not depend on the regime.
+
+**Rule:** the 2-bit gap test's rule (`run_qat.decide`), fixed before the run, applied to each setting × regime
+over its two lrs.
+- A run recovers if F1_val ≥ F1_val(original) − 0.03.
+- **Gap** if the best LCI_val among recovering runs is ≤ 0.85.
+- **No gap** if it is > 0.85.
+- **Inconclusive** if no run recovers F1.
+
+`decision.json` gives the verdict per setting × regime and lists the cells with a gap. The full-data verdicts are the
+earlier files: the 2-bit gap test for `channel-2bit`, and the ultra-small test for the other three.
+
+`python -m bitred.run_qat_regimes --fold 0 --device cuda --machine-name <m>` writes
+`bitred-qat-regimes-tinyhar-fold0-<m>-{models, per-subject-lci, finetune-history, lamp-keep-counts,
+regime-train-window-ids}.csv`, `-decision.json` and `-config.json`.
+
+Estimated time: 16 QAT runs of 4,020 steps each (≈ 50 s each, like a 20-epoch full-data run), plus 24 SHAP
+assessments at ≈ 40 s each, so ≈ 30–35 min on a GPU. Smoke: 14 s CPU.
+
 ## Commands (repo `.venv`, run from this folder)
 
 ```
 cd bit-reduction-test
-python -m pytest tests                                             # 24 tests
+python -m pytest tests                                             # 27 tests
 python -m bitred.run --prepare                                     # pre-registration (CPU, seconds); commit it before the runs
 python -m bitred.run --folds 0 1 2 3 4 --device cuda --machine-name nakhoul-3050
 #   or split: nakhoul-3050 --folds 0 1 2, uni-2080 --folds 3 4 (same flags, own --machine-name)
@@ -171,7 +238,9 @@ python -m bitred.run --analyze                                     # after mergi
 # --resume continues an interrupted fold; --smoke writes a pipeline check to results-smoke/ (git-ignored)
 python -m bitred.run_qat --fold 0 --device cuda --machine-name nakhoul-3050         # 2-bit gap test (done)
 python -m bitred.run_qat_small --fold 0 --smoke --device cpu --machine-name smoke-cpu
-python -m bitred.run_qat_small --fold 0 --device cuda --machine-name nakhoul-3050   # ultra-small gap test
+python -m bitred.run_qat_small --fold 0 --device cuda --machine-name nakhoul-3050   # ultra-small gap test (done)
+python -m bitred.run_qat_regimes --fold 0 --smoke --device cpu --machine-name smoke-cpu
+python -m bitred.run_qat_regimes --fold 0 --device cuda --machine-name <m>         # data-regime gap test
 ```
 
 **Time:** about 12,500 SHAP windows per fold (probe 7 × 300, sensitivity 52 × 140, allocation 9 × 300, original). At
@@ -239,10 +308,23 @@ Per fold and machine (`bitred-tinyhar-fold<k>-<machine>-…`):
   XGQ claim is moot, and folds 1–4 are not worth running.
 - **Caveat:** one fold, last-epoch model; the lr 1e-4 run's per-epoch F1 varies 0.74–0.83.
 
-### `bitred-qat-ultrasmall-tinyhar-fold0-<machine>-*` (ultra-small gap test)
-- Not run yet. Sizes, fixed by construction:
-  - `tensor-2bit`: 17.54 KB;
-  - `lamp_recon90-channel-4bit`: 16.92 KB, of which 6.44 KB bitmask and 3.20 KB scales;
-  - `lamp_recon95-channel-4bit`: 15.64 KB, same bitmask and scales.
-  The bitmask dominates once 90 % of the weights are gone: without it, 10.49 / 9.20 KB.
-- Fill in F1 / LCI / worst-subject LCI and the verdicts after the GPU run.
+### `bitred-qat-ultrasmall-tinyhar-fold0-uni-2080-*` (ultra-small gap test, 13.7 min)
+- **Original:** F1 0.818, so a run recovers at F1 ≥ 0.788.
+- **Results** (QAT runs at lr 1e-4 / 1e-3; LCI with the worst subject in brackets):
+
+  | Setting | Size | No QAT (F1 / LCI) | QAT lr 1e-4 (F1 / LCI) | QAT lr 1e-3 (F1 / LCI) |
+  |---|---|---|---|---|
+  | `tensor-2bit` | 17.5 KB | 0.223 / 0.310 | 0.783 / 0.746 (0.652) | 0.733 / 0.658 (0.649) |
+  | `lamp_recon90-channel-4bit` | 16.9 KB | 0.648 / 0.597 | 0.739 / 0.817 (0.812) | 0.780 / 0.889 (0.827) |
+  | `lamp_recon95-channel-4bit` | 15.6 KB | 0.481 / 0.258 | 0.674 / 0.753 (0.718) | 0.705 / 0.740 (0.685) |
+
+  The fp32 lamp_recon starts score F1 / LCI 0.660 / 0.600 at 90 % and 0.490 / 0.257 at 95 %.
+- **Verdict (pre-registered rule): inconclusive at every size.** No run recovers F1, so below 20.7 KB the problem is
+  accuracy first.
+  - The near misses: `tensor-2bit` at lr 1e-4 (F1 −3.5 pt, LCI 0.746) and lamp_recon 90 % at lr 1e-3 (F1 −3.8 pt,
+    LCI 0.889).
+  - The second keeps LCI above 0.85 while F1 is short, so explanations are not what breaks first.
+- **Sizes:** they include the 6.44 KB bitmask of the pruned tensors. Without it, 10.49 / 9.20 KB.
+
+### `bitred-qat-regimes-tinyhar-fold0-<machine>-*` (data-regime gap test)
+- Not run yet.
