@@ -84,7 +84,7 @@ def regime_indices(ctx: FoldContext, regime: str) -> np.ndarray:
         raise ValueError(regime)
     ids = kd5_table(ctx.tr).window_id.tolist()
     committed = ROUND4_DIR / f"har-xgp-pilot4-tinyhar-fold{ctx.k}-kd5pct-train-window-ids.csv"
-    if not ctx.smoke:
+    if not ctx.smoke and committed.exists():              # round 4 committed folds 0-1; others are rebuilt
         saved = pd.read_csv(committed, dtype={"subject": str}).window_id.tolist()
         if saved != ids:
             raise RuntimeError(f"fold {ctx.k}: kd5 windows differ from round 4's committed {committed.name}")

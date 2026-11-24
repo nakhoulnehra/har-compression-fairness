@@ -356,5 +356,13 @@ python -m bitred.run_qat_small --fold 0 --smoke --device cpu --machine-name smok
 python -m bitred.run_qat_small --fold 0 --device cuda --machine-name uni-2080             # done 2026-11-24 (13.7 min)
 python -m pytest tests                                              # 27/27 passed (9 s, LenovoP330-01 CPU)
 python -m bitred.run_qat_regimes --fold 0 --smoke --device cpu --machine-name smoke-cpu  # 14 s
-python -m bitred.run_qat_regimes --fold 0 --device cuda --machine-name <m>               # to do (GPU): kd5 + calibration regimes, 4,020 Adam steps each (≈ 30–35 min)
+python -m bitred.run_qat_regimes --fold 0 --device cuda --machine-name <m>               # done 2026-11-25 on uni-2080 (24.5 min)
+# --- final comparison: XGP (xgp_xb) vs lamp_recon at 90 / 95 % + 4-bit QAT, full / kd5 / calibration, folds 0-4 (README) ---
+python -m pytest tests                                              # 31/31 passed (11 s, LenovoP330-01 CPU)
+python -m bitred.run_xgp_compare --folds 0 1 2 3 4 --smoke --device cpu --machine-name smoke-cpu   # ≈ 25 s per fold
+python -m bitred.run_xgp_compare --folds 0 --smoke --resume --device cpu --machine-name smoke-cpu # resume check
+python -m bitred.run_xgp_compare --analyze --smoke
+python -m bitred.run_xgp_compare --folds 0 1 --device cuda --machine-name nakhoul-3050     # to do (≈ 2.2-2.5 h)
+python -m bitred.run_xgp_compare --folds 2 3 4 --device cuda --machine-name uni-2080       # to do (≈ 2.8-3 h)
+python -m bitred.run_xgp_compare --analyze                                                 # after merging
 ```

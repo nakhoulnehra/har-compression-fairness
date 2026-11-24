@@ -434,3 +434,91 @@ def test_qat_step_mode_matches_epoch_mode_and_stops_mid_epoch():
     net = l1_pruned(tinyhar(), 0.9)
     q, _ = qat_kd_finetune(net, tr, va, zt, uniform_bits(net, 4), steps=30, eval_every_steps=10, **kw)
     assert all(torch.all(dict(q.named_parameters())[n].detach()[~m] == 0) for n, m in net.prune_masks.items())
+
+
+# ------------------------------------------------------------------------------ final comparison (XGP vs LAMP)
+
+def _compare_frame(d_lci=0.03, d_f1=0.0, d_worst=0.0, lamp_f1=(0.70, 0.75), n_folds=5, lower_fold=None):
+    import bitred.run_xgp_compare as X
+    rows = []
+    for k in range(n_folds):
+        for level in X.LEVELS:
+            for regime in X.REGIMES:
+                for lr, f1 in zip(X.QAT["lrs"], lamp_f1):
+                    base = {"fold": k, "level": level, "regime": regime, "lr": lr, "role": "qat", "size_kb": 16.9}
+                    d = -0.01 if k == lower_fold else d_lci
+                    rows.append({**base, "method": "lamp_recon", "f1": f1, "lci": 0.80, "worst_subject_lci": 0.75})
+                    rows.append({**base, "method": "xgp_xb", "f1": f1 + d_f1, "lci": 0.80 + d,
+                                 "worst_subject_lci": 0.75 + d_worst})
+    return pd.DataFrame(rows)
+
+
+def test_primary_lr_is_chosen_on_lamp_f1_only():
+    import bitred.run_xgp_compare as X
+    p = X.primary_lrs(_compare_frame(lamp_f1=(0.70, 0.75)))
+    assert p.primary_lr.tolist() == [1e-3] * 3
+    assert X.primary_lrs(_compare_frame(lamp_f1=(0.75, 0.70))).primary_lr.tolist() == [1e-4] * 3
+    assert X.primary_lrs(_compare_frame(lamp_f1=(0.72, 0.72))).primary_lr.tolist() == [1e-4] * 3   # tie
+    # XGP's F1 does not move the choice
+    m = _compare_frame(lamp_f1=(0.75, 0.70), d_f1=0.0)
+    m.loc[(m.method == "xgp_xb") & np.isclose(m.lr, 1e-3), "f1"] = 0.99
+    assert X.primary_lrs(m).primary_lr.tolist() == [1e-4] * 3
+
+
+def test_r2_verdicts():
+    import bitred.run_xgp_compare as X
+    def verdicts(**kw):
+        m = _compare_frame(**kw)
+        c = X.comparisons(m, X.primary_lrs(m))
+        return c[c.primary].verdict.unique().tolist(), c
+    assert verdicts(d_lci=0.03)[0] == ["XGP beats LAMP"]
+    assert verdicts(d_lci=0.015)[0] == ["XGP does not beat LAMP"]                      # (a) gain < 0.02
+    assert verdicts(d_lci=0.03, lower_fold=0)[0] == ["XGP beats LAMP"]                 # 4 of 5 higher, mean 0.022
+    v, c = verdicts(d_lci=0.03, d_f1=-0.011)
+    assert v == ["XGP does not beat LAMP"] and not c.c_f1.any()                        # (c)
+    v, c = verdicts(d_lci=0.03, d_worst=-0.011)
+    assert v == ["XGP does not beat LAMP"] and not c.d_worst.any()                     # (d)
+    v, c = verdicts(d_lci=0.03, n_folds=4)
+    assert v == ["incomplete"]
+    assert len(c) == len(X.LEVELS) * len(X.REGIMES) * len(X.QAT["lrs"]) and c.primary.sum() == 6
+
+
+def test_r2_needs_four_of_five_higher():
+    import bitred.run_xgp_compare as X
+    m = _compare_frame(d_lci=0.06)
+    m.loc[(m.method == "xgp_xb") & m.fold.isin([0, 1]), "lci"] = 0.79                   # 3 of 5 higher, mean 0.032
+    c = X.comparisons(m, X.primary_lrs(m))
+    assert (c[c.primary].verdict == "XGP does not beat LAMP").all() and not c.b_folds.any()
+
+
+def test_xgp_xb_start_uses_round4_functions():
+    import bitred.run_xgp_compare as X
+    from har.xgp4 import U_CELLS, uniform_keep_counts
+    assert U_CELLS["xgp_xb"] == ("xb", "xgp") and U_CELLS["lamp_recon"] == ("lamp", "l1")
+    net0 = tinyhar()
+    w = synthetic_windows(28)
+
+    class Cal:
+        X = torch.from_numpy(w.X)
+        t = torch.from_numpy(w.y.astype(np.int64))
+        y = w.y
+        g = np.array(["S006", "S008"] * 14)
+        unrecon = []
+    bg = torch.from_numpy(synthetic_windows(4, 3).X)
+    xc = {**X.XGP, "m": 2, "K": 2}
+    calls = []
+
+    def shares_fn():
+        from har.xgp4 import worst_group_shares
+        calls.append(1)
+        return worst_group_shares(net0, net0, Cal.X, Cal.t, Cal.y, Cal.g, bg, k=xc["top_k"], m=2, eg_seeds=(0, 1))
+    before = {n: p.detach().clone() for n, p in net0.named_parameters()}
+    nx, kx, sx, _ = X.build_start(net0, "xgp_xb", 0.9, Cal, bg, xc, shares_fn, log=lambda s: None)
+    nl, kl, sl, _ = X.build_start(net0, "lamp_recon", 0.9, Cal, bg, xc, shares_fn, log=lambda s: None)
+    assert calls == [1] and sl is None and abs(sum(sx.values()) - 1) < 1e-9
+    total = sum(uniform_keep_counts(net0, 0.9).values())
+    assert sum(kx.values()) == sum(kl.values()) == total and kx != kl                  # same size, other split
+    assert all(torch.equal(p, before[n]) for n, p in net0.named_parameters())
+    from bitred.quant import pruned_size_record
+    sz = [pruned_size_record(net0, uniform_bits(net0, 4), n.prune_masks)["size_kb"] for n in (nx, nl)]
+    assert sz[0] == sz[1]

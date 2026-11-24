@@ -226,11 +226,95 @@ regime-train-window-ids}.csv`, `-decision.json` and `-config.json`.
 Estimated time: 16 QAT runs of 4,020 steps each (≈ 50 s each, like a 20-epoch full-data run), plus 24 SHAP
 assessments at ≈ 40 s each, so ≈ 30–35 min on a GPU. Smoke: 14 s CPU.
 
+## Final comparison: XGP vs the best existing at ultra-small size (added 2026-11-25, before any run)
+
+The gap tests found no explanation-specific gap below 20.7 KB: there, accuracy fails first. This last pre-registered
+test asks the method question directly in the ultra-small pipeline (unstructured pruning, then 4-bit per-channel
+weights, then QAT + KD). At the same size, does round 4's XGP keep explanations more consistent than the best
+existing pruning baseline? Runner: `bitred/run_xgp_compare.py`.
+
+**Methods,** per fold, built from the frozen TinyHAR with round 4's functions and values (`har/xgp4.py`,
+`har/xgp3.py`, unchanged):
+
+| Method | Round 4 cell | Budget | Selection |
+|---|---|---|---|
+| `lamp_recon` (best existing) | `U_CELLS["lamp_recon"]` = (lamp, l1) | LAMP keep counts (Lee et al. 2021) through `bounded_budget` | magnitude, β 0 |
+| `xgp_xb` (ours) | `U_CELLS["xgp_xb"]` = (xb, xgp) | XGP shares (`worst_group_shares` of the original model) through the same `bounded_budget` | β 0.1 with the worst-group EG importance, recomputed every step |
+
+Both methods share:
+- K = 5 nested steps (`iterative_prune_budget`);
+- after every step, the ridge reconstruction (`layerwise_reconstruct`, damp 0.01);
+- round 4's calibration set (≤ 10 training windows per (subject, class), seed 46, groups = subjects) and the fold's
+  100 SHAP background windows as EG baselines;
+- top-k 3, m = 8, floor 2 %;
+- EG seeds (0, 1), which is round 4's seed 0.
+
+At each level both keep the same total of weights (the uniform total), so they have the same size. The head is never
+pruned. On folds 0–1 the fp32 starts are checked against round 4's own no-fine-tune scores (`round4_f1`, `round4_lci`
+in `-models.csv`). For lamp_recon at 90 % on fold 0, the ultra-small test already reproduces round 4 exactly
+(F1 0.660375, LCI 0.599676).
+
+**Pipeline and sizes** (KB with the bitmask):
+
+| Level | Method | QAT | Size |
+|---|---|---|---|
+| 90 % | `lamp_recon`, `xgp_xb` | 4-bit per channel, QAT + KD | 16.92 KB |
+| 95 % | `lamp_recon`, `xgp_xb` | 4-bit per channel, QAT + KD | 15.64 KB |
+| — | `tensor-2bit`, the quantization-only reference | 2-bit per tensor, QAT + KD | 17.54 KB |
+
+- **QAT** (`bitred/qat.py`): STE, shared KD recipe, Adam, batch 256, masks fixed.
+  - **4,020 Adam steps in every regime and fold** (20 epochs of fold 0's full set), with validation logged every
+    201 steps.
+  - lr 1e-4 and 1e-3, seed 0, the model after the last step.
+- **Regimes** (QAT training windows, HARTH training subjects of the fold):
+
+  | Regime | Windows |
+  |---|---|
+  | `full` | all |
+  | `kd5` | round 4's 5 % subset, seed 48 |
+  | `calibration` | round 4's calibration set |
+
+  Round 4 committed the kd5 and calibration tables for folds 0–1 only. Those are checked; folds 2–4 rebuild the
+  same deterministic selections.
+- **No-QAT references,** assessed once per start: the fp32 start and its 4-bit PTQ model.
+- **Folds 0–4,** seed 0, HARTH only. Every number is on the fold's 3 inner-val subjects, as in every bit-reduction
+  test:
+  - F1 on all inner-val windows;
+  - LCI and worst-subject LCI on the 100 explain windows per subject.
+
+**Primary lr (fixed and confirmed 2026-11-25, before the run):** per regime, the lr with the higher mean F1_val of `lamp_recon` over the
+5 folds and both levels. A tie goes to 1e-4. It is chosen on the comparator only, never on XGP or on LCI. That gives
+the baseline its best-accuracy lr. Both lrs are reported in `-comparisons.csv`; only the primary one decides.
+
+**Rule R2 (fixed before the run; `bitred.rules.compare`).** At each level × regime, at the primary lr, XGP beats
+LAMP iff, over the 5 folds, all of these hold:
+- (a) the mean LCI_val gain is ≥ 0.02;
+- (b) LCI_val is strictly higher in ≥ 4 of 5 folds;
+- (c) mean F1_val ≥ LAMP's − 0.01;
+- (d) mean worst-subject LCI_val ≥ LAMP's − 0.01.
+
+With fewer than 5 folds the verdict is "incomplete". `-decision.json` gives the verdict for each of the 6
+level × regime cells, and `xgp_beats_lamp_anywhere`. Nothing is retuned after the run.
+
+**Outputs:**
+- per fold: `bitred-xgp-compare-tinyhar-fold<k>-<m>-{models, per-subject-lci, finetune-history, budgets}.csv`
+  and `-config.json`;
+- `--analyze`: `-summary-mean-sd-over-folds.csv`, `-per-fold.csv`, `-primary-lr.csv`, `-comparisons.csv` and
+  `-decision.json`.
+
+**Time per fold** (estimate from the measured gap tests on uni-2080):
+- 30 QAT runs at ≈ 50 s;
+- 40 SHAP assessments at ≈ 40 s;
+- the XGP shares and 2 xgp_xb builds at ≈ 1.5–2 min each (round 4: 91–110 s);
+- so ≈ 55–60 min on uni-2080, and ≈ 65–75 min on nakhoul-3050.
+
+`--resume` continues a fold: it skips finished models and reuses the saved starts. Smoke: ≈ 25 s per fold on CPU.
+
 ## Commands (repo `.venv`, run from this folder)
 
 ```
 cd bit-reduction-test
-python -m pytest tests                                             # 27 tests
+python -m pytest tests                                             # 31 tests
 python -m bitred.run --prepare                                     # pre-registration (CPU, seconds); commit it before the runs
 python -m bitred.run --folds 0 1 2 3 4 --device cuda --machine-name nakhoul-3050
 #   or split: nakhoul-3050 --folds 0 1 2, uni-2080 --folds 3 4 (same flags, own --machine-name)
@@ -240,7 +324,11 @@ python -m bitred.run_qat --fold 0 --device cuda --machine-name nakhoul-3050     
 python -m bitred.run_qat_small --fold 0 --smoke --device cpu --machine-name smoke-cpu
 python -m bitred.run_qat_small --fold 0 --device cuda --machine-name nakhoul-3050   # ultra-small gap test (done)
 python -m bitred.run_qat_regimes --fold 0 --smoke --device cpu --machine-name smoke-cpu
-python -m bitred.run_qat_regimes --fold 0 --device cuda --machine-name <m>         # data-regime gap test
+python -m bitred.run_qat_regimes --fold 0 --device cuda --machine-name <m>         # data-regime gap test (done)
+python -m bitred.run_xgp_compare --folds 0 --smoke --device cpu --machine-name smoke-cpu
+python -m bitred.run_xgp_compare --folds 0 1 --device cuda --machine-name nakhoul-3050    # final comparison
+python -m bitred.run_xgp_compare --folds 2 3 4 --device cuda --machine-name uni-2080
+python -m bitred.run_xgp_compare --analyze
 ```
 
 **Time:** about 12,500 SHAP windows per fold (probe 7 × 300, sensitivity 52 × 140, allocation 9 × 300, original). At
@@ -326,5 +414,23 @@ Per fold and machine (`bitred-tinyhar-fold<k>-<machine>-…`):
   - The second keeps LCI above 0.85 while F1 is short, so explanations are not what breaks first.
 - **Sizes:** they include the 6.44 KB bitmask of the pruned tensors. Without it, 10.49 / 9.20 KB.
 
-### `bitred-qat-regimes-tinyhar-fold0-<machine>-*` (data-regime gap test)
-- Not run yet.
+### `bitred-qat-regimes-tinyhar-fold0-uni-2080-*` (data-regime gap test, 24.5 min)
+- **Setup:** equal optimisation, 4,020 Adam steps per QAT run (≈ 49 s each in every regime). Original F1 0.818, so a
+  run recovers at F1 ≥ 0.788.
+- **Results** (F1 / LCI per lr):
+
+  | Setting | Size | kd5, lr 1e-4 | kd5, lr 1e-3 | calibration, lr 1e-4 | calibration, lr 1e-3 |
+  |---|---|---|---|---|---|
+  | `channel-2bit` | 20.7 KB | **0.795 / 0.856** | 0.710 / 0.748 | 0.743 / 0.836 | 0.756 / 0.666 |
+  | `tensor-2bit` | 17.5 KB | 0.695 / 0.726 | 0.778 / 0.635 | 0.737 / 0.715 | 0.727 / 0.599 |
+  | `lamp_recon90-channel-4bit` | 16.9 KB | 0.761 / 0.829 | 0.762 / 0.794 | 0.666 / 0.797 | 0.713 / 0.779 |
+  | `lamp_recon95-channel-4bit` | 15.6 KB | 0.674 / 0.771 | 0.715 / 0.793 | 0.619 / 0.697 | 0.658 / 0.678 |
+
+- **Verdicts (pre-registered rule):**
+  - `channel-2bit` with kd5: **no gap** (F1 0.795, LCI 0.856, worst subject 0.822).
+  - Every other cell: **inconclusive**. No run recovers F1.
+  - No cell has a gap.
+- **Reading:**
+  - With 5 % of the data, 2-bit QAT still recovers both F1 and LCI at 20.7 KB, as with full data.
+  - On the calibration set (978 windows) it does not recover F1.
+  - Below 20.7 KB, F1 fails first in every regime, as in the full-data run.
