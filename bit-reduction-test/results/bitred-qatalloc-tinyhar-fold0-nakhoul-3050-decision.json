@@ -1,0 +1,32 @@
+{
+ "by_budget": {
+  "2.5bit": {
+   "xgq_kd": {
+    "lci": 0.8809356961594332,
+    "f1": 0.7918740920068138,
+    "worst_subject_lci": 0.880124836498311,
+    "size_kb": 23.9169921875
+   },
+   "best_comparator": "zeroq_kl-2.5bit-kd",
+   "best_comparator_lci": 0.8868544640723796,
+   "d_lci_vs_best": -0.005918767912946321,
+   "wins": false
+  },
+  "2.25bit": {
+   "xgq_kd": {
+    "lci": 0.8985793034720099,
+    "f1": 0.7618772895695882,
+    "worst_subject_lci": 0.8692455580377402,
+    "size_kb": 22.310546875
+   },
+   "best_comparator": "hawq-2.25bit-kd",
+   "best_comparator_lci": 0.8737144263159239,
+   "d_lci_vs_best": 0.024864877156085985,
+   "wins": false
+  }
+ },
+ "any_win": false,
+ "rule": "Fold-0 screen, fixed before the run. At a budget B, XGQ + KD 'wins like-for-like' iff its LCI_val >= max(ZeroQ-KL + KD, HAWQ + KD, uniform 2-bit + KD) + 0.03 and its F1_val >= each of theirs - 0.01. The 0.03 margin = about one top-10 Jaccard step (~0.09 for one subject) averaged over the 3 inner-val subjects; smaller differences are within the metric's resolution. Uniform 2-bit + KD is smaller (20.7 KB), so XGQ + KD must beat it to show that mixed precision is worth its extra size. One fold and one seed: a win is a reason to run folds 1-4, not evidence; no win = no method contribution here.",
+ "lci": 0.03,
+ "f1_tol": 0.01
+}

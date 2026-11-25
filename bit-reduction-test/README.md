@@ -109,6 +109,23 @@ method is built for 2 bits, this test asks whether the standard fix for low-bit 
 `bitred-qat2bit-tinyhar-fold0-<m>-{models, per-subject-lci, finetune-history}.csv`, `-decision.json` and
 `-config.json`.
 
+## Like-for-like test (added 2026-11-24, before running it)
+
+The fold-0 comparison "XGQ 0.845 at 23.9 KB vs 2-bit + KD 0.886 at 20.7 KB" was not like-for-like. XGQ had no
+training; the 2-bit model had 20 epochs of quantization-aware KD.
+
+This test gives every allocation (XGQ, ZeroQ-KL, HAWQ at 2.5bit = 23.9 KB and 2.25bit = 22.3 KB, from fold 0's
+allocations file) the same recipe as the 2-bit run: QAT + KD, lr 1e-4, 20 epochs, seed 0. Uniform 2-bit + KD is rerun
+in the same session as the reference (`bitred/run_qat_alloc.py`).
+
+**Rule (fixed before the run):** at a budget, XGQ + KD wins iff:
+- its LCI_val ≥ the best of ZeroQ-KL + KD, HAWQ + KD and uniform 2-bit + KD, plus 0.03;
+- its F1_val is within 1 pt of each of them.
+
+The 0.03 margin is about one top-10 Jaccard step (≈ 0.09 for one subject) over the 3 inner-val subjects. LCI's
+Jaccard term compares one global top-10 set of 48 segments, so smaller differences are within the metric's
+resolution. One fold and one seed: a win is a reason to run folds 1–4, not evidence.
+
 ## Commands (repo `.venv`, run from this folder)
 
 ```
@@ -185,3 +202,27 @@ Per fold and machine (`bitred-tinyhar-fold<k>-<machine>-…`):
 - It also beats every allocation above while being smaller (20.7 KB vs 23.9 KB for XGQ's 0.845 / 0.808). So the
   XGQ claim is moot, and folds 1–4 are not worth running.
 - **Caveat:** one fold, last-epoch model; the lr 1e-4 run's per-epoch F1 varies 0.74–0.83.
+- **Correction (her review):** the "beats every allocation" comparison above was not like-for-like. The allocations
+  had no training. See the like-for-like test below.
+
+### `bitred-qatalloc-tinyhar-fold0-nakhoul-3050-*` (like-for-like test, 25 min)
+Every model gets the same QAT + KD recipe (lr 1e-4, 20 epochs, seed 0).
+
+| Model | Size | LCI | F1 |
+|---|---|---|---|
+| Uniform 2-bit | 20.7 KB | 0.852 | 0.805 |
+| XGQ, 2.5bit | 23.9 KB | 0.881 | 0.792 |
+| ZeroQ-KL, 2.5bit | 23.9 KB | 0.887 | 0.805 |
+| HAWQ, 2.5bit | 23.9 KB | 0.878 | 0.817 |
+| XGQ, 2.25bit | 22.3 KB | 0.899 | 0.762 |
+| ZeroQ-KL, 2.25bit | 22.3 KB | 0.848 | 0.820 |
+| HAWQ, 2.25bit | 22.3 KB | 0.874 | 0.774 |
+
+- **Verdict (pre-registered rule): no win at either budget.**
+  - 2.5bit: XGQ is 0.006 below ZeroQ-KL, with the lowest F1.
+  - 2.25bit: XGQ has the highest LCI (+0.025 over HAWQ, under the 0.03 margin), but F1 0.762 is 4–6 pts below the
+    others.
+- **Run-to-run noise:** the rerun of uniform 2-bit + KD (same recipe, seed and machine) gives LCI 0.852 vs 0.886
+  in the 2-bit gap test. GPU training is not bit-reproducible, so single-run differences of about 0.03 LCI are noise.
+- **Conclusion:** after equal fine-tuning, the three allocations are within noise of each other and of uniform
+  2-bit. Choosing bits by explanation sensitivity buys nothing. XGQ is not a contribution.
