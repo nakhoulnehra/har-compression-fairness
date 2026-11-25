@@ -310,11 +310,126 @@ level × regime cells, and `xgp_beats_lamp_anywhere`. Nothing is retuned after t
 
 `--resume` continues a fold: it skips finished models and reuses the saved starts. Smoke: ≈ 25 s per fold on CPU.
 
+## Final test on HAR70+ (pre-registered 2026-11-25, before any code or run; run once)
+
+The final comparison's one winning cell (90 %|kd5 at lr 1e-3; see Results) is tested on held-out subjects, older
+adults included. Runner: `bitred/run_final_test.py`. Nothing in the method, the baselines, the QAT + KD recipe
+(4,020 Adam steps, batch 256, lr 1e-3 primary), the metrics or the 9A test protocol changes.
+
+**Models per fold (0–4)**, rebuilt exactly as in `run_xgp_compare` (same functions, values, regimes and code path):
+
+| Models | Levels × regimes | lr | Seeds |
+|---|---|---|---|
+| `lamp_recon`, `xgp_xb` (+ 4-bit per channel, QAT + KD) | 90 / 95 % × full / kd5 / calibration | 1e-3 (primary), 1e-4 | 0 |
+| the same two, 90 %\|kd5 only | 90 % × kd5 | 1e-3, 1e-4 | 1, 2 |
+| ablations `l1_xb_recon` (XGP budgets + magnitude selection) and `xgp_lamp` (LAMP budgets + XGP selection) | all 6 cells | 1e-3, 1e-4 | 0 |
+| `tensor-2bit` (per-tensor 2-bit QAT + KD, 17.54 KB) | each regime | 1e-3, 1e-4 | 0 |
+| `original` | — | — | — |
+
+That makes 62 QAT models plus the original per fold. Sizes include the bitmask: 16.92 KB at 90 %, 15.64 KB at 95 %.
+
+- **Seed s** follows round 4's convention: QAT batch-order seed s, and EG seeds (2s, 2s + 1) for the XGP importance
+  and shares. lamp_recon's start is deterministic, so for seeds 1–2 only its QAT seed changes.
+- **Seed-0 starts:** where `run_xgp_compare`'s checkpoint of the same start is on the machine, it is reused.
+  Otherwise the start is rebuilt with the same code. `start_source` records which.
+- **Retraining:** the comparison's QAT models were not saved, and GPU QAT is not bit-reproducible (the run-to-run
+  F1 drift is ≈ 0.01). So every QAT model is retrained here. Their validation numbers are reported next to the
+  comparison's as a reproduction check.
+
+**Order (enforced in code):**
+1. `--phase validation`, per fold. It trains every model, saves its checkpoint and scores it on inner val with the
+   final comparison's protocol: F1_val, LCI_val and worst-subject LCI_val. It never loads HAR70+ or the fold's HARTH
+   test subjects.
+2. `--analyze-validation`. It needs all 5 folds, writes the validation tables and records each fold's sha256 in
+   `validation-complete.json`.
+3. `--phase test`, per fold. It refuses until that file exists and the fold's validation file still matches its
+   sha256. It assesses the saved checkpoints (no training) and checks that each one's inner-val F1 equals its
+   validation F1.
+4. `--analyze`. It needs all 5 test folds; otherwise there is no verdict. Test files are never overwritten
+   (`--resume` only continues).
+
+**Test protocol (9A, `har.run_compression_grid.Context` and `assess`, unchanged):**
+- **Explain windows:** the fold's fixed 9A windows (inner val 90, general 120, older 540).
+- **SHAP:** GradientExplainer, nsamples 200, SHAP seed 0, target = the original model's predicted class,
+  background = the fold's 100 HARTH windows.
+- **LCI:** 48 segments, k = 10, ω = 0.5. τ_k and the ceilings come from the committed noise-floor files: folds 0–1
+  nakhoul-3050, folds 2–4 uni-2080, as in the 9A analysis.
+- **AOPC:** deletion faithfulness with the random-deletion baseline.
+- **Accuracy and non-stair macro-F1:** on all of the subject's test windows.
+- **Unit = test subject (40):** the 22 HARTH general subjects, each from its single test fold, and the 18 HAR70+
+  subjects, each averaged over the 5 fold models (`har.stats.pool_over_folds`). Walking-aid (inferred) = 503, 505,
+  513, 514, 515 (5); other older = 13.
+- **Per group** (older vs general; walking-aid vs other older): accuracy, non-stair F1, LCI, FA-LCI, AOPC. Also the
+  gaps with bootstrap CIs (10,000 draws, seed 42), the safe-explanation rate (τ_k, global τ, 0.85) and the size in KB
+  with the bitmask.
+- **d_accuracy:** per (fold, subject), the model's accuracy minus the original model's.
+
+**Hypotheses:**
+- **H1 (single primary, confirmatory, no multiplicity correction).** At 90 %|kd5, lr 1e-3:
+  - Each test subject's LCI is the mean over seeds 0, 1, 2 (each seed pooled over folds first).
+  - Test: paired one-sided Wilcoxon signed-rank, xgp_xb > lamp_recon, over the 40 subjects (zero_method "wilcox").
+  - **Supported iff p < 0.05.**
+  - Also reported: the median and mean difference, rank-biserial r and d_z; non-stair F1 (per subject, two-sided
+    Wilcoxon, descriptive) and pooled 7-class F1 per group; worst-group LCI = min(LCI_older, LCI_general) = FA-LCI
+    at λ 0.5, with the paired bootstrap CI of its difference.
+- **H2.** Same cell, seed mean.
+  - gap = mean_older(AOPC) − mean_general(AOPC) per method.
+  - D2 = |gap_lamp_recon| − |gap_xgp_xb|.
+  - Paired stratified bootstrap: subjects are resampled within each group, with the same draws for both methods.
+  - **Supported iff the 95 % CI of D2 is > 0.** The signed gaps and their CIs are also reported.
+- **H3 (exploratory, 5 vs 13 subjects).** Same cell, seed mean.
+  - wa_gap = mean_walking_aid(d_accuracy) − mean_other_older(d_accuracy) (`d_accuracy_wa_gap`; < 0 = walking-aid
+    users lose more).
+  - D3 = wa_gap_xgp_xb − wa_gap_lamp_recon.
+  - Paired bootstrap within the 5 and the 13.
+  - **"Supported (exploratory)" iff the 95 % CI of D3 is > 0.**
+- **Secondary cells.** The other 5 level × regime cells, lr 1e-3, seed 0: the same one-sided Wilcoxon on per-subject
+  LCI, Holm over the 5. The H1 cell at seed 0 alone is descriptive.
+
+**Secondary analyses** (pre-registered as secondary; none of them changes H1–H3):
+1. **Ablations,** in every cell at both lrs (seed 0).
+   - Validation (folds 0–4) first: means, and R2 vs lamp_recon, descriptive.
+   - Then test: one-sided Wilcoxon on LCI vs lamp_recon, Holm over the 12 (2 ablations × 6 cells, lr 1e-3).
+   - Also xgp_xb vs each ablation, two-sided, Holm over the 12.
+2. **Seeds 1 and 2 at 90 %|kd5 on validation:** per-seed means and R2, descriptive.
+3. **Both lrs:** every H1–H3 and secondary-cell statistic is also computed at lr 1e-4, labelled secondary.
+4. **LCI sensitivity:** per-subject LCI is recomputed from the saved 48-segment SHAP with k ∈ {5, 10, 20} and
+   ω ∈ {0.25, 0.5, 0.75} at 90 %|kd5 (seed mean). H1's Wilcoxon is reported for each of the 9 settings.
+
+**Outputs** (repo-root `results/har-final-test-ultrasmall/`, prefix `har-final-test-ultrasmall-tinyhar`; the smoke
+run writes to `results/har-final-test-ultrasmall-smoke/`):
+- **`validation/`, per fold:** `-fold<k>-<m>-{models, per-subject-lci, finetune-history, budgets}.csv` and
+  `-config.json`.
+- **`validation/`, from `--analyze-validation`:** `-validation-summary-mean-sd-over-folds.csv`,
+  `-validation-comparisons-vs-lamp-recon.csv`, `-validation-seeds-90pct-kd5.csv`,
+  `-validation-reproduction-vs-xgp-compare.csv` and `-validation-complete.json`.
+- **Test, per fold:** `-fold<k>-<m>-{per-subject-metrics, per-subject-class-lci, per-group-class-lci, models}.csv`,
+  `-shap-48-segments.npz` and `-config.json`.
+- **Test, from `--analyze`:** `-decision.json` (H1–H3), `-hypotheses-both-lrs.csv`, `-secondary-cells-holm.csv`,
+  `-ablations-test-holm.csv`, `-group-summary-gaps-bootstrap-ci.csv`, `-fa-lci-bootstrap-ci.csv`,
+  `-safe-explanation-rate.csv`, `-per-subject-pooled-over-folds.csv`, `-lci-sensitivity-k-omega.csv` and
+  `-models-summary.csv`.
+
+**Time per fold** (estimate from the final comparison's and 9A's measured times):
+
+| Machine | Validation phase | Test phase | Fold total |
+|---|---|---|---|
+| uni-2080 | 62 QAT × ≈ 51 s + 63 inner-val SHAP × ≈ 39 s + ≈ 6 min of starts ≈ 1.7 h | 63 × ≈ 130 s (9A assess) ≈ 2.3 h | ≈ 4 h |
+| nakhoul-3050 | 62 × ≈ 65 s + 63 × ≈ 43 s + ≈ 12 min of starts ≈ 2.1 h | 63 × ≈ 100 s ≈ 1.8 h | ≈ 3.9 h (≈ 5 h if it throttles) |
+
+- On uni-2080 the seed-0 xgp_xb starts are reused from the comparison's checkpoints; there, the comparison ran all
+  5 folds.
+- **Split across the two machines:** folds 0 1 on nakhoul-3050 and 2 3 4 on uni-2080.
+  - Validation ≈ 5 h; then merge and run `--analyze-validation`; then test ≈ 7 h.
+  - **≈ 12 h wall**, plus the merges.
+- **Two terminals on uni-2080:** each process is ≈ 1.5× slower (as measured in the comparison), so ≈ 16–17 h wall.
+- **Smoke** (CPU, folds 0–1): validation 1.8 min, test 1.8 min, analysis ≈ 10 s.
+
 ## Commands (repo `.venv`, run from this folder)
 
 ```
 cd bit-reduction-test
-python -m pytest tests                                             # 31 tests
+python -m pytest tests                                             # 38 tests
 python -m bitred.run --prepare                                     # pre-registration (CPU, seconds); commit it before the runs
 python -m bitred.run --folds 0 1 2 3 4 --device cuda --machine-name nakhoul-3050
 #   or split: nakhoul-3050 --folds 0 1 2, uni-2080 --folds 3 4 (same flags, own --machine-name)
@@ -329,6 +444,17 @@ python -m bitred.run_xgp_compare --folds 0 --smoke --device cpu --machine-name s
 python -m bitred.run_xgp_compare --folds 0 1 --device cuda --machine-name nakhoul-3050    # final comparison
 python -m bitred.run_xgp_compare --folds 2 3 4 --device cuda --machine-name uni-2080
 python -m bitred.run_xgp_compare --analyze
+# final test on HAR70+ (order enforced: validation on all folds -> --analyze-validation -> test -> --analyze)
+python -m bitred.run_final_test --phase validation --folds 0 1 --smoke --device cpu --machine-name smoke-cpu
+python -m bitred.run_final_test --analyze-validation --smoke
+python -m bitred.run_final_test --phase test --folds 0 1 --smoke --device cpu --machine-name smoke-cpu
+python -m bitred.run_final_test --analyze --smoke
+python -m bitred.run_final_test --phase validation --folds 0 1 --device cuda --machine-name nakhoul-3050
+python -m bitred.run_final_test --phase validation --folds 2 3 4 --device cuda --machine-name uni-2080
+python -m bitred.run_final_test --analyze-validation              # after merging both machines' validation/ files
+python -m bitred.run_final_test --phase test --folds 0 1 --device cuda --machine-name nakhoul-3050
+python -m bitred.run_final_test --phase test --folds 2 3 4 --device cuda --machine-name uni-2080
+python -m bitred.run_final_test --analyze                         # after merging; writes -decision.json (H1-H3)
 ```
 
 **Time:** about 12,500 SHAP windows per fold (probe 7 × 300, sensitivity 52 × 140, allocation 9 × 300, original). At
@@ -434,3 +560,28 @@ Per fold and machine (`bitred-tinyhar-fold<k>-<machine>-…`):
   - With 5 % of the data, 2-bit QAT still recovers both F1 and LCI at 20.7 KB, as with full data.
   - On the calibration set (978 windows) it does not recover F1.
   - Below 20.7 KB, F1 fails first in every regime, as in the full-data run.
+
+### `bitred-xgp-compare-tinyhar-*` (final comparison, folds 0–4, uni-2080, 2026-11-25)
+- **Runs:** both commands ran at the same time on uni-2080 (folds 0 1 in 2.7 h, folds 2 3 4 in 3.6 h). Mean over
+  the 5 folds: original F1 0.835.
+- **Primary lr = 1e-3 in every regime.** lamp_recon's mean F1 at 1e-4 / 1e-3: full 0.763 / 0.799, kd5 0.767 / 0.782,
+  calibration 0.757 / 0.764.
+- **R2 at the primary lr** (`-decision.json`):
+
+  | Cell | LCI xgp_xb vs lamp_recon | Folds higher | ΔF1 | Δworst | Verdict |
+  |---|---|---|---|---|---|
+  | 90 %\|full | 0.822 vs 0.814 (+0.008) | 3/5 | +0.003 | +0.001 | does not beat |
+  | **90 %\|kd5** | **0.790 vs 0.750 (+0.040)** | **4/5** | **+0.016** | **+0.065** | **XGP beats LAMP** |
+  | 90 %\|calibration | 0.793 vs 0.773 (+0.019) | 3/5 | +0.016 | +0.030 | does not beat (gain < 0.02, 3/5 folds) |
+  | 95 %\|full | 0.736 vs 0.726 (+0.010) | 3/5 | +0.021 | +0.026 | does not beat |
+  | 95 %\|kd5 | 0.693 vs 0.693 (−0.000) | 4/5 | +0.014 | −0.029 | does not beat |
+  | 95 %\|calibration | 0.716 vs 0.695 (+0.021) | 3/5 | +0.014 | +0.040 | does not beat |
+
+- **At lr 1e-4** (secondary): XGP beats LAMP in 5 of 6 cells (all but 95 %|full).
+  There the gains are larger (+0.03 to +0.05) but LAMP is weaker.
+- **F1:** xgp_xb's mean F1 is ≥ lamp_recon's in every cell (+0.3 to +2.4 pt).
+- **Reference, per-tensor 2-bit QAT** (17.5 KB) at lr 1e-3, F1 / LCI: full 0.801 / 0.594, kd5 0.783 / 0.563,
+  calibration 0.768 / 0.599. At lr 1e-4: 0.808 / 0.771 with full data. Both pruned + 4-bit models are smaller and
+  have higher LCI.
+- **Reading:** XGP's explanation gain is real but small. It passes R2 only where LAMP is weakest (5 % data, 90 %).
+  This single cell is the H1 cell of the final test on HAR70+.

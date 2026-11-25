@@ -503,6 +503,12 @@ Step 5, baseline gap check on HAR70+ (**first HAR70+ use**), with the frozen Tin
 ## har-compression-grid-analysis-smoke/
 **Git-ignored, local only: a pipeline check, not results.** `python -m har.run_compression_grid --analyze --smoke` writes the 8 `har-grid-a-*.csv` tables and `har-grid-a-analysis-config.json` (same names as the real analysis, below) from the smoke fold. Passed on Aya CPU on 2026-11-21 (5 s with `--n-boot 500`).
 
+## har-final-test-ultrasmall-smoke/
+**Git-ignored, local only: a pipeline check, not results.** `python -m bitred.run_final_test --smoke` (final test on HAR70+, pre-registered in bit-reduction-test/README.md) writes here, folds 0-1, 3 QAT steps, nsamples 20, the 9A smoke explain windows (3 per subject; 4-5 general, 3 HAR70+ incl. 503).
+- `validation/`: 63 models per fold (62 QAT + original), sizes 16.92 / 15.64 / 17.54 KB. The seed-0 models reproduce `run_xgp_compare`'s smoke models exactly on CPU (|d F1| = |d LCI| = 0 over 60 models). `validation-complete.json` gates the test phase.
+- Test tables and the analysis tables (same names as the real run).
+- Passed on LenovoP330-01 CPU on 2026-11-25: validation 1.8 min, test 1.8 min, analysis 10 s (`--n-boot 2000`). The test phase refused before `--analyze-validation` and under another `--machine-name`, and `--resume` skipped all 63 models. Its numbers mean nothing (3 QAT steps, nsamples 20).
+
 ## har-compression-grid/ (Step 9A grid, all 5 folds done) and har-compression-grid-analysis/ (analysis done)
 Step 9A baseline grid, frozen TinyHAR, 38 models per fold: original, 5 noise references (retrain seeds 1–3, SHAP seeds 1–2), 4 PTQ (ptq8, ptq4, ptq_tulla8, ptq_tulla4), l1 / snip starts without fine-tuning at 30 / 50 / 70 / 90%, l1 / l1_kd / snip / snip_kd fine-tuned at every level, park / park_kd at 70 / 90%. E_ft 20 (round-2 decision), lr 1e-4. Runs: folds 0, 1, 3 on nakhoul-3050 (2026-11-21/22, git 9b228cd; fold 3's config records 86c8578, because a pull mid-run added only uni-2080 result files and no code); folds 2, 3, 4 on uni-2080. Per fold and machine: `har-grid-tinyhar-fold{k}-{machine}-{models, per-subject-metrics, per-subject-class-lci, per-group-class-lci, finetune-history}.csv`, `-config.json`, `logs/…log`. The `-shap-48-segments.npz` files (≈ 5 MB per fold) stay local and uncommitted; only `--resume` reads them. Fold 0 on nakhoul-3050 has two logs (the run was stopped at 01:50 during fold 1 and resumed at 06:58; the model in progress was redone).
 

@@ -355,4 +355,13 @@ SHAP is ≈ 60% of the time. Not measured yet; replace with the real times after
 - Final comparison (`run_xgp_compare`), per fold: 30 QAT runs (≈ 50 s) + 40 SHAP assessments (≈ 40 s) + XGP shares
   and 2 xgp_xb builds (round 4: 91–110 s per build) + lamp_recon builds (≈ 3 s) ≈ 55–60 min on uni-2080,
   ≈ 65–75 min on nakhoul-3050. Split folds 0 1 (nakhoul-3050, ≈ 2.2–2.5 h) / 2 3 4 (uni-2080, ≈ 2.8–3 h).
-  Smoke ≈ 25 s per fold on CPU (LenovoP330-01). Not measured yet.
+  Smoke ≈ 25 s per fold on CPU (LenovoP330-01). **Measured (2026-11-25, uni-2080, both commands at once on the
+  same GPU):** folds 0 1 in 2.7 h (77 / 83 min), folds 2 3 4 in 3.6 h (83 / 80 / 55 min; fold 4 ran alone after
+  the other process ended). Shared GPU: QAT 75–85 s per 4,020 steps, inner-val SHAP 53–61 s, xgp_xb build 101–138 s.
+  Alone (fold 4): QAT 51 s, SHAP 39 s, xgp_xb build 64–77 s, shares 12 s. Two processes on one GPU are each ≈ 1.5×
+  slower, so ≈ 1.3× the throughput of one.
+- Final test on HAR70+ (`run_final_test`), per fold: validation = 62 QAT + 63 inner-val SHAP + starts; test = 63 9A
+  assessments (750 explain windows + deletion curves; 9A measured ≈ 130 s per model on uni-2080, ≈ 100 s on
+  nakhoul-3050). Estimate: uni-2080 ≈ 1.7 h + 2.3 h ≈ 4 h; nakhoul-3050 ≈ 2.1 h + 1.8 h ≈ 3.9 h (≈ 5 h if throttled).
+  Split folds 0 1 (nakhoul-3050) / 2 3 4 (uni-2080): validation ≈ 5 h, then test ≈ 7 h, ≈ 12 h wall plus merges;
+  two terminals on uni-2080 ≈ 16–17 h. Smoke (CPU, folds 0–1): 1.8 min + 1.8 min + 10 s. Not measured yet.

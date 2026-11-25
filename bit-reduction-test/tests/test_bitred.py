@@ -252,10 +252,29 @@ def test_decide_requires_headroom_and_all_comparators():
 
 # ------------------------------------------------------------------------------ isolation
 
+BANNED_TEST_DATA = ("load_test_windows", "har70plus_test", "test_older", "explain_sets")
+
+
 def test_har70plus_never_loaded():
-    src = "\n".join(p.read_text(encoding="utf-8") for p in (Path(bitred.__file__).parent).glob("*.py"))
-    for banned in ("load_test_windows", "har70plus_test", "test_older", "explain_sets"):
+    """No bitred module loads HAR70+ or the HARTH test subjects, except the final test's test phase
+    (run_final_test.py, pre-registered 2026-11-25), which is checked separately below."""
+    src = "\n".join(p.read_text(encoding="utf-8") for p in (Path(bitred.__file__).parent).glob("*.py")
+                    if p.name != "run_final_test.py")
+    for banned in BANNED_TEST_DATA:
         assert banned not in src.replace("fold.test_older", ""), banned
+
+
+def test_final_test_validation_phase_never_loads_test_data():
+    import inspect
+    from bitred import run_final_test as F
+    for fn in (F.run_validation_fold, F.analyze_validation, F.fold_plan):     # get_start is nested in the first
+        src = inspect.getsource(fn)
+        for banned in BANNED_TEST_DATA:
+            assert banned not in src, (fn.__name__, banned)
+    main = inspect.getsource(F.main)
+    # test windows are loaded only after the validation branch has returned
+    assert main.index("run_validation_fold") < main.index("load_test_windows")
+    assert "check_gate(out, k, args.machine_name)" in inspect.getsource(F.run_test_fold)
 
 
 # ------------------------------------------------------------------------------ 2-bit QAT
@@ -522,3 +541,108 @@ def test_xgp_xb_start_uses_round4_functions():
     from bitred.quant import pruned_size_record
     sz = [pruned_size_record(net0, uniform_bits(net0, 4), n.prune_masks)["size_kb"] for n in (nx, nl)]
     assert sz[0] == sz[1]
+
+
+# ------------------------------------------------------------------------------ final test on HAR70+ (run_final_test)
+
+def test_final_test_plan_and_seeds():
+    from bitred import run_final_test as F
+    plan = F.fold_plan()
+    ids = [e["model_id"] for e in plan]
+    assert len(plan) == 62 and len(set(ids)) == 62
+    roles = pd.Series([e["role"] for e in plan]).value_counts().to_dict()
+    assert roles == {"reference": 6, "main": 24, "ablation": 24, "seed": 8}
+    extra = [e for e in plan if e["seed"] != 0]
+    assert {(e["method"], e["level"], e["regime"]) for e in extra} == {(m, 0.9, "kd5") for m in F.MAIN}
+    assert {e["lr"] for e in plan} == {1e-4, 1e-3} and F.PRIMARY_LR == 1e-3
+    # round 4's seed convention: only starts with XGP budgets or selection depend on the seed
+    assert F.start_seed("lamp_recon", 2) == 0
+    assert F.start_seed("xgp_xb", 2) == 2 and F.start_seed("xgp_lamp", 1) == 1 and F.start_seed("l1_xb_recon", 1) == 1
+
+
+def test_final_test_reuses_compare_pipeline_unchanged():
+    from bitred import run_final_test as F, run_xgp_compare as C
+    assert F.build_start is C.build_start and F.Calibration is C.Calibration
+    assert F.QAT is C.QAT and F.QAT["steps"] == 4020 and F.REGIMES == C.REGIMES and F.LEVELS == C.LEVELS
+    assert F.model_id("xgp_xb", 0.9, "kd5", 1e-3, 0) == "qat-xgp_xb90-channel-4bit-kd5-lr0.001-seed0"
+    import har.run_compression_grid as G
+    assert F.G is G and F.TestStore.__mro__[1] is G.FoldStore
+
+
+def test_wilcoxon_greater_direction():
+    from bitred.run_final_test import wilcoxon_greater
+    rng = np.random.default_rng(0)
+    b = rng.uniform(0.6, 0.8, 40)
+    up = wilcoxon_greater(b + 0.03 + rng.normal(0, 0.01, 40), b)
+    down = wilcoxon_greater(b - 0.03, b)
+    assert up["p_one_sided"] < 1e-6 and down["p_one_sided"] > 0.99
+    assert abs(up["p_one_sided"] - up["p_two_sided"] / 2) < 1e-12
+    assert wilcoxon_greater(b, b)["p_one_sided"] == 1.0
+
+
+def test_paired_gap_difference():
+    from bitred.run_final_test import paired_gap_difference
+    g1 = np.r_[np.ones(18, bool), np.zeros(22, bool)]
+    xb = np.where(g1, 0.5, 0.7) + np.random.default_rng(1).normal(0, 0.01, 40)   # B: gap -0.2
+    xa = np.where(g1, 0.65, 0.7) + np.random.default_rng(2).normal(0, 0.01, 40)  # A: gap -0.05
+    r = paired_gap_difference(xa, xb, g1, ~g1, absolute=True, n_boot=2000)
+    assert abs(r["d"] - 0.15) < 0.02 and r["d_ci_low"] > 0
+    s = paired_gap_difference(xa, xb, g1, ~g1, absolute=False, n_boot=2000)
+    assert abs(s["d"] - 0.15) < 0.02          # gap_A - gap_B = -0.05 - (-0.2)
+    rev = paired_gap_difference(xb, xa, g1, ~g1, absolute=True, n_boot=2000)
+    assert rev["d_ci_high"] < 0
+
+
+def _synthetic_pooled(delta_lci: float) -> pd.DataFrame:
+    from har.data import WALKING_AID_INFERRED
+    subjects = [(f"S{i:03d}", "general", "general") for i in range(22)] + [
+        (str(s), "older", "walking_aid_inferred" if str(s) in WALKING_AID_INFERRED else "other_older")
+        for s in range(501, 519)]
+    rng = np.random.default_rng(3)
+    rows = []
+    for method in ("lamp_recon", "xgp_xb"):
+        for seed in (0, 1, 2):
+            for subj, grp, sub in subjects:
+                base = 0.75 + rng.normal(0, 0.02)
+                rows.append({"method": method, "lr": 1e-3, "regime": "kd5", "sparsity": 0.9, "seed": seed,
+                             "subject": subj, "group": grp, "subgroup": sub,
+                             "lci": base + (delta_lci if method == "xgp_xb" else 0), "non_stair_macro_f1": 0.8,
+                             "aopc": 0.3 + (0.05 if grp == "older" and method == "lamp_recon" else 0),
+                             "d_accuracy": -0.05 - (0.05 if sub == "walking_aid_inferred" and method == "lamp_recon" else 0)})
+    return pd.DataFrame(rows)
+
+
+def test_final_test_hypotheses_on_synthetic_subjects():
+    from bitred.run_final_test import hypotheses
+    h = hypotheses(_synthetic_pooled(0.03), 1e-3, n_boot=2000)
+    assert h["complete"] and h["H1"]["n_subjects"] == 40 and h["H1"]["n_older"] == 18
+    assert h["H1"]["supported"] and h["H1"]["p_one_sided"] < 0.05
+    assert h["H2"]["supported"] and abs(h["H2"]["D2_abs_gap_reduction"] - 0.05) < 1e-9
+    assert h["H3"]["n_walking_aid"] == 5 and h["H3"]["n_other_older"] == 13
+    assert h["H3"]["supported_exploratory"] and abs(h["H3"]["D3"] - 0.05) < 1e-9
+    assert not hypotheses(_synthetic_pooled(-0.03), 1e-3, n_boot=500)["H1"]["supported"]
+    # a subject missing one seed is dropped, not averaged over fewer seeds
+    d = _synthetic_pooled(0.03)
+    d = d[~((d.subject == "S000") & (d.seed == 2) & (d.method == "xgp_xb"))]
+    assert hypotheses(d, 1e-3, n_boot=500)["H1"]["n_subjects"] == 39
+
+
+def test_final_test_gate_enforces_validation_first(tmp_path):
+    import json
+    from bitred.run_final_test import P, check_gate, sha256_file
+    v = tmp_path / "validation"
+    v.mkdir()
+    f = v / f"{P}-fold0-m1-models.csv"
+    f.write_text("model_id\noriginal\n")
+    with pytest.raises(SystemExit, match="analyze-validation"):
+        check_gate(tmp_path, 0, "m1")
+    (v / f"{P}-validation-complete.json").write_text(json.dumps(
+        {"complete": True, "folds": {"0": {"machine": "m1", "file": f.name, "sha256": sha256_file(f)}}}))
+    assert check_gate(tmp_path, 0, "m1")["complete"]
+    with pytest.raises(SystemExit, match="ran on m1"):
+        check_gate(tmp_path, 0, "m2")
+    with pytest.raises(SystemExit, match="not in the completed"):
+        check_gate(tmp_path, 1, "m1")
+    f.write_text("model_id\nchanged\n")
+    with pytest.raises(SystemExit, match="changed"):
+        check_gate(tmp_path, 0, "m1")
