@@ -364,4 +364,6 @@ SHAP is ≈ 60% of the time. Not measured yet; replace with the real times after
   assessments (750 explain windows + deletion curves; 9A measured ≈ 130 s per model on uni-2080, ≈ 100 s on
   nakhoul-3050). Estimate: uni-2080 ≈ 1.7 h + 2.3 h ≈ 4 h; nakhoul-3050 ≈ 2.1 h + 1.8 h ≈ 3.9 h (≈ 5 h if throttled).
   Split folds 0 1 (nakhoul-3050) / 2 3 4 (uni-2080): validation ≈ 5 h, then test ≈ 7 h, ≈ 12 h wall plus merges;
-  two terminals on uni-2080 ≈ 16–17 h. Smoke (CPU, folds 0–1): 1.8 min + 1.8 min + 10 s. Not measured yet.
+  two terminals on uni-2080 ≈ 16–17 h. Smoke (CPU, folds 0–1): 1.8 min + 1.8 min + 10 s. **Measured (2026-11-25,
+  nakhoul-3050, validation folds 0 1, alone on the GPU):** 4.02 h (fold 0 120.4 min, fold 1 120.9 min), ≈ 1.9 min per
+  model: QAT 63–72 s per 4,020 steps, starts 4–5 s (lamp_recon, l1_xb_recon) / 52–65 s (xgp_xb, xgp_lamp), shares 9–11 s.

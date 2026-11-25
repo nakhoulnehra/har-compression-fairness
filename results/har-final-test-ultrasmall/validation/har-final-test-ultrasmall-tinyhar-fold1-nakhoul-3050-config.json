@@ -1,0 +1,133 @@
+{
+ "phase": "validation",
+ "command": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\bit-reduction-test\\bitred\\run_final_test.py --phase validation --folds 0 1 --device cuda --machine-name nakhoul-3050",
+ "device": "cuda",
+ "gpu_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+ "cuda_version": "11.8",
+ "torch_version": "2.7.1+cu118",
+ "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+ "torch_threads": 8,
+ "python": "3.11.9",
+ "os": "Windows 10",
+ "git_commit": "40a65698fef4d06a8969e076dc5f18cd3e6fe356",
+ "git_dirty": false,
+ "bitred_code_sha256": "379e1c603dafbb50b096c718c3c0d5c5bdbd28d22f4330f374b3a7e3e40ae45a",
+ "har_code_sha256": "22304bfe4ba829592ceab726265de18920bcbae8179c8e7e5f4311066d3d93af",
+ "methods": {
+  "lamp_recon": [
+   "lamp",
+   "l1"
+  ],
+  "xgp_xb": [
+   "xb",
+   "xgp"
+  ],
+  "l1_xb_recon": [
+   "xb",
+   "l1"
+  ],
+  "xgp_lamp": [
+   "lamp",
+   "xgp"
+  ]
+ },
+ "levels": [
+  0.9,
+  0.95
+ ],
+ "quant": {
+  "bits": 4,
+  "granularity": "channel"
+ },
+ "reference": {
+  "setting": "tensor-2bit",
+  "bits": 2,
+  "granularity": "tensor"
+ },
+ "qat": {
+  "steps": 4020,
+  "eval_every_steps": 201,
+  "lrs": [
+   0.0001,
+   0.001
+  ],
+  "seed": 0,
+  "batch_size": 256
+ },
+ "xgp": {
+  "seed": 0,
+  "K": 5,
+  "beta": 0.1,
+  "top_k": 3,
+  "m": 8,
+  "score_batch": 125,
+  "damp": 0.01,
+  "floor_frac": 0.02
+ },
+ "seeds": {
+  "main_cell": [
+   0,
+   1,
+   2
+  ],
+  "other": [
+   0
+  ]
+ },
+ "regimes": {
+  "full": "all training windows of the fold",
+  "kd5": "round 4's kd5 subset (fraction 0.05, seed 48, >= 1 per (subject, class))",
+  "calibration": "round 4's calibration set (<= 10 per (subject, class), seed 46)"
+ },
+ "n_train_windows": {
+  "full": 55552,
+  "kd5": 2782,
+  "calibration": 967
+ },
+ "preregistration": {
+  "H1": "Single primary, confirmatory, no multiplicity correction: at 90%|kd5, lr 1e-3, per-subject LCI (9A protocol) averaged over seeds 0, 1, 2 (each seed pooled over folds first); paired one-sided Wilcoxon signed-rank xgp_xb > lamp_recon over the 40 test subjects; supported iff p < 0.05.",
+  "H2": "At 90%|kd5, lr 1e-3, seed mean: D2 = |gap_lamp_recon| - |gap_xgp_xb|, gap = mean_older(AOPC) - mean_general(AOPC); paired stratified bootstrap (10,000, seed 42); supported iff the 95% CI of D2 > 0.",
+  "H3": "Exploratory (5 vs 13 subjects): at 90%|kd5, lr 1e-3, seed mean: D3 = wa_gap_xgp_xb - wa_gap_lamp_recon, wa_gap = mean_walking_aid(d_accuracy) - mean_other_older(d_accuracy); paired bootstrap; supported (exploratory) iff the 95% CI of D3 > 0.",
+  "secondary_cells": "the other 5 level x regime cells, lr 1e-3, seed 0: one-sided Wilcoxon on LCI, Holm over the 5",
+  "secondary_analyses": "ablations (validation first, then test, Holm over 12), seeds 1-2 on validation, both lrs, LCI sensitivity k in {5,10,20} x omega in {0.25,0.5,0.75}; none changes H1-H3"
+ },
+ "window_hashes": {
+  "explain": "ea8a81dc90a3fe7610c54b488ec2bc6bbf266e6ca0f04099785d3fa362a23703",
+  "f1": "3e657c65407631751d48678ccb6322b8ec1fcc3ed7900db9ce49f09a7e56095e",
+  "calibration": "dd07918600fa55ef5203e9089bb115ce14e6bd2a9bd88ed334c04d5afb2bfec7",
+  "lci_calibration": "cceab7d223a3d1d952436d165bbe5b397b0f549163a5d0f0ea932acfbdd14213",
+  "n_explain": 300,
+  "n_f1": 6163,
+  "n_calibration": 967,
+  "n_lci_calibration": 140,
+  "inner_val_subjects": [
+   "S014",
+   "S018",
+   "S024"
+  ],
+  "n_train_subjects": 15
+ },
+ "calibration_matches_round4": true,
+ "har70plus_loaded": false,
+ "seconds": {
+  "starts": {
+   "lamp_recon90-seed0": 4.459542399970815,
+   "xgp_xb90-seed0": 60.84926089993678,
+   "l1_xb_recon90-seed0": 4.434392699971795,
+   "xgp_lamp90-seed0": 51.774720599874854,
+   "lamp_recon95-seed0": 4.386175899999216,
+   "xgp_xb95-seed0": 51.6414761999622,
+   "l1_xb_recon95-seed0": 4.325186799978837,
+   "xgp_lamp95-seed0": 51.47914329986088,
+   "xgp_xb90-seed1": 60.34920609998517,
+   "xgp_xb90-seed2": 61.22857900010422
+  },
+  "shares": {
+   "0": 9.262452899944037,
+   "1": 9.22271480015479,
+   "2": 9.509839699836448
+  },
+  "wall": 7255.268247999949
+ },
+ "finished_at": "2026-11-25T16:52:53+02:00"
+}

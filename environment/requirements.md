@@ -373,7 +373,7 @@ python -m bitred.run_final_test --phase test --folds 0 1 --smoke --device cpu --
 python -m bitred.run_final_test --analyze --smoke                                                              # ≈ 10 s
 # GPU (to do). Optional on nakhoul-3050 first: copy uni-2080's data/processed/checkpoints/bit-reduction-test/xgp-compare/fold{0,1}-*.pt
 # so the seed-0 lamp_recon / xgp_xb starts are the comparison's own (otherwise rebuilt with the same code; start_source says which)
-python -m bitred.run_final_test --phase validation --folds 0 1 --device cuda --machine-name nakhoul-3050      # ≈ 4.2 h
+python -m bitred.run_final_test --phase validation --folds 0 1 --device cuda --machine-name nakhoul-3050      # done 2026-11-25 (4.0 h; starts rebuilt, not copied)
 python -m bitred.run_final_test --phase validation --folds 2 3 4 --device cuda --machine-name uni-2080        # ≈ 5 h
 #   merge results/har-final-test-ultrasmall/validation/ from both machines, then on one machine:
 python -m bitred.run_final_test --analyze-validation                # writes validation-complete.json; commit / pull it on both machines
