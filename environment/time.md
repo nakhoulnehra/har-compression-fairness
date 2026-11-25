@@ -344,3 +344,24 @@ SHAP is ≈ 60% of the time. Not measured yet; replace with the real times after
 ## Bit-reduction test (bit-reduction-test/)
 - Tests 7 s; smoke fold 0: 26 s CPU (nakhoul-3050 laptop), 18 s CUDA; `--prepare` (5 folds, window hashes only) ≈ 15 s.
 - Estimate of the real run: ≈ 12,500 SHAP windows per fold (original 300 + 140, probe 7 × 300, sensitivities 52 × 140, allocations 9 × 300) at ≈ 0.14–0.15 s per window ≈ 30–40 min per fold; Hutchinson (100 iterations on ≈ 980 windows) + KL ≈ 2 min. 5 folds ≈ 2.5–3.4 h on one GPU, ≈ 1.5–2 h split over two. Not measured yet; replace with the config files' `seconds` after the runs.
+- 2-bit gap test (`run_qat`, fold 0, nakhoul-3050): 3.7 min measured (2 QAT runs, ≈ 65 s fine-tuning + ≈ 43 s SHAP each).
+- Ultra-small gap test (`run_qat_small`, fold 0): smoke 14 s CPU (LenovoP330-01). Estimate of the real run: 6 QAT runs
+  (≈ 65–70 s + ≈ 45 s SHAP each) + 6 assessments without QAT (≈ 45 s each) + 2 lamp_recon builds (seconds)
+  ≈ 15–20 min on a GPU. Measured: 13.7 min wall on uni-2080 (QAT ≈ 51–54 s per run, SHAP ≈ 40 s per model,
+  lamp_recon build 3.4 s).
+- Data-regime gap test (`run_qat_regimes`, fold 0): smoke 14 s CPU (LenovoP330-01). Estimate: equal Adam steps
+  (4,020 per run, as the full-data runs), so 16 QAT runs at ≈ 50 s + 24 SHAP assessments at ≈ 40 s ≈ 30–35 min
+  on a GPU. Measured: 24.5 min wall on uni-2080 (QAT 48–50 s per 4,020-step run in every regime, SHAP ≈ 40 s).
+- Final comparison (`run_xgp_compare`), per fold: 30 QAT runs (≈ 50 s) + 40 SHAP assessments (≈ 40 s) + XGP shares
+  and 2 xgp_xb builds (round 4: 91–110 s per build) + lamp_recon builds (≈ 3 s) ≈ 55–60 min on uni-2080,
+  ≈ 65–75 min on nakhoul-3050. Split folds 0 1 (nakhoul-3050, ≈ 2.2–2.5 h) / 2 3 4 (uni-2080, ≈ 2.8–3 h).
+  Smoke ≈ 25 s per fold on CPU (LenovoP330-01). **Measured (2026-11-25, uni-2080, both commands at once on the
+  same GPU):** folds 0 1 in 2.7 h (77 / 83 min), folds 2 3 4 in 3.6 h (83 / 80 / 55 min; fold 4 ran alone after
+  the other process ended). Shared GPU: QAT 75–85 s per 4,020 steps, inner-val SHAP 53–61 s, xgp_xb build 101–138 s.
+  Alone (fold 4): QAT 51 s, SHAP 39 s, xgp_xb build 64–77 s, shares 12 s. Two processes on one GPU are each ≈ 1.5×
+  slower, so ≈ 1.3× the throughput of one.
+- Final test on HAR70+ (`run_final_test`), per fold: validation = 62 QAT + 63 inner-val SHAP + starts; test = 63 9A
+  assessments (750 explain windows + deletion curves; 9A measured ≈ 130 s per model on uni-2080, ≈ 100 s on
+  nakhoul-3050). Estimate: uni-2080 ≈ 1.7 h + 2.3 h ≈ 4 h; nakhoul-3050 ≈ 2.1 h + 1.8 h ≈ 3.9 h (≈ 5 h if throttled).
+  Split folds 0 1 (nakhoul-3050) / 2 3 4 (uni-2080): validation ≈ 5 h, then test ≈ 7 h, ≈ 12 h wall plus merges;
+  two terminals on uni-2080 ≈ 16–17 h. Smoke (CPU, folds 0–1): 1.8 min + 1.8 min + 10 s. Not measured yet.

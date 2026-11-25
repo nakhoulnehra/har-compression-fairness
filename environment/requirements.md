@@ -349,4 +349,36 @@ python -m bitred.run --prepare                                      # done 2026-
 python -m bitred.run --folds 0 1 2 3 4 --device cuda --machine-name nakhoul-3050
 #   or split: --folds 0 1 2 on nakhoul-3050, --folds 3 4 on uni-2080 (--machine-name uni-2080)
 python -m bitred.run --analyze                                      # after merging
+# --- 2-bit gap test (done, fold 0) and ultra-small gap test (QAT + KD at 15.6-17.5 KB; README "Ultra-small gap test") ---
+python -m bitred.run_qat --fold 0 --device cuda --machine-name nakhoul-3050
+python -m pytest tests                                              # 24/24 passed (8 s, LenovoP330-01 CPU)
+python -m bitred.run_qat_small --fold 0 --smoke --device cpu --machine-name smoke-cpu     # 14 s
+python -m bitred.run_qat_small --fold 0 --device cuda --machine-name uni-2080             # done 2026-11-24 (13.7 min)
+python -m pytest tests                                              # 27/27 passed (9 s, LenovoP330-01 CPU)
+python -m bitred.run_qat_regimes --fold 0 --smoke --device cpu --machine-name smoke-cpu  # 14 s
+python -m bitred.run_qat_regimes --fold 0 --device cuda --machine-name <m>               # done 2026-11-25 on uni-2080 (24.5 min)
+# --- final comparison: XGP (xgp_xb) vs lamp_recon at 90 / 95 % + 4-bit QAT, full / kd5 / calibration, folds 0-4 (README) ---
+python -m pytest tests                                              # 31/31 passed (11 s, LenovoP330-01 CPU)
+python -m bitred.run_xgp_compare --folds 0 1 2 3 4 --smoke --device cpu --machine-name smoke-cpu   # ≈ 25 s per fold
+python -m bitred.run_xgp_compare --folds 0 --smoke --resume --device cpu --machine-name smoke-cpu # resume check
+python -m bitred.run_xgp_compare --analyze --smoke
+python -m bitred.run_xgp_compare --folds 0 1 --device cuda --machine-name uni-2080         # done 2026-11-25 (2.7 h, both commands at once on uni-2080)
+python -m bitred.run_xgp_compare --folds 2 3 4 --device cuda --machine-name uni-2080       # done 2026-11-25 (3.6 h)
+python -m bitred.run_xgp_compare --analyze                                                 # done: 90%|kd5 XGP beats LAMP (only cell)
+# --- final test on HAR70+ (README "Final test on HAR70+"; pre-registered 2026-11-25; run once) ---
+python -m pytest tests                                              # 38/38 passed (12 s, LenovoP330-01 CPU); har/tests 254/254
+python -m bitred.run_final_test --phase validation --folds 0 1 --smoke --device cpu --machine-name smoke-cpu   # 1.8 min
+python -m bitred.run_final_test --analyze-validation --smoke
+python -m bitred.run_final_test --phase test --folds 0 1 --smoke --device cpu --machine-name smoke-cpu         # 1.8 min
+python -m bitred.run_final_test --analyze --smoke                                                              # ≈ 10 s
+# GPU (to do). Optional on nakhoul-3050 first: copy uni-2080's data/processed/checkpoints/bit-reduction-test/xgp-compare/fold{0,1}-*.pt
+# so the seed-0 lamp_recon / xgp_xb starts are the comparison's own (otherwise rebuilt with the same code; start_source says which)
+python -m bitred.run_final_test --phase validation --folds 0 1 --device cuda --machine-name nakhoul-3050      # ≈ 4.2 h
+python -m bitred.run_final_test --phase validation --folds 2 3 4 --device cuda --machine-name uni-2080        # ≈ 5 h
+#   merge results/har-final-test-ultrasmall/validation/ from both machines, then on one machine:
+python -m bitred.run_final_test --analyze-validation                # writes validation-complete.json; commit / pull it on both machines
+python -m bitred.run_final_test --phase test --folds 0 1 --device cuda --machine-name nakhoul-3050            # ≈ 3.6 h
+python -m bitred.run_final_test --phase test --folds 2 3 4 --device cuda --machine-name uni-2080              # ≈ 6.9 h
+python -m bitred.run_final_test --analyze                           # after merging; -decision.json (H1-H3)
+# --resume continues either phase; each fold's test must run on the machine (and --machine-name) of its validation
 ```

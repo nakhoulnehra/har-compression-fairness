@@ -1,0 +1,35 @@
+{
+ "per_setting": {
+  "tensor-2bit": {
+   "verdict": "inconclusive: no QAT run recovers F1 (tensor-2bit is an accuracy problem first)",
+   "f1_original": 0.8178021924793387,
+   "recovered_runs": [],
+   "best_recovered": null,
+   "size_kb": 17.5380859375
+  },
+  "lamp_recon90-channel-4bit": {
+   "verdict": "inconclusive: no QAT run recovers F1 (lamp_recon90-channel-4bit is an accuracy problem first)",
+   "f1_original": 0.8178021924793387,
+   "recovered_runs": [],
+   "best_recovered": null,
+   "size_kb": 16.92431640625
+  },
+  "lamp_recon95-channel-4bit": {
+   "verdict": "inconclusive: no QAT run recovers F1 (lamp_recon95-channel-4bit is an accuracy problem first)",
+   "f1_original": 0.8178021924793387,
+   "recovered_runs": [],
+   "best_recovered": null,
+   "size_kb": 15.63671875
+  }
+ },
+ "verdict_by_setting": {
+  "tensor-2bit": "inconclusive",
+  "lamp_recon90-channel-4bit": "inconclusive",
+  "lamp_recon95-channel-4bit": "inconclusive"
+ },
+ "settings_with_gap": [],
+ "f1_original": 0.8178021924793387,
+ "rule": "Applied per setting: Recovered = F1_val >= F1_val(original) - 0.03. Among the QAT runs that recover F1, take the highest LCI_val. Gap (explanation-specific, room for a new method) iff that LCI_val <= 0.85 (uniform per-channel 4-bit PTQ is 0.90 on fold 0, so <= 0.85 = at least 0.05 below it). No gap iff it is > 0.85 (a standard recipe fixes 2 bits). If no run recovers F1: inconclusive for explanations, 2 bits is an accuracy problem first. Fixed before the run; nothing is retuned.",
+ "f1_recovered_tol": 0.03,
+ "lci_gap_threshold": 0.85
+}

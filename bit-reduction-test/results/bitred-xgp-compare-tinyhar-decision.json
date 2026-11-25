@@ -1,0 +1,119 @@
+{
+ "verdict_by_level_regime": {
+  "90%|full": "XGP does not beat LAMP",
+  "90%|kd5": "XGP beats LAMP",
+  "90%|calibration": "XGP does not beat LAMP",
+  "95%|full": "XGP does not beat LAMP",
+  "95%|kd5": "XGP does not beat LAMP",
+  "95%|calibration": "XGP does not beat LAMP"
+ },
+ "by_level_regime": {
+  "90%|full": {
+   "verdict": "XGP does not beat LAMP",
+   "primary_lr": 0.001,
+   "size_kb": 16.92431640625,
+   "n_folds": 5,
+   "d_lci_mean": 0.0076755801026046734,
+   "n_folds_higher": 3,
+   "d_f1_mean": 0.002970912798891945,
+   "d_worst_mean": 0.0011086361278699775,
+   "a_gain": false,
+   "b_folds": false,
+   "c_f1": true,
+   "d_worst": true
+  },
+  "90%|kd5": {
+   "verdict": "XGP beats LAMP",
+   "primary_lr": 0.001,
+   "size_kb": 16.92431640625,
+   "n_folds": 5,
+   "d_lci_mean": 0.03983878175521316,
+   "n_folds_higher": 4,
+   "d_f1_mean": 0.016452723763230613,
+   "d_worst_mean": 0.06479066516058211,
+   "a_gain": true,
+   "b_folds": true,
+   "c_f1": true,
+   "d_worst": true
+  },
+  "90%|calibration": {
+   "verdict": "XGP does not beat LAMP",
+   "primary_lr": 0.001,
+   "size_kb": 16.92431640625,
+   "n_folds": 5,
+   "d_lci_mean": 0.019215162551142907,
+   "n_folds_higher": 3,
+   "d_f1_mean": 0.015726052667975953,
+   "d_worst_mean": 0.02971279483206466,
+   "a_gain": false,
+   "b_folds": false,
+   "c_f1": true,
+   "d_worst": true
+  },
+  "95%|full": {
+   "verdict": "XGP does not beat LAMP",
+   "primary_lr": 0.001,
+   "size_kb": 15.63671875,
+   "n_folds": 5,
+   "d_lci_mean": 0.010185432597949972,
+   "n_folds_higher": 3,
+   "d_f1_mean": 0.02060224289222039,
+   "d_worst_mean": 0.02563229126571438,
+   "a_gain": false,
+   "b_folds": false,
+   "c_f1": true,
+   "d_worst": true
+  },
+  "95%|kd5": {
+   "verdict": "XGP does not beat LAMP",
+   "primary_lr": 0.001,
+   "size_kb": 15.63671875,
+   "n_folds": 5,
+   "d_lci_mean": -0.00039055432797503454,
+   "n_folds_higher": 4,
+   "d_f1_mean": 0.013886410546968864,
+   "d_worst_mean": -0.0292541641697855,
+   "a_gain": false,
+   "b_folds": true,
+   "c_f1": true,
+   "d_worst": false
+  },
+  "95%|calibration": {
+   "verdict": "XGP does not beat LAMP",
+   "primary_lr": 0.001,
+   "size_kb": 15.63671875,
+   "n_folds": 5,
+   "d_lci_mean": 0.021334554365438317,
+   "n_folds_higher": 3,
+   "d_f1_mean": 0.014388829807004466,
+   "d_worst_mean": 0.03957788639943664,
+   "a_gain": true,
+   "b_folds": false,
+   "c_f1": true,
+   "d_worst": true
+  }
+ },
+ "xgp_beats_lamp_anywhere": true,
+ "complete": true,
+ "folds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "primary_lr": {
+  "full": 0.001,
+  "kd5": 0.001,
+  "calibration": 0.001
+ },
+ "rule": "Per level x regime at the primary lr, XGP (xgp_xb) beats LAMP (lamp_recon) iff over the 5 folds: (a) mean LCI_val gain >= 0.02; (b) LCI_val strictly higher in >= 4 of 5 folds; (c) mean F1_val >= LAMP's - 0.01; (d) mean worst-subject LCI_val >= LAMP's - 0.01. Fewer than 5 folds -> incomplete, no verdict. Fixed before any run; nothing is retuned.",
+ "primary_lr_rule": "Primary lr per regime = the lr with the higher mean F1_val of lamp_recon (QAT, 4-bit) over the 5 folds and both levels; tie -> 1e-4. Chosen on the comparator only, never on XGP or on LCI.",
+ "thresholds": {
+  "lci_gain": 0.02,
+  "fold_share": 0.8,
+  "f1_tol": 0.01,
+  "worst_tol": 0.01
+ },
+ "n_folds_needed": 4
+}
