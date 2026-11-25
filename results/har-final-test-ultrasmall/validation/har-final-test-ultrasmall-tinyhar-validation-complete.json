@@ -1,0 +1,35 @@
+{
+ "complete": true,
+ "folds": {
+  "0": {
+   "machine": "nakhoul-3050",
+   "file": "har-final-test-ultrasmall-tinyhar-fold0-nakhoul-3050-models.csv",
+   "sha256": "d7dda29b0cfbd8158d5ef11485b9e9d56926574b245d35697348ed17c336ddac"
+  },
+  "1": {
+   "machine": "nakhoul-3050",
+   "file": "har-final-test-ultrasmall-tinyhar-fold1-nakhoul-3050-models.csv",
+   "sha256": "e8457df2d3fb04218b0f21864db17eefcdc7d3106ea778654d5d16fb14f96429"
+  },
+  "2": {
+   "machine": "uni-2080",
+   "file": "har-final-test-ultrasmall-tinyhar-fold2-uni-2080-models.csv",
+   "sha256": "d1389bb915ee588e2a793b24778227f5f53515f67e2fa79d89ee5dda90f7c675"
+  },
+  "3": {
+   "machine": "uni-2080",
+   "file": "har-final-test-ultrasmall-tinyhar-fold3-uni-2080-models.csv",
+   "sha256": "e9dd527ea096982453ec87e2c2b3143bbe585e32a376e0374fcfb9a8905bd311"
+  },
+  "4": {
+   "machine": "uni-2080",
+   "file": "har-final-test-ultrasmall-tinyhar-fold4-uni-2080-models.csv",
+   "sha256": "8a75e6c182f67ff44c941a9bc2b2fad99136586084c4ec00dfccb10ce27c468a"
+  }
+ },
+ "n_models_per_fold": 63,
+ "written_at": "2026-11-25T19:55:35+02:00",
+ "note": "the test phase of fold k refuses unless its validation models file still has this sha256",
+ "git_commit": "2bdcf0730485e90c5404a6793ef94c1d7a05cdfd",
+ "git_dirty": false
+}

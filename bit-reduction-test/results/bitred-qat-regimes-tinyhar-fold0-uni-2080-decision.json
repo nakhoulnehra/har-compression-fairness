@@ -1,0 +1,106 @@
+{
+ "per_setting_regime": {
+  "channel-2bit|kd5": {
+   "setting": "channel-2bit",
+   "regime": "kd5",
+   "n_train_windows": 2583,
+   "size_kb": 20.6904296875,
+   "verdict": "no gap: a standard QAT recipe recovers both F1 and LCI",
+   "f1_original": 0.8178021924793387,
+   "recovered_runs": [
+    "qat-channel-2bit-kd5-lr0.0001"
+   ],
+   "best_recovered": {
+    "model_id": "qat-channel-2bit-kd5-lr0.0001",
+    "f1": 0.7953153631124693,
+    "lci": 0.8562176653275678,
+    "worst_subject_lci": 0.8222807428278227
+   }
+  },
+  "channel-2bit|calibration": {
+   "setting": "channel-2bit",
+   "regime": "calibration",
+   "n_train_windows": 978,
+   "size_kb": 20.6904296875,
+   "verdict": "inconclusive: no QAT run recovers F1 (channel-2bit with calibration data is an accuracy problem first)",
+   "f1_original": 0.8178021924793387,
+   "recovered_runs": [],
+   "best_recovered": null
+  },
+  "tensor-2bit|kd5": {
+   "setting": "tensor-2bit",
+   "regime": "kd5",
+   "n_train_windows": 2583,
+   "size_kb": 17.5380859375,
+   "verdict": "inconclusive: no QAT run recovers F1 (tensor-2bit with kd5 data is an accuracy problem first)",
+   "f1_original": 0.8178021924793387,
+   "recovered_runs": [],
+   "best_recovered": null
+  },
+  "tensor-2bit|calibration": {
+   "setting": "tensor-2bit",
+   "regime": "calibration",
+   "n_train_windows": 978,
+   "size_kb": 17.5380859375,
+   "verdict": "inconclusive: no QAT run recovers F1 (tensor-2bit with calibration data is an accuracy problem first)",
+   "f1_original": 0.8178021924793387,
+   "recovered_runs": [],
+   "best_recovered": null
+  },
+  "lamp_recon90-channel-4bit|kd5": {
+   "setting": "lamp_recon90-channel-4bit",
+   "regime": "kd5",
+   "n_train_windows": 2583,
+   "size_kb": 16.92431640625,
+   "verdict": "inconclusive: no QAT run recovers F1 (lamp_recon90-channel-4bit with kd5 data is an accuracy problem first)",
+   "f1_original": 0.8178021924793387,
+   "recovered_runs": [],
+   "best_recovered": null
+  },
+  "lamp_recon90-channel-4bit|calibration": {
+   "setting": "lamp_recon90-channel-4bit",
+   "regime": "calibration",
+   "n_train_windows": 978,
+   "size_kb": 16.92431640625,
+   "verdict": "inconclusive: no QAT run recovers F1 (lamp_recon90-channel-4bit with calibration data is an accuracy problem first)",
+   "f1_original": 0.8178021924793387,
+   "recovered_runs": [],
+   "best_recovered": null
+  },
+  "lamp_recon95-channel-4bit|kd5": {
+   "setting": "lamp_recon95-channel-4bit",
+   "regime": "kd5",
+   "n_train_windows": 2583,
+   "size_kb": 15.63671875,
+   "verdict": "inconclusive: no QAT run recovers F1 (lamp_recon95-channel-4bit with kd5 data is an accuracy problem first)",
+   "f1_original": 0.8178021924793387,
+   "recovered_runs": [],
+   "best_recovered": null
+  },
+  "lamp_recon95-channel-4bit|calibration": {
+   "setting": "lamp_recon95-channel-4bit",
+   "regime": "calibration",
+   "n_train_windows": 978,
+   "size_kb": 15.63671875,
+   "verdict": "inconclusive: no QAT run recovers F1 (lamp_recon95-channel-4bit with calibration data is an accuracy problem first)",
+   "f1_original": 0.8178021924793387,
+   "recovered_runs": [],
+   "best_recovered": null
+  }
+ },
+ "verdict_by_setting_regime": {
+  "channel-2bit|kd5": "no gap",
+  "channel-2bit|calibration": "inconclusive",
+  "tensor-2bit|kd5": "inconclusive",
+  "tensor-2bit|calibration": "inconclusive",
+  "lamp_recon90-channel-4bit|kd5": "inconclusive",
+  "lamp_recon90-channel-4bit|calibration": "inconclusive",
+  "lamp_recon95-channel-4bit|kd5": "inconclusive",
+  "lamp_recon95-channel-4bit|calibration": "inconclusive"
+ },
+ "with_gap": [],
+ "f1_original": 0.8178021924793387,
+ "rule": "Applied per setting x regime (over the two lrs): Recovered = F1_val >= F1_val(original) - 0.03. Among the QAT runs that recover F1, take the highest LCI_val. Gap (explanation-specific, room for a new method) iff that LCI_val <= 0.85 (uniform per-channel 4-bit PTQ is 0.90 on fold 0, so <= 0.85 = at least 0.05 below it). No gap iff it is > 0.85 (a standard recipe fixes 2 bits). If no run recovers F1: inconclusive for explanations, 2 bits is an accuracy problem first. Fixed before the run; nothing is retuned.",
+ "f1_recovered_tol": 0.03,
+ "lci_gap_threshold": 0.85
+}

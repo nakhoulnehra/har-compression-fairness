@@ -1,0 +1,45 @@
+{
+ "command": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\bit-reduction-test\\bitred\\run_qat_alloc.py --fold 0 --device cuda --machine-name nakhoul-3050",
+ "device": "cuda",
+ "gpu_name": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+ "cuda_version": "11.8",
+ "torch_version": "2.7.1+cu118",
+ "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+ "torch_threads": 8,
+ "python": "3.11.9",
+ "os": "Windows 10",
+ "git_commit": "6f362ed715e05eb9db758d08b1f2f00c38df0b76",
+ "git_dirty": false,
+ "bitred_code_sha256": "cd7dbe7d53eb5ab1c4801ccaff44b99cb31f47f97b38a998d1a5e088677bac46",
+ "har_code_sha256": "22304bfe4ba829592ceab726265de18920bcbae8179c8e7e5f4311066d3d93af",
+ "qat": {
+  "granularity": "channel",
+  "epochs": 20,
+  "lr": 0.0001,
+  "seed": 0,
+  "batch_size": 256
+ },
+ "allocations_file": "bitred-tinyhar-fold0-nakhoul-3050-allocations.csv",
+ "rule": "Fold-0 screen, fixed before the run. At a budget B, XGQ + KD 'wins like-for-like' iff its LCI_val >= max(ZeroQ-KL + KD, HAWQ + KD, uniform 2-bit + KD) + 0.03 and its F1_val >= each of theirs - 0.01. The 0.03 margin = about one top-10 Jaccard step (~0.09 for one subject) averaged over the 3 inner-val subjects; smaller differences are within the metric's resolution. Uniform 2-bit + KD is smaller (20.7 KB), so XGQ + KD must beat it to show that mixed precision is worth its extra size. One fold and one seed: a win is a reason to run folds 1-4, not evidence; no win = no method contribution here.",
+ "window_hashes": {
+  "explain": "e03e919a8393ca7ab1be3582495288836a5b8c97ade08cfe0241a0026bafd49f",
+  "f1": "09d1dd0ea3d6fb617c4cd4cf2f4cf092bc8a9e450a88212b3518aac454306752",
+  "calibration": "256f8e0535387710f8d87da34973d9ca0b450ee2b40ee58540e2e09cb1528e45",
+  "lci_calibration": "4556c118dd1ac315613a8481f55b62e4ec408c631fd1729f334aaed0204962c4",
+  "n_explain": 300,
+  "n_f1": 7709,
+  "n_calibration": 978,
+  "n_lci_calibration": 140,
+  "inner_val_subjects": [
+   "S010",
+   "S020",
+   "S021"
+  ],
+  "n_train_subjects": 15
+ },
+ "seconds": {
+  "wall": 1482.5897067000624
+ },
+ "har70plus_loaded": false,
+ "finished_at": "2026-11-24T23:52:51+02:00"
+}

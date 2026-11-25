@@ -1,0 +1,112 @@
+{
+ "command": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\bit-reduction-test\\bitred\\run_qat_regimes.py --fold 0 --device cuda --machine-name uni-2080",
+ "device": "cuda",
+ "gpu_name": "GeForce RTX 2080",
+ "cuda_version": "11.8",
+ "torch_version": "2.7.1+cu118",
+ "cpu": "Intel64 Family 6 Model 158 Stepping 13, GenuineIntel",
+ "torch_threads": 8,
+ "python": "3.11.9",
+ "os": "Windows 10",
+ "git_commit": "d40d237926d11bd3edd3fb02146b39c83a88787a",
+ "git_dirty": false,
+ "bitred_code_sha256": "d49830b4835ef37c60dc8424afa8e2bc43995eabc19fdb89979485d04481b26c",
+ "har_code_sha256": "64835b9ec83ed7926b6c207b4554e087d40bba89955cf12013d463ac2fa764c3",
+ "settings": [
+  {
+   "setting": "channel-2bit",
+   "prune_level": null,
+   "bits": 2,
+   "granularity": "channel"
+  },
+  {
+   "setting": "tensor-2bit",
+   "prune_level": null,
+   "bits": 2,
+   "granularity": "tensor"
+  },
+  {
+   "setting": "lamp_recon90-channel-4bit",
+   "prune_level": 0.9,
+   "bits": 4,
+   "granularity": "channel"
+  },
+  {
+   "setting": "lamp_recon95-channel-4bit",
+   "prune_level": 0.95,
+   "bits": 4,
+   "granularity": "channel"
+  }
+ ],
+ "regimes": {
+  "kd5": {
+   "source": "round 4's kd5 subset (fraction 0.05, seed 48, >= 1 per (subject, class))",
+   "n_train_windows": 2583
+  },
+  "calibration": {
+   "source": "round 4's calibration set (<= 10 per (subject, class), seed 46)",
+   "n_train_windows": 978
+  }
+ },
+ "n_train_full": 51451,
+ "qat": {
+  "epochs": 20,
+  "lrs": [
+   0.0001,
+   0.001
+  ],
+  "seed": 0,
+  "batch_size": 256
+ },
+ "optimisation": {
+  "adam_steps_per_run": 4020,
+  "steps_per_epoch_full": 201,
+  "eval_every_steps": 201,
+  "epochs_equivalent": {
+   "kd5": 365.45454545454544,
+   "calibration": 1005.0
+  },
+  "note": "equal Adam steps across regimes (changed 2026-11-25 before any real run, from equal epochs)"
+ },
+ "lamp_recon": {
+  "K": 5,
+  "beta": 0.0,
+  "damp": 0.01,
+  "floor_frac": 0.02,
+  "budget": "lamp"
+ },
+ "gap": {
+  "f1_recovered_tol": 0.03,
+  "lci_gap_threshold": 0.85
+ },
+ "rule": "Applied per setting x regime (over the two lrs): Recovered = F1_val >= F1_val(original) - 0.03. Among the QAT runs that recover F1, take the highest LCI_val. Gap (explanation-specific, room for a new method) iff that LCI_val <= 0.85 (uniform per-channel 4-bit PTQ is 0.90 on fold 0, so <= 0.85 = at least 0.05 below it). No gap iff it is > 0.85 (a standard recipe fixes 2 bits). If no run recovers F1: inconclusive for explanations, 2 bits is an accuracy problem first. Fixed before the run; nothing is retuned.",
+ "window_hashes": {
+  "explain": "e03e919a8393ca7ab1be3582495288836a5b8c97ade08cfe0241a0026bafd49f",
+  "f1": "09d1dd0ea3d6fb617c4cd4cf2f4cf092bc8a9e450a88212b3518aac454306752",
+  "calibration": "256f8e0535387710f8d87da34973d9ca0b450ee2b40ee58540e2e09cb1528e45",
+  "lci_calibration": "4556c118dd1ac315613a8481f55b62e4ec408c631fd1729f334aaed0204962c4",
+  "n_explain": 300,
+  "n_f1": 7709,
+  "n_calibration": 978,
+  "n_lci_calibration": 140,
+  "inner_val_subjects": [
+   "S010",
+   "S020",
+   "S021"
+  ],
+  "n_train_subjects": 15
+ },
+ "calibration_matches_round4": true,
+ "checkpoint": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold0-nakhoul-3050.pt",
+ "tau_k": 0.659347126693845,
+ "ceiling": 0.9455042425573076,
+ "seconds": {
+  "lamp_recon": {
+   "lamp_recon90-channel-4bit": 3.2678134000161663,
+   "lamp_recon95-channel-4bit": 3.11921410006471
+  },
+  "wall": 1468.8474631999852
+ },
+ "har70plus_loaded": false,
+ "finished_at": "2026-11-25T01:38:01+02:00"
+}

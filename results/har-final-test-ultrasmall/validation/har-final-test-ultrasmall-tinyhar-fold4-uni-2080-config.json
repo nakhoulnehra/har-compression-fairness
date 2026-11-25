@@ -1,0 +1,133 @@
+{
+ "phase": "validation",
+ "command": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\bit-reduction-test\\bitred\\run_final_test.py --phase validation --folds 2 3 4 --device cuda --machine-name uni-2080",
+ "device": "cuda",
+ "gpu_name": "GeForce RTX 2080",
+ "cuda_version": "11.8",
+ "torch_version": "2.7.1+cu118",
+ "cpu": "Intel64 Family 6 Model 158 Stepping 13, GenuineIntel",
+ "torch_threads": 8,
+ "python": "3.11.9",
+ "os": "Windows 10",
+ "git_commit": "883e29c645f0d1245b364f257e088139f64797c2",
+ "git_dirty": false,
+ "bitred_code_sha256": "d42f1686b3fbfc4ba16866488e13f2f97795dc8f5acb25952b435001fb7a453c",
+ "har_code_sha256": "64835b9ec83ed7926b6c207b4554e087d40bba89955cf12013d463ac2fa764c3",
+ "methods": {
+  "lamp_recon": [
+   "lamp",
+   "l1"
+  ],
+  "xgp_xb": [
+   "xb",
+   "xgp"
+  ],
+  "l1_xb_recon": [
+   "xb",
+   "l1"
+  ],
+  "xgp_lamp": [
+   "lamp",
+   "xgp"
+  ]
+ },
+ "levels": [
+  0.9,
+  0.95
+ ],
+ "quant": {
+  "bits": 4,
+  "granularity": "channel"
+ },
+ "reference": {
+  "setting": "tensor-2bit",
+  "bits": 2,
+  "granularity": "tensor"
+ },
+ "qat": {
+  "steps": 4020,
+  "eval_every_steps": 201,
+  "lrs": [
+   0.0001,
+   0.001
+  ],
+  "seed": 0,
+  "batch_size": 256
+ },
+ "xgp": {
+  "seed": 0,
+  "K": 5,
+  "beta": 0.1,
+  "top_k": 3,
+  "m": 8,
+  "score_batch": 125,
+  "damp": 0.01,
+  "floor_frac": 0.02
+ },
+ "seeds": {
+  "main_cell": [
+   0,
+   1,
+   2
+  ],
+  "other": [
+   0
+  ]
+ },
+ "regimes": {
+  "full": "all training windows of the fold",
+  "kd5": "round 4's kd5 subset (fraction 0.05, seed 48, >= 1 per (subject, class))",
+  "calibration": "round 4's calibration set (<= 10 per (subject, class), seed 46)"
+ },
+ "n_train_windows": {
+  "full": 54355,
+  "kd5": 2724,
+  "calibration": 937
+ },
+ "preregistration": {
+  "H1": "Single primary, confirmatory, no multiplicity correction: at 90%|kd5, lr 1e-3, per-subject LCI (9A protocol) averaged over seeds 0, 1, 2 (each seed pooled over folds first); paired one-sided Wilcoxon signed-rank xgp_xb > lamp_recon over the 40 test subjects; supported iff p < 0.05.",
+  "H2": "At 90%|kd5, lr 1e-3, seed mean: D2 = |gap_lamp_recon| - |gap_xgp_xb|, gap = mean_older(AOPC) - mean_general(AOPC); paired stratified bootstrap (10,000, seed 42); supported iff the 95% CI of D2 > 0.",
+  "H3": "Exploratory (5 vs 13 subjects): at 90%|kd5, lr 1e-3, seed mean: D3 = wa_gap_xgp_xb - wa_gap_lamp_recon, wa_gap = mean_walking_aid(d_accuracy) - mean_other_older(d_accuracy); paired bootstrap; supported (exploratory) iff the 95% CI of D3 > 0.",
+  "secondary_cells": "the other 5 level x regime cells, lr 1e-3, seed 0: one-sided Wilcoxon on LCI, Holm over the 5",
+  "secondary_analyses": "ablations (validation first, then test, Holm over 12), seeds 1-2 on validation, both lrs, LCI sensitivity k in {5,10,20} x omega in {0.25,0.5,0.75}; none changes H1-H3"
+ },
+ "window_hashes": {
+  "explain": "92ce55c18ca6bb363e6d800cb013c01659d7f5bd0fee9a722f381f1aae5c9bc7",
+  "f1": "2f75546ecd2ed91bac190c13869154156f4110a51ccd5414b69afa58222c057f",
+  "calibration": "945adb5eecb863bfcf7c35480b79034fa47cb392f337bdbd2d6e0a5d83f79de2",
+  "lci_calibration": "20e22b7afcf432653a6fac27eb55b1fc8b0ffb337f6f1050c00e0ddbeae0ea8d",
+  "n_explain": 300,
+  "n_f1": 6682,
+  "n_calibration": 937,
+  "n_lci_calibration": 140,
+  "inner_val_subjects": [
+   "S012",
+   "S016",
+   "S024"
+  ],
+  "n_train_subjects": 14
+ },
+ "calibration_matches_round4": null,
+ "har70plus_loaded": false,
+ "seconds": {
+  "starts": {
+   "lamp_recon90-seed0": 0.0,
+   "xgp_xb90-seed0": 0.0,
+   "l1_xb_recon90-seed0": 16.39564150001388,
+   "xgp_lamp90-seed0": 64.17392710002605,
+   "lamp_recon95-seed0": 0.0,
+   "xgp_xb95-seed0": 0.0,
+   "l1_xb_recon95-seed0": 3.470280300010927,
+   "xgp_lamp95-seed0": 65.20026220008731,
+   "xgp_xb90-seed1": 77.42755689995829,
+   "xgp_xb90-seed2": 76.06694029993378
+  },
+  "shares": {
+   "0": 12.557152400026098,
+   "1": 12.158529700012878,
+   "2": 12.177132899989374
+  },
+  "wall": 5969.590730900061
+ },
+ "finished_at": "2026-11-25T17:00:36+02:00"
+}
