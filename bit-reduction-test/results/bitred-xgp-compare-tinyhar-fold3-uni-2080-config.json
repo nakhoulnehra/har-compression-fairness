@@ -1,0 +1,102 @@
+{
+ "command": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\bit-reduction-test\\bitred\\run_xgp_compare.py --folds 2 3 4 --device cuda --machine-name uni-2080",
+ "device": "cuda",
+ "gpu_name": "GeForce RTX 2080",
+ "cuda_version": "11.8",
+ "torch_version": "2.7.1+cu118",
+ "cpu": "Intel64 Family 6 Model 158 Stepping 13, GenuineIntel",
+ "torch_threads": 8,
+ "python": "3.11.9",
+ "os": "Windows 10",
+ "git_commit": "cf4dc8948544cf408e9cfd9337355a04fe00ed98",
+ "git_dirty": false,
+ "bitred_code_sha256": "1694bf61bf8291d80b82ec48eb2e8d517286100befb660bc3639b51546859108",
+ "har_code_sha256": "64835b9ec83ed7926b6c207b4554e087d40bba89955cf12013d463ac2fa764c3",
+ "methods": {
+  "lamp_recon": [
+   "lamp",
+   "l1"
+  ],
+  "xgp_xb": [
+   "xb",
+   "xgp"
+  ]
+ },
+ "levels": [
+  0.9,
+  0.95
+ ],
+ "quant": {
+  "bits": 4,
+  "granularity": "channel"
+ },
+ "reference": {
+  "setting": "tensor-2bit",
+  "bits": 2,
+  "granularity": "tensor"
+ },
+ "qat": {
+  "steps": 4020,
+  "eval_every_steps": 201,
+  "lrs": [
+   0.0001,
+   0.001
+  ],
+  "seed": 0,
+  "batch_size": 256
+ },
+ "xgp": {
+  "seed": 0,
+  "K": 5,
+  "beta": 0.1,
+  "top_k": 3,
+  "m": 8,
+  "score_batch": 125,
+  "damp": 0.01,
+  "floor_frac": 0.02
+ },
+ "regimes": {
+  "full": "all training windows of the fold",
+  "kd5": "round 4's kd5 subset (fraction 0.05, seed 48, >= 1 per (subject, class))",
+  "calibration": "round 4's calibration set (<= 10 per (subject, class), seed 46)"
+ },
+ "n_train_windows": {
+  "full": 54392,
+  "kd5": 2726,
+  "calibration": 958
+ },
+ "rule": "Per level x regime at the primary lr, XGP (xgp_xb) beats LAMP (lamp_recon) iff over the 5 folds: (a) mean LCI_val gain >= 0.02; (b) LCI_val strictly higher in >= 4 of 5 folds; (c) mean F1_val >= LAMP's - 0.01; (d) mean worst-subject LCI_val >= LAMP's - 0.01. Fewer than 5 folds -> incomplete, no verdict. Fixed before any run; nothing is retuned.",
+ "primary_lr_rule": "Primary lr per regime = the lr with the higher mean F1_val of lamp_recon (QAT, 4-bit) over the 5 folds and both levels; tie -> 1e-4. Chosen on the comparator only, never on XGP or on LCI.",
+ "window_hashes": {
+  "explain": "9419422914b8126c5742d9ecaeda4959033c22f6b480701147edd41afa6bd21a",
+  "f1": "800030fb672d2fd134535cdf59339970382655c4e265312efec727c80b2805b1",
+  "calibration": "83131e4e15a195c67884e97e004a0d88ab7fb5033a36f1aba1fbfd5349772fa3",
+  "lci_calibration": "b7f8eb80c4be3e49d6f5390775c021686f9f1a008387b77cf325af05ec84559c",
+  "n_explain": 300,
+  "n_f1": 6274,
+  "n_calibration": 958,
+  "n_lci_calibration": 140,
+  "inner_val_subjects": [
+   "S017",
+   "S022",
+   "S024"
+  ],
+  "n_train_subjects": 15
+ },
+ "calibration_matches_round4": null,
+ "checkpoint": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\data\\processed\\har\\checkpoints\\har-model-selection\\har-final-tinyhar-fold3-nakhoul-3050.pt",
+ "tau_k": 0.6236971762657825,
+ "ceiling": 0.9128560356687709,
+ "seconds": {
+  "starts": {
+   "lamp_recon90": 7.150144800078124,
+   "xgp_xb90": 130.24002090003341,
+   "lamp_recon95": 5.999478799989447,
+   "xgp_xb95": 106.91296799993142
+  },
+  "shares": 24.18611070001498,
+  "wall": 4826.381195200025
+ },
+ "har70plus_loaded": false,
+ "finished_at": "2026-11-25T04:37:53+02:00"
+}
