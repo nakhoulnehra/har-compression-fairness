@@ -1,0 +1,16 @@
+    SHAP cache hit bitred-fold3-eval-original-3eb7f90f4e0290ad.npz
+    SHAP cache hit bitred-fold3-cal-original-8cd08a2b205bdfe3.npz
+fold 3: train 54392 windows (15 subjects); calibration 958 training windows, LCI-calibration subset 140; inner val ['S017', 'S022', 'S024']: F1 windows 6274, explain 150; tau_k 0.6237, ceiling 0.9129; original SHAP 0.0 s
+fold 3 original-0pct-seed0: F1 0.831 acc 0.935 LCI 1.000 indep 0.940 self 0.940 occ 1.000 agree 1.000 nnz 54273 [3s, total 8s]
+    SHAP cache hit bitred-fold3-eval-gs4-fmkd_from_l1_fullrecon-80pct-seed0-lr0.0003-e62235ea46d11c23.npz
+fold 3 fmkd_from_l1_fullrecon-80pct-seed0-lr0.0003: F1 0.820 acc 0.932 LCI 0.886 indep 0.868 self 0.944 occ 0.677 agree 0.940 nnz 12095 [2342s, total 2350s]
+    SHAP cache hit bitred-fold3-eval-gs4-fmkd_from_l1_fullrecon-80pct-seed0-lr0.0001-6c43a3206cf2d9b2.npz
+fold 3 fmkd_from_l1_fullrecon-80pct-seed0-lr0.0001: F1 0.815 acc 0.931 LCI 0.871 indep 0.855 self 0.976 occ 0.706 agree 0.953 nnz 12095 [2491s, total 4841s]
+    SHAP cache hit bitred-fold3-eval-gs4-kd_from_l1_fullrecon-80pct-seed0-lr0.0003-138663f973a4736c.npz
+fold 3 kd_from_l1_fullrecon-80pct-seed0-lr0.0003: F1 0.820 acc 0.931 LCI 0.879 indep 0.863 self 0.914 occ 0.727 agree 0.953 nnz 12095 [627s, total 5468s]
+    SHAP cache hit bitred-fold3-eval-gs4-calkd_from_l1_fullrecon-80pct-seed0-lr0.0001-8db9334bcbb0a02d.npz
+fold 3 calkd_from_l1_fullrecon-80pct-seed0-lr0.0001: F1 0.810 acc 0.926 LCI 0.825 indep 0.809 self 0.942 occ 0.635 agree 0.960 nnz 12095 [153s, total 5621s]
+    SHAP cache hit bitred-fold3-eval-gs4-calkd_from_l1_fullrecon-80pct-seed0-lr0.0003-081f240a06f8dfac.npz
+fold 3 calkd_from_l1_fullrecon-80pct-seed0-lr0.0003: F1 0.813 acc 0.926 LCI 0.856 indep 0.841 self 0.913 occ 0.690 agree 0.960 nnz 12095 [189s, total 5810s]
+    SHAP cache hit bitred-fold3-eval-gs4-fmkd_from_lamp_recon-90pct-seed0-lr0.0003-c3184921b521c519.npz
+fold 3 fmkd_from_lamp_recon-90pct-seed0-lr0.0003: F1 0.810 acc 0.928 LCI 0.817 indep 0.804 self 0.947 occ 0.698 agree 0.947 nnz 6821 [1512s, total 7322s]

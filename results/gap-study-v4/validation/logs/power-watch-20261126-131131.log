@@ -1,0 +1,8 @@
+2026-11-26 13:11:31  watcher started (pid 39080), jobs: v4-ft-f0, v4-ft-f1, v4-ft-f2, v4-ft-f3, v4-ft-f4, v4-nr-a, v4-nr-b
+2026-11-26 13:11:31  v4-ft-f0: started pid 49872 on AC: -u -m gap_study_v4.run_v4 --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker ft --stages ref ft4 --folds 0
+2026-11-26 13:11:31  v4-ft-f1: started pid 45956 on AC: -u -m gap_study_v4.run_v4 --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker ft --stages ref ft4 --folds 1
+2026-11-26 13:11:31  v4-ft-f2: started pid 5392 on AC: -u -m gap_study_v4.run_v4 --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker ft --stages ref ft4 --folds 2
+2026-11-26 13:11:31  v4-ft-f3: started pid 42148 on AC: -u -m gap_study_v4.run_v4 --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker ft --stages ref ft4 --folds 3
+2026-11-26 13:11:31  v4-ft-f4: started pid 10108 on AC: -u -m gap_study_v4.run_v4 --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker ft --stages ref ft4 --folds 4
+2026-11-26 13:11:31  v4-nr-a: started pid 35288 on AC: -u -m gap_study_v4.run_v4 --device cpu --ft-device cuda --machine-name Ansel --resume --threads 3 --worker nr --stages ref nr4 --folds 0 1 2
+2026-11-26 13:11:31  v4-nr-b: started pid 25784 on AC: -u -m gap_study_v4.run_v4 --device cpu --ft-device cuda --machine-name Ansel --resume --threads 3 --worker nr --stages ref nr4 --folds 3 4

@@ -1,0 +1,15 @@
+    SHAP cache hit bitred-fold2-eval-original-4f48ea398413f533.npz
+    SHAP cache hit bitred-fold2-cal-original-8449b7e5080a246b.npz
+fold 2: train 52771 windows (14 subjects); calibration 917 training windows, LCI-calibration subset 140; inner val ['S013', 'S019', 'S022']: F1 windows 7389, explain 150; tau_k 0.6295, ceiling 0.9439; original SHAP 0.0 s
+fold 2 original-0pct-seed0: F1 0.882 acc 0.935 LCI 1.000 indep 0.915 self 0.915 occ 1.000 agree 1.000 nnz 54273 [4s, total 20s]
+    SHAP cache hit bitred-fold2-eval-gs4-calfm_from_lamp_recon-90pct-seed0-lr0.001-c17337227053e9fb.npz
+fold 2 calfm_from_lamp_recon-90pct-seed0-lr0.001: F1 0.871 acc 0.930 LCI 0.837 indep 0.802 self 0.917 occ 0.691 agree 0.940 nnz 6821 [751s, total 771s]
+    SHAP cache hit bitred-fold2-eval-gs4-calfm_from_lamp_recon-90pct-seed0-lr0.0003-bf61a800ddc311c0.npz
+fold 2 calfm_from_lamp_recon-90pct-seed0-lr0.0003: F1 0.863 acc 0.927 LCI 0.790 indep 0.749 self 0.951 occ 0.655 agree 0.927 nnz 6821 [624s, total 1394s]
+    SHAP cache hit bitred-fold2-eval-gs4-calfm_from_l1_fullrecon-90pct-seed0-lr0.001-6353a400cc3830f2.npz
+fold 2 calfm_from_l1_fullrecon-90pct-seed0-lr0.001: F1 0.870 acc 0.929 LCI 0.858 indep 0.823 self 0.944 occ 0.626 agree 0.960 nnz 6821 [525s, total 1919s]
+    SHAP cache hit bitred-fold2-eval-gs4-calkd_from_lamp_recon-90pct-seed0-lr0.001-9e14b77ff5c83bdd.npz
+fold 2 calkd_from_lamp_recon-90pct-seed0-lr0.001: F1 0.865 acc 0.928 LCI 0.793 indep 0.782 self 0.975 occ 0.676 agree 0.940 nnz 6821 [288s, total 2208s]
+    SHAP cache hit bitred-fold2-eval-gs4-calfm_from_lamp_recon-90pct-seed0-lr0.003-d71a496c611d6316.npz
+fold 2 calfm_from_lamp_recon-90pct-seed0-lr0.003: F1 0.862 acc 0.926 LCI 0.840 indep 0.827 self 0.916 occ 0.654 agree 0.927 nnz 6821 [525s, total 2733s]
+fold 2 stages ['ref', 'lf90'] done in 2733s

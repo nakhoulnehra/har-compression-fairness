@@ -1,0 +1,5 @@
+# Waits until the fold-0 ft worker has exited, then restarts fold 2 (crashed 14:26, CUDA illegal memory access) with --resume.
+$Root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path); Set-Location $Root
+while (@(Get-CimInstance Win32_Process -Filter "Name='python.exe'" | Where-Object { $_.CommandLine -match 'gap_study_v4.run_v4' -and $_.CommandLine -match '--worker ft' -and $_.CommandLine -match '--folds 0 *$' }).Count -gt 0) { Start-Sleep -Seconds 30 }
+$env:PYTHONPATH = "bit-reduction-test"; $env:PYTHONUNBUFFERED = "1"; $stamp = Get-Date -Format "yyyyMMdd-HHmmss"
+Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList '-u','-m','gap_study_v4.run_v4','--device','cpu','--ft-device','cuda','--machine-name','Ansel','--resume','--threads','2','--worker','ft','--stages','ref','ft4b','--folds','2' -WindowStyle Hidden -RedirectStandardOutput "results\gap-study-v4\validation\logs\v4-ft-f2-restart-$stamp.log" -RedirectStandardError "results\gap-study-v4\validation\logs\v4-ft-f2-restart-$stamp.err.log"

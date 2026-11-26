@@ -1,0 +1,34 @@
+    SHAP cache hit bitred-fold3-eval-original-3eb7f90f4e0290ad.npz
+    SHAP cache hit bitred-fold3-cal-original-8cd08a2b205bdfe3.npz
+fold 3: train 54392 windows (15 subjects); calibration 958 training windows, LCI-calibration subset 140; inner val ['S017', 'S022', 'S024']: F1 windows 6274, explain 150; tau_k 0.6237, ceiling 0.9129; original SHAP 0.0 s
+fold 3 original-0pct-seed0: F1 0.831 acc 0.935 LCI 1.000 indep 0.940 self 0.940 occ 1.000 agree 1.000 nnz 54273 [5s, total 10s]
+    SHAP cache hit bitred-fold3-eval-gs4-ria_fullrecon-80pct-seed0-ad8d19bfdb1ca2e0.npz
+fold 3 ria_fullrecon-80pct-seed0: F1 0.811 acc 0.928 LCI 0.830 indep 0.816 self 0.941 occ 0.520 agree 0.953 nnz 12095 [142s, total 153s]
+    SHAP cache hit bitred-fold3-eval-gs4-ria_fullrecon-80pct-seed1-73a98f7f053f25f1.npz
+fold 3 ria_fullrecon-80pct-seed1: F1 0.804 acc 0.926 LCI 0.856 indep 0.842 self 0.973 occ 0.568 agree 0.920 nnz 12095 [135s, total 287s]
+    SHAP cache hit bitred-fold3-eval-gs4-ria_fullrecon-80pct-seed2-819d1e181a33e19b.npz
+fold 3 ria_fullrecon-80pct-seed2: F1 0.812 acc 0.928 LCI 0.855 indep 0.812 self 0.941 occ 0.584 agree 0.927 nnz 12095 [124s, total 411s]
+    SHAP cache hit bitred-fold3-eval-gs4-l1_fullrecon_mixcal-80pct-seed0-3157451c59ae6f1c.npz
+fold 3 l1_fullrecon_mixcal-80pct-seed0: F1 0.800 acc 0.922 LCI 0.861 indep 0.845 self 0.975 occ 0.571 agree 0.933 nnz 12095 [137s, total 548s]
+    SHAP cache hit bitred-fold3-eval-gs4-l1_fullrecon_mixcal-80pct-seed1-2d68b61afd503dae.npz
+fold 3 l1_fullrecon_mixcal-80pct-seed1: F1 0.806 acc 0.926 LCI 0.859 indep 0.815 self 0.946 occ 0.574 agree 0.933 nnz 12095 [135s, total 683s]
+    SHAP cache hit bitred-fold3-eval-gs4-l1_fullrecon_mixcal-80pct-seed2-4bfd3468520b800d.npz
+fold 3 l1_fullrecon_mixcal-80pct-seed2: F1 0.806 acc 0.927 LCI 0.894 indep 0.850 self 0.945 occ 0.643 agree 0.927 nnz 12095 [135s, total 818s]
+fold 3 stages ['ref', 'nr4'] done in 818s
+    SHAP cache hit bitred-fold4-eval-original-74ae82916b2fe8d8.npz
+    SHAP cache hit bitred-fold4-cal-original-c624b528591796cd.npz
+fold 4: train 54355 windows (14 subjects); calibration 937 training windows, LCI-calibration subset 140; inner val ['S012', 'S016', 'S024']: F1 windows 6682, explain 150; tau_k 0.6125, ceiling 0.9617; original SHAP 0.0 s
+fold 4 original-0pct-seed0: F1 0.840 acc 0.961 LCI 1.000 indep 0.945 self 0.945 occ 1.000 agree 1.000 nnz 54273 [2s, total 6s]
+    SHAP cache hit bitred-fold4-eval-gs4-ria_fullrecon-80pct-seed0-e3fbfa1c7a50da00.npz
+fold 4 ria_fullrecon-80pct-seed0: F1 0.842 acc 0.962 LCI 0.825 indep 0.810 self 0.973 occ 0.639 agree 0.967 nnz 12095 [115s, total 121s]
+    SHAP cache hit bitred-fold4-eval-gs4-ria_fullrecon-80pct-seed1-5c43290f3b6c1ee9.npz
+fold 4 ria_fullrecon-80pct-seed1: F1 0.847 acc 0.963 LCI 0.822 indep 0.809 self 0.974 occ 0.565 agree 0.967 nnz 12095 [115s, total 236s]
+    SHAP cache hit bitred-fold4-eval-gs4-ria_fullrecon-80pct-seed2-c62794be5f0a7339.npz
+fold 4 ria_fullrecon-80pct-seed2: F1 0.830 acc 0.955 LCI 0.831 indep 0.845 self 0.944 occ 0.634 agree 0.940 nnz 12095 [116s, total 352s]
+    SHAP cache hit bitred-fold4-eval-gs4-l1_fullrecon_mixcal-80pct-seed0-0fea60fa8dc970a6.npz
+fold 4 l1_fullrecon_mixcal-80pct-seed0: F1 0.843 acc 0.962 LCI 0.835 indep 0.816 self 0.972 occ 0.609 agree 0.973 nnz 12095 [133s, total 485s]
+    SHAP cache hit bitred-fold4-eval-gs4-l1_fullrecon_mixcal-80pct-seed1-145d9ec2e753ef2d.npz
+fold 4 l1_fullrecon_mixcal-80pct-seed1: F1 0.840 acc 0.962 LCI 0.833 indep 0.843 self 0.945 occ 0.663 agree 0.953 nnz 12095 [133s, total 618s]
+    SHAP cache hit bitred-fold4-eval-gs4-l1_fullrecon_mixcal-80pct-seed2-845c4a8e8145492c.npz
+fold 4 l1_fullrecon_mixcal-80pct-seed2: F1 0.846 acc 0.961 LCI 0.839 indep 0.850 self 0.914 occ 0.658 agree 0.980 nnz 12095 [134s, total 752s]
+fold 4 stages ['ref', 'nr4'] done in 752s
