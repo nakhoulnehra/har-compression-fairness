@@ -1,0 +1,69 @@
+=== final test, TEST phase (9A protocol), fold 2, uni-2080, cuda; 0 of 63 models already done ===
+    SHAP cache hit har-noise-floor-fold2-inner_val-3380c7b8519ae04c.npz
+    SHAP cache hit har-noise-floor-fold2-general-bcf416b70303deb9.npz
+    SHAP cache hit har-noise-floor-fold2-older-d79025caa6df0bac.npz
+fold 2: train 52771 windows, inner val ['S013', 'S019', 'S022'], general ['S006', 'S010', 'S012', 'S024', 'S027'], older 18 subjects; explain inner_val 90, general 150, older 540; tau_k 0.6295 (C:\Users\LenovoP330-01-Adm01\Downloads\har-compression-fairness\results\har-noise-floor\har-noise-floor-tinyhar-fold2-uni-2080-tau.csv); ceilings inner_val 0.9439, general 0.9209, older 0.9271; original SHAP 0.0 s
+  original                                             LCI general 1.0000, older 1.0000; acc general 0.9091, older 0.7603; 1 s
+  qat-tensor-2bit-full-lr0.0001-seed0                  LCI general 0.7860, older 0.7236; acc general 0.8909, older 0.7330; 109 s
+  qat-tensor-2bit-full-lr0.001-seed0                   LCI general 0.6677, older 0.6143; acc general 0.8302, older 0.6698; 105 s
+  qat-tensor-2bit-kd5-lr0.0001-seed0                   LCI general 0.7527, older 0.7130; acc general 0.8717, older 0.7446; 104 s
+  qat-tensor-2bit-kd5-lr0.001-seed0                    LCI general 0.6613, older 0.6039; acc general 0.9109, older 0.8061; 105 s
+  qat-tensor-2bit-calibration-lr0.0001-seed0           LCI general 0.7704, older 0.7239; acc general 0.8551, older 0.7421; 106 s
+  qat-tensor-2bit-calibration-lr0.001-seed0            LCI general 0.5124, older 0.5021; acc general 0.8474, older 0.6595; 106 s
+  qat-lamp_recon90-channel-4bit-full-lr0.0001-seed0    LCI general 0.7655, older 0.7332; acc general 0.9017, older 0.7139; 108 s
+  qat-lamp_recon90-channel-4bit-full-lr0.001-seed0     LCI general 0.7963, older 0.7469; acc general 0.9019, older 0.7550; 108 s
+  qat-lamp_recon90-channel-4bit-kd5-lr0.0001-seed0     LCI general 0.7480, older 0.7574; acc general 0.9030, older 0.7117; 108 s
+  qat-lamp_recon90-channel-4bit-kd5-lr0.001-seed0      LCI general 0.6845, older 0.7077; acc general 0.9137, older 0.7812; 109 s
+  qat-lamp_recon90-channel-4bit-calibration-lr0.0001-seed0 LCI general 0.7240, older 0.7136; acc general 0.8490, older 0.6975; 108 s
+  qat-lamp_recon90-channel-4bit-calibration-lr0.001-seed0 LCI general 0.7346, older 0.7136; acc general 0.8642, older 0.7029; 107 s
+  qat-lamp_recon90-channel-4bit-kd5-lr0.0001-seed1     LCI general 0.7563, older 0.7517; acc general 0.9039, older 0.7560; 106 s
+  qat-lamp_recon90-channel-4bit-kd5-lr0.001-seed1      LCI general 0.7476, older 0.7091; acc general 0.9033, older 0.7561; 108 s
+  qat-lamp_recon90-channel-4bit-kd5-lr0.0001-seed2     LCI general 0.7434, older 0.7395; acc general 0.9055, older 0.7522; 108 s
+  qat-lamp_recon90-channel-4bit-kd5-lr0.001-seed2      LCI general 0.7568, older 0.7338; acc general 0.9076, older 0.7633; 109 s
+  qat-xgp_xb90-channel-4bit-full-lr0.0001-seed0        LCI general 0.7538, older 0.7403; acc general 0.9014, older 0.7451; 107 s
+  qat-xgp_xb90-channel-4bit-full-lr0.001-seed0         LCI general 0.8155, older 0.7975; acc general 0.8908, older 0.7352; 109 s
+  qat-xgp_xb90-channel-4bit-kd5-lr0.0001-seed0         LCI general 0.7253, older 0.7254; acc general 0.9047, older 0.7415; 107 s
+  qat-xgp_xb90-channel-4bit-kd5-lr0.001-seed0          LCI general 0.7318, older 0.7573; acc general 0.9100, older 0.7344; 106 s
+  qat-xgp_xb90-channel-4bit-calibration-lr0.0001-seed0 LCI general 0.7143, older 0.6988; acc general 0.8970, older 0.7103; 107 s
+  qat-xgp_xb90-channel-4bit-calibration-lr0.001-seed0  LCI general 0.7204, older 0.6783; acc general 0.8957, older 0.7124; 106 s
+  qat-l1_xb_recon90-channel-4bit-full-lr0.0001-seed0   LCI general 0.8178, older 0.7659; acc general 0.9025, older 0.7388; 106 s
+  qat-l1_xb_recon90-channel-4bit-full-lr0.001-seed0    LCI general 0.8636, older 0.8247; acc general 0.9034, older 0.7513; 107 s
+  qat-l1_xb_recon90-channel-4bit-kd5-lr0.0001-seed0    LCI general 0.8217, older 0.7557; acc general 0.9037, older 0.7354; 108 s
+  qat-l1_xb_recon90-channel-4bit-kd5-lr0.001-seed0     LCI general 0.8054, older 0.7729; acc general 0.9061, older 0.7461; 106 s
+  qat-l1_xb_recon90-channel-4bit-calibration-lr0.0001-seed0 LCI general 0.7573, older 0.7470; acc general 0.8703, older 0.7051; 108 s
+  qat-l1_xb_recon90-channel-4bit-calibration-lr0.001-seed0 LCI general 0.7793, older 0.7543; acc general 0.8913, older 0.7400; 107 s
+  qat-xgp_lamp90-channel-4bit-full-lr0.0001-seed0      LCI general 0.7232, older 0.7325; acc general 0.8986, older 0.7118; 106 s
+  qat-xgp_lamp90-channel-4bit-full-lr0.001-seed0       LCI general 0.8274, older 0.8022; acc general 0.9000, older 0.7156; 107 s
+  qat-xgp_lamp90-channel-4bit-kd5-lr0.0001-seed0       LCI general 0.7304, older 0.7359; acc general 0.9000, older 0.7268; 108 s
+  qat-xgp_lamp90-channel-4bit-kd5-lr0.001-seed0        LCI general 0.7473, older 0.7426; acc general 0.9061, older 0.7683; 107 s
+  qat-xgp_lamp90-channel-4bit-calibration-lr0.0001-seed0 LCI general 0.7058, older 0.6764; acc general 0.8803, older 0.6744; 106 s
+  qat-xgp_lamp90-channel-4bit-calibration-lr0.001-seed0 LCI general 0.6991, older 0.7102; acc general 0.8868, older 0.6913; 106 s
+  qat-lamp_recon95-channel-4bit-full-lr0.0001-seed0    LCI general 0.5224, older 0.5084; acc general 0.8870, older 0.7083; 107 s
+  qat-lamp_recon95-channel-4bit-full-lr0.001-seed0     LCI general 0.6594, older 0.6768; acc general 0.8947, older 0.7141; 107 s
+  qat-lamp_recon95-channel-4bit-kd5-lr0.0001-seed0     LCI general 0.5086, older 0.5238; acc general 0.8942, older 0.7281; 106 s
+  qat-lamp_recon95-channel-4bit-kd5-lr0.001-seed0      LCI general 0.6611, older 0.6590; acc general 0.8963, older 0.7512; 107 s
+  qat-lamp_recon95-channel-4bit-calibration-lr0.0001-seed0 LCI general 0.5581, older 0.5451; acc general 0.8182, older 0.6424; 107 s
+  qat-lamp_recon95-channel-4bit-calibration-lr0.001-seed0 LCI general 0.6056, older 0.5808; acc general 0.8687, older 0.6475; 106 s
+  qat-xgp_xb95-channel-4bit-full-lr0.0001-seed0        LCI general 0.5910, older 0.5404; acc general 0.8860, older 0.7030; 108 s
+  qat-xgp_xb95-channel-4bit-full-lr0.001-seed0         LCI general 0.7814, older 0.7400; acc general 0.8942, older 0.7125; 107 s
+  qat-xgp_xb95-channel-4bit-kd5-lr0.0001-seed0         LCI general 0.5665, older 0.5504; acc general 0.8904, older 0.7229; 109 s
+  qat-xgp_xb95-channel-4bit-kd5-lr0.001-seed0          LCI general 0.6989, older 0.6839; acc general 0.8962, older 0.7417; 107 s
+  qat-xgp_xb95-channel-4bit-calibration-lr0.0001-seed0 LCI general 0.6210, older 0.5956; acc general 0.8263, older 0.6644; 109 s
+  qat-xgp_xb95-channel-4bit-calibration-lr0.001-seed0  LCI general 0.7472, older 0.6934; acc general 0.8328, older 0.6931; 109 s
+  qat-l1_xb_recon95-channel-4bit-full-lr0.0001-seed0   LCI general 0.6264, older 0.5754; acc general 0.8835, older 0.6960; 108 s
+  qat-l1_xb_recon95-channel-4bit-full-lr0.001-seed0    LCI general 0.7591, older 0.6846; acc general 0.9024, older 0.7198; 107 s
+  qat-l1_xb_recon95-channel-4bit-kd5-lr0.0001-seed0    LCI general 0.6153, older 0.5692; acc general 0.8902, older 0.7004; 108 s
+  qat-l1_xb_recon95-channel-4bit-kd5-lr0.001-seed0     LCI general 0.6595, older 0.6130; acc general 0.8927, older 0.7820; 108 s
+  qat-l1_xb_recon95-channel-4bit-calibration-lr0.0001-seed0 LCI general 0.6489, older 0.5806; acc general 0.8398, older 0.6313; 107 s
+  qat-l1_xb_recon95-channel-4bit-calibration-lr0.001-seed0 LCI general 0.6702, older 0.6141; acc general 0.8674, older 0.6752; 108 s
+  qat-xgp_lamp95-channel-4bit-full-lr0.0001-seed0      LCI general 0.6017, older 0.5665; acc general 0.8880, older 0.6907; 108 s
+  qat-xgp_lamp95-channel-4bit-full-lr0.001-seed0       LCI general 0.6933, older 0.6782; acc general 0.8981, older 0.6933; 107 s
+  qat-xgp_lamp95-channel-4bit-kd5-lr0.0001-seed0       LCI general 0.6155, older 0.5950; acc general 0.8845, older 0.7212; 108 s
+  qat-xgp_lamp95-channel-4bit-kd5-lr0.001-seed0        LCI general 0.7178, older 0.6743; acc general 0.8982, older 0.7315; 109 s
+  qat-xgp_lamp95-channel-4bit-calibration-lr0.0001-seed0 LCI general 0.6283, older 0.5690; acc general 0.8863, older 0.6720; 110 s
+  qat-xgp_lamp95-channel-4bit-calibration-lr0.001-seed0 LCI general 0.6726, older 0.5787; acc general 0.8548, older 0.6569; 111 s
+  qat-xgp_xb90-channel-4bit-kd5-lr0.0001-seed1         LCI general 0.7335, older 0.7181; acc general 0.9058, older 0.7459; 109 s
+  qat-xgp_xb90-channel-4bit-kd5-lr0.001-seed1          LCI general 0.7268, older 0.7444; acc general 0.9161, older 0.7540; 107 s
+  qat-xgp_xb90-channel-4bit-kd5-lr0.0001-seed2         LCI general 0.7416, older 0.7188; acc general 0.9017, older 0.7650; 109 s
+  qat-xgp_xb90-channel-4bit-kd5-lr0.001-seed2          LCI general 0.7656, older 0.7271; acc general 0.9135, older 0.7796; 109 s
+fold 2 test done: 63 models, wall 111.4 min

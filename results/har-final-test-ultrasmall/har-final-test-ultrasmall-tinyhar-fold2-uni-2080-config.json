@@ -1,0 +1,82 @@
+{
+ "phase": "test",
+ "command": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\bit-reduction-test\\bitred\\run_final_test.py --phase test --folds 2 3 4 --device cuda --machine-name uni-2080",
+ "device": "cuda",
+ "gpu_name": "GeForce RTX 2080",
+ "cuda_version": "11.8",
+ "torch_version": "2.7.1+cu118",
+ "cpu": "Intel64 Family 6 Model 158 Stepping 13, GenuineIntel",
+ "torch_threads": 8,
+ "python": "3.11.9",
+ "os": "Windows 10",
+ "git_commit": "885b823a0ed259b6dbe064776fb6c68887f8dca2",
+ "git_dirty": false,
+ "bitred_code_sha256": "fb358c32e589a12180980854feee1c8d6fd559c9d53675a73a4ba51bc5b46abb",
+ "har_code_sha256": "64835b9ec83ed7926b6c207b4554e087d40bba89955cf12013d463ac2fa764c3",
+ "fold": 2,
+ "smoke": false,
+ "protocol": "9A (har.run_compression_grid.Context / assess)",
+ "grid": {
+  "levels": [
+   0.3,
+   0.5,
+   0.7,
+   0.9
+  ],
+  "park_levels": [
+   0.7,
+   0.9
+  ],
+  "ptq_bits": [
+   8,
+   4
+  ],
+  "epochs": 20,
+  "lr": 0.0001,
+  "seed": 0,
+  "park_gamma_p": 1.0,
+  "park_m": 4,
+  "nsamples": 200,
+  "shap_seed": 0,
+  "k": 10,
+  "k_sensitivity": 16,
+  "omega": 0.5,
+  "min_class_windows": 3,
+  "random_repeats": 5,
+  "random_seed": 42,
+  "tulla_tau": 0.85
+ },
+ "nsamples": 200,
+ "tau_k": 0.629535758601785,
+ "tau_source": "C:\\Users\\LenovoP330-01-Adm01\\Downloads\\har-compression-fairness\\results\\har-noise-floor\\har-noise-floor-tinyhar-fold2-uni-2080-tau.csv",
+ "ceilings": {
+  "inner_val": 0.9438539143816198,
+  "general": 0.9208805264795104,
+  "older": 0.9270838132338872
+ },
+ "noise_floor_machine": "uni-2080",
+ "n_explain": {
+  "inner_val": 90,
+  "general": 150,
+  "older": 540
+ },
+ "n_eval_windows": {
+  "inner_val": 7389,
+  "general": 8363,
+  "older": 17403
+ },
+ "validation_gate": {
+  "machine": "uni-2080",
+  "file": "har-final-test-ultrasmall-tinyhar-fold2-uni-2080-models.csv",
+  "sha256": "d1389bb915ee588e2a793b24778227f5f53515f67e2fa79d89ee5dda90f7c675"
+ },
+ "preregistration": {
+  "H1": "Single primary, confirmatory, no multiplicity correction: at 90%|kd5, lr 1e-3, per-subject LCI (9A protocol) averaged over seeds 0, 1, 2 (each seed pooled over folds first); paired one-sided Wilcoxon signed-rank xgp_xb > lamp_recon over the 40 test subjects; supported iff p < 0.05.",
+  "H2": "At 90%|kd5, lr 1e-3, seed mean: D2 = |gap_lamp_recon| - |gap_xgp_xb|, gap = mean_older(AOPC) - mean_general(AOPC); paired stratified bootstrap (10,000, seed 42); supported iff the 95% CI of D2 > 0.",
+  "H3": "Exploratory (5 vs 13 subjects): at 90%|kd5, lr 1e-3, seed mean: D3 = wa_gap_xgp_xb - wa_gap_lamp_recon, wa_gap = mean_walking_aid(d_accuracy) - mean_other_older(d_accuracy); paired bootstrap; supported (exploratory) iff the 95% CI of D3 > 0.",
+  "secondary_cells": "the other 5 level x regime cells, lr 1e-3, seed 0: one-sided Wilcoxon on LCI, Holm over the 5",
+  "secondary_analyses": "ablations (validation first, then test, Holm over 12), seeds 1-2 on validation, both lrs, LCI sensitivity k in {5,10,20} x omega in {0.25,0.5,0.75}; none changes H1-H3"
+ },
+ "seconds_wall_this_invocation": 6681.6329633001005,
+ "finished_at": "2026-11-25T21:51:18+02:00"
+}
