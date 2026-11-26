@@ -1,0 +1,130 @@
+{
+ "log_dir": "results/gap-study-v3/phase2/logs",
+ "jobs": [
+  {
+   "name": "p2d-ft-f0",
+   "args": [
+    "-u",
+    "-m",
+    "gap_study_v3.confirm",
+    "--device",
+    "cpu",
+    "--ft-device",
+    "cuda",
+    "--machine-name",
+    "Ansel",
+    "--resume",
+    "--threads",
+    "2",
+    "--worker",
+    "all",
+    "--stages",
+    "ftseeds",
+    "--ft-selected",
+    "lamp_recon_kd:0.0003:1,2",
+    "--folds",
+    "0"
+   ]
+  },
+  {
+   "name": "p2d-ft-f1",
+   "args": [
+    "-u",
+    "-m",
+    "gap_study_v3.confirm",
+    "--device",
+    "cpu",
+    "--ft-device",
+    "cuda",
+    "--machine-name",
+    "Ansel",
+    "--resume",
+    "--threads",
+    "2",
+    "--worker",
+    "all",
+    "--stages",
+    "ftseeds",
+    "--ft-selected",
+    "lamp_recon_kd:0.0003:1,2",
+    "--folds",
+    "1"
+   ]
+  },
+  {
+   "name": "p2d-ft-f2",
+   "args": [
+    "-u",
+    "-m",
+    "gap_study_v3.confirm",
+    "--device",
+    "cpu",
+    "--ft-device",
+    "cuda",
+    "--machine-name",
+    "Ansel",
+    "--resume",
+    "--threads",
+    "2",
+    "--worker",
+    "all",
+    "--stages",
+    "ftseeds",
+    "--ft-selected",
+    "lamp_recon_kd:0.0003:1,2",
+    "--folds",
+    "2"
+   ]
+  },
+  {
+   "name": "p2d-ft-f3",
+   "args": [
+    "-u",
+    "-m",
+    "gap_study_v3.confirm",
+    "--device",
+    "cpu",
+    "--ft-device",
+    "cuda",
+    "--machine-name",
+    "Ansel",
+    "--resume",
+    "--threads",
+    "2",
+    "--worker",
+    "all",
+    "--stages",
+    "ftseeds",
+    "--ft-selected",
+    "lamp_recon_kd:0.0003:1,2",
+    "--folds",
+    "3"
+   ]
+  },
+  {
+   "name": "p2d-ft-f4",
+   "args": [
+    "-u",
+    "-m",
+    "gap_study_v3.confirm",
+    "--device",
+    "cpu",
+    "--ft-device",
+    "cuda",
+    "--machine-name",
+    "Ansel",
+    "--resume",
+    "--threads",
+    "2",
+    "--worker",
+    "all",
+    "--stages",
+    "ftseeds",
+    "--ft-selected",
+    "lamp_recon_kd:0.0003:1,2",
+    "--folds",
+    "4"
+   ]
+  }
+ ]
+}

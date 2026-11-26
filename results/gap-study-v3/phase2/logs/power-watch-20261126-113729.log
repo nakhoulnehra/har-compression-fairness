@@ -1,0 +1,13 @@
+2026-11-26 11:37:29  watcher started (pid 47608), jobs: p2c-ft-f0, p2c-ft-f1, p2c-ft-f2, p2c-ft-f3, p2c-ft-f4
+2026-11-26 11:37:29  p2c-ft-f0: started pid 52832 on AC: -u -m gap_study_v3.confirm --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker all --stages ftseeds --ft-selected lamp_recon_kd:0.0003:0 lamp_recon_kd:0.0001:1,2 l1_fullrecon_kd:0.0003:1,2 --folds 0
+2026-11-26 11:37:29  p2c-ft-f1: started pid 52056 on AC: -u -m gap_study_v3.confirm --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker all --stages ftseeds --ft-selected lamp_recon_kd:0.0003:0 lamp_recon_kd:0.0001:1,2 l1_fullrecon_kd:0.0003:1,2 --folds 1
+2026-11-26 11:37:29  p2c-ft-f2: started pid 52976 on AC: -u -m gap_study_v3.confirm --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker all --stages ftseeds --ft-selected lamp_recon_kd:0.0003:0 lamp_recon_kd:0.0001:1,2 l1_fullrecon_kd:0.0003:1,2 --folds 2
+2026-11-26 11:37:29  p2c-ft-f3: started pid 51520 on AC: -u -m gap_study_v3.confirm --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker all --stages ftseeds --ft-selected lamp_recon_kd:0.0003:0 lamp_recon_kd:0.0001:1,2 l1_fullrecon_kd:0.0003:1,2 --folds 3
+2026-11-26 11:37:29  p2c-ft-f4: started pid 10032 on AC: -u -m gap_study_v3.confirm --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker all --stages ftseeds --ft-selected lamp_recon_kd:0.0003:0 lamp_recon_kd:0.0001:1,2 l1_fullrecon_kd:0.0003:1,2 --folds 4
+2026-11-26 12:01:30  on battery with 5 job(s) running; grace 180 s
+2026-11-26 12:08:00  p2c-ft-f0: finished (exit 0)
+2026-11-26 12:08:30  p2c-ft-f2: finished (exit 0)
+2026-11-26 12:12:00  p2c-ft-f4: finished (exit 0)
+2026-11-26 12:12:30  p2c-ft-f1: finished (exit 0)
+2026-11-26 12:12:30  p2c-ft-f3: finished (exit 0)
+2026-11-26 12:12:30  all jobs done; watcher exits

@@ -388,3 +388,7 @@ Not measured yet; replace with the real times after the runs.
   two terminals on uni-2080 ≈ 16–17 h. Smoke (CPU, folds 0–1): 1.8 min + 1.8 min + 10 s. **Measured (2026-11-25,
   nakhoul-3050, validation folds 0 1, alone on the GPU):** 4.02 h (fold 0 120.4 min, fold 1 120.9 min), ≈ 1.9 min per
   model: QAT 63–72 s per 4,020 steps, starts 4–5 s (lamp_recon, l1_xb_recon) / 52–65 s (xgp_xb, xgp_lamp), shares 9–11 s.
+- Gap study v3 (`gap_study_v3.confirm`, Ansel 3050 Ti + Ryzen 7 5800U, 2026-11-26): validation runs 09:56–12:29 (≈ 2.5 h wall,
+  5 fold workers + 2 CPU workers). Re-scoring a checkpoint with the artefact checks (SHAP seed 1 + occlusion) 33–51 s; no-retraining
+  builds 3 s (SparseGPT) to ≈ 100 s (taylor_fullrecon, 5 gradient passes); 20-epoch KD fine-tuning ≈ 64 s alone, 5–7 min per model
+  with 5 processes on the GPU (97 % use, 3.3 GB). Analysis scripts: seconds. Smoke: 57 s.

@@ -1,0 +1,7 @@
+2026-11-26 09:56:26  watcher started (pid 49952), jobs: p2-f0, p2-f1, p2-f2, p2-f3, p2-f4
+2026-11-26 09:56:26  p2-f0: started pid 14360 on AC: -u -m gap_study_v3.confirm --folds 0 --stages ref rescore ftcore nr ftextra rescore9a --device cpu --ft-device cuda --threads 3 --machine-name Ansel --worker all --resume
+2026-11-26 09:56:26  p2-f1: started pid 52616 on AC: -u -m gap_study_v3.confirm --folds 1 --stages ref rescore ftcore nr ftextra rescore9a --device cpu --ft-device cuda --threads 3 --machine-name Ansel --worker all --resume
+2026-11-26 09:56:26  p2-f2: started pid 32664 on AC: -u -m gap_study_v3.confirm --folds 2 --stages ref rescore ftcore nr ftextra rescore9a --device cpu --ft-device cuda --threads 3 --machine-name Ansel --worker all --resume
+2026-11-26 09:56:26  p2-f3: started pid 52412 on AC: -u -m gap_study_v3.confirm --folds 3 --stages ref rescore ftcore nr ftextra rescore9a --device cpu --ft-device cuda --threads 3 --machine-name Ansel --worker all --resume
+2026-11-26 09:56:26  p2-f4: started pid 44376 on AC: -u -m gap_study_v3.confirm --folds 4 --stages ref rescore ftcore nr ftextra rescore9a --device cpu --ft-device cuda --threads 3 --machine-name Ansel --worker all --resume
+2026-11-26 10:00:57  on battery with 5 job(s) running; grace 180 s

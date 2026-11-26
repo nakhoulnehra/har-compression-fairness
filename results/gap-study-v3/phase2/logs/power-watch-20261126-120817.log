@@ -1,0 +1,14 @@
+2026-11-26 12:08:17  watcher started (pid 28984), jobs: p2d-ft-f0, p2d-ft-f1, p2d-ft-f2, p2d-ft-f3, p2d-ft-f4
+2026-11-26 12:08:17  waiting for gap_study_v3\jobs-phase2c.json.done
+2026-11-26 12:12:47  gap_study_v3\jobs-phase2c.json.done exists
+2026-11-26 12:12:47  p2d-ft-f0: started pid 52564 on AC: -u -m gap_study_v3.confirm --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker all --stages ftseeds --ft-selected lamp_recon_kd:0.0003:1,2 --folds 0
+2026-11-26 12:12:47  p2d-ft-f1: started pid 26576 on AC: -u -m gap_study_v3.confirm --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker all --stages ftseeds --ft-selected lamp_recon_kd:0.0003:1,2 --folds 1
+2026-11-26 12:12:47  p2d-ft-f2: started pid 20700 on AC: -u -m gap_study_v3.confirm --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker all --stages ftseeds --ft-selected lamp_recon_kd:0.0003:1,2 --folds 2
+2026-11-26 12:12:47  p2d-ft-f3: started pid 15492 on AC: -u -m gap_study_v3.confirm --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker all --stages ftseeds --ft-selected lamp_recon_kd:0.0003:1,2 --folds 3
+2026-11-26 12:12:47  p2d-ft-f4: started pid 55284 on AC: -u -m gap_study_v3.confirm --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker all --stages ftseeds --ft-selected lamp_recon_kd:0.0003:1,2 --folds 4
+2026-11-26 12:27:18  p2d-ft-f0: finished (exit 0)
+2026-11-26 12:28:18  p2d-ft-f2: finished (exit 0)
+2026-11-26 12:28:48  p2d-ft-f1: finished (exit 0)
+2026-11-26 12:28:48  p2d-ft-f3: finished (exit 0)
+2026-11-26 12:28:48  p2d-ft-f4: finished (exit 0)
+2026-11-26 12:28:48  all jobs done; watcher exits

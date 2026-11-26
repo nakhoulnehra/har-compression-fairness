@@ -638,3 +638,59 @@ fp32 scales cost 3.2 KB and the fp32 biases and norms ≈ 4.6 KB, so per-channel
 - test: FA-LCI < τ = min_k τ_k with the accuracy drop ≤ 1 pt in both groups.
 
 Fill in the key numbers after the runs.
+
+## gap-study-v3/ (2026-11-26; report `gap_study_v3/GAP_REPORT.md`; no new method, existing techniques only)
+Find and prove an explanation gap after compression. Frozen TinyHAR, HARTH inner val (5 folds, 50 explain windows
+per subject), SHAP GradientExplainer on 48 features. u = uncompressed SHAP-noise ceiling (SHAP seed 0 vs 1) =
+**0.932**. "indep" = compressed model scored with SHAP seed 1 against the original's seed 0 (the fair comparison;
+same-seed LCI is inflated, e.g. 0.953 vs 0.905 at 50 %).
+
+### phase2/gap-study-v3-phase2-tinyhar-fold{0..4}-Ansel-{all,nr,refs2}-{models,per-subject-lci}.csv, -config.json, logs/
+- What: every validation model of this study (`gap_study_v3.confirm`). Per model: F1, accuracy, LCI (same-seed),
+  lci_indep, self_lci (explainer stability), occ_lci (gradient-free occlusion), agree / lci_agree (prediction
+  flips). `all` = re-scored agent B checkpoints + KD fine-tuning (90 / 80 %, lr {3e-5, 1e-4, 3e-4}, 3 seeds for the
+  selected lr) + 9A checkpoints; `nr` = SparseGPT percdamp {0.1, 1}, taylor_fullrecon, 5× calibration; `refs2` =
+  50 % model and an independently retrained TinyHAR.
+- Key numbers: as in the next two entries.
+
+### [phase2/gap-study-v3-phase2-tinyhar-gate-per-cell.csv](gap-study-v3/phase2/gap-study-v3-phase2-tinyhar-gate-per-cell.csv), [phase2/...-summary-every-method-level-mean-over-folds-seeds.csv](gap-study-v3/phase2/gap-study-v3-phase2-tinyhar-summary-every-method-level-mean-over-folds-seeds.csv)
+- What: the gate per cell (u − best baseline, fold-paired 95 % CI, folds ≥ 0.10, seed SD, accuracy) and every
+  method × level mean over folds × seeds.
+- Key numbers (gap indep, folds ≥ 0.10 indep, accuracy Δ; original accuracy 0.927):
+  - **No retraining, 80 % (confirmed gap):** best l1_fullrecon, LCI 0.786 / indep **0.760**, gap **0.172 (18.5 %)**,
+    CI [0.069, 0.276], **5/5 folds** (same-seed 3/5), accuracy −1.0 pt.
+    - Every other baseline is lower: wanda_fullrecon 0.760, 5× calibration 0.761, lamp_recon 0.720,
+      taylor_fullrecon 0.716, l1_recon 0.706, SparseGPT ≤ 0.52 at every dampening value.
+    - Self 0.933, agree 0.92, lci_agree 0.778, occlusion 0.639.
+  - No retraining, other levels: 50 % 0.03; 70 % 0.061 (1/5, fails); 90 % 0.30 at −6.8 pt accuracy (F1 −17 pt).
+  - **KD fine-tuning, 90 % (second, weaker gap):** best lamp_recon_kd lr 3e-4, LCI 0.797 / indep **0.781**, gap
+    **0.151 (16.2 %)**, CI [0.061, 0.241], **4/5 folds** (same-seed 3/5), accuracy −0.9 pt.
+    - Others: l1_fullrecon_kd 0.764, l1_kd 0.751; Park KD 0.735 at −5.4 pt (folds 0, 1, 3).
+  - KD fine-tuning, 80 %: 0.115 (3/5, fails). Uncompressed retrain-seed floor: 0.666.
+
+### phase3/gap-study-v3-phase3-tinyhar-{attribution-diagnostics-mean-over-folds, per-model-attribution-diagnostics, per-class-lci, cross-seed-agreement, window-level-explanation-vs-confidence}.csv
+- What: Phase 3 diagnostics from the saved attributions (`gap_study_v3.diagnose`): where explanations break (axis,
+  segment, class), how (window correlation, global top-10, magnitude, concentration, sign flips), cross-seed
+  agreement, and the window-level link to confidence.
+- Key numbers:
+  - Cross-seed vs to-original LCI: no-retrain 80 % 0.917 vs 0.786; KD 90 % l1_kd 0.959 vs 0.750. The removal
+    pattern fixes a new, stable explanation.
+  - Window correlation 0.848 at 80 % (noise 0.949).
+  - Per class at 80 %: walking 0.61 (noise 0.89), stairs 0.73, lying 0.90.
+  - Ruled out: axis error shares equal the noise pattern; no flattening (top-10 mass 0.56 vs 0.53); sign flips 1.7 %.
+
+### [test-confirmation/gap-study-v3-test-confirmation-per-subject-gaps-existing-test-runs.csv](gap-study-v3/test-confirmation/gap-study-v3-test-confirmation-per-subject-gaps-existing-test-runs.csv)
+- What: per-subject gap to each subject's SHAP-noise ceiling, from the existing one-shot test runs (9A; agent B's
+  no-retraining test). Nothing was selected on test.
+- Key numbers:
+  - No retraining 80 % l1_fullrecon: HARTH gap 0.144 (15/22 subjects ≥ 0.10), HAR70+ 0.117 (12/18), FA-LCI 0.775,
+    accuracy −2.2 pt.
+  - No retraining 70 %: no gap (0.004).
+  - KD 90 % l1_kd: HARTH 0.169 (14/22), HAR70+ 0.182 (18/18), FA-LCI 0.733 (the tuned lamp_recon_kd is not tested yet).
+
+### agentB-no-retrain-baselines/gap-study-phase2-tinyhar-fold{0..4}-Ansel-{models,per-subject-lci}.csv, agentB-no-retrain-test/gap-study-test-tinyhar-{means-per-model,per-subject-pooled-over-folds}.csv, [phase0-master-table-inputs-agentB-long.csv](gap-study-v3/phase0-master-table-inputs-agentB-long.csv)
+- What: agent B's (previous agent) no-retraining baseline runs, test runs and long master table, kept as inputs of
+  the confirmed gap. Its GMR method and agent A's PAIR files were deleted (both failed to beat the baselines;
+  summary in `gap_study_v3/PREVIOUS_ATTEMPTS.md`).
+- Key numbers: 5 baselines × 4 levels × 5 folds × 3 seeds; l1_fullrecon 80 % LCI 0.786 / F1 0.791 (same-seed).
+  Master table: 566 cells in `gap_study_v3/MASTER_TABLE.csv`.

@@ -402,3 +402,16 @@ python -m bitred.run_final_test --phase test --folds 2 3 4 --device cuda --machi
 python -m bitred.run_final_test --analyze                           # after merging; -decision.json (H1-H3)
 # --resume continues either phase; each fold's test must run on the machine (and --machine-name) of its validation
 ```
+
+## Gap study v3 (2026-11-26, Ansel; `gap_study_v3/`; no new method)
+Same environment (torch 2.7.1+cu118, `.venv`, repo root, `$env:PYTHONPATH = "bit-reduction-test"`).
+```
+python -m gap_study_v3.confirm --folds 0 --stages ref rescore ftcore nr ftextra rescore9a --smoke --threads 4 --out <scratch>/smoke-v3   # 57 s
+# validation runs, power-gated (waits for AC); jobs files list the exact per-fold commands
+powershell -NoProfile -ExecutionPolicy Bypass -File gap_study_v3\power_watch.ps1 -Jobs gap_study_v3\jobs-phase2.json    # then jobs-refs2, jobs-phase2b, jobs-phase2c, jobs-phase2d
+python -m gap_study_v3.analyze              # gate per cell
+python -m gap_study_v3.diagnose             # Phase 3 diagnostics
+python -m gap_study_v3.test_confirmation    # per-subject test gaps from the existing one-shot test runs
+python -m gap_study_v3.build_master_table   # gap_study_v3/MASTER_TABLE.csv
+```
+Re-scoring agent B's no-retraining models needs its checkpoints in `data/processed/har/checkpoints/gap-study/phase2/` (local).

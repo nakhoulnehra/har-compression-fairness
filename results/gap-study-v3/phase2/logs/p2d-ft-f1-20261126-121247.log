@@ -1,0 +1,8 @@
+    SHAP cache hit bitred-fold1-eval-original-2facaec8b31f39b9.npz
+    SHAP cache hit bitred-fold1-cal-original-47c2adeaf2011412.npz
+fold 1: train 55552 windows (15 subjects); calibration 967 training windows, LCI-calibration subset 140; inner val ['S014', 'S018', 'S024']: F1 windows 6163, explain 150; tau_k 0.5827, ceiling 0.8924; original SHAP 0.1 s
+    SHAP cache hit bitred-fold1-eval-gs3-lamp_recon_kd-90pct-seed1-lr0.0003-e20-77fe22aa66c90a31.npz
+fold 1 lamp_recon_kd-90pct-seed1-lr0.0003-e20: F1 0.759 acc 0.895 LCI 0.671 indep 0.681 self 0.945 occ 0.621 agree 0.940 lci_agree 0.711 nnz 6821 [481s, total 485s]
+    SHAP cache hit bitred-fold1-eval-gs3-lamp_recon_kd-90pct-seed2-lr0.0003-e20-f68cee5bafdf21ab.npz
+fold 1 lamp_recon_kd-90pct-seed2-lr0.0003-e20: F1 0.763 acc 0.898 LCI 0.652 indep 0.642 self 0.975 occ 0.563 agree 0.947 lci_agree 0.671 nnz 6821 [435s, total 920s]
+fold 1 stages ['ftseeds'] done in 920s

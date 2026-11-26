@@ -1,0 +1,32 @@
+    SHAP cache hit bitred-fold4-eval-original-74ae82916b2fe8d8.npz
+    SHAP cache hit bitred-fold4-cal-original-c624b528591796cd.npz
+fold 4: train 54355 windows (14 subjects); calibration 937 training windows, LCI-calibration subset 140; inner val ['S012', 'S016', 'S024']: F1 windows 6682, explain 150; tau_k 0.6125, ceiling 0.9617; original SHAP 0.0 s
+    SHAP cache hit bitred-fold4-eval-gs3-l1_kd-90pct-seed1-lr0.0001-e20-f965a2659a378095.npz
+fold 4 l1_kd-90pct-seed1-lr0.0001-e20: F1 0.798 acc 0.948 LCI 0.822 indep 0.843 self 0.945 occ 0.568 agree 0.967 lci_agree 0.824 nnz 6821 [469s, total 476s]
+    SHAP cache hit bitred-fold4-eval-gs3-l1_kd-90pct-seed2-lr0.0001-e20-db9f3198efd6c4be.npz
+fold 4 l1_kd-90pct-seed2-lr0.0001-e20: F1 0.794 acc 0.946 LCI 0.823 indep 0.844 self 0.945 occ 0.568 agree 0.960 lci_agree 0.825 nnz 6821 [438s, total 915s]
+    SHAP cache hit bitred-fold4-eval-gs3-l1_fullrecon_kd-90pct-seed0-lr0.0001-e20-db62963cf789ea38.npz
+fold 4 l1_fullrecon_kd-90pct-seed0-lr0.0001-e20: F1 0.821 acc 0.956 LCI 0.832 indep 0.791 self 0.940 occ 0.570 agree 0.920 lci_agree 0.802 nnz 6821 [469s, total 1383s]
+    SHAP cache hit bitred-fold4-eval-gs3-l1_fullrecon_kd-90pct-seed1-lr0.0001-e20-f18e49a04d386ff2.npz
+fold 4 l1_fullrecon_kd-90pct-seed1-lr0.0001-e20: F1 0.830 acc 0.956 LCI 0.833 indep 0.801 self 0.939 occ 0.559 agree 0.953 lci_agree 0.803 nnz 6821 [467s, total 1850s]
+    SHAP cache hit bitred-fold4-eval-gs3-l1_fullrecon_kd-90pct-seed2-lr0.0001-e20-8d8afc7388ced7c8.npz
+fold 4 l1_fullrecon_kd-90pct-seed2-lr0.0001-e20: F1 0.820 acc 0.955 LCI 0.822 indep 0.811 self 0.968 occ 0.580 agree 0.933 lci_agree 0.793 nnz 6821 [442s, total 2292s]
+    SHAP cache hit bitred-fold4-eval-gs3-lamp_recon_kd-90pct-seed0-lr0.0001-e20-b2523055fafea501.npz
+fold 4 lamp_recon_kd-90pct-seed0-lr0.0001-e20: F1 0.814 acc 0.943 LCI 0.833 indep 0.821 self 0.974 occ 0.616 agree 0.927 lci_agree 0.835 nnz 6821 [392s, total 2684s]
+    SHAP cache hit bitred-fold4-eval-gs3-l1_kd-90pct-seed0-lr0.0003-e20-44c898b55a4224a4.npz
+fold 4 l1_kd-90pct-seed0-lr0.0003-e20: F1 0.824 acc 0.954 LCI 0.891 indep 0.850 self 0.942 occ 0.563 agree 0.973 lci_agree 0.891 nnz 6821 [311s, total 2995s]
+    SHAP cache hit bitred-fold4-eval-gs3-l1_kd-90pct-seed0-lr3e-05-e20-80992833ca73befd.npz
+fold 4 l1_kd-90pct-seed0-lr3e-05-e20: F1 0.807 acc 0.953 LCI 0.748 indep 0.742 self 0.982 occ 0.476 agree 0.920 lci_agree 0.749 nnz 6821 [295s, total 3290s]
+    SHAP cache hit bitred-fold4-eval-gs3-l1_fullrecon_kd-90pct-seed0-lr0.0003-e20-ce33c7f6b2769daa.npz
+fold 4 l1_fullrecon_kd-90pct-seed0-lr0.0003-e20: F1 0.827 acc 0.957 LCI 0.842 indep 0.832 self 0.911 occ 0.569 agree 0.940 lci_agree 0.842 nnz 6821 [332s, total 3622s]
+    SHAP cache hit bitred-fold4-eval-gs3-l1_fullrecon_kd-90pct-seed0-lr3e-05-e20-283d629ff21d1603.npz
+fold 4 l1_fullrecon_kd-90pct-seed0-lr3e-05-e20: F1 0.813 acc 0.954 LCI 0.787 indep 0.775 self 0.937 occ 0.543 agree 0.913 lci_agree 0.789 nnz 6821 [392s, total 4014s]
+    SHAP cache hit bitred-fold4-eval-gs3-l1_kd-80pct-seed0-lr0.0001-e20-895e831be2a1c109.npz
+fold 4 l1_kd-80pct-seed0-lr0.0001-e20: F1 0.827 acc 0.955 LCI 0.897 indep 0.833 self 0.918 occ 0.606 agree 0.967 lci_agree 0.898 nnz 12095 [380s, total 4393s]
+    SHAP cache hit bitred-fold4-eval-gs3-l1_fullrecon_kd-80pct-seed0-lr0.0001-e20-3f14a26b90a4ff5a.npz
+fold 4 l1_fullrecon_kd-80pct-seed0-lr0.0001-e20: F1 0.840 acc 0.960 LCI 0.900 indep 0.861 self 0.944 occ 0.682 agree 0.973 lci_agree 0.900 nnz 12095 [305s, total 4699s]
+fold 4 9a_l1_kd-90pct-seed0: no 9A checkpoint here, skipped
+fold 4 9a_park_kd-90pct-seed0: no 9A checkpoint here, skipped
+fold 4 9a_park-90pct-seed0: no 9A checkpoint here, skipped
+fold 4 9a_l1_kd-70pct-seed0: no 9A checkpoint here, skipped
+fold 4 stages ['ref', 'rescore', 'ftcore', 'ftextra', 'rescore9a'] done in 4699s

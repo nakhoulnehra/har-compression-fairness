@@ -1,0 +1,42 @@
+    SHAP cache hit bitred-fold3-eval-original-3eb7f90f4e0290ad.npz
+    SHAP cache hit bitred-fold3-cal-original-8cd08a2b205bdfe3.npz
+fold 3: train 54392 windows (15 subjects); calibration 958 training windows, LCI-calibration subset 140; inner val ['S017', 'S022', 'S024']: F1 windows 6274, explain 150; tau_k 0.6237, ceiling 0.9129; original SHAP 0.0 s
+fold 3 original-0pct-seed0: F1 0.831 acc 0.935 LCI 1.000 indep 0.940 self 0.940 occ 1.000 agree 1.000 lci_agree nan nnz 54273 [2s, total 34s]
+    SHAP cache hit bitred-fold3-eval-gs-p2-l1_fullrecon-80pct-seed0-damp0.01-16215a48e91913ef.npz
+    SHAP cache hit bitred-fold3-eval-gs-p2-l1_fullrecon-80pct-seed0-damp0.01-16215a48e91913ef.npz
+fold 3 l1_fullrecon-80pct-seed0: F1 0.801 acc 0.924 LCI 0.857 indep 0.840 self 0.973 occ 0.552 agree 0.920 lci_agree 0.857 nnz 12095 [33s, total 67s]
+    SHAP cache hit bitred-fold3-eval-gs-p2-l1_fullrecon-80pct-seed1-damp0.01-f13110bff88ba193.npz
+    SHAP cache hit bitred-fold3-eval-gs-p2-l1_fullrecon-80pct-seed1-damp0.01-f13110bff88ba193.npz
+fold 3 l1_fullrecon-80pct-seed1: F1 0.810 acc 0.928 LCI 0.854 indep 0.809 self 0.913 occ 0.584 agree 0.933 lci_agree 0.857 nnz 12095 [34s, total 101s]
+    SHAP cache hit bitred-fold3-eval-gs-p2-l1_fullrecon-80pct-seed2-damp0.01-04c17ded54590c71.npz
+    SHAP cache hit bitred-fold3-eval-gs-p2-l1_fullrecon-80pct-seed2-damp0.01-04c17ded54590c71.npz
+fold 3 l1_fullrecon-80pct-seed2: F1 0.806 acc 0.929 LCI 0.855 indep 0.809 self 0.944 occ 0.589 agree 0.920 lci_agree 0.855 nnz 12095 [35s, total 136s]
+    SHAP cache hit bitred-fold3-eval-gs-p2-lamp_recon-80pct-seed0-damp0.01-6fdbb893c8e1ea10.npz
+    SHAP cache hit bitred-fold3-eval-gs-p2-lamp_recon-80pct-seed0-damp0.01-6fdbb893c8e1ea10.npz
+fold 3 lamp_recon-80pct-seed0: F1 0.815 acc 0.928 LCI 0.690 indep 0.674 self 0.918 occ 0.613 agree 0.900 lci_agree 0.706 nnz 12095 [35s, total 171s]
+    SHAP cache hit bitred-fold3-eval-gs-p2-lamp_recon-80pct-seed1-damp0.01-d3a6d936ed895297.npz
+    SHAP cache hit bitred-fold3-eval-gs-p2-lamp_recon-80pct-seed1-damp0.01-d3a6d936ed895297.npz
+fold 3 lamp_recon-80pct-seed1: F1 0.801 acc 0.926 LCI 0.703 indep 0.691 self 0.888 occ 0.628 agree 0.880 lci_agree 0.678 nnz 12095 [36s, total 207s]
+    SHAP cache hit bitred-fold3-eval-gs-p2-lamp_recon-80pct-seed2-damp0.01-56c0d87e6f1049de.npz
+    SHAP cache hit bitred-fold3-eval-gs-p2-lamp_recon-80pct-seed2-damp0.01-56c0d87e6f1049de.npz
+fold 3 lamp_recon-80pct-seed2: F1 0.810 acc 0.926 LCI 0.708 indep 0.694 self 0.950 occ 0.643 agree 0.900 lci_agree 0.705 nnz 12095 [39s, total 245s]
+    SHAP cache hit bitred-fold3-eval-gs-p2-wanda_fullrecon-80pct-seed0-damp0.01-5d7c6ed98b852f1d.npz
+    SHAP cache hit bitred-fold3-eval-gs-p2-wanda_fullrecon-80pct-seed0-damp0.01-5d7c6ed98b852f1d.npz
+fold 3 wanda_fullrecon-80pct-seed0: F1 0.782 acc 0.912 LCI 0.852 indep 0.838 self 0.941 occ 0.569 agree 0.913 lci_agree 0.829 nnz 12095 [51s, total 297s]
+    SHAP cache hit bitred-fold3-eval-gs-p2-l1_recon-80pct-seed0-damp0.01-f75fc77377914107.npz
+    SHAP cache hit bitred-fold3-eval-gs-p2-l1_recon-80pct-seed0-damp0.01-f75fc77377914107.npz
+fold 3 l1_recon-80pct-seed0: F1 0.789 acc 0.923 LCI 0.711 indep 0.698 self 0.950 occ 0.631 agree 0.867 lci_agree 0.759 nnz 12095 [47s, total 344s]
+    SHAP cache hit bitred-fold3-eval-gs-p2-l1_fullrecon-70pct-seed0-damp0.01-e6c5fb81372e2ad0.npz
+    SHAP cache hit bitred-fold3-eval-gs-p2-l1_fullrecon-70pct-seed0-damp0.01-e6c5fb81372e2ad0.npz
+fold 3 l1_fullrecon-70pct-seed0: F1 0.828 acc 0.933 LCI 0.893 indep 0.899 self 0.913 occ 0.882 agree 0.987 lci_agree 0.893 nnz 17365 [48s, total 392s]
+    SHAP cache hit bitred-fold3-eval-gs-p2-lamp_recon-70pct-seed0-damp0.01-41586da8dbdfe126.npz
+    SHAP cache hit bitred-fold3-eval-gs-p2-lamp_recon-70pct-seed0-damp0.01-41586da8dbdfe126.npz
+fold 3 lamp_recon-70pct-seed0: F1 0.819 acc 0.929 LCI 0.821 indep 0.857 self 0.914 occ 0.790 agree 0.953 lci_agree 0.820 nnz 17365 [41s, total 433s]
+    SHAP cache hit bitred-fold3-eval-gs-p2-l1_fullrecon-90pct-seed0-damp0.01-126a1555b4c76012.npz
+    SHAP cache hit bitred-fold3-eval-gs-p2-l1_fullrecon-90pct-seed0-damp0.01-126a1555b4c76012.npz
+fold 3 l1_fullrecon-90pct-seed0: F1 0.753 acc 0.905 LCI 0.726 indep 0.718 self 0.907 occ 0.385 agree 0.827 lci_agree 0.706 nnz 6821 [44s, total 478s]
+    SHAP cache hit bitred-fold3-eval-gs-p2-lamp_recon-90pct-seed0-damp0.01-b8eee8ba15164160.npz
+    SHAP cache hit bitred-fold3-eval-gs-p2-lamp_recon-90pct-seed0-damp0.01-b8eee8ba15164160.npz
+fold 3 lamp_recon-90pct-seed0: F1 0.772 acc 0.915 LCI 0.454 indep 0.446 self 0.986 occ 0.485 agree 0.927 lci_agree 0.463 nnz 6821 [46s, total 524s]
+    SHAP cache hit bitred-fold3-eval-gs3-l1_kd-90pct-seed0-lr0.0001-e20-b757d8ce039b7c31.npz
+fold 3 l1_kd-90pct-seed0-lr0.0001-e20: F1 0.783 acc 0.916 LCI 0.798 indep 0.816 self 0.948 occ 0.480 agree 0.893 lci_agree 0.802 nnz 6821 [430s, total 954s]
