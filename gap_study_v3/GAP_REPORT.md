@@ -17,7 +17,7 @@ Model and metric:
 - LCI = 0.5 · per-window Pearson + 0.5 · Jaccard of the subject's global top-10 features.
 - Inner val: 50 explain windows per subject, 3 subjects per fold.
 
-## 1. Audit summary (details: `PREVIOUS_ATTEMPTS.md`)
+## 1. Audit summary (final decision: `GAP_SUMMARY.md` at the repo root)
 
 | Agent | What it tried | What it found | What went wrong |
 |---|---|---|---|

@@ -392,3 +392,6 @@ Not measured yet; replace with the real times after the runs.
   5 fold workers + 2 CPU workers). Re-scoring a checkpoint with the artefact checks (SHAP seed 1 + occlusion) 33–51 s; no-retraining
   builds 3 s (SparseGPT) to ≈ 100 s (taylor_fullrecon, 5 gradient passes); 20-epoch KD fine-tuning ≈ 64 s alone, 5–7 min per model
   with 5 processes on the GPU (97 % use, 3.3 GB). Analysis scripts: seconds. Smoke: 57 s.
+- Gap study v4 (`gap_study_v4.run_v4`, Ansel 3050 Ti + Ryzen 7 5800U, 2026-11-26): validation 13:11–≈ 20:30 (≈ 7.3 h wall,
+  up to 6 processes). Function-matching KD fine-tunes ≈ 36 min each with 5 on the GPU (≈ 11 min estimated); label-free calfm on
+  ≈ 980 windows (200 epochs) minutes per model; no-retraining builds as v3. Analysis / diagnostics: seconds to minutes.

@@ -1,6 +1,0 @@
-    SHAP cache hit bitred-fold2-eval-original-4f48ea398413f533.npz
-    SHAP cache hit bitred-fold2-cal-original-8449b7e5080a246b.npz
-fold 2: train 52771 windows (14 subjects); calibration 917 training windows, LCI-calibration subset 140; inner val ['S013', 'S019', 'S022']: F1 windows 7389, explain 150; tau_k 0.6295, ceiling 0.9439; original SHAP 0.0 s
-fold 2 original-0pct-seed0: F1 0.882 acc 0.935 LCI 1.000 indep 0.915 self 0.915 occ 1.000 agree 1.000 nnz 54273 [4s, total 10s]
-    SHAP cache hit bitred-fold2-eval-gs4-fmkd_from_l1_fullrecon-80pct-seed0-lr0.0003-db64201921d5b8ef.npz
-fold 2 fmkd_from_l1_fullrecon-80pct-seed0-lr0.0003: F1 0.876 acc 0.934 LCI 0.865 indep 0.851 self 0.924 occ 0.730 agree 0.993 nnz 12095 [2279s, total 2289s]

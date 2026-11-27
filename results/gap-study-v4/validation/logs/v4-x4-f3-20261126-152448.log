@@ -1,8 +1,0 @@
-    SHAP cache hit bitred-fold3-eval-original-3eb7f90f4e0290ad.npz
-    SHAP cache hit bitred-fold3-cal-original-8cd08a2b205bdfe3.npz
-fold 3: train 54392 windows (15 subjects); calibration 958 training windows, LCI-calibration subset 140; inner val ['S017', 'S022', 'S024']: F1 windows 6274, explain 150; tau_k 0.6237, ceiling 0.9129; original SHAP 0.0 s
-    SHAP cache hit bitred-fold3-eval-gs4-calfm_from_l1_fullrecon-80pct-seed0-lr0.001-e7c87295bbee5382.npz
-fold 3 calfm_from_l1_fullrecon-80pct-seed0-lr0.001: F1 0.819 acc 0.931 LCI 0.852 indep 0.864 self 0.915 occ 0.686 agree 0.960 nnz 12095 [325s, total 330s]
-    SHAP cache hit bitred-fold3-eval-gs4-fmkd_from_l1_fullrecon-80pct-seed0-lr0.0003-e40-0f3acff74953e405.npz
-fold 3 fmkd_from_l1_fullrecon-80pct-seed0-lr0.0003-e40: F1 0.822 acc 0.934 LCI 0.858 indep 0.871 self 0.944 occ 0.752 agree 0.947 nnz 12095 [3546s, total 3876s]
-fold 3 stages ['ref', 'x4'] done in 3876s

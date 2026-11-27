@@ -1,4 +1,0 @@
-2026-11-26 10:01:14  watcher started (pid 46716), jobs: refs2
-2026-11-26 10:01:14  refs2: started pid 34432 on AC: -u -m gap_study_v3.confirm --folds 0 1 2 3 4 --stages refs2 --device cpu --threads 2 --machine-name Ansel --worker refs2 --resume
-2026-11-26 10:08:44  refs2: finished (exit 0)
-2026-11-26 10:08:44  all jobs done; watcher exits

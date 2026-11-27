@@ -407,8 +407,7 @@ python -m bitred.run_final_test --analyze                           # after merg
 Same environment (torch 2.7.1+cu118, `.venv`, repo root, `$env:PYTHONPATH = "bit-reduction-test"`).
 ```
 python -m gap_study_v3.confirm --folds 0 --stages ref rescore ftcore nr ftextra rescore9a --smoke --threads 4 --out <scratch>/smoke-v3   # 57 s
-# validation runs, power-gated (waits for AC); jobs files list the exact per-fold commands
-powershell -NoProfile -ExecutionPolicy Bypass -File gap_study_v3\power_watch.ps1 -Jobs gap_study_v3\jobs-phase2.json    # then jobs-refs2, jobs-phase2b, jobs-phase2c, jobs-phase2d
+# validation runs: per-fold commands as listed in gap_study_v3/RUNS.md (P2, R2, P2b-P2d); the power-gated watcher and its jobs files were removed in the 2026-11-27 cleanup
 python -m gap_study_v3.analyze              # gate per cell
 python -m gap_study_v3.diagnose             # Phase 3 diagnostics
 python -m gap_study_v3.test_confirmation    # per-subject test gaps from the existing one-shot test runs
@@ -422,14 +421,12 @@ Same environment (torch 2.7.1+cu118, `.venv`, repo root, `$env:PYTHONPATH = "bit
 ```
 python -m gap_study_v4.run_v4 --folds 0 --stages ref nr4 ft4 --smoke --threads 4 --out <scratch>/smoke-v4     # 59 s
 python -m gap_study_v4.test_confirm --folds 0 --smoke --out <scratch>/smoke-v4/test --models B=<ckpt> X=<ckpt>  # pipeline check
-# validation (V1, power-gated watcher; the watcher died mid-run, workers kept running)
-powershell -NoProfile -ExecutionPolicy Bypass -File gap_study_v4\power_watch.ps1 -Jobs gap_study_v4\jobs-validation.json
-#   = per fold k: python -u -m gap_study_v4.run_v4 --folds <k> --stages ref ft4 --device cpu --ft-device cuda --threads 2 --worker ft --machine-name Ansel --resume
+# validation (V1; the watcher scripts were removed in the 2026-11-27 cleanup)
+#   per fold k: python -u -m gap_study_v4.run_v4 --folds <k> --stages ref ft4 --device cpu --ft-device cuda --threads 2 --worker ft --machine-name Ansel --resume
 #     and       python -u -m gap_study_v4.run_v4 --folds 0 1 2 / 3 4 --stages ref nr4 --threads 3 --worker nr --machine-name Ansel --resume
 python -u -m gap_study_v4.run_v4 --folds 0 1 2 3 4 --stages ref cal4 --device cpu --ft-device cuda --threads 2 --worker cal --machine-name Ansel --resume   # V2
 python -u -m gap_study_v4.run_v4 --folds <k> --stages ref x4 --device cpu --ft-device cuda --threads 2 --worker ft --machine-name Ansel --resume          # V4, k = 0..4
 python -u -m gap_study_v4.run_v4 --folds 0 1 2 3 4 --stages ref cal5 --device cpu --ft-device cpu --threads 4 --worker calcpu --machine-name Ansel --resume # V5 (CPU)
-powershell -NoProfile -ExecutionPolicy Bypass -File gap_study_v4\keep_awake.ps1     # keeps Windows awake while v4 workers run
 # analysis and checks (validation only)
 python -m gap_study_v4.analyze_v4
 python -m gap_study_v4.diagnose_v4 --models B=v3:l1_fullrecon-80pct-seed{s} ... --seeds 0 1 2

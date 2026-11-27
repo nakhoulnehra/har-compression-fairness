@@ -1,3 +1,6 @@
+> Cleanup 2026-11-27: the watcher scripts (`power_watch.ps1`, `keep_awake.ps1`, `chain_fold2.ps1`), the jobs files and the console logs
+> were deleted. The commands below stay as the run record. Final decision: `GAP_SUMMARY.md`.
+
 # Gap study v4: run log
 
 **Setup.** Ansel (RTX 3050 Ti Laptop 4 GB, Ryzen 7 5800U), torch 2.7.1+cu118, `.venv`, repo root,
