@@ -1,0 +1,102 @@
+{
+  "command": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\gap_study_v4\\run_v4.py --device cpu --ft-device cuda --machine-name Ansel --resume --threads 2 --worker ft --stages ref ft4 --folds 4",
+  "fold": 4,
+  "device": "cpu",
+  "ft_device": "cuda",
+  "machine": "Ansel",
+  "torch": "2.7.1+cu118",
+  "explain_per_subject": 50,
+  "window_hashes": {
+    "explain": "0ce6c62e11dbfabec0982b1e50f7cfeb6df4c79c98a59d6fb0c6ff2cec75ce1d",
+    "f1": "2f75546ecd2ed91bac190c13869154156f4110a51ccd5414b69afa58222c057f",
+    "calibration": "945adb5eecb863bfcf7c35480b79034fa47cb392f337bdbd2d6e0a5d83f79de2",
+    "lci_calibration": "20e22b7afcf432653a6fac27eb55b1fc8b0ffb337f6f1050c00e0ddbeae0ea8d",
+    "n_explain": 150,
+    "n_f1": 6682,
+    "n_calibration": 937,
+    "n_lci_calibration": 140,
+    "inner_val_subjects": [
+      "S012",
+      "S016",
+      "S024"
+    ],
+    "n_train_subjects": 14
+  },
+  "ceiling50": 0.9454638065589499,
+  "calibration": {
+    "per_cell": 10,
+    "seed0": 46,
+    "per_cell_5x": 50
+  },
+  "ft_epochs": 20,
+  "calkd_epochs": 200,
+  "kd": {
+    "T": 3.0,
+    "alpha": 0.7
+  },
+  "ria_a": 0.5,
+  "plan": [
+    {
+      "stage": "ref",
+      "method": "original",
+      "level": 0.0,
+      "seed": 0
+    },
+    {
+      "stage": "ft4",
+      "method": "fmkd",
+      "start": "l1_fullrecon",
+      "level": 0.8,
+      "seed": 0,
+      "lr": 0.0003
+    },
+    {
+      "stage": "ft4",
+      "method": "fmkd",
+      "start": "l1_fullrecon",
+      "level": 0.8,
+      "seed": 0,
+      "lr": 0.0001
+    },
+    {
+      "stage": "ft4",
+      "method": "kd",
+      "start": "l1_fullrecon",
+      "level": 0.8,
+      "seed": 0,
+      "lr": 0.0003
+    },
+    {
+      "stage": "ft4",
+      "method": "calkd",
+      "start": "l1_fullrecon",
+      "level": 0.8,
+      "seed": 0,
+      "lr": 0.0001
+    },
+    {
+      "stage": "ft4",
+      "method": "calkd",
+      "start": "l1_fullrecon",
+      "level": 0.8,
+      "seed": 0,
+      "lr": 0.0003
+    },
+    {
+      "stage": "ft4",
+      "method": "fmkd",
+      "start": "lamp_recon",
+      "level": 0.9,
+      "seed": 0,
+      "lr": 0.0003
+    },
+    {
+      "stage": "ft4",
+      "method": "fmkd",
+      "start": "lamp_recon",
+      "level": 0.9,
+      "seed": 0,
+      "lr": 0.0001
+    }
+  ]
+}

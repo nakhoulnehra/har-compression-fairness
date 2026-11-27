@@ -1,0 +1,7 @@
+fold,machine_name,device,ceiling50,run_id,stage,method,start,level,seed,lr,subject,lci,shap_corr,jaccard,n_skipped
+2,Ansel,cpu,0.9146798602351932,calfm_from_l1_fullrecon-80pct-seed0-lr0.003,ft4,calfm,l1_fullrecon,0.8,0,0.003,S013,0.8604259699483789,0.9026701217149395,0.8181818181818182,0
+2,Ansel,cpu,0.9146798602351932,calfm_from_l1_fullrecon-80pct-seed0-lr0.003,ft4,calfm,l1_fullrecon,0.8,0,0.003,S019,0.951832358208968,0.903664716417936,1.0,0
+2,Ansel,cpu,0.9146798602351932,calfm_from_l1_fullrecon-80pct-seed0-lr0.003,ft4,calfm,l1_fullrecon,0.8,0,0.003,S022,0.8391243539037454,0.8600668896256726,0.8181818181818182,0
+2,Ansel,cpu,0.9146798602351932,calkd_from_l1_fullrecon-80pct-seed0-lr0.001,ft4,calkd,l1_fullrecon,0.8,0,0.001,S013,0.8418468950434093,0.8655119719050002,0.8181818181818182,0
+2,Ansel,cpu,0.9146798602351932,calkd_from_l1_fullrecon-80pct-seed0-lr0.001,ft4,calkd,l1_fullrecon,0.8,0,0.001,S019,0.9201850089515723,0.8403700179031446,1.0,0
+2,Ansel,cpu,0.9146798602351932,calkd_from_l1_fullrecon-80pct-seed0-lr0.001,ft4,calkd,l1_fullrecon,0.8,0,0.001,S022,0.8173828699587635,0.8165839217357087,0.8181818181818182,0

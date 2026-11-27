@@ -1,0 +1,15 @@
+group,spearman_windowcorr_vs_p_target,window_corr_agree,window_corr_disagree
+ft80_l1_fullrecon_kd,0.3273,0.8861,0.8607
+ft80_l1_kd,0.3169,0.8923,0.8651
+ft90_9a_park_kd,0.5433,0.7521,0.6058
+ft90_l1_fullrecon_kd,0.3524,0.7757,0.7061
+ft90_l1_kd,0.4136,0.7721,0.6917
+ft90_lamp_recon_kd,0.3194,0.838,0.7959
+nr50_l1_fullrecon,0.3279,0.9879,0.9874
+nr70_l1_fullrecon,0.3789,0.9605,0.9454
+nr80_l1_fullrecon,0.3781,0.8506,0.8055
+nr80_lamp_recon,-0.0465,0.834,0.8586
+nr80_taylor_fullrecon,0.4121,0.8192,0.7536
+nr80_wanda_fullrecon,0.4172,0.8489,0.7878
+nr90_l1_fullrecon,0.4162,0.709,0.5886
+retrain_seed1,0.1396,0.7287,0.7092

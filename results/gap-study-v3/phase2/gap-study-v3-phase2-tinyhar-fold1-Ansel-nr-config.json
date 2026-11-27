@@ -1,0 +1,145 @@
+{
+  "command": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\gap_study_v3\\confirm.py --device cpu --ft-device cuda --machine-name Ansel --resume --folds 0 1 2 --stages nr --threads 3 --worker nr",
+  "fold": 1,
+  "device": "cpu",
+  "ft_device": "cuda",
+  "machine": "Ansel",
+  "torch": "2.7.1+cu118",
+  "explain_per_subject": 50,
+  "window_hashes": {
+    "explain": "7f8bfa0c335d517a1d4fdf4013a3a2728ebd62ecf77b09dfa0c5124af819e77e",
+    "f1": "3e657c65407631751d48678ccb6322b8ec1fcc3ed7900db9ce49f09a7e56095e",
+    "calibration": "dd07918600fa55ef5203e9089bb115ce14e6bd2a9bd88ed334c04d5afb2bfec7",
+    "lci_calibration": "cceab7d223a3d1d952436d165bbe5b397b0f549163a5d0f0ea932acfbdd14213",
+    "n_explain": 150,
+    "n_f1": 6163,
+    "n_calibration": 967,
+    "n_lci_calibration": 140,
+    "inner_val_subjects": [
+      "S014",
+      "S018",
+      "S024"
+    ],
+    "n_train_subjects": 15
+  },
+  "tau_k": 0.582721677640067,
+  "ceiling_committed": 0.8924310138312194,
+  "ceiling50": 0.9142727541945902,
+  "calibration": {
+    "per_cell": 10,
+    "seed0": 46,
+    "per_cell_5x": 50
+  },
+  "ft": {
+    "epochs": 20,
+    "lr": 0.0001
+  },
+  "plan": [
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.8,
+      "seed": 0,
+      "pdamp": 0.1
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.8,
+      "seed": 1,
+      "pdamp": 0.1
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.8,
+      "seed": 2,
+      "pdamp": 0.1
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.7,
+      "seed": 0,
+      "pdamp": 0.1
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.9,
+      "seed": 0,
+      "pdamp": 0.1
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.8,
+      "seed": 0,
+      "pdamp": 1.0
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.8,
+      "seed": 1,
+      "pdamp": 1.0
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.8,
+      "seed": 2,
+      "pdamp": 1.0
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.7,
+      "seed": 0,
+      "pdamp": 1.0
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.9,
+      "seed": 0,
+      "pdamp": 1.0
+    },
+    {
+      "stage": "nr",
+      "method": "taylor_fullrecon",
+      "level": 0.8,
+      "seed": 0
+    },
+    {
+      "stage": "nr",
+      "method": "taylor_fullrecon",
+      "level": 0.8,
+      "seed": 1
+    },
+    {
+      "stage": "nr",
+      "method": "taylor_fullrecon",
+      "level": 0.8,
+      "seed": 2
+    },
+    {
+      "stage": "nr",
+      "method": "taylor_fullrecon",
+      "level": 0.7,
+      "seed": 0
+    },
+    {
+      "stage": "nr",
+      "method": "taylor_fullrecon",
+      "level": 0.9,
+      "seed": 0
+    },
+    {
+      "stage": "nr",
+      "method": "l1_fullrecon_cal5x",
+      "level": 0.8,
+      "seed": 0
+    }
+  ]
+}

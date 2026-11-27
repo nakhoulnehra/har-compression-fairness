@@ -402,3 +402,38 @@ python -m bitred.run_final_test --phase test --folds 2 3 4 --device cuda --machi
 python -m bitred.run_final_test --analyze                           # after merging; -decision.json (H1-H3)
 # --resume continues either phase; each fold's test must run on the machine (and --machine-name) of its validation
 ```
+
+## Gap study v3 (2026-11-26, Ansel; `gap_study_v3/`; no new method)
+Same environment (torch 2.7.1+cu118, `.venv`, repo root, `$env:PYTHONPATH = "bit-reduction-test"`).
+```
+python -m gap_study_v3.confirm --folds 0 --stages ref rescore ftcore nr ftextra rescore9a --smoke --threads 4 --out <scratch>/smoke-v3   # 57 s
+# validation runs: per-fold commands as listed in gap_study_v3/RUNS.md (P2, R2, P2b-P2d); the power-gated watcher and its jobs files were removed in the 2026-11-27 cleanup
+python -m gap_study_v3.analyze              # gate per cell
+python -m gap_study_v3.diagnose             # Phase 3 diagnostics
+python -m gap_study_v3.test_confirmation    # per-subject test gaps from the existing one-shot test runs
+python -m gap_study_v3.build_master_table   # gap_study_v3/MASTER_TABLE.csv
+```
+Re-scoring agent B's no-retraining models needs its checkpoints in `data/processed/har/checkpoints/gap-study/phase2/` (local).
+
+## Gap study v4 (2026-11-26, Ansel; `gap_study_v4/`; no new method)
+Same environment (torch 2.7.1+cu118, `.venv`, repo root, `$env:PYTHONPATH = "bit-reduction-test"`). Imports
+`gap_study_v3.confirm` / `gap_study_v3.baselines` unchanged. Run log with every launch: `gap_study_v4/RUNS.md`.
+```
+python -m gap_study_v4.run_v4 --folds 0 --stages ref nr4 ft4 --smoke --threads 4 --out <scratch>/smoke-v4     # 59 s
+python -m gap_study_v4.test_confirm --folds 0 --smoke --out <scratch>/smoke-v4/test --models B=<ckpt> X=<ckpt>  # pipeline check
+# validation (V1; the watcher scripts were removed in the 2026-11-27 cleanup)
+#   per fold k: python -u -m gap_study_v4.run_v4 --folds <k> --stages ref ft4 --device cpu --ft-device cuda --threads 2 --worker ft --machine-name Ansel --resume
+#     and       python -u -m gap_study_v4.run_v4 --folds 0 1 2 / 3 4 --stages ref nr4 --threads 3 --worker nr --machine-name Ansel --resume
+python -u -m gap_study_v4.run_v4 --folds 0 1 2 3 4 --stages ref cal4 --device cpu --ft-device cuda --threads 2 --worker cal --machine-name Ansel --resume   # V2
+python -u -m gap_study_v4.run_v4 --folds <k> --stages ref x4 --device cpu --ft-device cuda --threads 2 --worker ft --machine-name Ansel --resume          # V4, k = 0..4
+python -u -m gap_study_v4.run_v4 --folds 0 1 2 3 4 --stages ref cal5 --device cpu --ft-device cpu --threads 4 --worker calcpu --machine-name Ansel --resume # V5 (CPU)
+# analysis and checks (validation only)
+python -m gap_study_v4.analyze_v4
+python -m gap_study_v4.diagnose_v4 --models B=v3:l1_fullrecon-80pct-seed{s} ... --seeds 0 1 2
+python -m gap_study_v4.explainer_check --folds 0 1 2 3 4 --threads 2 --models label=<checkpoint pattern with {k}> ...
+# one held-out test run of the selected cell (after selection)
+python -m gap_study_v4.test_confirm --folds <k> --threads 3 --models label=<checkpoint pattern with {k}> ...   # per fold
+python -m gap_study_v4.test_confirm --analyze --models <labels>
+```
+Checkpoints (local, git-ignored): `data/processed/har/checkpoints/gap-study-v4/`; attributions
+`data/processed/har/gap-study-v4/attributions/`. Needs agent B's `data/processed/har/checkpoints/gap-study/phase2/`.

@@ -1,0 +1,350 @@
+{
+  "command": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\gap_study_v3\\confirm.py --folds 3 --stages ref rescore ftcore nr ftextra rescore9a --device cpu --ft-device cuda --threads 3 --machine-name Ansel --worker all --resume",
+  "fold": 3,
+  "device": "cpu",
+  "ft_device": "cuda",
+  "machine": "Ansel",
+  "torch": "2.7.1+cu118",
+  "explain_per_subject": 50,
+  "window_hashes": {
+    "explain": "635c15b0b155f2858e3cfebcb586908291be99af342950a22a4efc5d35f56e9c",
+    "f1": "800030fb672d2fd134535cdf59339970382655c4e265312efec727c80b2805b1",
+    "calibration": "83131e4e15a195c67884e97e004a0d88ab7fb5033a36f1aba1fbfd5349772fa3",
+    "lci_calibration": "b7f8eb80c4be3e49d6f5390775c021686f9f1a008387b77cf325af05ec84559c",
+    "n_explain": 150,
+    "n_f1": 6274,
+    "n_calibration": 958,
+    "n_lci_calibration": 140,
+    "inner_val_subjects": [
+      "S017",
+      "S022",
+      "S024"
+    ],
+    "n_train_subjects": 15
+  },
+  "tau_k": 0.6236971762657825,
+  "ceiling_committed": 0.9128560356687709,
+  "ceiling50": 0.9404299954707159,
+  "calibration": {
+    "per_cell": 10,
+    "seed0": 46,
+    "per_cell_5x": 50
+  },
+  "ft": {
+    "epochs": 20,
+    "lr": 0.0001
+  },
+  "plan": [
+    {
+      "stage": "ref",
+      "method": "original",
+      "level": 0.0,
+      "seed": 0
+    },
+    {
+      "stage": "rescore",
+      "method": "l1_fullrecon",
+      "level": 0.8,
+      "seed": 0,
+      "damp": 0.01
+    },
+    {
+      "stage": "rescore",
+      "method": "l1_fullrecon",
+      "level": 0.8,
+      "seed": 1,
+      "damp": 0.01
+    },
+    {
+      "stage": "rescore",
+      "method": "l1_fullrecon",
+      "level": 0.8,
+      "seed": 2,
+      "damp": 0.01
+    },
+    {
+      "stage": "rescore",
+      "method": "lamp_recon",
+      "level": 0.8,
+      "seed": 0,
+      "damp": 0.01
+    },
+    {
+      "stage": "rescore",
+      "method": "lamp_recon",
+      "level": 0.8,
+      "seed": 1,
+      "damp": 0.01
+    },
+    {
+      "stage": "rescore",
+      "method": "lamp_recon",
+      "level": 0.8,
+      "seed": 2,
+      "damp": 0.01
+    },
+    {
+      "stage": "rescore",
+      "method": "wanda_fullrecon",
+      "level": 0.8,
+      "seed": 0,
+      "damp": 0.01
+    },
+    {
+      "stage": "rescore",
+      "method": "l1_recon",
+      "level": 0.8,
+      "seed": 0,
+      "damp": 0.01
+    },
+    {
+      "stage": "rescore",
+      "method": "l1_fullrecon",
+      "level": 0.7,
+      "seed": 0,
+      "damp": 0.01
+    },
+    {
+      "stage": "rescore",
+      "method": "lamp_recon",
+      "level": 0.7,
+      "seed": 0,
+      "damp": 0.01
+    },
+    {
+      "stage": "rescore",
+      "method": "l1_fullrecon",
+      "level": 0.9,
+      "seed": 0,
+      "damp": 0.01
+    },
+    {
+      "stage": "rescore",
+      "method": "lamp_recon",
+      "level": 0.9,
+      "seed": 0,
+      "damp": 0.01
+    },
+    {
+      "stage": "ftcore",
+      "method": "l1_kd",
+      "level": 0.9,
+      "seed": 0,
+      "lr": 0.0001
+    },
+    {
+      "stage": "ftcore",
+      "method": "l1_kd",
+      "level": 0.9,
+      "seed": 1,
+      "lr": 0.0001
+    },
+    {
+      "stage": "ftcore",
+      "method": "l1_kd",
+      "level": 0.9,
+      "seed": 2,
+      "lr": 0.0001
+    },
+    {
+      "stage": "ftcore",
+      "method": "l1_fullrecon_kd",
+      "level": 0.9,
+      "seed": 0,
+      "lr": 0.0001
+    },
+    {
+      "stage": "ftcore",
+      "method": "l1_fullrecon_kd",
+      "level": 0.9,
+      "seed": 1,
+      "lr": 0.0001
+    },
+    {
+      "stage": "ftcore",
+      "method": "l1_fullrecon_kd",
+      "level": 0.9,
+      "seed": 2,
+      "lr": 0.0001
+    },
+    {
+      "stage": "ftcore",
+      "method": "lamp_recon_kd",
+      "level": 0.9,
+      "seed": 0,
+      "lr": 0.0001
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.8,
+      "seed": 0,
+      "pdamp": 0.1
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.8,
+      "seed": 1,
+      "pdamp": 0.1
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.8,
+      "seed": 2,
+      "pdamp": 0.1
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.7,
+      "seed": 0,
+      "pdamp": 0.1
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.9,
+      "seed": 0,
+      "pdamp": 0.1
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.8,
+      "seed": 0,
+      "pdamp": 1.0
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.8,
+      "seed": 1,
+      "pdamp": 1.0
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.8,
+      "seed": 2,
+      "pdamp": 1.0
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.7,
+      "seed": 0,
+      "pdamp": 1.0
+    },
+    {
+      "stage": "nr",
+      "method": "sparsegpt",
+      "level": 0.9,
+      "seed": 0,
+      "pdamp": 1.0
+    },
+    {
+      "stage": "nr",
+      "method": "taylor_fullrecon",
+      "level": 0.8,
+      "seed": 0
+    },
+    {
+      "stage": "nr",
+      "method": "taylor_fullrecon",
+      "level": 0.8,
+      "seed": 1
+    },
+    {
+      "stage": "nr",
+      "method": "taylor_fullrecon",
+      "level": 0.8,
+      "seed": 2
+    },
+    {
+      "stage": "nr",
+      "method": "taylor_fullrecon",
+      "level": 0.7,
+      "seed": 0
+    },
+    {
+      "stage": "nr",
+      "method": "taylor_fullrecon",
+      "level": 0.9,
+      "seed": 0
+    },
+    {
+      "stage": "nr",
+      "method": "l1_fullrecon_cal5x",
+      "level": 0.8,
+      "seed": 0
+    },
+    {
+      "stage": "ftextra",
+      "method": "l1_kd",
+      "level": 0.9,
+      "seed": 0,
+      "lr": 0.0003
+    },
+    {
+      "stage": "ftextra",
+      "method": "l1_kd",
+      "level": 0.9,
+      "seed": 0,
+      "lr": 3e-05
+    },
+    {
+      "stage": "ftextra",
+      "method": "l1_fullrecon_kd",
+      "level": 0.9,
+      "seed": 0,
+      "lr": 0.0003
+    },
+    {
+      "stage": "ftextra",
+      "method": "l1_fullrecon_kd",
+      "level": 0.9,
+      "seed": 0,
+      "lr": 3e-05
+    },
+    {
+      "stage": "ftextra",
+      "method": "l1_kd",
+      "level": 0.8,
+      "seed": 0,
+      "lr": 0.0001
+    },
+    {
+      "stage": "ftextra",
+      "method": "l1_fullrecon_kd",
+      "level": 0.8,
+      "seed": 0,
+      "lr": 0.0001
+    },
+    {
+      "stage": "rescore9a",
+      "method": "9a_l1_kd",
+      "level": 0.9,
+      "seed": 0
+    },
+    {
+      "stage": "rescore9a",
+      "method": "9a_park_kd",
+      "level": 0.9,
+      "seed": 0
+    },
+    {
+      "stage": "rescore9a",
+      "method": "9a_park",
+      "level": 0.9,
+      "seed": 0
+    },
+    {
+      "stage": "rescore9a",
+      "method": "9a_l1_kd",
+      "level": 0.7,
+      "seed": 0
+    }
+  ]
+}

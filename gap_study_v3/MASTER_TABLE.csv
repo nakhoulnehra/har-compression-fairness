@@ -1,0 +1,567 @@
+source,eval_set,compression,level,scenario,method,variant,n_folds,n_runs,accuracy_mean,accuracy_sd,f1_mean,f1_sd,lci_mean,lci_sd,fa_lci,fa_lci_ci,lci_indep_mean,self_lci_mean,occ_lci_mean,agree_mean,lci_agree_mean,flags
+9A,harth_inner_val,noise_ref,none,reference,noise_shap_seed2,30 explain windows/subject,5,5,,,,,0.9388,0.025,,,,,,,,<3 seeds/fold; no accuracy in source
+9A,harth_inner_val,noise_ref,none,reference,noise_shap_seed1,30 explain windows/subject,5,5,,,,,0.9237,0.034,,,,,,,,<3 seeds/fold; no accuracy in source
+9A,harth_inner_val,noise_ref,none,reference,noise_retrain_seed3,30 explain windows/subject,5,5,,,,,0.6938,0.091,,,,,,,,<3 seeds/fold; no accuracy in source
+9A,harth_inner_val,noise_ref,none,reference,noise_retrain_seed2,30 explain windows/subject,5,5,,,,,0.6886,0.0701,,,,,,,,<3 seeds/fold; no accuracy in source
+9A,harth_inner_val,noise_ref,none,reference,noise_retrain_seed1,30 explain windows/subject,5,5,,,,,0.6602,0.043,,,,,,,,<3 seeds/fold; no accuracy in source
+9A,harth_inner_val,none,none,reference,original,30 explain windows/subject,5,5,0.9265,0.0265,0.8354,0.0287,1.0,0.0,,,,,,,,<3 seeds/fold
+lowbit,harth_inner_val,pruning+ptq,90%+4-bit,no_retrain,lamp_recon_ptq_pc4,,5,5,,,0.6994,0.0456,0.4708,0.0494,,,,,,,,<3 seeds/fold; no accuracy in source
+lowbit,harth_inner_val,pruning+ptq,95%+4-bit,no_retrain,lamp_recon_ptq_pc4,,5,5,,,0.3974,0.1258,0.2643,0.0398,,,,,,,,<3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.95|b4.0,no_retrain,xgp_xb,,5,5,,,0.5953,0.1002,0.3352,0.0695,,,,,,,,<3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.95|b4.0,no_retrain,lamp_recon,,5,5,,,0.3974,0.1258,0.2711,0.0495,,,,,,,,<3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.9|b4.0,no_retrain,xgp_xb,,5,5,,,0.743,0.0386,0.4905,0.0271,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.9|b4.0,no_retrain,lamp_recon,,5,5,,,0.6994,0.0456,0.477,0.076,,,,,,,,<3 seeds/fold; no accuracy in source
+pair-calibration,harth_inner_val,pruning+ptq/qat,channel-2bit,no_retrain,ptq,,5,5,,,0.496,0.1458,0.6043,0.1042,,,,,,,,<3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6); no accuracy in source; previous agent
+pair-calibration,harth_inner_val,pruning+ptq/qat,lamp_recon90-channel-4bit,no_retrain,ptq,,5,5,,,0.6995,0.0456,0.477,0.076,,,,,,,,<3 seeds/fold; no accuracy in source; previous agent
+pair-scarce,harth_inner_val,pruning+ptq/qat,,no_retrain,ptq,,5,5,,,0.496,0.1458,0.6043,0.1042,,,,,,,,<3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6); no accuracy in source; previous agent
+xgp-compare,harth_inner_val,pruning+ptq/qat,,no_retrain,xgp_xb,,5,10,,,0.6814,0.1134,0.4178,0.0992,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,,no_retrain,lamp_recon,,5,10,,,0.5551,0.186,0.378,0.1253,,,,,,,,<3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6); no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,,no_retrain,tensor-2bit,,5,5,,,0.1964,0.1408,0.3243,0.1581,,,,,,,,<3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6); no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_calibration,xgp_xb,lr=0.001,5,5,,,0.7556,0.0801,0.7165,0.0593,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_calibration,lamp_recon,lr=0.001,5,5,,,0.7491,0.067,0.7122,0.1061,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_calibration,xgp_xb,lr=0.001,5,5,,,0.7626,0.0833,0.6983,0.0631,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_calibration,l1_xb_recon,lr=0.001,5,5,,,0.7658,0.0615,0.6965,0.0508,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_calibration,xgp_xb,lr=0.0001,5,5,,,0.7575,0.0672,0.6957,0.0852,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_calibration,lamp_recon,lr=0.001,5,5,,,0.7412,0.077,0.6951,0.101,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_calibration,xgp_xb,lr=0.0001,5,5,,,0.7554,0.0636,0.6841,0.0662,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_calibration,xgp_lamp,lr=0.001,5,5,,,0.7471,0.0573,0.676,0.0882,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_calibration,l1_xb_recon,lr=0.0001,5,5,,,0.736,0.0709,0.6651,0.0757,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_calibration,lamp_recon,lr=0.0001,5,5,,,0.7337,0.068,0.6593,0.0808,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_calibration,xgp_lamp,lr=0.0001,5,5,,,0.7296,0.075,0.657,0.0844,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_calibration,lamp_recon,lr=0.0001,5,5,,,0.7359,0.0674,0.6525,0.0937,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_calibration,l1_xb_recon,lr=0.0001,5,5,,,0.7915,0.0622,0.8048,0.101,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_calibration,xgp_xb,lr=0.0001,5,5,,,0.7963,0.0628,0.7993,0.0723,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_calibration,xgp_xb,lr=0.0001,5,5,,,0.7957,0.0538,0.7991,0.0836,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_calibration,xgp_xb,lr=0.001,5,5,,,0.8028,0.0607,0.7925,0.0496,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_calibration,xgp_xb,lr=0.001,5,5,,,0.8101,0.0598,0.7871,0.08,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_calibration,xgp_lamp,lr=0.0001,5,5,,,0.7764,0.0772,0.786,0.0858,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_calibration,l1_xb_recon,lr=0.001,5,5,,,0.7991,0.0634,0.7835,0.0878,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_calibration,lamp_recon,lr=0.001,5,5,,,0.7829,0.0728,0.7766,0.1143,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_calibration,lamp_recon,lr=0.001,5,5,,,0.787,0.0672,0.7733,0.1161,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_calibration,lamp_recon,lr=0.0001,5,5,,,0.7849,0.067,0.7642,0.098,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_calibration,lamp_recon,lr=0.0001,5,5,,,0.7809,0.0662,0.7617,0.0764,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_calibration,xgp_lamp,lr=0.001,5,5,,,0.7785,0.0808,0.7537,0.088,,,,,,,,<3 seeds/fold; no accuracy in source
+pair-calibration,harth_inner_val,pruning+ptq/qat,channel-2bit,retrained_calibration,pair,lr=0.0001,5,5,,,0.7943,0.0401,0.8198,0.0957,,,,,,,,<3 seeds/fold; no accuracy in source; previous agent
+pair-calibration,harth_inner_val,pruning+ptq/qat,channel-2bit,retrained_calibration,pair,lr=0.001,5,5,,,0.7641,0.0636,0.8143,0.0982,,,,,,,,<3 seeds/fold; no accuracy in source; previous agent
+pair-calibration,harth_inner_val,pruning+ptq/qat,channel-2bit,retrained_calibration,kd,lr=0.0001,5,5,,,0.8159,0.0532,0.8082,0.0831,,,,,,,,<3 seeds/fold; no accuracy in source; previous agent
+pair-calibration,harth_inner_val,pruning+ptq/qat,channel-2bit,retrained_calibration,kd,lr=0.001,5,5,,,0.8177,0.0524,0.6974,0.0613,,,,,,,,<3 seeds/fold; no accuracy in source; previous agent
+pair-calibration,harth_inner_val,pruning+ptq/qat,lamp_recon90-channel-4bit,retrained_calibration,kd,lr=0.0001,3,3,,,0.7561,0.082,0.7316,0.1225,,,,,,,,only 3 fold(s); <3 seeds/fold; LCI SD > 0.10; no accuracy in source; previous agent
+pair-scarce,harth_inner_val,pruning+ptq/qat,,retrained_calibration,kd,lr=0.0001 ~100 windows,5,5,,,0.7895,0.0549,0.7777,0.0765,,,,,,,,<3 seeds/fold; no accuracy in source; previous agent
+final-test-val,harth_inner_val,pruning+ptq/qat,,retrained_calibration,tensor-2bit,lr=0.0001,5,5,,,0.7834,0.0886,0.749,0.111,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+pair-scarce,harth_inner_val,pruning+ptq/qat,,retrained_calibration,pairpath,lr=0.0001 ~100 windows,5,5,,,0.7454,0.0421,0.747,0.0571,,,,,,,,<3 seeds/fold; no accuracy in source; previous agent
+xgp-compare,harth_inner_val,pruning+ptq/qat,,retrained_calibration,tensor-2bit,lr=0.0001,5,5,,,0.7956,0.0288,0.7133,0.0732,,,,,,,,<3 seeds/fold; no accuracy in source
+pair-scarce,harth_inner_val,pruning+ptq/qat,,retrained_calibration,kdpath,lr=0.0001 ~100 windows,5,5,,,0.7436,0.0437,0.6768,0.0778,,,,,,,,<3 seeds/fold; no accuracy in source; previous agent
+pair-scarce,harth_inner_val,pruning+ptq/qat,,retrained_calibration,kd,lr=0.001 ~100 windows,5,5,,,0.7774,0.07,0.6621,0.0652,,,,,,,,<3 seeds/fold; no accuracy in source; previous agent
+pair-scarce,harth_inner_val,pruning+ptq/qat,,retrained_calibration,kdpath,lr=0.001 ~100 windows,5,5,,,0.7596,0.0495,0.6266,0.0568,,,,,,,,<3 seeds/fold; no accuracy in source; previous agent
+xgp-compare,harth_inner_val,pruning+ptq/qat,,retrained_calibration,tensor-2bit,lr=0.001,5,5,,,0.768,0.0762,0.5993,0.0536,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,,retrained_calibration,tensor-2bit,lr=0.001,5,5,,,0.7657,0.0965,0.5804,0.0541,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_full,xgp_xb,lr=0.001,5,5,,,0.7971,0.0697,0.7359,0.08,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_full,lamp_recon,lr=0.001,5,5,,,0.7715,0.0567,0.7296,0.1205,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_full,xgp_lamp,lr=0.001,5,5,,,0.7866,0.0503,0.7262,0.0774,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_full,lamp_recon,lr=0.001,5,5,,,0.7765,0.0589,0.7257,0.0964,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_full,xgp_xb,lr=0.001,5,5,,,0.7939,0.0695,0.7155,0.0636,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_full,l1_xb_recon,lr=0.001,5,5,,,0.7953,0.0509,0.7135,0.0699,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_full,xgp_xb,lr=0.0001,5,5,,,0.7633,0.0723,0.6673,0.0911,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_full,xgp_xb,lr=0.0001,5,5,,,0.7635,0.0685,0.658,0.0941,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_full,l1_xb_recon,lr=0.0001,5,5,,,0.7666,0.0636,0.6449,0.0883,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_full,lamp_recon,lr=0.0001,5,5,,,0.7452,0.0689,0.6184,0.1082,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_full,lamp_recon,lr=0.0001,5,5,,,0.7393,0.0642,0.6182,0.1064,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_full,xgp_lamp,lr=0.0001,5,5,,,0.7601,0.0685,0.6018,0.0703,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_full,xgp_xb,lr=0.001,5,5,,,0.8251,0.044,0.8219,0.0795,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_full,l1_xb_recon,lr=0.001,5,5,,,0.8158,0.0511,0.8175,0.049,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_full,l1_xb_recon,lr=0.0001,5,5,,,0.8031,0.0574,0.8163,0.0643,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_full,lamp_recon,lr=0.001,5,5,,,0.8126,0.0482,0.8144,0.0934,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_full,lamp_recon,lr=0.001,5,5,,,0.8221,0.0338,0.8142,0.0937,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_full,xgp_xb,lr=0.001,5,5,,,0.8235,0.0447,0.8105,0.0647,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_full,xgp_xb,lr=0.0001,5,5,,,0.8044,0.0488,0.7994,0.0776,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_full,xgp_xb,lr=0.0001,5,5,,,0.8092,0.0426,0.7991,0.0717,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_full,xgp_lamp,lr=0.001,5,5,,,0.8014,0.0585,0.7982,0.0729,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_full,xgp_lamp,lr=0.0001,5,5,,,0.7909,0.0536,0.7756,0.1079,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_full,lamp_recon,lr=0.0001,5,5,,,0.7925,0.0503,0.7644,0.0791,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_full,lamp_recon,lr=0.0001,5,5,,,0.7875,0.0506,0.7453,0.0701,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,,retrained_full,tensor-2bit,lr=0.0001,5,5,,,0.8079,0.065,0.7711,0.1198,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,,retrained_full,tensor-2bit,lr=0.0001,5,5,,,0.7937,0.0606,0.7417,0.1186,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,,retrained_full,tensor-2bit,lr=0.001,5,5,,,0.7737,0.113,0.6072,0.0641,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,,retrained_full,tensor-2bit,lr=0.001,5,5,,,0.8009,0.0303,0.5943,0.078,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_kd5,l1_xb_recon,lr=0.001,5,5,,,0.7781,0.0585,0.6976,0.0791,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_kd5,xgp_xb,lr=0.001,5,5,,,0.7794,0.0592,0.697,0.0835,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_kd5,lamp_recon,lr=0.001,5,5,,,0.76,0.0541,0.6935,0.0918,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_kd5,xgp_xb,lr=0.001,5,5,,,0.7739,0.0558,0.6931,0.0976,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_kd5,lamp_recon,lr=0.001,5,5,,,0.7685,0.0515,0.6919,0.0923,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_kd5,xgp_lamp,lr=0.001,5,5,,,0.7672,0.046,0.6644,0.1,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_kd5,xgp_xb,lr=0.0001,5,5,,,0.7579,0.0625,0.6596,0.0972,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_kd5,xgp_xb,lr=0.0001,5,5,,,0.7563,0.0695,0.6587,0.0899,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_kd5,lamp_recon,lr=0.0001,5,5,,,0.7418,0.0664,0.6277,0.0911,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_kd5,xgp_lamp,lr=0.0001,5,5,,,0.7488,0.0618,0.6249,0.0887,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_kd5,l1_xb_recon,lr=0.0001,5,5,,,0.7685,0.0605,0.6241,0.1067,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.95|b4.0,retrained_kd5,lamp_recon,lr=0.0001,5,5,,,0.745,0.0635,0.6205,0.097,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_kd5,xgp_xb,lr=0.0001,5,15,,,0.8025,0.0488,0.7931,0.0723,,,,,,,,no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_kd5,xgp_xb,lr=0.001,5,5,,,0.82,0.0425,0.7899,0.0663,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_kd5,l1_xb_recon,lr=0.0001,5,5,,,0.8014,0.0502,0.7867,0.0976,,,,,,,,<3 seeds/fold; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_kd5,xgp_xb,lr=0.0001,5,5,,,0.8052,0.0485,0.7866,0.0828,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_kd5,xgp_xb,lr=0.001,5,15,,,0.8117,0.0343,0.7834,0.0627,,,,,,,,no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_kd5,xgp_lamp,lr=0.001,5,5,,,0.7948,0.0497,0.7694,0.1024,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_kd5,l1_xb_recon,lr=0.001,5,5,,,0.8123,0.0513,0.768,0.0737,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_kd5,lamp_recon,lr=0.0001,5,15,,,0.7895,0.043,0.7674,0.0843,,,,,,,,no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_kd5,xgp_lamp,lr=0.0001,5,5,,,0.7828,0.0585,0.7613,0.1071,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_kd5,lamp_recon,lr=0.0001,5,5,,,0.7932,0.0498,0.758,0.0896,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_kd5,lamp_recon,lr=0.001,5,15,,,0.7925,0.0381,0.7542,0.0755,,,,,,,,no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,0.9|b4.0,retrained_kd5,lamp_recon,lr=0.001,5,5,,,0.8036,0.0541,0.7501,0.0865,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,,retrained_kd5,tensor-2bit,lr=0.0001,5,5,,,0.7849,0.0477,0.7331,0.1127,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,,retrained_kd5,tensor-2bit,lr=0.0001,5,5,,,0.7951,0.0465,0.7084,0.1005,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+xgp-compare,harth_inner_val,pruning+ptq/qat,,retrained_kd5,tensor-2bit,lr=0.001,5,5,,,0.7829,0.063,0.5634,0.0498,,,,,,,,<3 seeds/fold; no accuracy in source
+final-test-val,harth_inner_val,pruning+ptq/qat,,retrained_kd5,tensor-2bit,lr=0.001,5,5,,,0.7966,0.0442,0.5563,0.0526,,,,,,,,<3 seeds/fold; no accuracy in source
+lowbit,harth_inner_val,ptq,2-bit,no_retrain,ptq_pc2,,5,5,,,0.4961,0.1459,0.599,0.0955,,,,,,,,<3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+lowbit,harth_inner_val,ptq,3-bit,no_retrain,ptq_pc3,,5,5,,,0.8174,0.0439,0.8999,0.1125,,,,,,,,<3 seeds/fold; LCI SD > 0.10; no accuracy in source
+lowbit,harth_inner_val,ptq,4-bit,no_retrain,ptq_pc4,,5,5,,,0.8326,0.031,0.9583,0.0479,,,,,,,,<3 seeds/fold; no accuracy in source
+9A,harth_inner_val,ptq,4-bit,no_retrain,ptq4,30 explain windows/subject,5,5,0.9256,0.0274,0.8326,0.0318,0.9214,0.0472,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,ptq,4-bit,no_retrain,ptq_tulla4,30 explain windows/subject,5,5,0.8458,0.0483,0.6361,0.0634,0.6825,0.0954,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,ptq,8-bit,no_retrain,ptq8,30 explain windows/subject,5,5,0.9265,0.0263,0.8355,0.0282,0.9999,0.0,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,ptq,8-bit,no_retrain,ptq_tulla8,30 explain windows/subject,5,5,0.9269,0.0257,0.8366,0.0288,0.9869,0.0168,,,,,,,,<3 seeds/fold
+round4,harth_inner_val,structured_filter_pruning,0.5,no_retrain,l1_filter_recon,,2,2,,,0.7902,0.0072,0.9084,0.0385,,,,,,,,only 2 fold(s); <3 seeds/fold; no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,no_retrain,xgp_s,,2,6,,,0.7996,0.0097,0.8858,0.0399,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,no_retrain,taylor_recon,,2,2,,,0.7957,0.0201,0.8261,0.0814,,,,,,,,only 2 fold(s); <3 seeds/fold; no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,no_retrain,l1_filter,,2,2,,,0.1886,0.0363,0.2948,0.0076,,,,,,,,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,no_retrain,taylor_recon,,2,2,,,0.752,0.0113,0.736,0.0582,,,,,,,,only 2 fold(s); <3 seeds/fold; no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,no_retrain,xgp_s,,2,6,,,0.7491,0.0241,0.7012,0.0869,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,no_retrain,l1_filter_recon,,2,2,,,0.7713,0.0471,0.6126,0.0223,,,,,,,,only 2 fold(s); <3 seeds/fold; no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,no_retrain,l1_filter,,2,2,,,0.0663,0.0328,0.0579,0.054,,,,,,,,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,retrained_full,l1_filter_recon,,2,6,,,0.8021,0.0114,0.8705,0.0402,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,retrained_full,xgp_s,,2,6,,,0.8006,0.0091,0.8684,0.0364,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,retrained_full,l1_filter_recon_kd_dro,,2,6,,,0.8057,0.0168,0.8624,0.043,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,retrained_full,l1_filter,,2,6,,,0.7935,0.0068,0.8516,0.0114,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,retrained_full,taylor_recon,,2,6,,,0.7998,0.0139,0.8313,0.0547,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,retrained_full,taylor_recon_kd_dro,,2,6,,,0.7984,0.0175,0.8284,0.0542,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,retrained_full,l1_filter_kd_dro,,2,6,,,0.7928,0.0021,0.8153,0.0254,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,retrained_full,taylor_recon_kd_dro,,2,6,,,0.7843,0.0143,0.7793,0.0966,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,retrained_full,taylor_recon,,2,6,,,0.7811,0.009,0.7747,0.0753,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,retrained_full,xgp_s,,2,6,,,0.7874,0.0155,0.7642,0.0699,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,retrained_full,l1_filter_recon,,2,6,,,0.778,0.0251,0.7394,0.036,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,retrained_full,l1_filter_recon_kd_dro,,2,6,,,0.786,0.0342,0.7383,0.0302,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,retrained_full,l1_filter,,2,6,,,0.7245,0.0593,0.692,0.0478,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,retrained_full,l1_filter_kd_dro,,2,6,,,0.7392,0.033,0.6843,0.0332,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,retrained_kd5,l1_filter_recon_kd_dro,,2,6,,,0.7947,0.006,0.891,0.0498,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,retrained_kd5,l1_filter_recon,,2,6,,,0.7911,0.0036,0.8859,0.0457,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,retrained_kd5,xgp_s,,2,6,,,0.8023,0.0094,0.8725,0.0353,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,retrained_kd5,taylor_recon_kd_dro,,2,6,,,0.7968,0.0187,0.8479,0.0689,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,retrained_kd5,taylor_recon,,2,6,,,0.7916,0.0154,0.8296,0.0668,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,retrained_kd5,l1_filter,,2,6,,,0.7473,0.034,0.7335,0.0322,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.5,retrained_kd5,l1_filter_kd_dro,,2,6,,,0.7512,0.0245,0.7221,0.0432,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,retrained_kd5,taylor_recon_kd_dro,,2,6,,,0.7675,0.0075,0.7543,0.0849,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,retrained_kd5,taylor_recon,,2,6,,,0.7659,0.0037,0.7533,0.085,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,retrained_kd5,xgp_s,,2,6,,,0.7668,0.0176,0.7039,0.101,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,retrained_kd5,l1_filter_recon,,2,6,,,0.7668,0.0611,0.6421,0.0268,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,retrained_kd5,l1_filter_recon_kd_dro,,2,6,,,0.7752,0.0562,0.6319,0.0327,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,retrained_kd5,l1_filter_kd_dro,,2,6,,,0.6513,0.02,0.4287,0.0303,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,structured_filter_pruning,0.75,retrained_kd5,l1_filter,,2,6,,,0.6697,0.0162,0.4084,0.0265,,,,,,,,only 2 fold(s); no accuracy in source
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.5,no_retrain,wanda_fullrecon,damp=0.01,5,5,0.9294,0.022,0.8365,0.027,0.9528,0.0633,,,,,,,,<3 seeds/fold; previous agent
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.5,no_retrain,l1_fullrecon,damp=0.01,5,5,0.9273,0.0244,0.8334,0.0284,0.9526,0.0493,,,,,,,,<3 seeds/fold; previous agent
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.5,no_retrain,l1_fullrecon,"agent B checkpoint, re-scored",5,5,0.9273,0.0244,0.8334,0.0284,0.9526,0.0493,,,0.9051,0.9226,0.9359,0.9893,0.9526,<3 seeds/fold
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.5,no_retrain,lamp_recon,damp=0.01,5,5,0.9224,0.0296,0.8273,0.0349,0.9469,0.0321,,,,,,,,<3 seeds/fold; previous agent
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.5,no_retrain,l1_recon,damp=0.01,5,5,0.9228,0.029,0.8278,0.0343,0.9395,0.0259,,,,,,,,<3 seeds/fold; previous agent
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.5,no_retrain,sparsegpt,damp=0.01,5,5,0.9187,0.0265,0.8188,0.0373,0.8914,0.0407,,,,,,,,<3 seeds/fold; previous agent
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.7,no_retrain,l1_fullrecon,damp=0.01,5,15,0.9252,0.0237,0.8233,0.0332,0.8874,0.0701,,,,,,,,previous agent
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.7,no_retrain,l1_fullrecon,"agent B checkpoint, re-scored",5,5,0.9241,0.0256,0.8212,0.0361,0.8809,0.0795,,,0.871,0.9325,0.8397,0.976,0.8862,<3 seeds/fold
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.7,no_retrain,wanda_fullrecon,damp=0.01,5,15,0.9226,0.0268,0.8164,0.039,0.8757,0.0765,,,,,,,,previous agent
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.7,no_retrain,lamp_recon,"agent B checkpoint, re-scored",5,5,0.9137,0.0231,0.8091,0.0457,0.8555,0.0488,,,0.8345,0.9369,0.7638,0.9547,0.8599,<3 seeds/fold
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.7,no_retrain,taylor_fullrecon,-,5,5,0.9224,0.0276,0.8163,0.0403,0.8525,0.0773,,,0.8465,0.9191,0.8079,0.9667,0.8641,<3 seeds/fold
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.7,no_retrain,lamp_recon,damp=0.01,5,15,0.913,0.024,0.8075,0.0469,0.8505,0.0467,,,,,,,,previous agent
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.7,no_retrain,l1_recon,damp=0.01,5,15,0.9151,0.0224,0.8122,0.0417,0.8431,0.0354,,,,,,,,previous agent
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.7,no_retrain,sparsegpt,damp=0.01,5,15,0.7137,0.2155,0.6037,0.1511,0.7094,0.0768,,,,,,,,previous agent
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.7,no_retrain,sparsegpt,percdamp=0.1,5,5,0.7415,0.2293,0.5831,0.1441,0.6998,0.1242,,,,,,0.744,0.7165,<3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6)
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.7,no_retrain,sparsegpt,percdamp=1.0,5,5,0.7063,0.22,0.4806,0.2061,0.5634,0.1244,,,,,,0.5667,0.6102,<3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6)
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,l1_fullrecon,damp=0.01,5,15,0.9164,0.0272,0.7911,0.0445,0.7865,0.0923,,,,,,,,previous agent
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.8,no_retrain,l1_fullrecon,"agent B checkpoint, re-scored",5,15,0.9164,0.0272,0.7911,0.0445,0.7865,0.0923,,,0.7597,0.9325,0.6389,0.9191,0.7779,
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,l1_fullrecon,damp=0.001,5,5,0.9071,0.0462,0.7818,0.0599,0.784,0.101,,,,,,,,<3 seeds/fold; LCI SD > 0.10; previous agent
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,l1_fullrecon,damp=0.03,5,5,0.9143,0.0313,0.7888,0.052,0.7833,0.1011,,,,,,,,<3 seeds/fold; LCI SD > 0.10; previous agent
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,wanda_fullrecon,damp=0.01,5,15,0.9127,0.03,0.7837,0.0446,0.7794,0.09,,,,,,,,previous agent
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.8,no_retrain,l1_fullrecon_cal5x,-,5,5,0.9193,0.0316,0.7959,0.0527,0.7784,0.099,,,0.7612,0.9347,0.6521,0.916,0.7789,<3 seeds/fold
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.8,no_retrain,wanda_fullrecon,"agent B checkpoint, re-scored",5,5,0.9126,0.0316,0.7827,0.0489,0.7772,0.0954,,,0.7596,0.947,0.6157,0.912,0.7878,<3 seeds/fold
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,l1_fullrecon,damp=0.1,5,5,0.9164,0.0214,0.7902,0.0329,0.7686,0.0821,,,,,,,,<3 seeds/fold; previous agent
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.8,no_retrain,taylor_fullrecon,-,5,15,0.9131,0.0308,0.7831,0.0486,0.7283,0.1025,,,0.7165,0.9271,0.548,0.9049,0.7452,LCI SD > 0.10
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,lamp_recon,damp=0.01,5,15,0.9134,0.0331,0.8066,0.0454,0.7257,0.0582,,,,,,,,previous agent
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.8,no_retrain,lamp_recon,"agent B checkpoint, re-scored",5,15,0.9134,0.0331,0.8066,0.0454,0.7257,0.0582,,,0.7202,0.9378,0.6638,0.9187,0.7228,
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,l1_recon,damp=0.01,5,15,0.9095,0.0388,0.787,0.0534,0.7231,0.0462,,,,,,,,previous agent
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.8,no_retrain,l1_recon,"agent B checkpoint, re-scored",5,5,0.9087,0.044,0.787,0.0603,0.7224,0.046,,,0.706,0.9376,0.6295,0.8947,0.7164,<3 seeds/fold
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,sparsegpt,damp=0.01,5,15,0.5926,0.1205,0.391,0.0831,0.519,0.0981,,,,,,,,F1 collapsed (<0.6); previous agent
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.8,no_retrain,sparsegpt,percdamp=0.1,5,15,0.6318,0.2527,0.3895,0.1751,0.4999,0.1191,,,,,,0.5191,0.5043,LCI SD > 0.10; F1 collapsed (<0.6)
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.8,no_retrain,sparsegpt,percdamp=1.0,5,15,0.4436,0.2958,0.2293,0.1586,0.303,0.0652,,,,,,0.3284,0.4706,F1 collapsed (<0.6)
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,no_retrain,l1_fullrecon,"agent B checkpoint, re-scored",5,5,0.8518,0.0815,0.6806,0.1041,0.6416,0.0856,,,0.637,0.9195,0.4545,0.796,0.6547,<3 seeds/fold
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.9,no_retrain,wanda_fullrecon,damp=0.01,5,15,0.8589,0.0416,0.6666,0.0479,0.6252,0.0867,,,,,,,,previous agent
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.9,no_retrain,l1_fullrecon,damp=0.01,5,15,0.8517,0.0629,0.6825,0.0743,0.6234,0.0854,,,,,,,,previous agent
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,no_retrain,taylor_fullrecon,-,5,5,0.8661,0.0289,0.6778,0.0308,0.5866,0.0785,,,0.5749,0.9261,0.3734,0.796,0.5965,<3 seeds/fold
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,no_retrain,lamp_recon,"agent B checkpoint, re-scored",5,5,0.8624,0.0793,0.7053,0.0577,0.4909,0.0772,,,0.4809,0.9626,0.4164,0.8213,0.4908,<3 seeds/fold
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.9,no_retrain,l1_recon,damp=0.01,5,15,0.8735,0.0618,0.702,0.0584,0.4784,0.0358,,,,,,,,previous agent
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.9,no_retrain,lamp_recon,damp=0.01,5,15,0.8528,0.0792,0.6982,0.0617,0.4723,0.0489,,,,,,,,previous agent
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,no_retrain,sparsegpt,percdamp=0.1,5,5,0.4339,0.234,0.1509,0.077,0.2416,0.1207,,,,,,0.252,0.3354,<3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6)
+gap-study-phase2 (agent B),harth_inner_val,unstructured_pruning,0.9,no_retrain,sparsegpt,damp=0.01,5,15,0.3025,0.245,0.1191,0.0788,0.2298,0.1585,,,,,,,,LCI SD > 0.10; F1 collapsed (<0.6); previous agent
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,no_retrain,sparsegpt,percdamp=1.0,5,5,0.3067,0.216,0.1289,0.0809,0.1645,0.0329,,,,,,0.2333,0.198,<3 seeds/fold; F1 collapsed (<0.6)
+gap-study-phase3 (agent B),harth_inner_val,unstructured_pruning,0.5,no_retrain,gmr,mu=0.1,5,5,0.9268,0.0257,0.8344,0.0281,0.9775,0.0392,,,,,,,,<3 seeds/fold
+gap-study-phase3 (agent B),harth_inner_val,unstructured_pruning,0.5,no_retrain,gmr,mu=0.3,5,5,0.9264,0.0259,0.832,0.0295,0.9756,0.028,,,,,,,,<3 seeds/fold
+round3,harth_inner_val,unstructured_pruning,0.5,no_retrain,xgp_no_iter,xgp_no_iter(beta=0.5),2,6,,,0.7803,0.0188,0.921,0.0361,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,no_retrain,xgp_no_score,xgp_no_score,2,6,,,0.7704,0.0181,0.8998,0.0298,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,no_retrain,xgp,xgp(beta=0.5),2,6,,,0.7806,0.02,0.8996,0.0414,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,no_retrain,xgp_no_group,xgp_no_group(beta=0.5),2,6,,,0.7796,0.0185,0.8951,0.0454,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,no_retrain,xgp,xgp(beta=0.1),2,6,,,0.7748,0.0178,0.8931,0.0328,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,no_retrain,xgp,xgp(beta=0.3),2,6,,,0.7799,0.021,0.8851,0.0323,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,no_retrain,l1_recon,,2,2,,,0.7691,0.0207,0.8728,0.0755,,,,,,,,only 2 fold(s); <3 seeds/fold; no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,no_retrain,xgp_no_recon,xgp_no_recon(beta=0.5),2,6,,,0.6373,0.0603,0.6929,0.1198,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,no_retrain,l1,,2,2,,,0.5849,0.0505,0.6635,0.1548,,,,,,,,only 2 fold(s); <3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,no_retrain,snip,,2,2,,,0.2679,0.0374,0.3325,0.1467,,,,,,,,only 2 fold(s); <3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6); no accuracy in source
+gap-study-phase3 (agent B),harth_inner_val,unstructured_pruning,0.7,no_retrain,gmr,mu=0.1,5,15,0.9273,0.0224,0.8294,0.0308,0.9265,0.0641,,,,,,,,
+gap-study-phase3 (agent B),harth_inner_val,unstructured_pruning,0.7,no_retrain,gmr,mu=0.3,5,15,0.9264,0.0224,0.8278,0.0296,0.9231,0.0605,,,,,,,,
+round3,harth_inner_val,unstructured_pruning,0.7,no_retrain,l1_recon,,2,2,,,0.7432,0.0058,0.8076,0.1232,,,,,,,,only 2 fold(s); <3 seeds/fold; LCI SD > 0.10; no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,no_retrain,xgp_no_group,xgp_no_group(beta=0.1),2,6,,,0.773,0.0172,0.807,0.0771,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,no_retrain,xgp,xgp(beta=0.3),2,6,,,0.7698,0.0157,0.8058,0.0825,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,no_retrain,xgp,xgp(beta=0.1),2,6,,,0.7716,0.0166,0.8034,0.0809,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,no_retrain,xgp_no_score,xgp_no_score,2,6,,,0.7622,0.0141,0.7977,0.0777,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,no_retrain,xgp_no_iter,xgp_no_iter(beta=0.1),2,6,,,0.7602,0.0059,0.7975,0.0813,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,no_retrain,xgp,xgp(beta=0.5),2,6,,,0.7782,0.0242,0.7862,0.0644,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,no_retrain,l1,,2,2,,,0.3357,0.042,0.4303,0.0689,,,,,,,,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,no_retrain,xgp_no_recon,xgp_no_recon(beta=0.1),2,6,,,0.3061,0.071,0.4165,0.0581,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,no_retrain,snip,,2,2,,,0.1776,0.0965,0.1818,0.144,,,,,,,,only 2 fold(s); <3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6); no accuracy in source
+gap-study-phase3 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,gmr,mu=0.1,5,15,0.9131,0.0319,0.7911,0.0418,0.8237,0.051,,,,,,,,
+gap-study-phase3 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,gmr,mu=0.3,5,15,0.9073,0.0335,0.7771,0.0433,0.8156,0.0726,,,,,,,,
+gap-study-phase3 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,gmr_anchor,mu=0.1,5,15,0.9129,0.028,0.7875,0.0413,0.8035,0.0741,,,,,,,,
+gap-study-phase3 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,gmr,mu=1.0,5,15,0.8668,0.0655,0.7264,0.0707,0.7999,0.0726,,,,,,,,
+gap-study-phase3 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,gmr_anchor,mu=0.3,5,15,0.9021,0.0261,0.7601,0.037,0.7653,0.0753,,,,,,,,
+gap-study-phase3 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,gmr,mu=3.0,5,15,0.8313,0.1041,0.6829,0.0896,0.755,0.0794,,,,,,,,
+gap-study-phase3 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,gmr_anchor,mu=1.0,5,5,0.8525,0.0708,0.6852,0.0657,0.7193,0.098,,,,,,,,<3 seeds/fold
+gap-study-phase3 (agent B),harth_inner_val,unstructured_pruning,0.8,no_retrain,gmr_anchor,mu=3.0,3,3,0.8183,0.0823,0.63,0.0609,0.715,0.0515,,,,,,,,only 3 fold(s); <3 seeds/fold
+round4,harth_inner_val,unstructured_pruning,0.8,no_retrain,l1_recon,,2,2,,,0.764,0.0069,0.7149,0.1004,,,,,,,,only 2 fold(s); <3 seeds/fold; LCI SD > 0.10; no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,no_retrain,xgp_xb,,2,6,,,0.7527,0.0118,0.7084,0.0691,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,no_retrain,xgp_r3,,2,6,,,0.7769,0.0149,0.6978,0.0939,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,no_retrain,l1_xb_recon,,2,6,,,0.772,0.0074,0.6973,0.0834,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,no_retrain,xgp,,2,6,,,0.7618,0.0081,0.6837,0.0449,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,no_retrain,lamp_recon,,2,2,,,0.7695,0.0013,0.6771,0.1107,,,,,,,,only 2 fold(s); <3 seeds/fold; LCI SD > 0.10; no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,no_retrain,xgp_lamp,,2,6,,,0.739,0.0318,0.6673,0.0525,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,no_retrain,l1,,2,2,,,0.1601,0.168,0.2326,0.0379,,,,,,,,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+gap-study-phase3 (agent B),harth_inner_val,unstructured_pruning,0.9,no_retrain,gmr,mu=0.1,5,15,0.8433,0.059,0.6719,0.0674,0.7153,0.0887,,,,,,,,
+gap-study-phase3 (agent B),harth_inner_val,unstructured_pruning,0.9,no_retrain,gmr,mu=0.3,5,15,0.7767,0.0855,0.5944,0.0703,0.6618,0.0734,,,,,,,,F1 collapsed (<0.6)
+round4,harth_inner_val,unstructured_pruning,0.9,no_retrain,lamp_recon,,2,2,,,0.647,0.0189,0.521,0.1112,,,,,,,,only 2 fold(s); <3 seeds/fold; LCI SD > 0.10; no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,no_retrain,xgp,xgp(beta=0.3),2,6,,,0.671,0.0282,0.5044,0.041,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,no_retrain,xgp_no_score,xgp_no_score,2,6,,,0.6501,0.0052,0.503,0.054,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,no_retrain,xgp_r3,,2,6,,,0.6725,0.0,0.503,0.054,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,no_retrain,l1_recon,,2,2,,,0.6135,0.019,0.5011,0.0793,,,,,,,,only 2 fold(s); <3 seeds/fold; no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,no_retrain,xgp_no_group,xgp_no_group(beta=0.1),2,6,,,0.6898,0.0408,0.4937,0.0224,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,no_retrain,xgp,xgp(beta=0.1),2,6,,,0.6763,0.0473,0.493,0.0337,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,no_retrain,l1_xb_recon,,2,6,,,0.674,0.0298,0.4906,0.0162,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,no_retrain,xgp_xb,,2,6,,,0.6959,0.029,0.4904,0.0152,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,no_retrain,xgp,xgp(beta=0.5),2,6,,,0.6558,0.0208,0.4871,0.0213,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,no_retrain,xgp,,2,6,,,0.689,0.0112,0.4838,0.0409,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,no_retrain,l1_recon,,2,2,,,0.6525,0.0163,0.4819,0.0236,,,,,,,,only 2 fold(s); <3 seeds/fold; no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,no_retrain,xgp_lamp,,2,6,,,0.6223,0.0435,0.4667,0.0248,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,no_retrain,xgp_no_iter,xgp_no_iter(beta=0.1),2,6,,,0.6157,0.0079,0.4526,0.0456,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,no_retrain,xgp_no_recon,xgp_no_recon(beta=0.1),2,6,,,0.13,0.1011,0.2345,0.0752,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,no_retrain,l1,,2,2,,,0.0517,0.0053,0.2119,0.0506,,,,,,,,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,no_retrain,l1,,2,2,,,0.051,0.0046,0.2119,0.0506,,,,,,,,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,no_retrain,snip,,2,2,,,0.1399,0.1354,0.1204,0.0942,,,,,,,,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,no_retrain,xgp_xb,,2,6,,,0.5061,0.0451,0.3742,0.0159,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,no_retrain,xgp,,2,6,,,0.4717,0.0348,0.3491,0.0256,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,no_retrain,l1_xb_recon,,2,6,,,0.4581,0.1062,0.3459,0.0569,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,no_retrain,xgp_lamp,,2,6,,,0.4304,0.0623,0.3044,0.0458,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,no_retrain,l1_recon,,2,2,,,0.4416,0.1582,0.3018,0.0957,,,,,,,,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,no_retrain,xgp_r3,,2,6,,,0.3946,0.0453,0.3011,0.067,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,no_retrain,lamp_recon,,2,2,,,0.3297,0.2264,0.2777,0.0293,,,,,,,,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,no_retrain,l1,,2,2,,,0.0187,0.0201,0.0685,0.0361,,,,,,,,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+9A,harth_inner_val,unstructured_pruning,30%,no_retrain,l1,30 explain windows/subject,5,5,0.9192,0.024,0.8085,0.0212,0.8919,0.0375,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,30%,no_retrain,snip,30 explain windows/subject,5,5,0.8172,0.1379,0.7272,0.0473,0.7386,0.0537,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,50%,no_retrain,l1,30 explain windows/subject,5,5,0.8002,0.0439,0.6251,0.0722,0.6595,0.1019,,,,,,,,<3 seeds/fold; LCI SD > 0.10
+9A,harth_inner_val,unstructured_pruning,50%,no_retrain,snip,30 explain windows/subject,5,5,0.4849,0.2064,0.3759,0.1173,0.4181,0.1249,,,,,,,,<3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6)
+9A,harth_inner_val,unstructured_pruning,70%,no_retrain,l1,30 explain windows/subject,5,5,0.4426,0.1934,0.2938,0.0534,0.411,0.0966,,,,,,,,<3 seeds/fold; F1 collapsed (<0.6)
+9A,harth_inner_val,unstructured_pruning,70%,no_retrain,snip,30 explain windows/subject,5,5,0.3866,0.2457,0.1836,0.0558,0.1788,0.0794,,,,,,,,<3 seeds/fold; F1 collapsed (<0.6)
+lowbit,harth_inner_val,unstructured_pruning,90%,no_retrain,lamp_recon,,5,5,,,0.7053,0.0577,0.4767,0.0583,,,,,,,,<3 seeds/fold; no accuracy in source
+9A,harth_inner_val,unstructured_pruning,90%,no_retrain,l1,30 explain windows/subject,5,5,0.2046,0.267,0.067,0.071,0.1775,0.0736,,,,,,,,<3 seeds/fold; F1 collapsed (<0.6)
+9A,harth_inner_val,unstructured_pruning,90%,no_retrain,snip,30 explain windows/subject,5,5,0.2311,0.2436,0.0745,0.0883,0.1179,0.0822,,,,,,,,<3 seeds/fold; F1 collapsed (<0.6)
+lowbit,harth_inner_val,unstructured_pruning,95%,no_retrain,lamp_recon,,5,5,,,0.405,0.1349,0.2717,0.0448,,,,,,,,<3 seeds/fold; F1 collapsed (<0.6); no accuracy in source
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.7,retrained_full,9a_l1_kd,"9A checkpoint, re-scored (folds 0 1 3)",3,3,0.9106,0.0228,0.8031,0.0248,0.869,0.0606,,,0.8441,0.8965,0.8039,0.9711,0.8764,only 3 fold(s); <3 seeds/fold
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.8,retrained_full,l1_fullrecon_kd,lr=0.0001 E=20,5,5,0.9219,0.0288,0.8141,0.0397,0.8483,0.084,,,0.8176,0.9261,0.7073,0.9467,0.8543,<3 seeds/fold
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.8,retrained_full,l1_kd,lr=0.0001 E=20,5,5,0.9195,0.0304,0.8099,0.0489,0.8464,0.1158,,,0.8134,0.9185,0.7008,0.956,0.8592,<3 seeds/fold; LCI SD > 0.10
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,retrained_full,lamp_recon_kd,lr=0.0003 E=20,5,15,0.9175,0.0245,0.81,0.0435,0.7974,0.0832,,,0.7811,0.958,0.6512,0.9418,0.8062,
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1_fullrecon_kd,lr=0.0003 E=20,5,15,0.9174,0.0273,0.7986,0.0472,0.7709,0.081,,,0.7642,0.9362,0.6024,0.9147,0.7654,
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,retrained_full,lamp_recon_kd,lr=0.0001 E=20,5,15,0.9141,0.0258,0.7971,0.0467,0.7662,0.0769,,,0.7494,0.9337,0.6252,0.9271,0.7756,
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1_fullrecon_kd,lr=0.0001 E=20,5,15,0.9154,0.0274,0.7867,0.0455,0.7515,0.0775,,,0.74,0.935,0.5833,0.9089,0.7521,
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1_kd,lr=0.0003 E=20,5,5,0.9094,0.0366,0.7891,0.0512,0.7497,0.1309,,,0.741,0.9448,0.5935,0.9,0.7475,<3 seeds/fold; LCI SD > 0.10
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1_kd,lr=0.0001 E=20,5,15,0.9099,0.0277,0.7774,0.046,0.7495,0.095,,,0.7515,0.9458,0.5513,0.9031,0.7531,
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,retrained_full,9a_park_kd,"9A checkpoint, re-scored (folds 0 1 3)",3,3,0.8586,0.0448,0.6672,0.0394,0.7427,0.1465,,,0.7345,0.9694,0.4773,0.7933,0.7374,only 3 fold(s); <3 seeds/fold; LCI SD > 0.10
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,retrained_full,9a_l1_kd,"9A checkpoint, re-scored (folds 0 1 3)",3,3,0.8914,0.0173,0.7456,0.0252,0.7216,0.1348,,,0.7175,0.9591,0.537,0.8711,0.7217,only 3 fold(s); <3 seeds/fold; LCI SD > 0.10
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,retrained_full,9a_park,"9A checkpoint, re-scored (folds 0 1 3)",3,3,0.8298,0.0165,0.6347,0.0218,0.7177,0.0949,,,0.7249,0.9796,0.4885,0.7333,0.7273,only 3 fold(s); <3 seeds/fold
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1_fullrecon_kd,lr=3e-05 E=20,5,5,0.9083,0.0337,0.756,0.0623,0.6938,0.098,,,0.6911,0.9236,0.5261,0.8453,0.7033,<3 seeds/fold
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1_kd,lr=3e-05 E=20,5,5,0.9038,0.0449,0.7585,0.0594,0.6794,0.0956,,,0.6763,0.9396,0.4663,0.868,0.7019,<3 seeds/fold
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,xgp_no_score_ft,xgp_no_score_ft(r=0.25),2,6,,,0.7642,0.0084,0.9021,0.0447,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,xgp_ft,"xgp_ft(beta=0.5,r=0.25)",2,6,,,0.7664,0.012,0.8963,0.0456,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,xgp_ft,"xgp_ft(beta=0.3,r=0.25)",2,6,,,0.767,0.0098,0.8927,0.0513,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,l1_recon_ft,,2,6,,,0.7663,0.0151,0.8924,0.0436,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,xgp_no_iter_ft,"xgp_no_iter_ft(beta=0.3,r=0.25)",2,6,,,0.7651,0.0113,0.8923,0.0475,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,xgp_ft,"xgp_ft(beta=0.3,r=0.5)",2,6,,,0.7693,0.0123,0.8919,0.0414,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,xgp_ft,"xgp_ft(beta=0.1,r=0.5)",2,6,,,0.7663,0.0084,0.8915,0.0382,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,xgp_ft,"xgp_ft(beta=0.1,r=0.25)",2,6,,,0.7653,0.0085,0.8913,0.0334,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,xgp_no_group_ft,"xgp_no_group_ft(beta=0.3,r=0.25)",2,6,,,0.7662,0.0104,0.8883,0.0454,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,l1_kd,,2,6,,,0.7677,0.0099,0.888,0.025,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,xgp_ft_no_aug,xgp_ft_no_aug(beta=0.3),2,6,,,0.7736,0.0117,0.8876,0.0194,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,l1_kdaug,,2,12,,,0.7634,0.01,0.8868,0.0268,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,xgp_no_recon_ft,"xgp_no_recon_ft(beta=0.3,r=0.25)",2,6,,,0.7632,0.0085,0.8866,0.0354,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,xgp_ft_no_dro,"xgp_ft_no_dro(beta=0.3,r=0.25)",2,6,,,0.7706,0.0065,0.8836,0.0394,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,xgp_ft,"xgp_ft(beta=0.5,r=0.5)",2,6,,,0.7704,0.0121,0.8773,0.0355,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,snip_kd,,2,6,,,0.768,0.0063,0.8028,0.0446,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.5,retrained_full,l1,,2,6,,,0.7442,0.0139,0.7816,0.0224,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,xgp_no_group_ft,"xgp_no_group_ft(beta=0.1,r=0.25)",2,6,,,0.762,0.0061,0.8749,0.0523,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,xgp_ft,"xgp_ft(beta=0.3,r=0.5)",2,6,,,0.7702,0.0113,0.8722,0.0592,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,xgp_ft,"xgp_ft(beta=0.1,r=0.5)",2,6,,,0.7668,0.0124,0.8691,0.0382,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,xgp_ft,"xgp_ft(beta=0.1,r=0.25)",2,6,,,0.762,0.0092,0.8653,0.0482,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,xgp_ft,"xgp_ft(beta=0.5,r=0.5)",2,6,,,0.7706,0.0112,0.8649,0.0491,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,xgp_ft_no_dro,"xgp_ft_no_dro(beta=0.1,r=0.25)",2,6,,,0.7624,0.0086,0.8643,0.0396,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,xgp_no_score_ft,xgp_no_score_ft(r=0.25),2,6,,,0.7636,0.0081,0.8613,0.0573,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,xgp_ft,"xgp_ft(beta=0.5,r=0.25)",2,6,,,0.767,0.0089,0.8578,0.0554,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,xgp_ft_no_aug,xgp_ft_no_aug(beta=0.1),2,6,,,0.7643,0.0104,0.8568,0.0549,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,xgp_no_iter_ft,"xgp_no_iter_ft(beta=0.1,r=0.25)",2,6,,,0.7524,0.0083,0.8564,0.0386,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,l1_recon_ft,,2,6,,,0.7559,0.0037,0.8484,0.0546,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,xgp_ft,"xgp_ft(beta=0.3,r=0.25)",2,6,,,0.7662,0.0091,0.8475,0.0627,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,l1_kdaug,,2,12,,,0.7517,0.0067,0.8411,0.0469,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,xgp_no_recon_ft,"xgp_no_recon_ft(beta=0.1,r=0.25)",2,6,,,0.7561,0.0041,0.8382,0.0304,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,l1_kd,,2,6,,,0.7535,0.0075,0.8268,0.024,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,l1,,2,6,,,0.7248,0.0204,0.7837,0.0466,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.7,retrained_full,snip_kd,,2,6,,,0.7288,0.0042,0.7388,0.077,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,retrained_full,xgp_r3,,2,6,,,0.7992,0.0036,0.8462,0.0727,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,retrained_full,xgp,,2,6,,,0.7992,0.0158,0.8419,0.0465,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,retrained_full,xgp_xb,,2,6,,,0.7923,0.0083,0.8393,0.0613,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,retrained_full,xgp_lamp,,2,6,,,0.788,0.0108,0.8198,0.0526,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,retrained_full,l1_recon,,2,6,,,0.7877,0.0085,0.819,0.0578,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,retrained_full,lamp_recon,,2,6,,,0.7895,0.0051,0.8097,0.0361,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,retrained_full,l1_recon_kd_dro,,2,6,,,0.7973,0.0167,0.8095,0.0619,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,retrained_full,l1_xb_recon,,2,6,,,0.8011,0.0196,0.8076,0.0627,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,retrained_full,lamp_recon_kd_dro,,2,6,,,0.8008,0.0136,0.7874,0.0306,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,retrained_full,l1_kd_dro,,2,6,,,0.7736,0.0101,0.785,0.0713,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.8,retrained_full,l1,,2,6,,,0.7658,0.0218,0.7734,0.0802,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_ft_no_dro,"xgp_ft_no_dro(beta=0.1,r=0.5)",2,6,,,0.7288,0.0142,0.7669,0.1106,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_r3,,2,6,,,0.7729,0.0093,0.7648,0.0839,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_ft_no_aug,xgp_ft_no_aug(beta=0.1),2,6,,,0.7198,0.0092,0.7603,0.1071,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_xb,,2,6,,,0.7633,0.0159,0.7552,0.0704,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_ft,"xgp_ft(beta=0.5,r=0.25)",2,6,,,0.7365,0.0121,0.7536,0.0919,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_lamp,,2,6,,,0.7561,0.018,0.752,0.1072,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_ft,"xgp_ft(beta=0.1,r=0.5)",2,6,,,0.7253,0.0156,0.7489,0.094,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_no_score_ft,xgp_no_score_ft(r=0.5),2,6,,,0.7271,0.0127,0.743,0.0726,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_ft,"xgp_ft(beta=0.3,r=0.5)",2,6,,,0.7353,0.0125,0.7301,0.0956,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_ft,"xgp_ft(beta=0.5,r=0.5)",2,6,,,0.7344,0.0098,0.7288,0.0837,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_full,lamp_recon,,2,6,,,0.739,0.006,0.7287,0.11,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_ft,"xgp_ft(beta=0.1,r=0.25)",2,6,,,0.7196,0.0091,0.7269,0.105,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1_xb_recon,,2,6,,,0.7668,0.0079,0.7228,0.0653,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_ft,"xgp_ft(beta=0.3,r=0.25)",2,6,,,0.6943,0.1154,0.7078,0.1156,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_full,lamp_recon_kd_dro,,2,6,,,0.736,0.0035,0.7015,0.1232,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1_recon_ft,,2,6,,,0.7005,0.0272,0.6964,0.1086,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_no_iter_ft,"xgp_no_iter_ft(beta=0.1,r=0.5)",2,6,,,0.7119,0.0119,0.695,0.1106,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1,,2,6,,,0.7285,0.0132,0.6944,0.097,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_no_group_ft,"xgp_no_group_ft(beta=0.1,r=0.5)",2,6,,,0.7264,0.0166,0.6893,0.072,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp,,2,6,,,0.7594,0.0097,0.6828,0.0221,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1_recon,,2,6,,,0.7485,0.0335,0.6759,0.0442,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1_kdaug,,2,12,,,0.6893,0.0149,0.6714,0.0997,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,xgp_no_recon_ft,"xgp_no_recon_ft(beta=0.1,r=0.5)",2,6,,,0.7015,0.0281,0.6704,0.0688,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1_kd,,2,6,,,0.6853,0.0139,0.6654,0.1115,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1_recon_kd_dro,,2,6,,,0.7476,0.0263,0.6521,0.0489,,,,,,,,only 2 fold(s); no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1,,2,6,,,0.6466,0.0111,0.6451,0.1293,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_full,l1_kd_dro,,2,6,,,0.696,0.0116,0.6426,0.1341,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round3,harth_inner_val,unstructured_pruning,0.9,retrained_full,snip_kd,,2,6,,,0.1441,0.1481,0.308,0.1093,,,,,,,,only 2 fold(s); LCI SD > 0.10; F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_full,xgp_xb,,2,6,,,0.6854,0.0183,0.6353,0.1255,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_full,l1_xb_recon,,2,6,,,0.67,0.0192,0.6251,0.1372,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_full,lamp_recon,,2,6,,,0.6798,0.0177,0.6156,0.1543,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_full,lamp_recon_kd_dro,,2,6,,,0.608,0.0309,0.6073,0.1391,,,,,,,,only 2 fold(s); LCI SD > 0.10; no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_full,l1,,2,6,,,0.563,0.1373,0.5762,0.0387,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_full,xgp_lamp,,2,6,,,0.637,0.0328,0.5699,0.0831,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_full,xgp_r3,,2,6,,,0.5915,0.1306,0.5691,0.0908,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_full,l1_kd_dro,,2,6,,,0.5753,0.1495,0.5397,0.0733,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_full,l1_recon_kd_dro,,2,6,,,0.5608,0.0478,0.472,0.0195,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_full,xgp,,2,6,,,0.453,0.2029,0.4689,0.0394,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_full,l1_recon,,2,6,,,0.5494,0.1987,0.465,0.0217,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+9A,harth_inner_val,unstructured_pruning,30%,retrained_full,snip_kd,30 explain windows/subject,5,5,0.9257,0.0271,0.8341,0.0364,0.9023,0.0498,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,30%,retrained_full,l1_kd,30 explain windows/subject,5,5,0.9253,0.0282,0.8332,0.0374,0.9021,0.0527,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,30%,retrained_full,snip,30 explain windows/subject,5,5,0.9227,0.0157,0.8206,0.0416,0.8025,0.0757,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,30%,retrained_full,l1,30 explain windows/subject,5,5,0.9212,0.0208,0.8189,0.0472,0.7805,0.0593,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,50%,retrained_full,l1_kd,30 explain windows/subject,5,5,0.9258,0.0253,0.8339,0.0347,0.9063,0.0241,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,50%,retrained_full,snip_kd,30 explain windows/subject,5,5,0.9249,0.0244,0.8286,0.0345,0.8512,0.054,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,50%,retrained_full,l1,30 explain windows/subject,5,5,0.9192,0.0228,0.8164,0.0498,0.8135,0.0584,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,50%,retrained_full,snip,30 explain windows/subject,5,5,0.9207,0.021,0.8107,0.0458,0.7934,0.0649,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,70%,retrained_full,l1_kd,30 explain windows/subject,5,5,0.9249,0.0266,0.8265,0.0402,0.8818,0.0525,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,70%,retrained_full,l1,30 explain windows/subject,5,5,0.9176,0.0253,0.8102,0.054,0.8181,0.0505,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,70%,retrained_full,park_kd,30 explain windows/subject,5,5,0.9165,0.0221,0.8035,0.03,0.7971,0.0547,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,70%,retrained_full,park,30 explain windows/subject,5,5,0.913,0.0263,0.7849,0.0642,0.7834,0.0703,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,70%,retrained_full,snip_kd,30 explain windows/subject,5,5,0.9214,0.0266,0.8096,0.0464,0.7816,0.0475,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,70%,retrained_full,snip,30 explain windows/subject,5,5,0.9031,0.0449,0.7896,0.0694,0.7793,0.0608,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,90%,retrained_full,l1_kd,30 explain windows/subject,5,5,0.911,0.0288,0.7785,0.0495,0.744,0.106,,,,,,,,<3 seeds/fold; LCI SD > 0.10
+9A,harth_inner_val,unstructured_pruning,90%,retrained_full,l1,30 explain windows/subject,5,5,0.8886,0.0366,0.7542,0.062,0.7239,0.1218,,,,,,,,<3 seeds/fold; LCI SD > 0.10
+9A,harth_inner_val,unstructured_pruning,90%,retrained_full,park_kd,30 explain windows/subject,5,5,0.7979,0.1879,0.6037,0.2317,0.7163,0.1063,,,,,,,,<3 seeds/fold; LCI SD > 0.10
+9A,harth_inner_val,unstructured_pruning,90%,retrained_full,park,30 explain windows/subject,5,5,0.8465,0.0589,0.6331,0.1311,0.7114,0.087,,,,,,,,<3 seeds/fold
+9A,harth_inner_val,unstructured_pruning,90%,retrained_full,snip,30 explain windows/subject,5,5,0.7509,0.3384,0.6219,0.2815,0.505,0.1525,,,,,,,,<3 seeds/fold; LCI SD > 0.10
+9A,harth_inner_val,unstructured_pruning,90%,retrained_full,snip_kd,30 explain windows/subject,5,5,0.7084,0.3949,0.5496,0.3132,0.4939,0.1087,,,,,,,,<3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6)
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_kd5,xgp_xb,,2,6,,,0.7495,0.0094,0.5796,0.0435,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_kd5,xgp_r3,,2,6,,,0.7596,0.0321,0.5663,0.0417,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_kd5,lamp_recon,,2,6,,,0.6852,0.0073,0.5647,0.0756,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_kd5,lamp_recon_kd_dro,,2,6,,,0.6679,0.0253,0.5616,0.0798,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_kd5,l1_xb_recon,,2,6,,,0.7334,0.0186,0.5606,0.0453,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_kd5,xgp_lamp,,2,6,,,0.7152,0.0376,0.5417,0.0612,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_kd5,xgp,,2,6,,,0.7139,0.0213,0.5316,0.0266,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_kd5,l1_recon_kd_dro,,2,6,,,0.6664,0.0262,0.5111,0.0371,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_kd5,l1_recon,,2,6,,,0.6686,0.0399,0.4968,0.0455,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_kd5,l1_kd_dro,,2,6,,,0.5477,0.0261,0.3925,0.0295,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.9,retrained_kd5,l1,,2,6,,,0.5443,0.0799,0.3873,0.0557,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_kd5,xgp_xb,,2,6,,,0.608,0.0303,0.4005,0.0333,,,,,,,,only 2 fold(s); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_kd5,xgp,,2,6,,,0.3641,0.2118,0.3353,0.0848,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_kd5,l1_xb_recon,,2,6,,,0.5445,0.0581,0.3263,0.02,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_kd5,xgp_lamp,,2,6,,,0.5602,0.0505,0.3188,0.0541,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_kd5,xgp_r3,,2,6,,,0.4946,0.1414,0.3139,0.0376,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_kd5,lamp_recon,,2,6,,,0.4676,0.0327,0.2822,0.0108,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_kd5,lamp_recon_kd_dro,,2,6,,,0.464,0.0388,0.2808,0.0097,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_kd5,l1_recon,,2,6,,,0.517,0.0151,0.2727,0.0582,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_kd5,l1_recon_kd_dro,,2,6,,,0.4882,0.0275,0.2682,0.0523,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_kd5,l1,,2,6,,,0.2956,0.0376,0.2323,0.0544,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+round4,harth_inner_val,unstructured_pruning,0.95,retrained_kd5,l1_kd_dro,,2,6,,,0.2229,0.0218,0.232,0.0544,,,,,,,,only 2 fold(s); F1 collapsed (<0.6); no accuracy in source
+gap-study-v3 phase2,harth_inner_val,unstructured_pruning,0.0,,retrain_seed1,-,3,3,0.912,0.0115,0.822,0.0129,0.6655,0.0476,,,0.6831,0.9296,0.5371,0.9222,0.659,only 3 fold(s); <3 seeds/fold
+gap-study test (agent B),test_all,unstructured_pruning,70pct,no_retrain,l1_fullrecon,"agent B test, seed 0",5,1,0.8331,,,,0.9111,,0.9066,,,,,,,previous agent
+gap-study test (agent B),test_all,unstructured_pruning,70pct,no_retrain,gmr-mu0.1,"agent B test, seed 0",5,1,0.8414,,,,0.9043,,0.8984,,,,,,,previous agent
+gap-study test (agent B),test_all,unstructured_pruning,70pct,no_retrain,lamp_recon,"agent B test, seed 0",5,1,0.8231,,,,0.8127,,0.8049,,,,,,,previous agent
+gap-study test (agent B),test_all,unstructured_pruning,80pct,no_retrain,gmr-mu0.1,"agent B test, seed 0",5,1,0.8192,,,,0.8082,,0.7967,,,,,,,previous agent
+gap-study test (agent B),test_all,unstructured_pruning,80pct,no_retrain,l1_fullrecon,"agent B test, seed 0",5,1,0.8202,,,,0.7849,,0.7746,,,,,,,previous agent
+gap-study test (agent B),test_all,unstructured_pruning,80pct,no_retrain,lamp_recon,"agent B test, seed 0",5,1,0.8134,,,,0.7011,,0.6969,,,,,,,previous agent
+gap-study test (agent B),test_all,unstructured_pruning,90pct,no_retrain,gmr-mu0.1,"agent B test, seed 0",5,1,0.713,,,,0.6912,,0.6847,,,,,,,previous agent
+gap-study test (agent B),test_all,unstructured_pruning,90pct,no_retrain,l1_fullrecon,"agent B test, seed 0",5,1,0.7218,,,,0.6662,,0.6562,,,,,,,previous agent
+gap-study test (agent B),test_all,unstructured_pruning,90pct,no_retrain,lamp_recon,"agent B test, seed 0",5,1,0.7752,,,,0.4748,,0.4703,,,,,,,previous agent
+gap-study test (agent B),test_all,unstructured_pruning,none,no_retrain,original,"agent B test, seed 0",5,1,0.8427,,,,1.0,,1.0,,,,,,,previous agent
+9A test,test_har70plus,noise_ref,none,reference,noise_shap_seed2,"9A test, seed 0, 5 fold models",5,1,,,,,0.9203,,0.9084,"[0.889, 0.923]",,,,,,no accuracy in source
+9A test,test_har70plus,noise_ref,none,reference,noise_shap_seed1,"9A test, seed 0, 5 fold models",5,1,,,,,0.9147,,0.9147,"[0.889, 0.923]",,,,,,no accuracy in source
+9A test,test_har70plus,noise_ref,none,reference,noise_retrain_seed3,"9A test, seed 0, 5 fold models",5,1,,,,,0.7121,,0.7107,"[0.669, 0.725]",,,,,,no accuracy in source
+9A test,test_har70plus,noise_ref,none,reference,noise_retrain_seed2,"9A test, seed 0, 5 fold models",5,1,,,,,0.6887,,0.6728,"[0.631, 0.697]",,,,,,no accuracy in source
+9A test,test_har70plus,noise_ref,none,reference,noise_retrain_seed1,"9A test, seed 0, 5 fold models",5,1,,,,,0.6725,,0.6716,"[0.633, 0.689]",,,,,,no accuracy in source
+9A test,test_har70plus,original,none,reference,original,"9A test, seed 0, 5 fold models",5,1,0.7627,,,,1.0,,1.0,"[1.000, 1.000]",,,,,,
+low-bit test,test_har70plus,original,none,reference,original,low-bit diagnostic test,5,1,,,,,1.0,,1.0,"[1.000, 1.000]",,,,,,no accuracy in source
+low-bit test,test_har70plus,pruning_recon,90%,no_retrain,lamp_recon,low-bit diagnostic test,5,1,,,,,0.4703,,0.4703,"[0.442, 0.486]",,,,,,no accuracy in source
+low-bit test,test_har70plus,pruning_recon,95%,no_retrain,lamp_recon,low-bit diagnostic test,5,1,,,,,0.2705,,0.2673,"[0.241, 0.278]",,,,,,no accuracy in source
+low-bit test,test_har70plus,pruning_recon_ptq,90%+4-bit,no_retrain,lamp_recon_ptq_pc4,low-bit diagnostic test,5,1,,,,,0.4598,,0.4598,"[0.434, 0.478]",,,,,,no accuracy in source
+low-bit test,test_har70plus,pruning_recon_ptq,95%+4-bit,no_retrain,lamp_recon_ptq_pc4,low-bit diagnostic test,5,1,,,,,0.2652,,0.2652,"[0.243, 0.274]",,,,,,no accuracy in source
+9A test,test_har70plus,ptq,4-bit,no_retrain,ptq4,"9A test, seed 0, 5 fold models",5,1,0.7723,,,,0.9037,,0.9037,"[0.895, 0.912]",,,,,,
+9A test,test_har70plus,ptq,4-bit,no_retrain,ptq_tulla4,"9A test, seed 0, 5 fold models",5,1,0.5933,,,,0.699,,0.6887,"[0.656, 0.706]",,,,,,
+9A test,test_har70plus,ptq,8-bit,no_retrain,ptq8,"9A test, seed 0, 5 fold models",5,1,0.7617,,,,0.9938,,0.9938,"[0.990, 0.998]",,,,,,
+9A test,test_har70plus,ptq,8-bit,no_retrain,ptq_tulla8,"9A test, seed 0, 5 fold models",5,1,0.7625,,,,0.9806,,0.9806,"[0.974, 0.987]",,,,,,
+har-pair-calibration test (agent A),test_har70plus,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration,original,original,5,1,0.7627,,,,1.0,,1.0,,,,,,,
+har-pair-calibration test (agent A),test_har70plus,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration,kd,kd-channel-2bit-lr0.0001,5,1,0.7461,,,,0.7847,,0.7806,,,,,,,
+har-pair-calibration test (agent A),test_har70plus,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration,pair,pair-channel-2bit-lr0.001,5,1,0.664,,,,0.7817,,0.7817,,,,,,,
+har-pair-calibration test (agent A),test_har70plus,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration,pair,pair-channel-2bit-lr0.0001,5,1,0.7155,,,,0.7723,,0.7723,,,,,,,
+har-pair-calibration test (agent A),test_har70plus,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration,kd,kd-channel-2bit-lr0.001,5,1,0.7574,,,,0.6927,,0.6927,,,,,,,
+har-pair-scarce test (agent A),test_har70plus,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),original,original,5,1,0.7627,,,,1.0,,1.0,,,,,,,
+har-pair-scarce test (agent A),test_har70plus,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),kd,kd-channel-2bit-lr0.0001,5,1,0.7516,,,,0.7386,,0.7386,,,,,,,
+har-pair-scarce test (agent A),test_har70plus,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),pairpath,pairpath-channel-2bit-lr0.0001,5,1,0.7016,,,,0.7197,,0.7197,,,,,,,
+har-pair-scarce test (agent A),test_har70plus,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),kd,kd-channel-2bit-lr0.001,5,1,0.7481,,,,0.6684,,0.6684,,,,,,,
+har-pair-scarce test (agent A),test_har70plus,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),kdpath,kdpath-channel-2bit-lr0.0001,5,1,0.7504,,,,0.6461,,0.6461,,,,,,,
+har-pair-scarce test (agent A),test_har70plus,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),kdpath,kdpath-channel-2bit-lr0.001,5,1,0.7466,,,,0.6117,,0.6117,,,,,,,
+low-bit test,test_har70plus,ptq_per_channel,2-bit,no_retrain,ptq_pc2,low-bit diagnostic test,5,1,,,,,0.5556,,0.5556,"[0.536, 0.575]",,,,,,no accuracy in source
+low-bit test,test_har70plus,ptq_per_channel,3-bit,no_retrain,ptq_pc3,low-bit diagnostic test,5,1,,,,,0.8668,,0.8668,"[0.843, 0.877]",,,,,,no accuracy in source
+low-bit test,test_har70plus,ptq_per_channel,4-bit,no_retrain,ptq_pc4,low-bit diagnostic test,5,1,,,,,0.9341,,0.9341,"[0.923, 0.945]",,,,,,no accuracy in source
+9A test,test_har70plus,unstructured_pruning,30%,no_retrain,l1,"9A test, seed 0, 5 fold models",5,1,0.7591,,,,0.8767,,0.8767,"[0.862, 0.886]",,,,,,
+9A test,test_har70plus,unstructured_pruning,30%,no_retrain,snip,"9A test, seed 0, 5 fold models",5,1,0.6586,,,,0.6841,,0.6841,"[0.665, 0.703]",,,,,,
+9A test,test_har70plus,unstructured_pruning,50%,no_retrain,l1,"9A test, seed 0, 5 fold models",5,1,0.6749,,,,0.6216,,0.6216,"[0.602, 0.640]",,,,,,
+9A test,test_har70plus,unstructured_pruning,50%,no_retrain,snip,"9A test, seed 0, 5 fold models",5,1,0.5762,,,,0.3609,,0.3609,"[0.338, 0.382]",,,,,,
+9A test,test_har70plus,unstructured_pruning,70%,no_retrain,l1,"9A test, seed 0, 5 fold models",5,1,0.4374,,,,0.3374,,0.3374,"[0.313, 0.363]",,,,,,
+9A test,test_har70plus,unstructured_pruning,70%,no_retrain,snip,"9A test, seed 0, 5 fold models",5,1,0.4052,,,,0.1436,,0.1436,"[0.134, 0.153]",,,,,,
+gap-study test (agent B),test_har70plus,unstructured_pruning,70pct,no_retrain,gmr-mu0.1,"agent B test, seed 0",5,1,0.7604,,,,0.9114,,0.8984,,,,,,,previous agent
+gap-study test (agent B),test_har70plus,unstructured_pruning,70pct,no_retrain,l1_fullrecon,"agent B test, seed 0",5,1,0.7476,,,,0.9066,,0.9066,,,,,,,previous agent
+gap-study test (agent B),test_har70plus,unstructured_pruning,70pct,no_retrain,lamp_recon,"agent B test, seed 0",5,1,0.7332,,,,0.8049,,0.8049,,,,,,,previous agent
+gap-study test (agent B),test_har70plus,unstructured_pruning,80pct,no_retrain,l1_fullrecon,"agent B test, seed 0",5,1,0.7398,,,,0.7975,,0.7746,,,,,,,previous agent
+gap-study test (agent B),test_har70plus,unstructured_pruning,80pct,no_retrain,gmr-mu0.1,"agent B test, seed 0",5,1,0.7406,,,,0.7967,,0.7967,,,,,,,previous agent
+gap-study test (agent B),test_har70plus,unstructured_pruning,80pct,no_retrain,lamp_recon,"agent B test, seed 0",5,1,0.7066,,,,0.7063,,0.6969,,,,,,,previous agent
+9A test,test_har70plus,unstructured_pruning,90%,no_retrain,l1,"9A test, seed 0, 5 fold models",5,1,0.142,,,,0.1414,,0.1414,"[0.126, 0.155]",,,,,,
+9A test,test_har70plus,unstructured_pruning,90%,no_retrain,snip,"9A test, seed 0, 5 fold models",5,1,0.2512,,,,0.1091,,0.1083,"[0.081, 0.115]",,,,,,
+gap-study test (agent B),test_har70plus,unstructured_pruning,90pct,no_retrain,gmr-mu0.1,"agent B test, seed 0",5,1,0.646,,,,0.6991,,0.6847,,,,,,,previous agent
+gap-study test (agent B),test_har70plus,unstructured_pruning,90pct,no_retrain,l1_fullrecon,"agent B test, seed 0",5,1,0.6259,,,,0.6785,,0.6562,,,,,,,previous agent
+gap-study test (agent B),test_har70plus,unstructured_pruning,90pct,no_retrain,lamp_recon,"agent B test, seed 0",5,1,0.6821,,,,0.4703,,0.4703,,,,,,,previous agent
+gap-study test (agent B),test_har70plus,unstructured_pruning,none,no_retrain,original,"agent B test, seed 0",5,1,0.7627,,,,1.0,,1.0,,,,,,,previous agent
+9A test,test_har70plus,unstructured_pruning,30%,retrained_full,l1_kd,"9A test, seed 0, 5 fold models",5,1,0.7695,,,,0.9076,,0.9016,"[0.875, 0.913]",,,,,,
+9A test,test_har70plus,unstructured_pruning,30%,retrained_full,snip_kd,"9A test, seed 0, 5 fold models",5,1,0.7701,,,,0.9047,,0.8958,"[0.870, 0.911]",,,,,,
+9A test,test_har70plus,unstructured_pruning,30%,retrained_full,snip,"9A test, seed 0, 5 fold models",5,1,0.7965,,,,0.8198,,0.8036,"[0.772, 0.824]",,,,,,
+9A test,test_har70plus,unstructured_pruning,30%,retrained_full,l1,"9A test, seed 0, 5 fold models",5,1,0.7937,,,,0.7893,,0.7893,"[0.768, 0.801]",,,,,,
+9A test,test_har70plus,unstructured_pruning,50%,retrained_full,l1_kd,"9A test, seed 0, 5 fold models",5,1,0.7636,,,,0.8962,,0.8854,"[0.859, 0.901]",,,,,,
+9A test,test_har70plus,unstructured_pruning,50%,retrained_full,snip_kd,"9A test, seed 0, 5 fold models",5,1,0.7667,,,,0.8632,,0.8632,"[0.843, 0.872]",,,,,,
+9A test,test_har70plus,unstructured_pruning,50%,retrained_full,l1,"9A test, seed 0, 5 fold models",5,1,0.7815,,,,0.814,,0.8027,"[0.756, 0.822]",,,,,,
+9A test,test_har70plus,unstructured_pruning,50%,retrained_full,snip,"9A test, seed 0, 5 fold models",5,1,0.7732,,,,0.7937,,0.7937,"[0.754, 0.803]",,,,,,
+9A test,test_har70plus,unstructured_pruning,70%,retrained_full,l1_kd,"9A test, seed 0, 5 fold models",5,1,0.7638,,,,0.8769,,0.875,"[0.848, 0.883]",,,,,,
+9A test,test_har70plus,unstructured_pruning,70%,retrained_full,l1,"9A test, seed 0, 5 fold models",5,1,0.7704,,,,0.8195,,0.8073,"[0.776, 0.825]",,,,,,
+9A test,test_har70plus,unstructured_pruning,70%,retrained_full,park_kd,"9A test, seed 0, 5 fold models",5,1,0.7394,,,,0.7879,,0.7879,"[0.769, 0.801]",,,,,,
+9A test,test_har70plus,unstructured_pruning,70%,retrained_full,park,"9A test, seed 0, 5 fold models",5,1,0.7385,,,,0.7879,,0.7768,"[0.743, 0.796]",,,,,,
+9A test,test_har70plus,unstructured_pruning,70%,retrained_full,snip_kd,"9A test, seed 0, 5 fold models",5,1,0.7683,,,,0.7779,,0.7779,"[0.760, 0.792]",,,,,,
+9A test,test_har70plus,unstructured_pruning,70%,retrained_full,snip,"9A test, seed 0, 5 fold models",5,1,0.7485,,,,0.7368,,0.7368,"[0.710, 0.755]",,,,,,
+9A test,test_har70plus,unstructured_pruning,90%,retrained_full,l1_kd,"9A test, seed 0, 5 fold models",5,1,0.7292,,,,0.7329,,0.7329,"[0.707, 0.750]",,,,,,
+9A test,test_har70plus,unstructured_pruning,90%,retrained_full,park_kd,"9A test, seed 0, 5 fold models",5,1,0.6466,,,,0.7165,,0.7125,"[0.672, 0.728]",,,,,,
+9A test,test_har70plus,unstructured_pruning,90%,retrained_full,park,"9A test, seed 0, 5 fold models",5,1,0.6095,,,,0.7137,,0.7137,"[0.687, 0.731]",,,,,,
+9A test,test_har70plus,unstructured_pruning,90%,retrained_full,l1,"9A test, seed 0, 5 fold models",5,1,0.6762,,,,0.7125,,0.7125,"[0.694, 0.727]",,,,,,
+9A test,test_har70plus,unstructured_pruning,90%,retrained_full,snip,"9A test, seed 0, 5 fold models",5,1,0.5625,,,,0.5115,,0.5017,"[0.446, 0.521]",,,,,,
+9A test,test_har70plus,unstructured_pruning,90%,retrained_full,snip_kd,"9A test, seed 0, 5 fold models",5,1,0.5458,,,,0.4902,,0.4902,"[0.451, 0.500]",,,,,,
+9A test,test_harth_general,noise_ref,none,reference,noise_shap_seed1,"9A test, seed 0, 5 fold models",5,1,,,,,0.9188,,0.9147,"[0.889, 0.923]",,,,,,no accuracy in source
+9A test,test_harth_general,noise_ref,none,reference,noise_shap_seed2,"9A test, seed 0, 5 fold models",5,1,,,,,0.9084,,0.9084,"[0.889, 0.923]",,,,,,no accuracy in source
+9A test,test_harth_general,noise_ref,none,reference,noise_retrain_seed3,"9A test, seed 0, 5 fold models",5,1,,,,,0.7107,,0.7107,"[0.669, 0.725]",,,,,,no accuracy in source
+9A test,test_harth_general,noise_ref,none,reference,noise_retrain_seed2,"9A test, seed 0, 5 fold models",5,1,,,,,0.6728,,0.6728,"[0.631, 0.697]",,,,,,no accuracy in source
+9A test,test_harth_general,noise_ref,none,reference,noise_retrain_seed1,"9A test, seed 0, 5 fold models",5,1,,,,,0.6716,,0.6716,"[0.633, 0.689]",,,,,,no accuracy in source
+9A test,test_harth_general,original,none,reference,original,"9A test, seed 0, 5 fold models",5,1,0.9081,,,,1.0,,1.0,"[1.000, 1.000]",,,,,,
+low-bit test,test_harth_general,original,none,reference,original,low-bit diagnostic test,5,1,,,,,1.0,,1.0,"[1.000, 1.000]",,,,,,no accuracy in source
+low-bit test,test_harth_general,pruning_recon,90%,no_retrain,lamp_recon,low-bit diagnostic test,5,1,,,,,0.4785,,0.4703,"[0.442, 0.486]",,,,,,no accuracy in source
+low-bit test,test_harth_general,pruning_recon,95%,no_retrain,lamp_recon,low-bit diagnostic test,5,1,,,,,0.2673,,0.2673,"[0.241, 0.278]",,,,,,no accuracy in source
+low-bit test,test_harth_general,pruning_recon_ptq,90%+4-bit,no_retrain,lamp_recon_ptq_pc4,low-bit diagnostic test,5,1,,,,,0.4756,,0.4598,"[0.434, 0.478]",,,,,,no accuracy in source
+low-bit test,test_harth_general,pruning_recon_ptq,95%+4-bit,no_retrain,lamp_recon_ptq_pc4,low-bit diagnostic test,5,1,,,,,0.2691,,0.2652,"[0.243, 0.274]",,,,,,no accuracy in source
+9A test,test_harth_general,ptq,4-bit,no_retrain,ptq4,"9A test, seed 0, 5 fold models",5,1,0.9008,,,,0.9218,,0.9037,"[0.895, 0.912]",,,,,,
+9A test,test_harth_general,ptq,4-bit,no_retrain,ptq_tulla4,"9A test, seed 0, 5 fold models",5,1,0.8377,,,,0.6887,,0.6887,"[0.656, 0.706]",,,,,,
+9A test,test_harth_general,ptq,8-bit,no_retrain,ptq8,"9A test, seed 0, 5 fold models",5,1,0.9079,,,,0.9999,,0.9938,"[0.990, 0.998]",,,,,,
+9A test,test_harth_general,ptq,8-bit,no_retrain,ptq_tulla8,"9A test, seed 0, 5 fold models",5,1,0.9077,,,,0.9906,,0.9806,"[0.974, 0.987]",,,,,,
+har-pair-calibration test (agent A),test_harth_general,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration,original,original,5,1,0.9081,,,,1.0,,1.0,,,,,,,
+har-pair-calibration test (agent A),test_harth_general,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration,pair,pair-channel-2bit-lr0.001,5,1,0.88,,,,0.8015,,0.7817,,,,,,,
+har-pair-calibration test (agent A),test_harth_general,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration,kd,kd-channel-2bit-lr0.0001,5,1,0.9049,,,,0.7806,,0.7806,,,,,,,
+har-pair-calibration test (agent A),test_harth_general,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration,pair,pair-channel-2bit-lr0.0001,5,1,0.8878,,,,0.7799,,0.7723,,,,,,,
+har-pair-calibration test (agent A),test_harth_general,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration,kd,kd-channel-2bit-lr0.001,5,1,0.8968,,,,0.7241,,0.6927,,,,,,,
+har-pair-scarce test (agent A),test_harth_general,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),original,original,5,1,0.9081,,,,1.0,,1.0,,,,,,,
+har-pair-scarce test (agent A),test_harth_general,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),kd,kd-channel-2bit-lr0.0001,5,1,0.9034,,,,0.7529,,0.7386,,,,,,,
+har-pair-scarce test (agent A),test_harth_general,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),pairpath,pairpath-channel-2bit-lr0.0001,5,1,0.8655,,,,0.7458,,0.7197,,,,,,,
+har-pair-scarce test (agent A),test_harth_general,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),kdpath,kdpath-channel-2bit-lr0.0001,5,1,0.876,,,,0.6858,,0.6461,,,,,,,
+har-pair-scarce test (agent A),test_harth_general,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),kd,kd-channel-2bit-lr0.001,5,1,0.8775,,,,0.6713,,0.6684,,,,,,,
+har-pair-scarce test (agent A),test_harth_general,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),kdpath,kdpath-channel-2bit-lr0.001,5,1,0.8784,,,,0.6247,,0.6117,,,,,,,
+low-bit test,test_harth_general,ptq_per_channel,2-bit,no_retrain,ptq_pc2,low-bit diagnostic test,5,1,,,,,0.5883,,0.5556,"[0.536, 0.575]",,,,,,no accuracy in source
+low-bit test,test_harth_general,ptq_per_channel,3-bit,no_retrain,ptq_pc3,low-bit diagnostic test,5,1,,,,,0.8711,,0.8668,"[0.843, 0.877]",,,,,,no accuracy in source
+low-bit test,test_harth_general,ptq_per_channel,4-bit,no_retrain,ptq_pc4,low-bit diagnostic test,5,1,,,,,0.9597,,0.9341,"[0.923, 0.945]",,,,,,no accuracy in source
+9A test,test_harth_general,unstructured_pruning,30%,no_retrain,l1,"9A test, seed 0, 5 fold models",5,1,0.8993,,,,0.8892,,0.8767,"[0.862, 0.886]",,,,,,
+9A test,test_harth_general,unstructured_pruning,30%,no_retrain,snip,"9A test, seed 0, 5 fold models",5,1,0.8151,,,,0.7431,,0.6841,"[0.665, 0.703]",,,,,,
+9A test,test_harth_general,unstructured_pruning,50%,no_retrain,l1,"9A test, seed 0, 5 fold models",5,1,0.7577,,,,0.6578,,0.6216,"[0.602, 0.640]",,,,,,
+9A test,test_harth_general,unstructured_pruning,50%,no_retrain,snip,"9A test, seed 0, 5 fold models",5,1,0.5414,,,,0.4325,,0.3609,"[0.338, 0.382]",,,,,,
+9A test,test_harth_general,unstructured_pruning,70%,no_retrain,l1,"9A test, seed 0, 5 fold models",5,1,0.4847,,,,0.4254,,0.3374,"[0.313, 0.363]",,,,,,
+9A test,test_harth_general,unstructured_pruning,70%,no_retrain,snip,"9A test, seed 0, 5 fold models",5,1,0.4239,,,,0.1966,,0.1436,"[0.134, 0.153]",,,,,,
+gap-study test (agent B),test_harth_general,unstructured_pruning,70pct,no_retrain,l1_fullrecon,"agent B test, seed 0",5,1,0.903,,,,0.9149,,0.9066,,,,,,,previous agent
+gap-study test (agent B),test_harth_general,unstructured_pruning,70pct,no_retrain,gmr-mu0.1,"agent B test, seed 0",5,1,0.9076,,,,0.8984,,0.8984,,,,,,,previous agent
+gap-study test (agent B),test_harth_general,unstructured_pruning,70pct,no_retrain,lamp_recon,"agent B test, seed 0",5,1,0.8967,,,,0.8191,,0.8049,,,,,,,previous agent
+gap-study test (agent B),test_harth_general,unstructured_pruning,80pct,no_retrain,gmr-mu0.1,"agent B test, seed 0",5,1,0.8834,,,,0.8177,,0.7967,,,,,,,previous agent
+gap-study test (agent B),test_harth_general,unstructured_pruning,80pct,no_retrain,l1_fullrecon,"agent B test, seed 0",5,1,0.886,,,,0.7746,,0.7746,,,,,,,previous agent
+gap-study test (agent B),test_harth_general,unstructured_pruning,80pct,no_retrain,lamp_recon,"agent B test, seed 0",5,1,0.9008,,,,0.6969,,0.6969,,,,,,,previous agent
+9A test,test_harth_general,unstructured_pruning,90%,no_retrain,l1,"9A test, seed 0, 5 fold models",5,1,0.1943,,,,0.1646,,0.1414,"[0.126, 0.155]",,,,,,
+9A test,test_harth_general,unstructured_pruning,90%,no_retrain,snip,"9A test, seed 0, 5 fold models",5,1,0.2098,,,,0.1083,,0.1083,"[0.081, 0.115]",,,,,,
+gap-study test (agent B),test_harth_general,unstructured_pruning,90pct,no_retrain,gmr-mu0.1,"agent B test, seed 0",5,1,0.7679,,,,0.6847,,0.6847,,,,,,,previous agent
+gap-study test (agent B),test_harth_general,unstructured_pruning,90pct,no_retrain,l1_fullrecon,"agent B test, seed 0",5,1,0.8002,,,,0.6562,,0.6562,,,,,,,previous agent
+gap-study test (agent B),test_harth_general,unstructured_pruning,90pct,no_retrain,lamp_recon,"agent B test, seed 0",5,1,0.8514,,,,0.4785,,0.4703,,,,,,,previous agent
+gap-study test (agent B),test_harth_general,unstructured_pruning,none,no_retrain,original,"agent B test, seed 0",5,1,0.9081,,,,1.0,,1.0,,,,,,,previous agent
+9A test,test_harth_general,unstructured_pruning,30%,retrained_full,l1_kd,"9A test, seed 0, 5 fold models",5,1,0.9082,,,,0.9016,,0.9016,"[0.875, 0.913]",,,,,,
+9A test,test_harth_general,unstructured_pruning,30%,retrained_full,snip_kd,"9A test, seed 0, 5 fold models",5,1,0.9081,,,,0.8958,,0.8958,"[0.870, 0.911]",,,,,,
+9A test,test_harth_general,unstructured_pruning,30%,retrained_full,l1,"9A test, seed 0, 5 fold models",5,1,0.9073,,,,0.8137,,0.7893,"[0.768, 0.801]",,,,,,
+9A test,test_harth_general,unstructured_pruning,30%,retrained_full,snip,"9A test, seed 0, 5 fold models",5,1,0.9049,,,,0.8036,,0.8036,"[0.772, 0.824]",,,,,,
+9A test,test_harth_general,unstructured_pruning,50%,retrained_full,l1_kd,"9A test, seed 0, 5 fold models",5,1,0.9075,,,,0.8854,,0.8854,"[0.859, 0.901]",,,,,,
+9A test,test_harth_general,unstructured_pruning,50%,retrained_full,snip_kd,"9A test, seed 0, 5 fold models",5,1,0.9069,,,,0.8728,,0.8632,"[0.843, 0.872]",,,,,,
+9A test,test_harth_general,unstructured_pruning,50%,retrained_full,l1,"9A test, seed 0, 5 fold models",5,1,0.9036,,,,0.8027,,0.8027,"[0.756, 0.822]",,,,,,
+9A test,test_harth_general,unstructured_pruning,50%,retrained_full,snip,"9A test, seed 0, 5 fold models",5,1,0.9106,,,,0.7945,,0.7937,"[0.754, 0.803]",,,,,,
+9A test,test_harth_general,unstructured_pruning,70%,retrained_full,l1_kd,"9A test, seed 0, 5 fold models",5,1,0.9048,,,,0.875,,0.875,"[0.848, 0.883]",,,,,,
+9A test,test_harth_general,unstructured_pruning,70%,retrained_full,l1,"9A test, seed 0, 5 fold models",5,1,0.9044,,,,0.8073,,0.8073,"[0.776, 0.825]",,,,,,
+9A test,test_harth_general,unstructured_pruning,70%,retrained_full,park_kd,"9A test, seed 0, 5 fold models",5,1,0.8955,,,,0.7986,,0.7879,"[0.769, 0.801]",,,,,,
+9A test,test_harth_general,unstructured_pruning,70%,retrained_full,snip_kd,"9A test, seed 0, 5 fold models",5,1,0.9073,,,,0.7979,,0.7779,"[0.760, 0.792]",,,,,,
+9A test,test_harth_general,unstructured_pruning,70%,retrained_full,park,"9A test, seed 0, 5 fold models",5,1,0.8915,,,,0.7768,,0.7768,"[0.743, 0.796]",,,,,,
+9A test,test_harth_general,unstructured_pruning,70%,retrained_full,snip,"9A test, seed 0, 5 fold models",5,1,0.8996,,,,0.7561,,0.7368,"[0.710, 0.755]",,,,,,
+9A test,test_harth_general,unstructured_pruning,90%,retrained_full,l1_kd,"9A test, seed 0, 5 fold models",5,1,0.9015,,,,0.7501,,0.7329,"[0.707, 0.750]",,,,,,
+9A test,test_harth_general,unstructured_pruning,90%,retrained_full,l1,"9A test, seed 0, 5 fold models",5,1,0.8855,,,,0.7462,,0.7125,"[0.694, 0.727]",,,,,,
+9A test,test_harth_general,unstructured_pruning,90%,retrained_full,park,"9A test, seed 0, 5 fold models",5,1,0.7825,,,,0.7236,,0.7137,"[0.687, 0.731]",,,,,,
+9A test,test_harth_general,unstructured_pruning,90%,retrained_full,park_kd,"9A test, seed 0, 5 fold models",5,1,0.7743,,,,0.7125,,0.7125,"[0.672, 0.728]",,,,,,
+9A test,test_harth_general,unstructured_pruning,90%,retrained_full,snip,"9A test, seed 0, 5 fold models",5,1,0.7348,,,,0.5017,,0.5017,"[0.446, 0.521]",,,,,,
+9A test,test_harth_general,unstructured_pruning,90%,retrained_full,snip_kd,"9A test, seed 0, 5 fold models",5,1,0.7083,,,,0.4947,,0.4902,"[0.451, 0.500]",,,,,,
+har-pair-scarce test (agent A),test_primary_untouched,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),original,original,5,1,0.8089,,,,1.0,,1.0,,,,,,,
+har-pair-scarce test (agent A),test_primary_untouched,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),kd,kd-channel-2bit-lr0.0001,5,1,0.7956,,,,0.735,,0.7386,,,,,,,
+har-pair-scarce test (agent A),test_primary_untouched,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),pairpath,pairpath-channel-2bit-lr0.0001,5,1,0.7458,,,,0.7259,,0.7197,,,,,,,
+har-pair-scarce test (agent A),test_primary_untouched,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),kdpath,kdpath-channel-2bit-lr0.0001,5,1,0.7825,,,,0.6687,,0.6461,,,,,,,
+har-pair-scarce test (agent A),test_primary_untouched,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),kd,kd-channel-2bit-lr0.001,5,1,0.7827,,,,0.667,,0.6684,,,,,,,
+har-pair-scarce test (agent A),test_primary_untouched,ptq/qat 2-bit per channel,20.7 KB,retrained_calibration (~100 windows),kdpath,kdpath-channel-2bit-lr0.001,5,1,0.7807,,,,0.6213,,0.6117,,,,,,,

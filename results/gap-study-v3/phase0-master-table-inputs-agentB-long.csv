@@ -1,0 +1,345 @@
+source,scenario,compression,level,method,variant,eval_windows,n_folds,n_runs,f1_mean,f1_sd,lci_mean,lci_sd,worst_lci_mean,folds,flags
+pair-scarce,calib_train,pruning+ptq/qat,,kd,lr=0.0001 ~100 windows,inner-val 100/subject,5,5,0.7895,0.0549,0.7777,0.0765,0.7392,0 1 2 3 4,<3 seeds/fold
+pair-scarce,calib_train,pruning+ptq/qat,,pairpath,lr=0.0001 ~100 windows,inner-val 100/subject,5,5,0.7454,0.0421,0.747,0.0571,0.7093,0 1 2 3 4,<3 seeds/fold
+pair-scarce,calib_train,pruning+ptq/qat,,kdpath,lr=0.0001 ~100 windows,inner-val 100/subject,5,5,0.7436,0.0437,0.6768,0.0778,0.6638,0 1 2 3 4,<3 seeds/fold
+pair-scarce,calib_train,pruning+ptq/qat,,kd,lr=0.001 ~100 windows,inner-val 100/subject,5,5,0.7774,0.07,0.6621,0.0652,0.6268,0 1 2 3 4,<3 seeds/fold
+pair-scarce,calib_train,pruning+ptq/qat,,kdpath,lr=0.001 ~100 windows,inner-val 100/subject,5,5,0.7596,0.0495,0.6266,0.0568,0.5841,0 1 2 3 4,<3 seeds/fold
+xgp-compare,calib_train,pruning+ptq/qat,0.95|b4.0,xgp_xb,lr=0.001,inner-val 100/subject,5,5,0.7556,0.0801,0.7165,0.0593,0.6782,0 1 2 3 4,<3 seeds/fold
+final-test-val,calib_train,pruning+ptq/qat,0.95|b4.0,lamp_recon,lr=0.001,inner-val 100/subject,5,5,0.7491,0.067,0.7122,0.1061,0.6698,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+final-test-val,calib_train,pruning+ptq/qat,0.95|b4.0,xgp_xb,lr=0.001,inner-val 100/subject,5,5,0.7626,0.0833,0.6983,0.0631,0.6523,0 1 2 3 4,<3 seeds/fold
+final-test-val,calib_train,pruning+ptq/qat,0.95|b4.0,l1_xb_recon,lr=0.001,inner-val 100/subject,5,5,0.7658,0.0615,0.6965,0.0508,0.633,0 1 2 3 4,<3 seeds/fold
+xgp-compare,calib_train,pruning+ptq/qat,0.95|b4.0,xgp_xb,lr=0.0001,inner-val 100/subject,5,5,0.7575,0.0672,0.6957,0.0852,0.6455,0 1 2 3 4,<3 seeds/fold
+xgp-compare,calib_train,pruning+ptq/qat,0.95|b4.0,lamp_recon,lr=0.001,inner-val 100/subject,5,5,0.7412,0.077,0.6951,0.101,0.6387,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+final-test-val,calib_train,pruning+ptq/qat,0.95|b4.0,xgp_xb,lr=0.0001,inner-val 100/subject,5,5,0.7554,0.0636,0.6841,0.0662,0.629,0 1 2 3 4,<3 seeds/fold
+final-test-val,calib_train,pruning+ptq/qat,0.95|b4.0,xgp_lamp,lr=0.001,inner-val 100/subject,5,5,0.7471,0.0573,0.676,0.0882,0.6383,0 1 2 3 4,<3 seeds/fold
+final-test-val,calib_train,pruning+ptq/qat,0.95|b4.0,l1_xb_recon,lr=0.0001,inner-val 100/subject,5,5,0.736,0.0709,0.6651,0.0757,0.6047,0 1 2 3 4,<3 seeds/fold
+xgp-compare,calib_train,pruning+ptq/qat,0.95|b4.0,lamp_recon,lr=0.0001,inner-val 100/subject,5,5,0.7337,0.068,0.6593,0.0808,0.6104,0 1 2 3 4,<3 seeds/fold
+final-test-val,calib_train,pruning+ptq/qat,0.95|b4.0,xgp_lamp,lr=0.0001,inner-val 100/subject,5,5,0.7296,0.075,0.657,0.0844,0.6231,0 1 2 3 4,<3 seeds/fold
+final-test-val,calib_train,pruning+ptq/qat,0.95|b4.0,lamp_recon,lr=0.0001,inner-val 100/subject,5,5,0.7359,0.0674,0.6525,0.0937,0.6065,0 1 2 3 4,<3 seeds/fold
+final-test-val,calib_train,pruning+ptq/qat,0.9|b4.0,l1_xb_recon,lr=0.0001,inner-val 100/subject,5,5,0.7915,0.0622,0.8048,0.101,0.7432,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+final-test-val,calib_train,pruning+ptq/qat,0.9|b4.0,xgp_xb,lr=0.0001,inner-val 100/subject,5,5,0.7963,0.0628,0.7993,0.0723,0.7776,0 1 2 3 4,<3 seeds/fold
+xgp-compare,calib_train,pruning+ptq/qat,0.9|b4.0,xgp_xb,lr=0.0001,inner-val 100/subject,5,5,0.7957,0.0538,0.7991,0.0836,0.7876,0 1 2 3 4,<3 seeds/fold
+xgp-compare,calib_train,pruning+ptq/qat,0.9|b4.0,xgp_xb,lr=0.001,inner-val 100/subject,5,5,0.8028,0.0607,0.7925,0.0496,0.7553,0 1 2 3 4,<3 seeds/fold
+final-test-val,calib_train,pruning+ptq/qat,0.9|b4.0,xgp_xb,lr=0.001,inner-val 100/subject,5,5,0.8101,0.0598,0.7871,0.08,0.7266,0 1 2 3 4,<3 seeds/fold
+final-test-val,calib_train,pruning+ptq/qat,0.9|b4.0,xgp_lamp,lr=0.0001,inner-val 100/subject,5,5,0.7764,0.0772,0.786,0.0858,0.7515,0 1 2 3 4,<3 seeds/fold
+final-test-val,calib_train,pruning+ptq/qat,0.9|b4.0,l1_xb_recon,lr=0.001,inner-val 100/subject,5,5,0.7991,0.0634,0.7835,0.0878,0.7503,0 1 2 3 4,<3 seeds/fold
+final-test-val,calib_train,pruning+ptq/qat,0.9|b4.0,lamp_recon,lr=0.001,inner-val 100/subject,5,5,0.7829,0.0728,0.7766,0.1143,0.7545,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+xgp-compare,calib_train,pruning+ptq/qat,0.9|b4.0,lamp_recon,lr=0.001,inner-val 100/subject,5,5,0.787,0.0672,0.7733,0.1161,0.7256,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+final-test-val,calib_train,pruning+ptq/qat,0.9|b4.0,lamp_recon,lr=0.0001,inner-val 100/subject,5,5,0.7849,0.067,0.7642,0.098,0.7446,0 1 2 3 4,<3 seeds/fold
+xgp-compare,calib_train,pruning+ptq/qat,0.9|b4.0,lamp_recon,lr=0.0001,inner-val 100/subject,5,5,0.7809,0.0662,0.7617,0.0764,0.7302,0 1 2 3 4,<3 seeds/fold
+final-test-val,calib_train,pruning+ptq/qat,0.9|b4.0,xgp_lamp,lr=0.001,inner-val 100/subject,5,5,0.7785,0.0808,0.7537,0.088,0.7117,0 1 2 3 4,<3 seeds/fold
+pair-calibration,calib_train,pruning+ptq/qat,channel-2bit,pair,lr=0.0001,inner-val 100/subject,5,5,0.7943,0.0401,0.8198,0.0957,0.7545,0 1 2 3 4,<3 seeds/fold
+pair-calibration,calib_train,pruning+ptq/qat,channel-2bit,pair,lr=0.001,inner-val 100/subject,5,5,0.7641,0.0636,0.8143,0.0982,0.7693,0 1 2 3 4,<3 seeds/fold
+pair-calibration,calib_train,pruning+ptq/qat,channel-2bit,kd,lr=0.0001,inner-val 100/subject,5,5,0.8159,0.0532,0.8082,0.0831,0.7569,0 1 2 3 4,<3 seeds/fold
+pair-calibration,calib_train,pruning+ptq/qat,channel-2bit,kd,lr=0.001,inner-val 100/subject,5,5,0.8177,0.0524,0.6974,0.0613,0.6436,0 1 2 3 4,<3 seeds/fold
+pair-calibration,calib_train,pruning+ptq/qat,lamp_recon90-channel-4bit,kd,lr=0.0001,inner-val 100/subject,3,3,0.7561,0.082,0.7316,0.1225,0.7202,0 1 2,only 3 fold(s); <3 seeds/fold; LCI SD > 0.10
+final-test-val,calib_train,pruning+ptq/qat,,tensor-2bit,lr=0.0001,inner-val 100/subject,5,5,0.7834,0.0886,0.749,0.111,0.7126,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+xgp-compare,calib_train,pruning+ptq/qat,,tensor-2bit,lr=0.0001,inner-val 100/subject,5,5,0.7956,0.0288,0.7133,0.0732,0.6409,0 1 2 3 4,<3 seeds/fold
+xgp-compare,calib_train,pruning+ptq/qat,,tensor-2bit,lr=0.001,inner-val 100/subject,5,5,0.768,0.0762,0.5993,0.0536,0.5574,0 1 2 3 4,<3 seeds/fold
+final-test-val,calib_train,pruning+ptq/qat,,tensor-2bit,lr=0.001,inner-val 100/subject,5,5,0.7657,0.0965,0.5804,0.0541,0.522,0 1 2 3 4,<3 seeds/fold
+xgp-compare,full_ft,pruning+ptq/qat,0.95|b4.0,xgp_xb,lr=0.001,inner-val 100/subject,5,5,0.7971,0.0697,0.7359,0.08,0.696,0 1 2 3 4,<3 seeds/fold
+final-test-val,full_ft,pruning+ptq/qat,0.95|b4.0,lamp_recon,lr=0.001,inner-val 100/subject,5,5,0.7715,0.0567,0.7296,0.1205,0.6719,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+final-test-val,full_ft,pruning+ptq/qat,0.95|b4.0,xgp_lamp,lr=0.001,inner-val 100/subject,5,5,0.7866,0.0503,0.7262,0.0774,0.6975,0 1 2 3 4,<3 seeds/fold
+xgp-compare,full_ft,pruning+ptq/qat,0.95|b4.0,lamp_recon,lr=0.001,inner-val 100/subject,5,5,0.7765,0.0589,0.7257,0.0964,0.6704,0 1 2 3 4,<3 seeds/fold
+final-test-val,full_ft,pruning+ptq/qat,0.95|b4.0,xgp_xb,lr=0.001,inner-val 100/subject,5,5,0.7939,0.0695,0.7155,0.0636,0.6626,0 1 2 3 4,<3 seeds/fold
+final-test-val,full_ft,pruning+ptq/qat,0.95|b4.0,l1_xb_recon,lr=0.001,inner-val 100/subject,5,5,0.7953,0.0509,0.7135,0.0699,0.6619,0 1 2 3 4,<3 seeds/fold
+final-test-val,full_ft,pruning+ptq/qat,0.95|b4.0,xgp_xb,lr=0.0001,inner-val 100/subject,5,5,0.7633,0.0723,0.6673,0.0911,0.6131,0 1 2 3 4,<3 seeds/fold
+xgp-compare,full_ft,pruning+ptq/qat,0.95|b4.0,xgp_xb,lr=0.0001,inner-val 100/subject,5,5,0.7635,0.0685,0.658,0.0941,0.6076,0 1 2 3 4,<3 seeds/fold
+final-test-val,full_ft,pruning+ptq/qat,0.95|b4.0,l1_xb_recon,lr=0.0001,inner-val 100/subject,5,5,0.7666,0.0636,0.6449,0.0883,0.6059,0 1 2 3 4,<3 seeds/fold
+final-test-val,full_ft,pruning+ptq/qat,0.95|b4.0,lamp_recon,lr=0.0001,inner-val 100/subject,5,5,0.7452,0.0689,0.6184,0.1082,0.571,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+xgp-compare,full_ft,pruning+ptq/qat,0.95|b4.0,lamp_recon,lr=0.0001,inner-val 100/subject,5,5,0.7393,0.0642,0.6182,0.1064,0.5721,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+final-test-val,full_ft,pruning+ptq/qat,0.95|b4.0,xgp_lamp,lr=0.0001,inner-val 100/subject,5,5,0.7601,0.0685,0.6018,0.0703,0.5586,0 1 2 3 4,<3 seeds/fold
+xgp-compare,full_ft,pruning+ptq/qat,0.9|b4.0,xgp_xb,lr=0.001,inner-val 100/subject,5,5,0.8251,0.044,0.8219,0.0795,0.7634,0 1 2 3 4,<3 seeds/fold
+final-test-val,full_ft,pruning+ptq/qat,0.9|b4.0,l1_xb_recon,lr=0.001,inner-val 100/subject,5,5,0.8158,0.0511,0.8175,0.049,0.7827,0 1 2 3 4,<3 seeds/fold
+final-test-val,full_ft,pruning+ptq/qat,0.9|b4.0,l1_xb_recon,lr=0.0001,inner-val 100/subject,5,5,0.8031,0.0574,0.8163,0.0643,0.7603,0 1 2 3 4,<3 seeds/fold
+final-test-val,full_ft,pruning+ptq/qat,0.9|b4.0,lamp_recon,lr=0.001,inner-val 100/subject,5,5,0.8126,0.0482,0.8144,0.0934,0.7768,0 1 2 3 4,<3 seeds/fold
+xgp-compare,full_ft,pruning+ptq/qat,0.9|b4.0,lamp_recon,lr=0.001,inner-val 100/subject,5,5,0.8221,0.0338,0.8142,0.0937,0.7623,0 1 2 3 4,<3 seeds/fold
+final-test-val,full_ft,pruning+ptq/qat,0.9|b4.0,xgp_xb,lr=0.001,inner-val 100/subject,5,5,0.8235,0.0447,0.8105,0.0647,0.7764,0 1 2 3 4,<3 seeds/fold
+xgp-compare,full_ft,pruning+ptq/qat,0.9|b4.0,xgp_xb,lr=0.0001,inner-val 100/subject,5,5,0.8044,0.0488,0.7994,0.0776,0.7635,0 1 2 3 4,<3 seeds/fold
+final-test-val,full_ft,pruning+ptq/qat,0.9|b4.0,xgp_xb,lr=0.0001,inner-val 100/subject,5,5,0.8092,0.0426,0.7991,0.0717,0.7635,0 1 2 3 4,<3 seeds/fold
+final-test-val,full_ft,pruning+ptq/qat,0.9|b4.0,xgp_lamp,lr=0.001,inner-val 100/subject,5,5,0.8014,0.0585,0.7982,0.0729,0.7603,0 1 2 3 4,<3 seeds/fold
+final-test-val,full_ft,pruning+ptq/qat,0.9|b4.0,xgp_lamp,lr=0.0001,inner-val 100/subject,5,5,0.7909,0.0536,0.7756,0.1079,0.7461,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+final-test-val,full_ft,pruning+ptq/qat,0.9|b4.0,lamp_recon,lr=0.0001,inner-val 100/subject,5,5,0.7925,0.0503,0.7644,0.0791,0.7319,0 1 2 3 4,<3 seeds/fold
+xgp-compare,full_ft,pruning+ptq/qat,0.9|b4.0,lamp_recon,lr=0.0001,inner-val 100/subject,5,5,0.7875,0.0506,0.7453,0.0701,0.7032,0 1 2 3 4,<3 seeds/fold
+xgp-compare,full_ft,pruning+ptq/qat,,tensor-2bit,lr=0.0001,inner-val 100/subject,5,5,0.8079,0.065,0.7711,0.1198,0.7101,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+final-test-val,full_ft,pruning+ptq/qat,,tensor-2bit,lr=0.0001,inner-val 100/subject,5,5,0.7937,0.0606,0.7417,0.1186,0.6957,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+final-test-val,full_ft,pruning+ptq/qat,,tensor-2bit,lr=0.001,inner-val 100/subject,5,5,0.7737,0.113,0.6072,0.0641,0.57,0 1 2 3 4,<3 seeds/fold
+xgp-compare,full_ft,pruning+ptq/qat,,tensor-2bit,lr=0.001,inner-val 100/subject,5,5,0.8009,0.0303,0.5943,0.078,0.5595,0 1 2 3 4,<3 seeds/fold
+round4,full_ft,structured_filter_pruning,0.5,l1_filter_recon,,inner-val 100/subject,2,6,0.8021,0.0114,0.8705,0.0402,0.8265,0 1,only 2 fold(s)
+round4,full_ft,structured_filter_pruning,0.5,xgp_s,,inner-val 100/subject,2,6,0.8006,0.0091,0.8684,0.0364,0.84,0 1,only 2 fold(s)
+round4,full_ft,structured_filter_pruning,0.5,l1_filter_recon_kd_dro,,inner-val 100/subject,2,6,0.8057,0.0168,0.8624,0.043,0.8339,0 1,only 2 fold(s)
+round4,full_ft,structured_filter_pruning,0.5,l1_filter,,inner-val 100/subject,2,6,0.7935,0.0068,0.8516,0.0114,0.7611,0 1,only 2 fold(s)
+round4,full_ft,structured_filter_pruning,0.5,taylor_recon,,inner-val 100/subject,2,6,0.7998,0.0139,0.8313,0.0547,0.8046,0 1,only 2 fold(s)
+round4,full_ft,structured_filter_pruning,0.5,taylor_recon_kd_dro,,inner-val 100/subject,2,6,0.7984,0.0175,0.8284,0.0542,0.8019,0 1,only 2 fold(s)
+round4,full_ft,structured_filter_pruning,0.5,l1_filter_kd_dro,,inner-val 100/subject,2,6,0.7928,0.0021,0.8153,0.0254,0.7577,0 1,only 2 fold(s)
+round4,full_ft,structured_filter_pruning,0.75,taylor_recon_kd_dro,,inner-val 100/subject,2,6,0.7843,0.0143,0.7793,0.0966,0.7278,0 1,only 2 fold(s)
+round4,full_ft,structured_filter_pruning,0.75,taylor_recon,,inner-val 100/subject,2,6,0.7811,0.009,0.7747,0.0753,0.739,0 1,only 2 fold(s)
+round4,full_ft,structured_filter_pruning,0.75,xgp_s,,inner-val 100/subject,2,6,0.7874,0.0155,0.7642,0.0699,0.7227,0 1,only 2 fold(s)
+round4,full_ft,structured_filter_pruning,0.75,l1_filter_recon,,inner-val 100/subject,2,6,0.778,0.0251,0.7394,0.036,0.6798,0 1,only 2 fold(s)
+round4,full_ft,structured_filter_pruning,0.75,l1_filter_recon_kd_dro,,inner-val 100/subject,2,6,0.786,0.0342,0.7383,0.0302,0.6886,0 1,only 2 fold(s)
+round4,full_ft,structured_filter_pruning,0.75,l1_filter,,inner-val 100/subject,2,6,0.7245,0.0593,0.692,0.0478,0.6413,0 1,only 2 fold(s)
+round4,full_ft,structured_filter_pruning,0.75,l1_filter_kd_dro,,inner-val 100/subject,2,6,0.7392,0.033,0.6843,0.0332,0.6326,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,xgp_no_score_ft,xgp_no_score_ft(r=0.25),inner-val 100/subject,2,6,0.7642,0.0084,0.9021,0.0447,0.8496,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,xgp_ft,"xgp_ft(beta=0.5,r=0.25)",inner-val 100/subject,2,6,0.7664,0.012,0.8963,0.0456,0.8618,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,xgp_ft,"xgp_ft(beta=0.3,r=0.25)",inner-val 100/subject,2,6,0.767,0.0098,0.8927,0.0513,0.8503,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,l1_recon_ft,,inner-val 100/subject,2,6,0.7663,0.0151,0.8924,0.0436,0.8382,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,xgp_no_iter_ft,"xgp_no_iter_ft(beta=0.3,r=0.25)",inner-val 100/subject,2,6,0.7651,0.0113,0.8923,0.0475,0.8494,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,xgp_ft,"xgp_ft(beta=0.3,r=0.5)",inner-val 100/subject,2,6,0.7693,0.0123,0.8919,0.0414,0.8512,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,xgp_ft,"xgp_ft(beta=0.1,r=0.5)",inner-val 100/subject,2,6,0.7663,0.0084,0.8915,0.0382,0.8638,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,xgp_ft,"xgp_ft(beta=0.1,r=0.25)",inner-val 100/subject,2,6,0.7653,0.0085,0.8913,0.0334,0.8626,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,xgp_no_group_ft,"xgp_no_group_ft(beta=0.3,r=0.25)",inner-val 100/subject,2,6,0.7662,0.0104,0.8883,0.0454,0.839,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,l1_kd,,inner-val 100/subject,2,6,0.7677,0.0099,0.888,0.025,0.8394,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,xgp_ft_no_aug,xgp_ft_no_aug(beta=0.3),inner-val 100/subject,2,6,0.7736,0.0117,0.8876,0.0194,0.8541,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,l1_kdaug,,inner-val 100/subject,2,12,0.7634,0.01,0.8868,0.0268,0.8403,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,xgp_no_recon_ft,"xgp_no_recon_ft(beta=0.3,r=0.25)",inner-val 100/subject,2,6,0.7632,0.0085,0.8866,0.0354,0.8455,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,xgp_ft_no_dro,"xgp_ft_no_dro(beta=0.3,r=0.25)",inner-val 100/subject,2,6,0.7706,0.0065,0.8836,0.0394,0.8321,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,xgp_ft,"xgp_ft(beta=0.5,r=0.5)",inner-val 100/subject,2,6,0.7704,0.0121,0.8773,0.0355,0.8504,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,snip_kd,,inner-val 100/subject,2,6,0.768,0.0063,0.8028,0.0446,0.7526,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.5,l1,,inner-val 100/subject,2,6,0.7442,0.0139,0.7816,0.0224,0.6794,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,xgp_no_group_ft,"xgp_no_group_ft(beta=0.1,r=0.25)",inner-val 100/subject,2,6,0.762,0.0061,0.8749,0.0523,0.8304,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,xgp_ft,"xgp_ft(beta=0.3,r=0.5)",inner-val 100/subject,2,6,0.7702,0.0113,0.8722,0.0592,0.8315,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,xgp_ft,"xgp_ft(beta=0.1,r=0.5)",inner-val 100/subject,2,6,0.7668,0.0124,0.8691,0.0382,0.8297,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,xgp_ft,"xgp_ft(beta=0.1,r=0.25)",inner-val 100/subject,2,6,0.762,0.0092,0.8653,0.0482,0.8299,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,xgp_ft,"xgp_ft(beta=0.5,r=0.5)",inner-val 100/subject,2,6,0.7706,0.0112,0.8649,0.0491,0.8416,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,xgp_ft_no_dro,"xgp_ft_no_dro(beta=0.1,r=0.25)",inner-val 100/subject,2,6,0.7624,0.0086,0.8643,0.0396,0.8228,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,xgp_no_score_ft,xgp_no_score_ft(r=0.25),inner-val 100/subject,2,6,0.7636,0.0081,0.8613,0.0573,0.8071,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,xgp_ft,"xgp_ft(beta=0.5,r=0.25)",inner-val 100/subject,2,6,0.767,0.0089,0.8578,0.0554,0.8194,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,xgp_ft_no_aug,xgp_ft_no_aug(beta=0.1),inner-val 100/subject,2,6,0.7643,0.0104,0.8568,0.0549,0.8232,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,xgp_no_iter_ft,"xgp_no_iter_ft(beta=0.1,r=0.25)",inner-val 100/subject,2,6,0.7524,0.0083,0.8564,0.0386,0.815,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,l1_recon_ft,,inner-val 100/subject,2,6,0.7559,0.0037,0.8484,0.0546,0.8035,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,xgp_ft,"xgp_ft(beta=0.3,r=0.25)",inner-val 100/subject,2,6,0.7662,0.0091,0.8475,0.0627,0.8096,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,l1_kdaug,,inner-val 100/subject,2,12,0.7517,0.0067,0.8411,0.0469,0.8117,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,xgp_no_recon_ft,"xgp_no_recon_ft(beta=0.1,r=0.25)",inner-val 100/subject,2,6,0.7561,0.0041,0.8382,0.0304,0.8044,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,l1_kd,,inner-val 100/subject,2,6,0.7535,0.0075,0.8268,0.024,0.7641,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,l1,,inner-val 100/subject,2,6,0.7248,0.0204,0.7837,0.0466,0.71,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.7,snip_kd,,inner-val 100/subject,2,6,0.7288,0.0042,0.7388,0.077,0.6906,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.8,xgp_r3,,inner-val 100/subject,2,6,0.7992,0.0036,0.8462,0.0727,0.8177,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.8,xgp,,inner-val 100/subject,2,6,0.7992,0.0158,0.8419,0.0465,0.8025,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.8,xgp_xb,,inner-val 100/subject,2,6,0.7923,0.0083,0.8393,0.0613,0.8167,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.8,xgp_lamp,,inner-val 100/subject,2,6,0.788,0.0108,0.8198,0.0526,0.7751,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.8,l1_recon,,inner-val 100/subject,2,6,0.7877,0.0085,0.819,0.0578,0.7939,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.8,lamp_recon,,inner-val 100/subject,2,6,0.7895,0.0051,0.8097,0.0361,0.7507,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.8,l1_recon_kd_dro,,inner-val 100/subject,2,6,0.7973,0.0167,0.8095,0.0619,0.77,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.8,l1_xb_recon,,inner-val 100/subject,2,6,0.8011,0.0196,0.8076,0.0627,0.7789,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.8,lamp_recon_kd_dro,,inner-val 100/subject,2,6,0.8008,0.0136,0.7874,0.0306,0.7469,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.8,l1_kd_dro,,inner-val 100/subject,2,6,0.7736,0.0101,0.785,0.0713,0.74,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.8,l1,,inner-val 100/subject,2,6,0.7658,0.0218,0.7734,0.0802,0.7317,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.9,xgp_ft_no_dro,"xgp_ft_no_dro(beta=0.1,r=0.5)",inner-val 100/subject,2,6,0.7288,0.0142,0.7669,0.1106,0.7088,0 1,only 2 fold(s); LCI SD > 0.10
+round4,full_ft,unstructured_pruning,0.9,xgp_r3,,inner-val 100/subject,2,6,0.7729,0.0093,0.7648,0.0839,0.7336,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.9,xgp_ft_no_aug,xgp_ft_no_aug(beta=0.1),inner-val 100/subject,2,6,0.7198,0.0092,0.7603,0.1071,0.7109,0 1,only 2 fold(s); LCI SD > 0.10
+round4,full_ft,unstructured_pruning,0.9,xgp_xb,,inner-val 100/subject,2,6,0.7633,0.0159,0.7552,0.0704,0.7077,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.9,xgp_ft,"xgp_ft(beta=0.5,r=0.25)",inner-val 100/subject,2,6,0.7365,0.0121,0.7536,0.0919,0.7109,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.9,xgp_lamp,,inner-val 100/subject,2,6,0.7561,0.018,0.752,0.1072,0.7142,0 1,only 2 fold(s); LCI SD > 0.10
+round3,full_ft,unstructured_pruning,0.9,xgp_ft,"xgp_ft(beta=0.1,r=0.5)",inner-val 100/subject,2,6,0.7253,0.0156,0.7489,0.094,0.7268,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.9,xgp_no_score_ft,xgp_no_score_ft(r=0.5),inner-val 100/subject,2,6,0.7271,0.0127,0.743,0.0726,0.7008,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.9,xgp_ft,"xgp_ft(beta=0.3,r=0.5)",inner-val 100/subject,2,6,0.7353,0.0125,0.7301,0.0956,0.6697,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.9,xgp_ft,"xgp_ft(beta=0.5,r=0.5)",inner-val 100/subject,2,6,0.7344,0.0098,0.7288,0.0837,0.6853,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.9,lamp_recon,,inner-val 100/subject,2,6,0.739,0.006,0.7287,0.11,0.6983,0 1,only 2 fold(s); LCI SD > 0.10
+round3,full_ft,unstructured_pruning,0.9,xgp_ft,"xgp_ft(beta=0.1,r=0.25)",inner-val 100/subject,2,6,0.7196,0.0091,0.7269,0.105,0.6913,0 1,only 2 fold(s); LCI SD > 0.10
+round4,full_ft,unstructured_pruning,0.9,l1_xb_recon,,inner-val 100/subject,2,6,0.7668,0.0079,0.7228,0.0653,0.6689,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.9,xgp_ft,"xgp_ft(beta=0.3,r=0.25)",inner-val 100/subject,2,6,0.6943,0.1154,0.7078,0.1156,0.6587,0 1,only 2 fold(s); LCI SD > 0.10
+round4,full_ft,unstructured_pruning,0.9,lamp_recon_kd_dro,,inner-val 100/subject,2,6,0.736,0.0035,0.7015,0.1232,0.6869,0 1,only 2 fold(s); LCI SD > 0.10
+round3,full_ft,unstructured_pruning,0.9,l1_recon_ft,,inner-val 100/subject,2,6,0.7005,0.0272,0.6964,0.1086,0.6529,0 1,only 2 fold(s); LCI SD > 0.10
+round3,full_ft,unstructured_pruning,0.9,xgp_no_iter_ft,"xgp_no_iter_ft(beta=0.1,r=0.5)",inner-val 100/subject,2,6,0.7119,0.0119,0.695,0.1106,0.6463,0 1,only 2 fold(s); LCI SD > 0.10
+round4,full_ft,unstructured_pruning,0.9,l1,,inner-val 100/subject,2,6,0.7285,0.0132,0.6944,0.097,0.6396,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.9,xgp_no_group_ft,"xgp_no_group_ft(beta=0.1,r=0.5)",inner-val 100/subject,2,6,0.7264,0.0166,0.6893,0.072,0.6383,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.9,xgp,,inner-val 100/subject,2,6,0.7594,0.0097,0.6828,0.0221,0.6257,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.9,l1_recon,,inner-val 100/subject,2,6,0.7485,0.0335,0.6759,0.0442,0.6225,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.9,l1_kdaug,,inner-val 100/subject,2,12,0.6893,0.0149,0.6714,0.0997,0.6293,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.9,xgp_no_recon_ft,"xgp_no_recon_ft(beta=0.1,r=0.5)",inner-val 100/subject,2,6,0.7015,0.0281,0.6704,0.0688,0.6384,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.9,l1_kd,,inner-val 100/subject,2,6,0.6853,0.0139,0.6654,0.1115,0.6207,0 1,only 2 fold(s); LCI SD > 0.10
+round4,full_ft,unstructured_pruning,0.9,l1_recon_kd_dro,,inner-val 100/subject,2,6,0.7476,0.0263,0.6521,0.0489,0.5915,0 1,only 2 fold(s)
+round3,full_ft,unstructured_pruning,0.9,l1,,inner-val 100/subject,2,6,0.6466,0.0111,0.6451,0.1293,0.5934,0 1,only 2 fold(s); LCI SD > 0.10
+round4,full_ft,unstructured_pruning,0.9,l1_kd_dro,,inner-val 100/subject,2,6,0.696,0.0116,0.6426,0.1341,0.6123,0 1,only 2 fold(s); LCI SD > 0.10
+round3,full_ft,unstructured_pruning,0.9,snip_kd,,inner-val 100/subject,2,6,0.1441,0.1481,0.308,0.1093,0.2615,0 1,only 2 fold(s); LCI SD > 0.10; F1 collapsed (<0.6)
+round4,full_ft,unstructured_pruning,0.95,xgp_xb,,inner-val 100/subject,2,6,0.6854,0.0183,0.6353,0.1255,0.5838,0 1,only 2 fold(s); LCI SD > 0.10
+round4,full_ft,unstructured_pruning,0.95,l1_xb_recon,,inner-val 100/subject,2,6,0.67,0.0192,0.6251,0.1372,0.5741,0 1,only 2 fold(s); LCI SD > 0.10
+round4,full_ft,unstructured_pruning,0.95,lamp_recon,,inner-val 100/subject,2,6,0.6798,0.0177,0.6156,0.1543,0.5808,0 1,only 2 fold(s); LCI SD > 0.10
+round4,full_ft,unstructured_pruning,0.95,lamp_recon_kd_dro,,inner-val 100/subject,2,6,0.608,0.0309,0.6073,0.1391,0.5755,0 1,only 2 fold(s); LCI SD > 0.10
+round4,full_ft,unstructured_pruning,0.95,l1,,inner-val 100/subject,2,6,0.563,0.1373,0.5762,0.0387,0.5202,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,full_ft,unstructured_pruning,0.95,xgp_lamp,,inner-val 100/subject,2,6,0.637,0.0328,0.5699,0.0831,0.5182,0 1,only 2 fold(s)
+round4,full_ft,unstructured_pruning,0.95,xgp_r3,,inner-val 100/subject,2,6,0.5915,0.1306,0.5691,0.0908,0.5041,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,full_ft,unstructured_pruning,0.95,l1_kd_dro,,inner-val 100/subject,2,6,0.5753,0.1495,0.5397,0.0733,0.4731,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,full_ft,unstructured_pruning,0.95,l1_recon_kd_dro,,inner-val 100/subject,2,6,0.5608,0.0478,0.472,0.0195,0.4246,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,full_ft,unstructured_pruning,0.95,xgp,,inner-val 100/subject,2,6,0.453,0.2029,0.4689,0.0394,0.3882,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,full_ft,unstructured_pruning,0.95,l1_recon,,inner-val 100/subject,2,6,0.5494,0.1987,0.465,0.0217,0.4023,0 1,only 2 fold(s); F1 collapsed (<0.6)
+9A,full_ft,unstructured_pruning,30%,snip_kd,f1=non-stair macro,inner-val 30/subject,5,5,0.8376,0.0333,0.9023,0.0498,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,30%,l1_kd,f1=non-stair macro,inner-val 30/subject,5,5,0.8385,0.0344,0.9021,0.0527,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,30%,snip,f1=non-stair macro,inner-val 30/subject,5,5,0.8368,0.0235,0.8025,0.0757,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,30%,l1,f1=non-stair macro,inner-val 30/subject,5,5,0.8367,0.0278,0.7805,0.0593,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,50%,l1_kd,f1=non-stair macro,inner-val 30/subject,5,5,0.8401,0.0309,0.9063,0.0241,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,50%,snip_kd,f1=non-stair macro,inner-val 30/subject,5,5,0.8375,0.0296,0.8512,0.054,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,50%,l1,f1=non-stair macro,inner-val 30/subject,5,5,0.8384,0.0296,0.8135,0.0584,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,50%,snip,f1=non-stair macro,inner-val 30/subject,5,5,0.8364,0.0259,0.7934,0.0649,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,70%,l1_kd,f1=non-stair macro,inner-val 30/subject,5,5,0.8394,0.0314,0.8818,0.0525,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,70%,l1,f1=non-stair macro,inner-val 30/subject,5,5,0.8361,0.0297,0.8181,0.0505,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,70%,park_kd,f1=non-stair macro,inner-val 30/subject,5,5,0.8165,0.0177,0.7971,0.0547,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,70%,park,f1=non-stair macro,inner-val 30/subject,5,5,0.8188,0.0236,0.7834,0.0703,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,70%,snip_kd,f1=non-stair macro,inner-val 30/subject,5,5,0.8377,0.0286,0.7816,0.0475,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,70%,snip,f1=non-stair macro,inner-val 30/subject,5,5,0.8213,0.0411,0.7793,0.0608,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,90%,l1_kd,f1=non-stair macro,inner-val 30/subject,5,5,0.8251,0.0278,0.744,0.106,,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+9A,full_ft,unstructured_pruning,90%,l1,f1=non-stair macro,inner-val 30/subject,5,5,0.8055,0.0338,0.7239,0.1218,,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+9A,full_ft,unstructured_pruning,90%,park_kd,f1=non-stair macro,inner-val 30/subject,5,5,0.6826,0.2242,0.7163,0.1063,,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+9A,full_ft,unstructured_pruning,90%,park,f1=non-stair macro,inner-val 30/subject,5,5,0.7219,0.086,0.7114,0.087,,0 1 2 3 4,<3 seeds/fold
+9A,full_ft,unstructured_pruning,90%,snip,f1=non-stair macro,inner-val 30/subject,5,5,0.6717,0.2939,0.505,0.1525,,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+9A,full_ft,unstructured_pruning,90%,snip_kd,f1=non-stair macro,inner-val 30/subject,5,5,0.6004,0.3459,0.4939,0.1087,,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+final-test-val,kd5,pruning+ptq/qat,0.95|b4.0,l1_xb_recon,lr=0.001,inner-val 100/subject,5,5,0.7781,0.0585,0.6976,0.0791,0.6258,0 1 2 3 4,<3 seeds/fold
+final-test-val,kd5,pruning+ptq/qat,0.95|b4.0,xgp_xb,lr=0.001,inner-val 100/subject,5,5,0.7794,0.0592,0.697,0.0835,0.6468,0 1 2 3 4,<3 seeds/fold
+xgp-compare,kd5,pruning+ptq/qat,0.95|b4.0,lamp_recon,lr=0.001,inner-val 100/subject,5,5,0.76,0.0541,0.6935,0.0918,0.6621,0 1 2 3 4,<3 seeds/fold
+xgp-compare,kd5,pruning+ptq/qat,0.95|b4.0,xgp_xb,lr=0.001,inner-val 100/subject,5,5,0.7739,0.0558,0.6931,0.0976,0.6328,0 1 2 3 4,<3 seeds/fold
+final-test-val,kd5,pruning+ptq/qat,0.95|b4.0,lamp_recon,lr=0.001,inner-val 100/subject,5,5,0.7685,0.0515,0.6919,0.0923,0.6614,0 1 2 3 4,<3 seeds/fold
+final-test-val,kd5,pruning+ptq/qat,0.95|b4.0,xgp_lamp,lr=0.001,inner-val 100/subject,5,5,0.7672,0.046,0.6644,0.1,0.5993,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+final-test-val,kd5,pruning+ptq/qat,0.95|b4.0,xgp_xb,lr=0.0001,inner-val 100/subject,5,5,0.7579,0.0625,0.6596,0.0972,0.6301,0 1 2 3 4,<3 seeds/fold
+xgp-compare,kd5,pruning+ptq/qat,0.95|b4.0,xgp_xb,lr=0.0001,inner-val 100/subject,5,5,0.7563,0.0695,0.6587,0.0899,0.6263,0 1 2 3 4,<3 seeds/fold
+xgp-compare,kd5,pruning+ptq/qat,0.95|b4.0,lamp_recon,lr=0.0001,inner-val 100/subject,5,5,0.7418,0.0664,0.6277,0.0911,0.5985,0 1 2 3 4,<3 seeds/fold
+final-test-val,kd5,pruning+ptq/qat,0.95|b4.0,xgp_lamp,lr=0.0001,inner-val 100/subject,5,5,0.7488,0.0618,0.6249,0.0887,0.5752,0 1 2 3 4,<3 seeds/fold
+final-test-val,kd5,pruning+ptq/qat,0.95|b4.0,l1_xb_recon,lr=0.0001,inner-val 100/subject,5,5,0.7685,0.0605,0.6241,0.1067,0.5841,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+final-test-val,kd5,pruning+ptq/qat,0.95|b4.0,lamp_recon,lr=0.0001,inner-val 100/subject,5,5,0.745,0.0635,0.6205,0.097,0.5891,0 1 2 3 4,<3 seeds/fold
+final-test-val,kd5,pruning+ptq/qat,0.9|b4.0,xgp_xb,lr=0.0001,inner-val 100/subject,5,15,0.8025,0.0488,0.7931,0.0723,0.753,0 1 2 3 4,
+xgp-compare,kd5,pruning+ptq/qat,0.9|b4.0,xgp_xb,lr=0.001,inner-val 100/subject,5,5,0.82,0.0425,0.7899,0.0663,0.7656,0 1 2 3 4,<3 seeds/fold
+final-test-val,kd5,pruning+ptq/qat,0.9|b4.0,l1_xb_recon,lr=0.0001,inner-val 100/subject,5,5,0.8014,0.0502,0.7867,0.0976,0.7439,0 1 2 3 4,<3 seeds/fold
+xgp-compare,kd5,pruning+ptq/qat,0.9|b4.0,xgp_xb,lr=0.0001,inner-val 100/subject,5,5,0.8052,0.0485,0.7866,0.0828,0.768,0 1 2 3 4,<3 seeds/fold
+final-test-val,kd5,pruning+ptq/qat,0.9|b4.0,xgp_xb,lr=0.001,inner-val 100/subject,5,15,0.8117,0.0343,0.7834,0.0627,0.7301,0 1 2 3 4,
+final-test-val,kd5,pruning+ptq/qat,0.9|b4.0,xgp_lamp,lr=0.001,inner-val 100/subject,5,5,0.7948,0.0497,0.7694,0.1024,0.7174,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+final-test-val,kd5,pruning+ptq/qat,0.9|b4.0,l1_xb_recon,lr=0.001,inner-val 100/subject,5,5,0.8123,0.0513,0.768,0.0737,0.7013,0 1 2 3 4,<3 seeds/fold
+final-test-val,kd5,pruning+ptq/qat,0.9|b4.0,lamp_recon,lr=0.0001,inner-val 100/subject,5,15,0.7895,0.043,0.7674,0.0843,0.7236,0 1 2 3 4,
+final-test-val,kd5,pruning+ptq/qat,0.9|b4.0,xgp_lamp,lr=0.0001,inner-val 100/subject,5,5,0.7828,0.0585,0.7613,0.1071,0.7333,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+xgp-compare,kd5,pruning+ptq/qat,0.9|b4.0,lamp_recon,lr=0.0001,inner-val 100/subject,5,5,0.7932,0.0498,0.758,0.0896,0.7172,0 1 2 3 4,<3 seeds/fold
+final-test-val,kd5,pruning+ptq/qat,0.9|b4.0,lamp_recon,lr=0.001,inner-val 100/subject,5,15,0.7925,0.0381,0.7542,0.0755,0.7096,0 1 2 3 4,
+xgp-compare,kd5,pruning+ptq/qat,0.9|b4.0,lamp_recon,lr=0.001,inner-val 100/subject,5,5,0.8036,0.0541,0.7501,0.0865,0.7008,0 1 2 3 4,<3 seeds/fold
+final-test-val,kd5,pruning+ptq/qat,,tensor-2bit,lr=0.0001,inner-val 100/subject,5,5,0.7849,0.0477,0.7331,0.1127,0.6696,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+xgp-compare,kd5,pruning+ptq/qat,,tensor-2bit,lr=0.0001,inner-val 100/subject,5,5,0.7951,0.0465,0.7084,0.1005,0.6514,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+xgp-compare,kd5,pruning+ptq/qat,,tensor-2bit,lr=0.001,inner-val 100/subject,5,5,0.7829,0.063,0.5634,0.0498,0.5262,0 1 2 3 4,<3 seeds/fold
+final-test-val,kd5,pruning+ptq/qat,,tensor-2bit,lr=0.001,inner-val 100/subject,5,5,0.7966,0.0442,0.5563,0.0526,0.5125,0 1 2 3 4,<3 seeds/fold
+round4,kd5,structured_filter_pruning,0.5,l1_filter_recon_kd_dro,,inner-val 100/subject,2,6,0.7947,0.006,0.891,0.0498,0.8366,0 1,only 2 fold(s)
+round4,kd5,structured_filter_pruning,0.5,l1_filter_recon,,inner-val 100/subject,2,6,0.7911,0.0036,0.8859,0.0457,0.8361,0 1,only 2 fold(s)
+round4,kd5,structured_filter_pruning,0.5,xgp_s,,inner-val 100/subject,2,6,0.8023,0.0094,0.8725,0.0353,0.8394,0 1,only 2 fold(s)
+round4,kd5,structured_filter_pruning,0.5,taylor_recon_kd_dro,,inner-val 100/subject,2,6,0.7968,0.0187,0.8479,0.0689,0.7693,0 1,only 2 fold(s)
+round4,kd5,structured_filter_pruning,0.5,taylor_recon,,inner-val 100/subject,2,6,0.7916,0.0154,0.8296,0.0668,0.7698,0 1,only 2 fold(s)
+round4,kd5,structured_filter_pruning,0.5,l1_filter,,inner-val 100/subject,2,6,0.7473,0.034,0.7335,0.0322,0.6953,0 1,only 2 fold(s)
+round4,kd5,structured_filter_pruning,0.5,l1_filter_kd_dro,,inner-val 100/subject,2,6,0.7512,0.0245,0.7221,0.0432,0.691,0 1,only 2 fold(s)
+round4,kd5,structured_filter_pruning,0.75,taylor_recon_kd_dro,,inner-val 100/subject,2,6,0.7675,0.0075,0.7543,0.0849,0.7107,0 1,only 2 fold(s)
+round4,kd5,structured_filter_pruning,0.75,taylor_recon,,inner-val 100/subject,2,6,0.7659,0.0037,0.7533,0.085,0.7096,0 1,only 2 fold(s)
+round4,kd5,structured_filter_pruning,0.75,xgp_s,,inner-val 100/subject,2,6,0.7668,0.0176,0.7039,0.101,0.6557,0 1,only 2 fold(s); LCI SD > 0.10
+round4,kd5,structured_filter_pruning,0.75,l1_filter_recon,,inner-val 100/subject,2,6,0.7668,0.0611,0.6421,0.0268,0.5818,0 1,only 2 fold(s)
+round4,kd5,structured_filter_pruning,0.75,l1_filter_recon_kd_dro,,inner-val 100/subject,2,6,0.7752,0.0562,0.6319,0.0327,0.5777,0 1,only 2 fold(s)
+round4,kd5,structured_filter_pruning,0.75,l1_filter_kd_dro,,inner-val 100/subject,2,6,0.6513,0.02,0.4287,0.0303,0.3747,0 1,only 2 fold(s)
+round4,kd5,structured_filter_pruning,0.75,l1_filter,,inner-val 100/subject,2,6,0.6697,0.0162,0.4084,0.0265,0.3639,0 1,only 2 fold(s)
+round4,kd5,unstructured_pruning,0.9,xgp_xb,,inner-val 100/subject,2,6,0.7495,0.0094,0.5796,0.0435,0.5309,0 1,only 2 fold(s)
+round4,kd5,unstructured_pruning,0.9,xgp_r3,,inner-val 100/subject,2,6,0.7596,0.0321,0.5663,0.0417,0.526,0 1,only 2 fold(s)
+round4,kd5,unstructured_pruning,0.9,lamp_recon,,inner-val 100/subject,2,6,0.6852,0.0073,0.5647,0.0756,0.5294,0 1,only 2 fold(s)
+round4,kd5,unstructured_pruning,0.9,lamp_recon_kd_dro,,inner-val 100/subject,2,6,0.6679,0.0253,0.5616,0.0798,0.5266,0 1,only 2 fold(s)
+round4,kd5,unstructured_pruning,0.9,l1_xb_recon,,inner-val 100/subject,2,6,0.7334,0.0186,0.5606,0.0453,0.5197,0 1,only 2 fold(s)
+round4,kd5,unstructured_pruning,0.9,xgp_lamp,,inner-val 100/subject,2,6,0.7152,0.0376,0.5417,0.0612,0.5044,0 1,only 2 fold(s)
+round4,kd5,unstructured_pruning,0.9,xgp,,inner-val 100/subject,2,6,0.7139,0.0213,0.5316,0.0266,0.4956,0 1,only 2 fold(s)
+round4,kd5,unstructured_pruning,0.9,l1_recon_kd_dro,,inner-val 100/subject,2,6,0.6664,0.0262,0.5111,0.0371,0.4705,0 1,only 2 fold(s)
+round4,kd5,unstructured_pruning,0.9,l1_recon,,inner-val 100/subject,2,6,0.6686,0.0399,0.4968,0.0455,0.4566,0 1,only 2 fold(s)
+round4,kd5,unstructured_pruning,0.9,l1_kd_dro,,inner-val 100/subject,2,6,0.5477,0.0261,0.3925,0.0295,0.355,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,kd5,unstructured_pruning,0.9,l1,,inner-val 100/subject,2,6,0.5443,0.0799,0.3873,0.0557,0.3377,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,kd5,unstructured_pruning,0.95,xgp_xb,,inner-val 100/subject,2,6,0.608,0.0303,0.4005,0.0333,0.3716,0 1,only 2 fold(s)
+round4,kd5,unstructured_pruning,0.95,xgp,,inner-val 100/subject,2,6,0.3641,0.2118,0.3353,0.0848,0.2789,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,kd5,unstructured_pruning,0.95,l1_xb_recon,,inner-val 100/subject,2,6,0.5445,0.0581,0.3263,0.02,0.3093,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,kd5,unstructured_pruning,0.95,xgp_lamp,,inner-val 100/subject,2,6,0.5602,0.0505,0.3188,0.0541,0.2846,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,kd5,unstructured_pruning,0.95,xgp_r3,,inner-val 100/subject,2,6,0.4946,0.1414,0.3139,0.0376,0.2823,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,kd5,unstructured_pruning,0.95,lamp_recon,,inner-val 100/subject,2,6,0.4676,0.0327,0.2822,0.0108,0.2624,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,kd5,unstructured_pruning,0.95,lamp_recon_kd_dro,,inner-val 100/subject,2,6,0.464,0.0388,0.2808,0.0097,0.2609,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,kd5,unstructured_pruning,0.95,l1_recon,,inner-val 100/subject,2,6,0.517,0.0151,0.2727,0.0582,0.2402,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,kd5,unstructured_pruning,0.95,l1_recon_kd_dro,,inner-val 100/subject,2,6,0.4882,0.0275,0.2682,0.0523,0.2315,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,kd5,unstructured_pruning,0.95,l1,,inner-val 100/subject,2,6,0.2956,0.0376,0.2323,0.0544,0.215,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,kd5,unstructured_pruning,0.95,l1_kd_dro,,inner-val 100/subject,2,6,0.2229,0.0218,0.232,0.0544,0.2202,0 1,only 2 fold(s); F1 collapsed (<0.6)
+lowbit,no_retrain,pruning+ptq,90%+4-bit,lamp_recon_ptq_pc4,,inner-val 30/subject,5,5,0.6994,0.0456,0.4708,0.0494,0.4288,0 1 2 3 4,<3 seeds/fold
+lowbit,no_retrain,pruning+ptq,95%+4-bit,lamp_recon_ptq_pc4,,inner-val 30/subject,5,5,0.3974,0.1258,0.2643,0.0398,0.2322,0 1 2 3 4,<3 seeds/fold; F1 collapsed (<0.6)
+pair-scarce,no_retrain,pruning+ptq/qat,,ptq,,inner-val 100/subject,5,5,0.496,0.1458,0.6043,0.1042,0.5455,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6)
+xgp-compare,no_retrain,pruning+ptq/qat,0.95|b4.0,xgp_xb,,inner-val 100/subject,5,5,0.5953,0.1002,0.3352,0.0695,0.3011,0 1 2 3 4,<3 seeds/fold; F1 collapsed (<0.6)
+xgp-compare,no_retrain,pruning+ptq/qat,0.95|b4.0,lamp_recon,,inner-val 100/subject,5,5,0.3974,0.1258,0.2711,0.0495,0.2341,0 1 2 3 4,<3 seeds/fold; F1 collapsed (<0.6)
+xgp-compare,no_retrain,pruning+ptq/qat,0.9|b4.0,xgp_xb,,inner-val 100/subject,5,5,0.743,0.0386,0.4905,0.0271,0.455,0 1 2 3 4,<3 seeds/fold
+xgp-compare,no_retrain,pruning+ptq/qat,0.9|b4.0,lamp_recon,,inner-val 100/subject,5,5,0.6994,0.0456,0.477,0.076,0.4366,0 1 2 3 4,<3 seeds/fold
+pair-calibration,no_retrain,pruning+ptq/qat,channel-2bit,ptq,,inner-val 100/subject,5,5,0.496,0.1458,0.6043,0.1042,0.5455,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6)
+pair-calibration,no_retrain,pruning+ptq/qat,lamp_recon90-channel-4bit,ptq,,inner-val 100/subject,5,5,0.6995,0.0456,0.477,0.076,0.4366,0 1 2 3 4,<3 seeds/fold
+xgp-compare,no_retrain,pruning+ptq/qat,,xgp_xb,,inner-val 100/subject,5,10,0.6814,0.1134,0.4178,0.0992,0.3772,0 1 2 3 4,<3 seeds/fold
+xgp-compare,no_retrain,pruning+ptq/qat,,lamp_recon,,inner-val 100/subject,5,10,0.5551,0.186,0.378,0.1253,0.3429,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6)
+xgp-compare,no_retrain,pruning+ptq/qat,,tensor-2bit,,inner-val 100/subject,5,5,0.1964,0.1408,0.3243,0.1581,0.2849,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6)
+lowbit,no_retrain,ptq,2-bit,ptq_pc2,,inner-val 30/subject,5,5,0.4961,0.1459,0.599,0.0955,0.548,0 1 2 3 4,<3 seeds/fold; F1 collapsed (<0.6)
+lowbit,no_retrain,ptq,3-bit,ptq_pc3,,inner-val 30/subject,5,5,0.8174,0.0439,0.8999,0.1125,0.8617,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+lowbit,no_retrain,ptq,4-bit,ptq_pc4,,inner-val 30/subject,5,5,0.8326,0.031,0.9583,0.0479,0.9257,0 1 2 3 4,<3 seeds/fold
+9A,no_retrain,ptq,4-bit,ptq4,f1=non-stair macro,inner-val 30/subject,5,5,0.836,0.0371,0.9214,0.0472,,0 1 2 3 4,<3 seeds/fold
+9A,no_retrain,ptq,4-bit,ptq_tulla4,f1=non-stair macro,inner-val 30/subject,5,5,0.7282,0.0502,0.6825,0.0954,,0 1 2 3 4,<3 seeds/fold
+9A,no_retrain,ptq,8-bit,ptq8,f1=non-stair macro,inner-val 30/subject,5,5,0.8368,0.0312,0.9999,0.0,,0 1 2 3 4,<3 seeds/fold
+9A,no_retrain,ptq,8-bit,ptq_tulla8,f1=non-stair macro,inner-val 30/subject,5,5,0.8374,0.0308,0.9869,0.0168,,0 1 2 3 4,<3 seeds/fold
+round4,no_retrain,structured_filter_pruning,0.5,l1_filter_recon,,inner-val 100/subject,2,2,0.7902,0.0072,0.9084,0.0385,0.839,0 1,only 2 fold(s); <3 seeds/fold
+round4,no_retrain,structured_filter_pruning,0.5,xgp_s,,inner-val 100/subject,2,6,0.7996,0.0097,0.8858,0.0399,0.8431,0 1,only 2 fold(s)
+round4,no_retrain,structured_filter_pruning,0.5,taylor_recon,,inner-val 100/subject,2,2,0.7957,0.0201,0.8261,0.0814,0.7712,0 1,only 2 fold(s); <3 seeds/fold
+round4,no_retrain,structured_filter_pruning,0.5,l1_filter,,inner-val 100/subject,2,2,0.1886,0.0363,0.2948,0.0076,0.2217,0 1,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6)
+round4,no_retrain,structured_filter_pruning,0.75,taylor_recon,,inner-val 100/subject,2,2,0.752,0.0113,0.736,0.0582,0.6797,0 1,only 2 fold(s); <3 seeds/fold
+round4,no_retrain,structured_filter_pruning,0.75,xgp_s,,inner-val 100/subject,2,6,0.7491,0.0241,0.7012,0.0869,0.6563,0 1,only 2 fold(s)
+round4,no_retrain,structured_filter_pruning,0.75,l1_filter_recon,,inner-val 100/subject,2,2,0.7713,0.0471,0.6126,0.0223,0.5714,0 1,only 2 fold(s); <3 seeds/fold
+round4,no_retrain,structured_filter_pruning,0.75,l1_filter,,inner-val 100/subject,2,2,0.0663,0.0328,0.0579,0.054,0.0286,0 1,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6)
+round3,no_retrain,unstructured_pruning,0.5,xgp_no_iter,xgp_no_iter(beta=0.5),inner-val 100/subject,2,6,0.7803,0.0188,0.921,0.0361,0.8872,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.5,xgp_no_score,xgp_no_score,inner-val 100/subject,2,6,0.7704,0.0181,0.8998,0.0298,0.859,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.5,xgp,xgp(beta=0.5),inner-val 100/subject,2,6,0.7806,0.02,0.8996,0.0414,0.8634,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.5,xgp_no_group,xgp_no_group(beta=0.5),inner-val 100/subject,2,6,0.7796,0.0185,0.8951,0.0454,0.863,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.5,xgp,xgp(beta=0.1),inner-val 100/subject,2,6,0.7748,0.0178,0.8931,0.0328,0.8617,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.5,xgp,xgp(beta=0.3),inner-val 100/subject,2,6,0.7799,0.021,0.8851,0.0323,0.863,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.5,l1_recon,,inner-val 100/subject,2,2,0.7691,0.0207,0.8728,0.0755,0.857,0 1,only 2 fold(s); <3 seeds/fold
+round3,no_retrain,unstructured_pruning,0.5,xgp_no_recon,xgp_no_recon(beta=0.5),inner-val 100/subject,2,6,0.6373,0.0603,0.6929,0.1198,0.62,0 1,only 2 fold(s); LCI SD > 0.10
+round3,no_retrain,unstructured_pruning,0.5,l1,,inner-val 100/subject,2,2,0.5849,0.0505,0.6635,0.1548,0.585,0 1,only 2 fold(s); <3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6)
+round3,no_retrain,unstructured_pruning,0.5,snip,,inner-val 100/subject,2,2,0.2679,0.0374,0.3325,0.1467,0.2679,0 1,only 2 fold(s); <3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6)
+round3,no_retrain,unstructured_pruning,0.7,l1_recon,,inner-val 100/subject,2,2,0.7432,0.0058,0.8076,0.1232,0.7916,0 1,only 2 fold(s); <3 seeds/fold; LCI SD > 0.10
+round3,no_retrain,unstructured_pruning,0.7,xgp_no_group,xgp_no_group(beta=0.1),inner-val 100/subject,2,6,0.773,0.0172,0.807,0.0771,0.801,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.7,xgp,xgp(beta=0.3),inner-val 100/subject,2,6,0.7698,0.0157,0.8058,0.0825,0.8034,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.7,xgp,xgp(beta=0.1),inner-val 100/subject,2,6,0.7716,0.0166,0.8034,0.0809,0.8004,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.7,xgp_no_score,xgp_no_score,inner-val 100/subject,2,6,0.7622,0.0141,0.7977,0.0777,0.7956,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.7,xgp_no_iter,xgp_no_iter(beta=0.1),inner-val 100/subject,2,6,0.7602,0.0059,0.7975,0.0813,0.7863,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.7,xgp,xgp(beta=0.5),inner-val 100/subject,2,6,0.7782,0.0242,0.7862,0.0644,0.7749,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.7,l1,,inner-val 100/subject,2,2,0.3357,0.042,0.4303,0.0689,0.3282,0 1,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6)
+round3,no_retrain,unstructured_pruning,0.7,xgp_no_recon,xgp_no_recon(beta=0.1),inner-val 100/subject,2,6,0.3061,0.071,0.4165,0.0581,0.3333,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round3,no_retrain,unstructured_pruning,0.7,snip,,inner-val 100/subject,2,2,0.1776,0.0965,0.1818,0.144,0.1573,0 1,only 2 fold(s); <3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6)
+round4,no_retrain,unstructured_pruning,0.8,l1_recon,,inner-val 100/subject,2,2,0.764,0.0069,0.7149,0.1004,0.6875,0 1,only 2 fold(s); <3 seeds/fold; LCI SD > 0.10
+round4,no_retrain,unstructured_pruning,0.8,xgp_xb,,inner-val 100/subject,2,6,0.7527,0.0118,0.7084,0.0691,0.6727,0 1,only 2 fold(s)
+round4,no_retrain,unstructured_pruning,0.8,xgp_r3,,inner-val 100/subject,2,6,0.7769,0.0149,0.6978,0.0939,0.6402,0 1,only 2 fold(s)
+round4,no_retrain,unstructured_pruning,0.8,l1_xb_recon,,inner-val 100/subject,2,6,0.772,0.0074,0.6973,0.0834,0.6476,0 1,only 2 fold(s)
+round4,no_retrain,unstructured_pruning,0.8,xgp,,inner-val 100/subject,2,6,0.7618,0.0081,0.6837,0.0449,0.6489,0 1,only 2 fold(s)
+round4,no_retrain,unstructured_pruning,0.8,lamp_recon,,inner-val 100/subject,2,2,0.7695,0.0013,0.6771,0.1107,0.659,0 1,only 2 fold(s); <3 seeds/fold; LCI SD > 0.10
+round4,no_retrain,unstructured_pruning,0.8,xgp_lamp,,inner-val 100/subject,2,6,0.739,0.0318,0.6673,0.0525,0.6321,0 1,only 2 fold(s)
+round4,no_retrain,unstructured_pruning,0.8,l1,,inner-val 100/subject,2,2,0.1601,0.168,0.2326,0.0379,0.2144,0 1,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6)
+round4,no_retrain,unstructured_pruning,0.9,lamp_recon,,inner-val 100/subject,2,2,0.647,0.0189,0.521,0.1112,0.4894,0 1,only 2 fold(s); <3 seeds/fold; LCI SD > 0.10
+round3,no_retrain,unstructured_pruning,0.9,xgp,xgp(beta=0.3),inner-val 100/subject,2,6,0.671,0.0282,0.5044,0.041,0.4507,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.9,xgp_no_score,xgp_no_score,inner-val 100/subject,2,6,0.6501,0.0052,0.503,0.054,0.4678,0 1,only 2 fold(s)
+round4,no_retrain,unstructured_pruning,0.9,xgp_r3,,inner-val 100/subject,2,6,0.6725,0.0,0.503,0.054,0.4678,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.9,l1_recon,,inner-val 100/subject,2,2,0.6135,0.019,0.5011,0.0793,0.4653,0 1,only 2 fold(s); <3 seeds/fold
+round3,no_retrain,unstructured_pruning,0.9,xgp_no_group,xgp_no_group(beta=0.1),inner-val 100/subject,2,6,0.6898,0.0408,0.4937,0.0224,0.4621,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.9,xgp,xgp(beta=0.1),inner-val 100/subject,2,6,0.6763,0.0473,0.493,0.0337,0.4479,0 1,only 2 fold(s)
+round4,no_retrain,unstructured_pruning,0.9,l1_xb_recon,,inner-val 100/subject,2,6,0.674,0.0298,0.4906,0.0162,0.4698,0 1,only 2 fold(s)
+round4,no_retrain,unstructured_pruning,0.9,xgp_xb,,inner-val 100/subject,2,6,0.6959,0.029,0.4904,0.0152,0.4595,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.9,xgp,xgp(beta=0.5),inner-val 100/subject,2,6,0.6558,0.0208,0.4871,0.0213,0.426,0 1,only 2 fold(s)
+round4,no_retrain,unstructured_pruning,0.9,xgp,,inner-val 100/subject,2,6,0.689,0.0112,0.4838,0.0409,0.4517,0 1,only 2 fold(s)
+round4,no_retrain,unstructured_pruning,0.9,l1_recon,,inner-val 100/subject,2,2,0.6525,0.0163,0.4819,0.0236,0.4446,0 1,only 2 fold(s); <3 seeds/fold
+round4,no_retrain,unstructured_pruning,0.9,xgp_lamp,,inner-val 100/subject,2,6,0.6223,0.0435,0.4667,0.0248,0.4399,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.9,xgp_no_iter,xgp_no_iter(beta=0.1),inner-val 100/subject,2,6,0.6157,0.0079,0.4526,0.0456,0.4188,0 1,only 2 fold(s)
+round3,no_retrain,unstructured_pruning,0.9,xgp_no_recon,xgp_no_recon(beta=0.1),inner-val 100/subject,2,6,0.13,0.1011,0.2345,0.0752,0.1952,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,no_retrain,unstructured_pruning,0.9,l1,,inner-val 100/subject,2,2,0.0517,0.0053,0.2119,0.0506,0.1843,0 1,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6)
+round3,no_retrain,unstructured_pruning,0.9,l1,,inner-val 100/subject,2,2,0.051,0.0046,0.2119,0.0506,0.1843,0 1,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6)
+round3,no_retrain,unstructured_pruning,0.9,snip,,inner-val 100/subject,2,2,0.1399,0.1354,0.1204,0.0942,0.0768,0 1,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6)
+round4,no_retrain,unstructured_pruning,0.95,xgp_xb,,inner-val 100/subject,2,6,0.5061,0.0451,0.3742,0.0159,0.3488,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,no_retrain,unstructured_pruning,0.95,xgp,,inner-val 100/subject,2,6,0.4717,0.0348,0.3491,0.0256,0.299,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,no_retrain,unstructured_pruning,0.95,l1_xb_recon,,inner-val 100/subject,2,6,0.4581,0.1062,0.3459,0.0569,0.3015,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,no_retrain,unstructured_pruning,0.95,xgp_lamp,,inner-val 100/subject,2,6,0.4304,0.0623,0.3044,0.0458,0.2773,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,no_retrain,unstructured_pruning,0.95,l1_recon,,inner-val 100/subject,2,2,0.4416,0.1582,0.3018,0.0957,0.2529,0 1,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6)
+round4,no_retrain,unstructured_pruning,0.95,xgp_r3,,inner-val 100/subject,2,6,0.3946,0.0453,0.3011,0.067,0.2657,0 1,only 2 fold(s); F1 collapsed (<0.6)
+round4,no_retrain,unstructured_pruning,0.95,lamp_recon,,inner-val 100/subject,2,2,0.3297,0.2264,0.2777,0.0293,0.2526,0 1,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6)
+round4,no_retrain,unstructured_pruning,0.95,l1,,inner-val 100/subject,2,2,0.0187,0.0201,0.0685,0.0361,0.0499,0 1,only 2 fold(s); <3 seeds/fold; F1 collapsed (<0.6)
+9A,no_retrain,unstructured_pruning,30%,l1,f1=non-stair macro,inner-val 30/subject,5,5,0.8293,0.028,0.8919,0.0375,,0 1 2 3 4,<3 seeds/fold
+9A,no_retrain,unstructured_pruning,30%,snip,f1=non-stair macro,inner-val 30/subject,5,5,0.7432,0.0453,0.7386,0.0537,,0 1 2 3 4,<3 seeds/fold
+9A,no_retrain,unstructured_pruning,50%,l1,f1=non-stair macro,inner-val 30/subject,5,5,0.7096,0.0308,0.6595,0.1019,,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10
+9A,no_retrain,unstructured_pruning,50%,snip,f1=non-stair macro,inner-val 30/subject,5,5,0.3978,0.0724,0.4181,0.1249,,0 1 2 3 4,<3 seeds/fold; LCI SD > 0.10; F1 collapsed (<0.6)
+9A,no_retrain,unstructured_pruning,70%,l1,f1=non-stair macro,inner-val 30/subject,5,5,0.307,0.1148,0.411,0.0966,,0 1 2 3 4,<3 seeds/fold; F1 collapsed (<0.6)
+9A,no_retrain,unstructured_pruning,70%,snip,f1=non-stair macro,inner-val 30/subject,5,5,0.1962,0.0847,0.1788,0.0794,,0 1 2 3 4,<3 seeds/fold; F1 collapsed (<0.6)
+lowbit,no_retrain,unstructured_pruning,90%,lamp_recon,,inner-val 30/subject,5,5,0.7053,0.0577,0.4767,0.0583,0.4374,0 1 2 3 4,<3 seeds/fold
+9A,no_retrain,unstructured_pruning,90%,l1,f1=non-stair macro,inner-val 30/subject,5,5,0.079,0.0755,0.1775,0.0736,,0 1 2 3 4,<3 seeds/fold; F1 collapsed (<0.6)
+9A,no_retrain,unstructured_pruning,90%,snip,f1=non-stair macro,inner-val 30/subject,5,5,0.1001,0.1175,0.1179,0.0822,,0 1 2 3 4,<3 seeds/fold; F1 collapsed (<0.6)
+lowbit,no_retrain,unstructured_pruning,95%,lamp_recon,,inner-val 30/subject,5,5,0.405,0.1349,0.2717,0.0448,0.2409,0 1 2 3 4,<3 seeds/fold; F1 collapsed (<0.6)
+9A,reference,unstructured_pruning,none,noise_shap_seed2,f1=non-stair macro,inner-val 30/subject,5,5,,,0.9388,0.025,,0 1 2 3 4,<3 seeds/fold
+9A,reference,unstructured_pruning,none,noise_shap_seed1,f1=non-stair macro,inner-val 30/subject,5,5,,,0.9237,0.034,,0 1 2 3 4,<3 seeds/fold
+9A,reference,unstructured_pruning,none,noise_retrain_seed3,f1=non-stair macro,inner-val 30/subject,5,5,,,0.6938,0.091,,0 1 2 3 4,<3 seeds/fold
+9A,reference,unstructured_pruning,none,noise_retrain_seed2,f1=non-stair macro,inner-val 30/subject,5,5,,,0.6886,0.0701,,0 1 2 3 4,<3 seeds/fold
+9A,reference,unstructured_pruning,none,noise_retrain_seed1,f1=non-stair macro,inner-val 30/subject,5,5,,,0.6602,0.043,,0 1 2 3 4,<3 seeds/fold
