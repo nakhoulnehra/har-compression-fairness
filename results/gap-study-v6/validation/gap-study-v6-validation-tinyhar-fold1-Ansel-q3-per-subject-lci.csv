@@ -1,0 +1,4 @@
+fold,machine_name,device,ceiling50,run_id,stage,method,bits,epochs,lr,seed,width,subject,lci,shap_corr,jaccard,n_skipped
+1,Ansel,cuda,0.9142727541945902,qat_fmkd_p8_from_gptq-2bit-seed0-lr3e-05-e20,qat,qat_fmkd_p8,2,20,3e-05,0,28,S014,0.7695976775219762,0.8725286883772857,0.6666666666666666,0
+1,Ansel,cuda,0.9142727541945902,qat_fmkd_p8_from_gptq-2bit-seed0-lr3e-05-e20,qat,qat_fmkd_p8,2,20,3e-05,0,28,S018,0.6558426622534358,0.8831138959354431,0.42857142857142855,0
+1,Ansel,cuda,0.9142727541945902,qat_fmkd_p8_from_gptq-2bit-seed0-lr3e-05-e20,qat,qat_fmkd_p8,2,20,3e-05,0,28,S024,0.7085341834728028,0.8786068284840672,0.5384615384615384,0

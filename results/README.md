@@ -804,3 +804,37 @@ existing baselines it had not run, and how high LCI can go at 80 / 90 % sparsity
   - FMOA90 (fmkd from the KL-chosen allocation) **0.832** (16/40 subjects with gap ≥ 0.10), accuracy 0.836.
   - v3's LAMPKD90 0.767 (31/40), accuracy 0.839; FMOA90 − LAMPKD90 = **+0.065** (36/40 subjects, p < 1e-4).
   - AKL90 (one shot) 0.777, accuracy 0.812.
+
+## gap-study-v6/validation/ (2026-11-28 afternoon, Ansel; run log `gap_study_v6/RUNS.md`; report `gap_study_v6/GAP_REPORT.md`)
+Same protocol as v3–v5: inner val, `lci_indep`, ceiling u = 0.932 (per fold 0.914–0.962). The search for a **new** gap
+found none that passes; no new method. Seed 0 throughout.
+
+### gap-study-v6-validation-tinyhar-fold{0..4}-Ansel-{s12,scarce,quant,q2,q3}-{models,per-subject-lci,history}.csv, -config.json
+- What: one row per model (F1, accuracy, LCI, lci_indep, self, occlusion, agreement, cal_kl / val_kl, n_params,
+  seconds). The history files hold per-epoch training curves.
+- Workers:
+  - s12 = dense students, width 12 / 20 (fmkd, slice_fmkd, capfit, slice_capfit);
+  - scarce = one shot with N random unlabelled windows (akl, akl_mix, obcu);
+  - quant = RTN / GPTQ at 3 / 2 bits;
+  - q2 = gptq_p8 + QAT + fmkd lr 1e-4;
+  - q3 = QAT + fmkd lr 3e-5 / 3e-4.
+- Key numbers: next entry.
+
+### [gap-study-v6-validation-tinyhar-summary-mean-over-folds.csv](gap-study-v6/validation/gap-study-v6-validation-tinyhar-summary-mean-over-folds.csv), [-lci-indep-per-fold.csv](gap-study-v6/validation/gap-study-v6-validation-tinyhar-lci-indep-per-fold.csv), [-paired-gaps.csv](gap-study-v6/validation/gap-study-v6-validation-tinyhar-paired-gaps.csv), [-kl-decoupling.csv](gap-study-v6/validation/gap-study-v6-validation-tinyhar-kl-decoupling.csv)
+- What: means over the folds run, per-fold `lci_indep`, fold-paired differences (t 95 % CI), and each student's LCI
+  residual against the fold's fit of LCI on log(cal KL) over v5's in-place models.
+- **A, dense students:**
+  - width 12 (10,401 parameters; folds 0 / 2): fmkd from scratch 0.786, slice_fmkd 0.806, capfit oracle 0.823,
+    slice_capfit 0.808; ceiling 0.930; accuracy within 0.5 pt;
+  - KL decoupling: fmkd W12 residual −0.044 / −0.087 (in-place models at the same KL 0.894 / 0.821); occlusion
+    0.597 vs ≈ 0.80;
+  - width 20 (28,049 parameters): slice_fmkd 0.920 / 0.849 / 0.868 (folds 0 / 2 / 4), fmkd from scratch
+    0.935 / 0.825. No gap.
+- **B, fold 0:** N = 16: akl 0.700 (F1 0.629, original 0.818), akl_mix 0.752, obcu 0.722. N = 64: akl 0.949,
+  akl_mix 0.885.
+- **D, 5 folds (accuracy Δ):**
+  - rtn 3-bit 0.851 (−2.0 pt), **gptq 3-bit 0.926** (−0.2 pt); GPTQ − RTN +0.074 [0.004, 0.144], 5/5 folds;
+  - rtn 2-bit 0.600 (−24.9 pt), gptq 2-bit 0.778 (−2.2 pt);
+  - gptq_p8 2-bit (21.2 KB): 0.902 / 0.732 / 0.856 / 0.879 / 0.832, mean 0.840 (0.863 on folds 0 / 2 / 4).
+- **2-bit maxima (QAT + fmkd p8, 20 ep), folds 0 / 2 / 4:** lr 3e-5 0.861, lr 1e-4 0.837, lr 3e-4 0.840; per-fold best
+  0.875. lr 3e-5 on 5 folds: 0.875 / 0.734 / 0.877 / 0.818 / 0.831 = 0.827 (gptq_p8 0.840). None is ≥ 0.05 above gptq_p8, so the 2-bit cell fails.

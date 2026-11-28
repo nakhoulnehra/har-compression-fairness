@@ -1,5 +1,32 @@
 # Gap summary
 
+## Update 2026-11-28 afternoon (gap study v6, `gap_study_v6/GAP_REPORT.md`): searched for a new gap; none passes
+
+The goal was a **new** gap (not v3–v5's). Candidates were ranked by theory, checked on existing data, then tested
+against the strongest existing baselines. Every rule was written before its result (`gap_study_v6/RUNS.md`). All
+numbers are HARTH inner validation, `lci_indep`; ceiling 0.932.
+
+| Candidate | Strongest existing | Highest measured at that size | Verdict |
+|---|---|---|---|
+| A. Dense narrow student (leaves the weight basin), width 12 = 10.4 k parameters | 0.806 (structured slicing + fmkd) | 0.823 (capacity oracle) | capacity limit, not fixable |
+| A, width 20 = 28 k parameters | 0.885 (slicing + fmkd); from scratch 0.880 | — | no gap |
+| B. One shot with N random unlabelled calibration windows | N = 64: 0.949 (fold 0) | — | no gap; N = 16 is an accuracy collapse |
+| C. Older adults at deployment (v5 test) | AKL 0.860 older vs 0.856 general | — | no group gap |
+| D. One-shot 3-bit weight quantization (27.2 KB) | **GPTQ 0.926** (RTN 0.851) | — | closed by GPTQ |
+| D, 2-bit (20.7–21.2 KB) | GPTQ + 8-bit first / last tensors 0.840 (5 folds) | QAT + fmkd 0.827 (best lr, 5 folds) | training does not go higher |
+| One shot 90 % (v5 data) | AKL90 0.771 | fmkd 0.851 | not on every fold (−0.006 on fold 4); −2.2 pt accuracy |
+
+What the day adds to v5's law (explanation fidelity tracks output fidelity):
+- It holds for every in-basin compressor, quantization included. GPTQ, which had never been run here, keeps 3-bit
+  at the ceiling.
+- A student outside the basin breaks the link (at width 12, LCI is 0.066 below what its output KL predicts for
+  in-place models; occlusion 0.60 vs 0.80), but only when it lacks capacity, and then no objective recovers it.
+- At ≈ 20–28 KB every route stops 0.06–0.08 below the ceiling, and nothing measured exceeds the strongest existing
+  model by ≥ 0.05.
+
+Closest candidate: one-shot 2-bit quantization, best existing 0.840 vs ceiling 0.932. The best achievable measured
+(QAT + fmkd 0.827) is not above it, so it is not promising.
+
 ## Update 2026-11-28 (gap study v5, `gap_study_v5/GAP_REPORT.md`): the 2026-11-27 gap below does not survive
 
 The 2026-11-27 gap (one-shot 80 % pruning; best baseline 0.773 vs 0.865 at the same masks) was measured against

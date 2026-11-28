@@ -1,0 +1,4 @@
+fold,machine_name,device,ceiling50,run_id,stage,method,width,seed,epochs,lr,subject,lci,shap_corr,jaccard,n_skipped
+4,Ansel,cuda,0.9454638065589499,slice_fmkd-w20-seed0-lr0.0003-e30,stu,slice_fmkd,20,0,30,0.0003,S012,0.8780197260082414,0.9378576338346645,0.8181818181818182,0
+4,Ansel,cuda,0.9454638065589499,slice_fmkd-w20-seed0-lr0.0003-e30,stu,slice_fmkd,20,0,30,0.0003,S016,0.9692358404435051,0.9384716808870102,1.0,0
+4,Ansel,cuda,0.9454638065589499,slice_fmkd-w20-seed0-lr0.0003-e30,stu,slice_fmkd,20,0,30,0.0003,S024,0.8792032925616582,0.9402247669414983,0.8181818181818182,0

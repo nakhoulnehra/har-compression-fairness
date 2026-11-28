@@ -1,0 +1,4 @@
+fold,machine_name,device,ceiling50,run_id,stage,method,bits,seed,width,subject,lci,shap_corr,jaccard,n_skipped
+3,Ansel,cuda,0.9404299954707159,gptq_p8-2bit-seed0,quant,gptq_p8,2,0,28,S017,0.8596824889241917,0.9011831596665653,0.8181818181818182,0
+3,Ansel,cuda,0.9404299954707159,gptq_p8-2bit-seed0,quant,gptq_p8,2,0,28,S022,0.9576708374869894,0.9153416749739789,1.0,0
+3,Ansel,cuda,0.9404299954707159,gptq_p8-2bit-seed0,quant,gptq_p8,2,0,28,S024,0.8781447621817404,0.9381077061816625,0.8181818181818182,0
