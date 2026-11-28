@@ -437,3 +437,41 @@ python -m gap_study_v4.test_confirm --analyze --models <labels>
 ```
 Checkpoints (local, git-ignored): `data/processed/har/checkpoints/gap-study-v4/`; attributions
 `data/processed/har/gap-study-v4/attributions/`. Needs agent B's `data/processed/har/checkpoints/gap-study/phase2/`.
+
+## Gap study v5 (2026-11-27 → 28, Ansel; `gap_study_v5/`; no new method)
+Same environment (torch 2.7.1+cu118, `.venv`, repo root, `$env:PYTHONPATH = "bit-reduction-test"`). Imports
+`gap_study_v3.confirm` / `gap_study_v3.baselines` / `gap_study_v4.run_v4` / `gap_study_v4.test_confirm` unchanged.
+Run log with every launch, stop and rule: `gap_study_v5/RUNS.md`. Workers were started detached (helper scripts deleted at cleanup, as in v4) with
+`gap_study_v5/launch.ps1 <name> <run_v5 args>` (generic module: `launch_mod.ps1 <name> <module> <args>`);
+`keep_awake.ps1` kept Windows awake; `watch.sh` / `after.sh` woke the agent and chained runs (logs deleted at cleanup).
+```
+# smoke (CPU + CUDA, scratchpad output, 1-2 min each)
+python -m gap_study_v5.run_v5 --folds 0 --stages ref nr5 abl swap orc --smoke --threads 8 --ft-device cuda --out <scratch>/smoke-v5
+python -m gap_study_v5.run_v5 --folds 0 --stages ref alloc --smoke --threads 2 --out <scratch>/smoke-v5e
+# validation (per fold k = 0..4, or several folds per worker; --device cpu for building / scoring)
+python -u -m gap_study_v5.run_v5 --folds <k> --stages ref nr5 abl swap --device cpu --threads 2 --worker nr --machine-name Ansel --resume
+python -u -m gap_study_v5.run_v5 --folds 0 1 2 3 4 --stages ref nr5x:obc_fullrecon:0.9:0 nr5s:obc_fullrecon nr5x:obc_fullrecon:0.7:0 --device cpu --threads 2 --worker obcx --machine-name Ansel --resume
+python -u -m gap_study_v5.run_v5 --folds 0 1 2 3 4 --stages ref nr5x:obc_fullrecon_k5:0.8:0 --device cpu --threads 2 --worker obck --machine-name Ansel --resume
+python -u -m gap_study_v5.run_v5 --folds <k> --stages ref nr5x:obc_fullrecon_mixcal:0.8:0 nr5x:obc_fullrecon_damp0.1:0.8:0 nr5x:obc_fullrecon_damp0.001:0.8:0 nr5x:obc_fullrecon_cal5x:0.8:0 swap2 --device cpu --threads 2 --worker obcv --machine-name Ansel --resume
+python -u -m gap_study_v5.run_v5 --folds 0 1 2 3 4 --stages ref "nr5x:obc_fullrecon_cal5x:0.8:1,2" "nr5x:obc_fullrecon_mixcal:0.8:1,2" --device cpu --threads 2 --worker obcs --machine-name Ansel --resume   # quote the comma in PowerShell
+python -u -m gap_study_v5.run_v5 --folds <k> --stages ref alloc --device cpu --threads 2 --worker alloc --machine-name Ansel --resume
+python -u -m gap_study_v5.run_v5 --folds <k> --stages ref alloc90 --device cpu --threads 2 --worker alloc90 --machine-name Ansel --resume
+python -u -m gap_study_v5.shift_probe --folds 0 1 2 3 4 --threads 2 --resume
+# GPU references and oracles (--ft-device cuda)
+python -u -m gap_study_v5.run_v5 --folds <k> --stages ref orc --device cpu --ft-device cuda --threads 2 --worker orc --machine-name Ansel --resume      # jfm (stopped after lam 1 at 80 %)
+python -u -m gap_study_v5.run_v5 --folds <k> --stages ref fmo:obc_fullrecon-80pct-seed0:0.8 --device cpu --ft-device cuda --threads 2 --worker fmo --machine-name Ansel --resume
+python -u -m gap_study_v5.run_v5 --folds <k> --stages ref cap:obc_fullrecon-80pct-seed0:0.8:10:20 --device cpu --ft-device cuda --threads 2 --worker cap --machine-name Ansel --resume
+python -u -m gap_study_v5.run_v5 --folds <k> --stages ref cap:lamp_recon-90pct-seed0:0.9:10:20 --device cpu --ft-device cuda --threads 2 --worker cap90 --machine-name Ansel --resume
+python -u -m gap_study_v5.run_v5 --folds 1 2 --stages ref cap:alloc_a5-80pct-seed0:0.8:100:40 --device cpu --ft-device cuda --threads 2 --worker capS --machine-name Ansel --resume
+python -u -m gap_study_v5.run_v5 --folds <k> --stages ref fmo:<KL-chosen allocation>-90pct-seed0:0.9:20 --device cpu --ft-device cuda --threads 2 --worker fmoA90 --machine-name Ansel --resume   # a3 (folds 0 1 2 4), a4 (fold 3)
+# held-out test (run once, candidate sets fixed before; HARTH test subjects + HAR70+)
+python -m gap_study_v4.test_confirm --folds <k> --threads 2 --resume --out results/gap-study-v5/test --models OBC=<ckpt {k}> OBC5X=... FMKD=... MIXCAL=... L1FR=...
+python -m gap_study_v4.test_confirm --folds <k> --threads 2 --resume --out results/gap-study-v5/test --models CAP=... AKL=<KL-chosen 80 % allocation of fold k> FMO=...
+python -m gap_study_v4.test_confirm --folds <k> --threads 3 --resume --out results/gap-study-v5/test --models LAMPKD90=<v3 lamp_recon_kd 90 % lr 3e-4 seed 0> AKL90=... FMOA90=...
+# analysis (seconds)
+python -m gap_study_v5.analyze_v5
+python -m gap_study_v5.analyze_test_v5 --models <labels> --pairs A:B ...
+python -m gap_study_v5.diagnose_v5 --folds 0 1 2 3 4 --models UNI=v5:alloc_a0-80pct-seed0 ...
+```
+Checkpoints (local, git-ignored): `data/processed/har/checkpoints/gap-study-v5/`; attributions
+`data/processed/har/gap-study-v5/attributions/`. Needs agent B's `gap-study/phase2/`, v3's and v4's checkpoints.

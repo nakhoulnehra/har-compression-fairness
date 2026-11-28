@@ -1,4 +1,44 @@
-# Gap summary: explanations break under one-shot pruning while accuracy holds
+# Gap summary
+
+## Update 2026-11-28 (gap study v5, `gap_study_v5/GAP_REPORT.md`): the 2026-11-27 gap below does not survive
+
+The 2026-11-27 gap (one-shot 80 % pruning; best baseline 0.773 vs 0.865 at the same masks) was measured against
+baselines that missed two existing ingredients:
+1. **Hessian-aware mask selection.** OBC + full refit (Frantar et al. 2022) reaches **0.817** (3 seeds).
+2. **Output-driven layer budgets.** Choosing among 7 group allocations by the lowest output KL on the calibration
+   windows (label-free, backprop-free, SPDY / OWL-style) reaches **0.864** (3 seeds), the same as full-data fmkd (0.865).
+
+Held-out test (40 subjects, ceiling 0.917):
+
+| Model | LCI | Paired difference |
+|---|---|---|
+| KL-chosen allocation | 0.858 | vs fmkd: +0.021 (p = 0.002) |
+| fmkd | 0.837 | — |
+| OBC | 0.834 | vs mixcal: +0.067 (39/40 subjects) |
+| v4's mixcal | 0.767 | — |
+
+At 90 % the same pieces plus fmkd reach **0.851** (v3's tuned baseline 0.781, accuracy −0.1 pt), so v3's second
+gap closes too.
+
+What remains is the residual of the strongest existing combination to the uncompressed ceiling: 0.068 at 80 %
+(0.059 on test) and 0.081 at 90 %. No oracle tonight exceeded the strongest existing combination by ≥ 0.05:
+- capacity oracle at 80 %: 0.875 (+0.010);
+- the same at 90 %: 0.798 (below);
+- gradient-field oracles: below fmkd.
+
+The residual sits in fold 1, where even a hard fit to the evaluated windows stays at 0.80 (ceiling 0.914), and in
+walking / standing.
+
+**Decision: no fixable between-method gap passes the bar**, by rule 5, written before the 90 % results.
+
+Why, in theory and in the data: within a fold, explanation fidelity tracks the label-free output KL on calibration
+windows (Spearman −0.57 at 80 %, −0.80 at 90 %), and not accuracy (−0.06 at 80 %). Explanations are preserved
+exactly as well as the function is, so the strongest output-fidelity tools already do the job. A new method would
+need to reach > 0.864 / 0.851 at the same size. The only bound above that is the 0.932 ceiling.
+
+## History (superseded 2026-11-28): the 2026-11-27 decision
+
+### Gap summary: explanations break under one-shot pruning while accuracy holds
 
 Final decision, 2026-11-27. It draws on every study in this repository (9A grid, XGP rounds 1–4, low-bit / bit-reduction
 tests, PAIR, GMR, gap studies v3 and v4). **No new method is proposed here.** All numbers are HARTH inner validation

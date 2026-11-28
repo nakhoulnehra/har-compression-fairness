@@ -1,0 +1,132 @@
+{
+  "command": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\gap_study_v5\\run_v5.py --folds 3 --stages ref allocs:0.8:1,2 --device cpu --threads 2 --worker allocs --machine-name Ansel --resume",
+  "fold": 3,
+  "device": "cpu",
+  "ft_device": "cuda",
+  "machine": "Ansel",
+  "torch": "2.7.1+cu118",
+  "explain_per_subject": 50,
+  "window_hashes": {
+    "explain": "635c15b0b155f2858e3cfebcb586908291be99af342950a22a4efc5d35f56e9c",
+    "f1": "800030fb672d2fd134535cdf59339970382655c4e265312efec727c80b2805b1",
+    "calibration": "83131e4e15a195c67884e97e004a0d88ab7fb5033a36f1aba1fbfd5349772fa3",
+    "lci_calibration": "b7f8eb80c4be3e49d6f5390775c021686f9f1a008387b77cf325af05ec84559c",
+    "n_explain": 150,
+    "n_f1": 6274,
+    "n_calibration": 958,
+    "n_lci_calibration": 140,
+    "inner_val_subjects": [
+      "S017",
+      "S022",
+      "S024"
+    ],
+    "n_train_subjects": 15
+  },
+  "ceiling50": 0.9404299954707159,
+  "calibration": {
+    "per_cell": 10,
+    "seed0": 46,
+    "per_cell_5x": 50
+  },
+  "level": 0.8,
+  "orc_epochs": 20,
+  "orc_sub": 64,
+  "kd": {
+    "T": 3.0,
+    "alpha": 0.7
+  },
+  "obc_damp": 0.01,
+  "dsnot_cycles": 50,
+  "plan": [
+    {
+      "stage": "ref",
+      "method": "original",
+      "level": 0.0,
+      "seed": 0
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a0",
+      "level": 0.8,
+      "seed": 1
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a1",
+      "level": 0.8,
+      "seed": 1
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a2",
+      "level": 0.8,
+      "seed": 1
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a3",
+      "level": 0.8,
+      "seed": 1
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a4",
+      "level": 0.8,
+      "seed": 1
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a5",
+      "level": 0.8,
+      "seed": 1
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a6",
+      "level": 0.8,
+      "seed": 1
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a0",
+      "level": 0.8,
+      "seed": 2
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a1",
+      "level": 0.8,
+      "seed": 2
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a2",
+      "level": 0.8,
+      "seed": 2
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a3",
+      "level": 0.8,
+      "seed": 2
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a4",
+      "level": 0.8,
+      "seed": 2
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a5",
+      "level": 0.8,
+      "seed": 2
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a6",
+      "level": 0.8,
+      "seed": 2
+    }
+  ]
+}

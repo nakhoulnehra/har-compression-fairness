@@ -1,0 +1,84 @@
+{
+  "command": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\gap_study_v5\\run_v5.py --folds 1 --stages ref orc --device cpu --ft-device cuda --threads 2 --worker orc --machine-name Ansel --resume",
+  "fold": 1,
+  "device": "cpu",
+  "ft_device": "cuda",
+  "machine": "Ansel",
+  "torch": "2.7.1+cu118",
+  "explain_per_subject": 50,
+  "window_hashes": {
+    "explain": "7f8bfa0c335d517a1d4fdf4013a3a2728ebd62ecf77b09dfa0c5124af819e77e",
+    "f1": "3e657c65407631751d48678ccb6322b8ec1fcc3ed7900db9ce49f09a7e56095e",
+    "calibration": "dd07918600fa55ef5203e9089bb115ce14e6bd2a9bd88ed334c04d5afb2bfec7",
+    "lci_calibration": "cceab7d223a3d1d952436d165bbe5b397b0f549163a5d0f0ea932acfbdd14213",
+    "n_explain": 150,
+    "n_f1": 6163,
+    "n_calibration": 967,
+    "n_lci_calibration": 140,
+    "inner_val_subjects": [
+      "S014",
+      "S018",
+      "S024"
+    ],
+    "n_train_subjects": 15
+  },
+  "ceiling50": 0.9142727541945902,
+  "calibration": {
+    "per_cell": 10,
+    "seed0": 46,
+    "per_cell_5x": 50
+  },
+  "level": 0.8,
+  "orc_epochs": 20,
+  "orc_sub": 64,
+  "kd": {
+    "T": 3.0,
+    "alpha": 0.7
+  },
+  "obc_damp": 0.01,
+  "dsnot_cycles": 50,
+  "plan": [
+    {
+      "stage": "ref",
+      "method": "original",
+      "level": 0.0,
+      "seed": 0
+    },
+    {
+      "stage": "orc",
+      "method": "jfm",
+      "start": "l1_fullrecon",
+      "level": 0.8,
+      "seed": 0,
+      "lr": 0.0003,
+      "lam": 1.0
+    },
+    {
+      "stage": "orc",
+      "method": "jfm",
+      "start": "l1_fullrecon",
+      "level": 0.8,
+      "seed": 0,
+      "lr": 0.0003,
+      "lam": 10.0
+    },
+    {
+      "stage": "orc",
+      "method": "jfm",
+      "start": "lamp_recon",
+      "level": 0.9,
+      "seed": 0,
+      "lr": 0.0003,
+      "lam": 1.0
+    },
+    {
+      "stage": "orc",
+      "method": "jfm",
+      "start": "lamp_recon",
+      "level": 0.9,
+      "seed": 0,
+      "lr": 0.0003,
+      "lam": 10.0
+    }
+  ]
+}
