@@ -395,3 +395,15 @@ Not measured yet; replace with the real times after the runs.
 - Gap study v4 (`gap_study_v4.run_v4`, Ansel 3050 Ti + Ryzen 7 5800U, 2026-11-26): validation 13:11–≈ 20:30 (≈ 7.3 h wall,
   up to 6 processes). Function-matching KD fine-tunes ≈ 36 min each with 5 on the GPU (≈ 11 min estimated); label-free calfm on
   ≈ 980 windows (200 epochs) minutes per model; no-retraining builds as v3. Analysis / diagnostics: seconds to minutes.
+- Gap study v5 (`gap_study_v5`, Ansel 3050 Ti 4 GB + Ryzen 7 5800U 16 GB, 2026-11-27 21:58 → 11-28 ≈ 05:00, with a user
+  stop 22:40–23:23): up to 13 processes at once (≈ 1 GB RAM each; one worker failed at load with
+  `_ArrayMemoryError` at ≈ 1.6 GB free, so ≤ 12 is the practical limit), up to 6 on the GPU (3.6–3.9 GB).
+  Medians per model under that load:
+  - Builds: OBC + full refit 30 s (plain OBC 15 s; nested K = 5 139 s; 5× calibration 95 s); allocation builds 35 s
+    (80 %) / 25 s (90 %); DSnoT + refit 129 s; l1 K = 20 285 s.
+  - Scoring with the artefact checks (SHAP seeds 0 + 1, occlusion): 45–110 s.
+  - Fine-tunes on the shared GPU: fmkd 40 ep 24 min; capfit 20 ep (λ 10) 25 min; fmkd 20 ep from the 90 %
+    allocation 55 min with 6 GPU processes; jfm2 40 ep 54 min; capS (λ 100, 40 ep) ≈ 75 min.
+  - Held-out test (`gap_study_v4.test_confirm`, ≈ 690 explain windows per fold, 2 SHAP seeds + occlusion): 13–16 min
+    per model per fold with 5 test workers + 8 others; 5–7.5 min with 2–3 workers.
+  - Smoke runs: 1–2.5 min each. Analysis scripts: seconds.

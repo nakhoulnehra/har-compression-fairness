@@ -1,0 +1,4 @@
+fold,machine_name,device,ceiling50,run_id,stage,method,start,level,seed,lr,epochs,subject,lci,shap_corr,jaccard,n_skipped
+3,Ansel,cpu,0.9404299954707159,fmkd_from_alloc_a5-80pct-seed0-80pct-seed0-lr0.0003-e20,fmo,fmkd,alloc_a5-80pct-seed0,0.8,0,0.0003,20,S017,0.9700761295178293,0.9401522590356585,1.0,0
+3,Ansel,cpu,0.9404299954707159,fmkd_from_alloc_a5-80pct-seed0-80pct-seed0-lr0.0003-e20,fmo,fmkd,alloc_a5-80pct-seed0,0.8,0,0.0003,20,S022,0.8826795459131127,0.9471772736444073,0.8181818181818182,0
+3,Ansel,cpu,0.9404299954707159,fmkd_from_alloc_a5-80pct-seed0-80pct-seed0-lr0.0003-e20,fmo,fmkd,alloc_a5-80pct-seed0,0.8,0,0.0003,20,S024,0.8842287609309878,0.9502757036801575,0.8181818181818182,0

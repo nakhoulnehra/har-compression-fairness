@@ -721,3 +721,86 @@ no-retraining / label-free baselines.
   0.69 / 0.75 / 0.84, lying 0.92 / 0.94 / 0.95.
 - Gradient × input LCI (seed 0): l1_fullrecon 0.650, fmkd 0.704; at 90 % l1_fullrecon 0.507, lamp_recon_kd 0.637.
 
+
+## gap-study-v5/validation/ (2026-11-27 → 28, Ansel; run log `gap_study_v5/RUNS.md`; report `gap_study_v5/GAP_REPORT.md`)
+Same protocol as v3 / v4: inner val, 5 folds, `lci_indep`, ceiling u = 0.932. Tests whether v4's gap survives the
+existing baselines it had not run, and how high LCI can go at 80 / 90 % sparsity.
+
+### gap-study-v5-validation-tinyhar-fold{0..4}-Ansel-{nr,obcx,obck,obcv,obcs,alloc,alloc90,fmo,fmo90,fmoA90,orc,jfm2,cap,cap90,capS}-{models,per-subject-lci}.csv, -config.json
+- What: one row per model (F1, accuracy, LCI, lci_indep, self, occlusion, agreement, build / fine-tune seconds; from
+  `alloc` on also `cal_kl` / `val_kl` = KL(original ‖ model) on the calibration / inner-val windows). Workers:
+  - nr = OBC, DSnoT, SparseGPT + refit, BatchNorm re-estimation, K20, unit-only ablation, probe calibration;
+  - obcx / obck / obcv / obcs = OBC levels, seeds, K = 5, dampening, 5× / blended calibration, swap2;
+  - alloc / alloc90 = 7 layer allocations;
+  - fmo / fmo90 / fmoA90 = fmkd from OBC / the KL-chosen allocation;
+  - orc / jfm2 = gradient-field oracles; cap / cap90 / capS = capacity oracles.
+- Key numbers: next entries.
+
+### [gap-study-v5-validation-tinyhar-summary-mean-over-folds-seeds.csv](gap-study-v5/validation/gap-study-v5-validation-tinyhar-summary-mean-over-folds-seeds.csv), [-per-fold-lci-indep.csv](gap-study-v5/validation/gap-study-v5-validation-tinyhar-per-fold-lci-indep.csv), [-paired-gaps.csv](gap-study-v5/validation/gap-study-v5-validation-tinyhar-paired-gaps.csv)
+- What: v3 + v4 + v5 rows per method × level, per-fold values, and fold-paired differences with 95 % CIs.
+  `alloc_kl` = per fold the allocation with the lowest calibration KL (label-free, backprop-free).
+- **80 %, one shot.** v4's best (mixcal) 0.773 → OBC + full refit **0.817** (3 seeds; seed 0 0.831), accuracy −0.2 pt
+  → **alloc_kl 0.864** (3 calibration seeds, seed SD 0.013; accuracy −0.5 pt, occlusion 0.814).
+  - alloc_kl − mixcal = +0.091 [0.048, 0.134], 5/5 folds.
+  - alloc_kl = full-data fmkd 0.865 (diff −0.001 [−0.029, 0.026]); fmkd 20 ep on top of alloc_kl 0.864 (no gain).
+  - **v4's gap is dropped** (an existing method closes it).
+- Other one-shot baselines at 80 %:
+  - OBC + 5× calibration 0.839, + blended calibration 0.830, dampening 0.1 / 0.001 0.830, K = 5 nested 0.817;
+  - l1 K = 20 0.790; DSnoT + refit 0.742 (−3.4 pt); SparseGPT + refit 0.723 (−2.0 pt);
+  - BatchNorm re-estimation 0.651 (−7.9 pt); plain OBC 0.748 (−14 pt accuracy).
+- Allocations at 80 %, 3 seeds (a0 uniform 0.817): a4 0.867, a5 0.860, a3 0.859, a2 0.847, a1 0.816, a6 0.749. Protecting
+  the LSTM (a1, a6) is worse; protecting the convs / fusion helps.
+- **90 %.**
+  - One shot: alloc_kl 0.771 (−2.2 pt) vs uniform OBC 0.700 (−6.3 pt).
+  - **fmkd from alloc_kl (20 ep) 0.851**, accuracy −0.1 pt, vs v3's tuned lamp_recon_kd 0.781 (+0.070, 4/5 folds)
+    and fmkd from LAMP 0.787: **v3's second gap closes too.**
+- Oracles (bounds, not methods):
+  - capfit 80 % 0.875 (+0.011 vs alloc_kl, CI [−0.011, 0.033]);
+  - capS (λ 100, 40 ep) fold 1 0.800 (ceiling 0.914);
+  - capfit 90 % 0.798 (−0.053 vs fmkd from alloc_kl);
+  - jfm 0.783 (2 folds), jfm2 0.764 (fold 1), both below fmkd.
+- **Residual to the ceiling** of the strongest existing combination: 0.068 at 80 %, 0.081 at 90 %. No oracle exceeds
+  it by ≥ 0.05.
+
+### [gap-study-v5-validation-tinyhar-ablation-where.csv](gap-study-v5/validation/gap-study-v5-validation-tinyhar-ablation-where.csv)
+- What: unit-only pruning (one unit at 80 %, the rest dense, full refit) and same-mask weight swaps between
+  l1_fullrecon and fmkd (swap: weights only; swap2: conv + its BatchNorm).
+- Key numbers:
+  - Unit-only LCI cost: LSTM 0.068, conv0 0.046 (140 weights), fusion 0.027, conv6 0.025, conv9 0.017,
+    attention / feed-forward ≤ 0.007. The full model loses 0.115–0.17, so the costs are super-additive.
+  - Swaps: conv swaps break accuracy (−10 to −63 pt); attention / fusion swaps move LCI by < 0.03. The training gain is
+    joint, not located in one unit.
+
+### [gap-study-v5-validation-tinyhar-diagnostics-per-class.csv](gap-study-v5/validation/gap-study-v5-validation-tinyhar-diagnostics-per-class.csv), [-diagnostics-parts.csv](gap-study-v5/validation/gap-study-v5-validation-tinyhar-diagnostics-parts.csv)
+- What: 80 % models, 5 folds, seed 0: LCI parts and per-class LCI vs the SHAP-noise reference.
+- Key numbers:
+  - Pearson / Jaccard parts: OBC 0.880 / 0.782, A5 0.905 / 0.812, FMKD 0.880 / 0.850, CAP 0.908 / 0.842, MIXCAL
+    0.826 / 0.729, noise 0.949 / 0.915.
+  - Walking is the weakest class for every model: best 0.788 (A3) vs noise 0.842; MIXCAL 0.632.
+  - Standing: best 0.775 vs 0.837.
+
+### [gap-study-v5-validation-tinyhar-fold{0..4}-Ansel-shift-models.csv](gap-study-v5/validation/), [-shift-probe-summary.csv](gap-study-v5/validation/gap-study-v5-validation-tinyhar-shift-probe-summary.csv)
+- What: existing checkpoints re-explained on perturbed inner-val windows: noise σ 0.05 g, or each sensor rotated by
+  U(−15°, 15°); the ceiling is re-measured on the same perturbed windows.
+- Key numbers (gap to the shifted ceiling, clean in brackets):
+  - Noise: l1_fullrecon 80 % 0.198 (0.172), 70 % 0.095 (0.061, F1 −5.6 pt), fmkd 0.089 (0.067), calfm 0.111 (0.097).
+  - Rotation: as clean (l1 80 % 0.157, fmkd 0.045).
+  - No condition opens a larger or earlier gap.
+
+## gap-study-v5/test/ (held-out, run once per candidate set: 22 HARTH test subjects + 18 HAR70+; 2026-11-28)
+### gap-study-v5-test-tinyhar-fold{0..4}-per-subject.csv
+- What: per model × subject: lci_indep, same-seed LCI, ceiling (original seed 1 vs 0), occlusion LCI, agreement,
+  accuracy (from `gap_study_v4.test_confirm`, renamed from its v4 prefix).
+
+### [gap-study-v5-test-tinyhar-summary-per-group-and-model.csv](gap-study-v5/test/gap-study-v5-test-tinyhar-summary-per-group-and-model.csv), [-paired-differences.csv](gap-study-v5/test/gap-study-v5-test-tinyhar-paired-differences.csv)
+- What: subject-level means (HAR70+ averaged over folds) and paired differences (one-sided Wilcoxon).
+- Key numbers, 80 % (40 subjects, ceiling 0.917):
+  - AKL (KL-chosen allocation) **0.858** (13 subjects with gap ≥ 0.10), CAP 0.851, FMO 0.847, FMKD 0.837, OBC 0.834,
+    OBC5X 0.827, MIXCAL 0.767, L1FR 0.762.
+  - OBC − MIXCAL +0.067 (39/40 subjects, p < 1e-4); FMKD − OBC +0.003 (p = 0.26); AKL − FMKD +0.021 (31/40,
+    p = 0.002).
+  - Accuracy (original 0.843): AKL 0.830, mostly older adults (0.740 vs 0.763); FMKD 0.848.
+- 90 %:
+  - FMOA90 (fmkd from the KL-chosen allocation) **0.832** (16/40 subjects with gap ≥ 0.10), accuracy 0.836.
+  - v3's LAMPKD90 0.767 (31/40), accuracy 0.839; FMOA90 − LAMPKD90 = **+0.065** (36/40 subjects, p < 1e-4).
+  - AKL90 (one shot) 0.777, accuracy 0.812.

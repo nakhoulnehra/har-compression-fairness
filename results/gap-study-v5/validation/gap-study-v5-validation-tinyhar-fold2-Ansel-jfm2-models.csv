@@ -1,0 +1,2 @@
+fold,machine_name,device,ceiling50,run_id,stage,method,level,seed,f1,accuracy,lci,lci_indep,self_lci,occ_lci,agree,build_seconds,ft_seconds,start_source,epochs_run,dsnot_swaps,n_nonzero,seconds_total
+2,Ansel,cpu,0.9146798602351932,original-0pct-seed0,ref,original,0.0,0,0.8818838905935121,0.935309243470023,1.0,0.9146798602351932,0.9146798602351932,1.0,1.0,0.0,0.0,,,,54273,2.7862350000068545

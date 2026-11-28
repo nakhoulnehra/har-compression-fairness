@@ -1,0 +1,90 @@
+{
+  "command": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\gap_study_v5\\run_v5.py --folds 2 3 --stages ref alloc90 --device cpu --threads 2 --worker alloc90 --machine-name Ansel --resume",
+  "fold": 2,
+  "device": "cpu",
+  "ft_device": "cuda",
+  "machine": "Ansel",
+  "torch": "2.7.1+cu118",
+  "explain_per_subject": 50,
+  "window_hashes": {
+    "explain": "1eb246ce1d12d227cbe9d6c13d06f6122ac0309302f79f88bedafe38d90c886e",
+    "f1": "fae7a2b3e06d7e5847e4ddbed43b5604540dc24dcfe181c250f7ffd96419481c",
+    "calibration": "fa6ea71f048045b3d86a92b154888cc999678391ba561a29f8c14a63d5bd4bd3",
+    "lci_calibration": "110bd8eabf10e308068fdb140c3aa0be533ca89e35bad7f81aad7d204e3b44c8",
+    "n_explain": 150,
+    "n_f1": 7389,
+    "n_calibration": 917,
+    "n_lci_calibration": 140,
+    "inner_val_subjects": [
+      "S013",
+      "S019",
+      "S022"
+    ],
+    "n_train_subjects": 14
+  },
+  "ceiling50": 0.9146798602351932,
+  "calibration": {
+    "per_cell": 10,
+    "seed0": 46,
+    "per_cell_5x": 50
+  },
+  "level": 0.8,
+  "orc_epochs": 20,
+  "orc_sub": 64,
+  "kd": {
+    "T": 3.0,
+    "alpha": 0.7
+  },
+  "obc_damp": 0.01,
+  "dsnot_cycles": 50,
+  "plan": [
+    {
+      "stage": "ref",
+      "method": "original",
+      "level": 0.0,
+      "seed": 0
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a0",
+      "level": 0.9,
+      "seed": 0
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a1",
+      "level": 0.9,
+      "seed": 0
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a2",
+      "level": 0.9,
+      "seed": 0
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a3",
+      "level": 0.9,
+      "seed": 0
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a4",
+      "level": 0.9,
+      "seed": 0
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a5",
+      "level": 0.9,
+      "seed": 0
+    },
+    {
+      "stage": "nr5",
+      "method": "alloc_a6",
+      "level": 0.9,
+      "seed": 0
+    }
+  ]
+}

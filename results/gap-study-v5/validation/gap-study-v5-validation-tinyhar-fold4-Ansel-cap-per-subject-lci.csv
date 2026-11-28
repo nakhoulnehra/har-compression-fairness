@@ -1,0 +1,4 @@
+fold,machine_name,device,ceiling50,run_id,stage,method,start,level,seed,lr,lam,epochs,subject,lci,shap_corr,jaccard,n_skipped
+4,Ansel,cpu,0.9454638065589499,capfit_from_obc_fullrecon-80pct-seed0-80pct-seed0-lr0.0003-e20-lam10,cap,capfit,obc_fullrecon-80pct-seed0,0.8,0,0.0003,10.0,20,S012,0.886468117662942,0.9547544171440657,0.8181818181818182,0
+4,Ansel,cpu,0.9454638065589499,capfit_from_obc_fullrecon-80pct-seed0-80pct-seed0-lr0.0003-e20-lam10,cap,capfit,obc_fullrecon-80pct-seed0,0.8,0,0.0003,10.0,20,S016,0.9782833640897802,0.9565667281795605,1.0,0
+4,Ansel,cpu,0.9454638065589499,capfit_from_obc_fullrecon-80pct-seed0-80pct-seed0-lr0.0003-e20-lam10,cap,capfit,obc_fullrecon-80pct-seed0,0.8,0,0.0003,10.0,20,S024,0.8900193378503799,0.9618568575189416,0.8181818181818182,0

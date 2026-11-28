@@ -1,0 +1,57 @@
+{
+  "command": "C:\\Users\\nehra\\Downloads\\LAU\\Masters\\First Year\\Research Methods\\Project\\har-compression-fairness\\gap_study_v5\\run_v5.py --folds 0 1 --stages ref fmo:alloc_a5-80pct-seed0:0.8:20 --device cpu --ft-device cuda --threads 2 --worker fmoA80 --machine-name Ansel --resume",
+  "fold": 0,
+  "device": "cpu",
+  "ft_device": "cuda",
+  "machine": "Ansel",
+  "torch": "2.7.1+cu118",
+  "explain_per_subject": 50,
+  "window_hashes": {
+    "explain": "bdf9d71bf3a739cf72cc10e433b55bb31e73f3d0d3e2999944866725d1c01532",
+    "f1": "09d1dd0ea3d6fb617c4cd4cf2f4cf092bc8a9e450a88212b3518aac454306752",
+    "calibration": "256f8e0535387710f8d87da34973d9ca0b450ee2b40ee58540e2e09cb1528e45",
+    "lci_calibration": "4556c118dd1ac315613a8481f55b62e4ec408c631fd1729f334aaed0204962c4",
+    "n_explain": 150,
+    "n_f1": 7709,
+    "n_calibration": 978,
+    "n_lci_calibration": 140,
+    "inner_val_subjects": [
+      "S010",
+      "S020",
+      "S021"
+    ],
+    "n_train_subjects": 15
+  },
+  "ceiling50": 0.9454779850645769,
+  "calibration": {
+    "per_cell": 10,
+    "seed0": 46,
+    "per_cell_5x": 50
+  },
+  "level": 0.8,
+  "orc_epochs": 20,
+  "orc_sub": 64,
+  "kd": {
+    "T": 3.0,
+    "alpha": 0.7
+  },
+  "obc_damp": 0.01,
+  "dsnot_cycles": 50,
+  "plan": [
+    {
+      "stage": "ref",
+      "method": "original",
+      "level": 0.0,
+      "seed": 0
+    },
+    {
+      "stage": "fmo",
+      "method": "fmkd",
+      "start": "alloc_a5-80pct-seed0",
+      "level": 0.8,
+      "seed": 0,
+      "lr": 0.0003,
+      "epochs": 20
+    }
+  ]
+}
