@@ -1,5 +1,5 @@
 # Status
-Current step: **gap study v5 done (2026-11-28, `gap_study_v5/GAP_REPORT.md`, `GAP_SUMMARY.md` update)**: the 2026-11-27 gap (one-shot 80 %) does not survive the existing OBC + KL-chosen layer budgets (0.864 val / 0.858 test, = full-data fmkd; v4 baseline 0.773). v3's 90 % gap closes too (0.851 vs 0.781). No fixable between-method gap passes; the residual to the ceiling is 0.068 (80 %) / 0.081 (90 %), and no oracle exceeds the strongest existing combination by ≥ 0.05. Presentation 3 Dec. Earlier XGP / 9B plan below is history.
+Current step: **gap study v6 done (2026-11-28 afternoon, `gap_study_v6/GAP_REPORT.md`, `GAP_SUMMARY.md` update)**: searched for a new explanation gap (dense students outside the weight basin, scarce unlabelled calibration, older-adult deployment, one-shot 2–3-bit quantization with GPTQ, one-shot 90 %). None passes: GPTQ keeps 3-bit at the ceiling (0.926), the 2-bit maximum measured (QAT + fmkd 0.827, 5 folds) is not above the protected one-shot GPTQ (0.840), and narrow students are capacity-limited. Before that: **gap study v5 done (2026-11-28, `gap_study_v5/GAP_REPORT.md`, `GAP_SUMMARY.md` update)**: the 2026-11-27 gap (one-shot 80 %) does not survive the existing OBC + KL-chosen layer budgets (0.864 val / 0.858 test, = full-data fmkd; v4 baseline 0.773). v3's 90 % gap closes too (0.851 vs 0.781). No fixable between-method gap passes; the residual to the ceiling is 0.068 (80 %) / 0.081 (90 %), and no oracle exceeds the strongest existing combination by ≥ 0.05. Presentation 3 Dec. Earlier XGP / 9B plan below is history.
 Order (decided 2026-11-21): measure drift and unfairness with existing methods first (9A: RQ1, RQ2, RQ0) ✔, then design XGP's final version for the observed drift (round 3; validation-only tuning; disclosed in the paper), then 9B adds XGP to the same grid.
 Done:
 - 1–5 setup, plan, data, model choice (TinyHAR frozen), baseline gap (older −10.9 pts, p < 0.001)
@@ -52,6 +52,13 @@ Done:
   - Oracles: capacity 0.875 at 80 %, 0.798 at 90 %; gradient-field oracles fall below fmkd.
   - Ablations: the LSTM and conv0 carry most of the explanation cost, and the costs are super-additive; probe calibration does not help; sensor shifts open no larger gap. LCI tracks the calibration KL (Spearman −0.57 / −0.80), not accuracy.
   - Decision: no fixable between-method gap; residual to the ceiling 0.068 / 0.081.
+- **Gap study v6 (2026-11-28 afternoon, Ansel; `gap_study_v6/RUNS.md`, `GAP_REPORT.md`; no new method):** a new-gap search, ranked by theory, then data, then experiments.
+  - A, dense narrow students (TinyHAR width 12 / 20, from scratch or sliced from the original). At width 12 the output-KL → LCI law breaks (residual −0.066), but the capacity oracle adds only +0.017. At width 20, fmkd from scratch is 0.880 and the sliced model 0.885: no gap.
+  - B, 64 random unlabelled calibration windows: 0.949 on fold 0 (no gap). At 16 windows accuracy collapses.
+  - C, older adults on v5's test: no group gap.
+  - D, GPTQ: 3-bit 0.926 (RTN 0.851). 2-bit with 8-bit conv0 / attn_score / head: 0.840 on 5 folds; the QAT + fmkd maximum is 0.827 (lr 3e-5, 5 folds; lr 1e-4 / 3e-4 no higher).
+  - 90 % one shot (v5 data): inconsistent across folds.
+  - Decision: no fixable gap. The residual at ≈ 20–28 KB is 0.06–0.08 below the ceiling for every route.
 - **Final decision + cleanup (2026-11-27, superseded by v5):** `GAP_SUMMARY.md` (gap, proof, where baselines fail, why fixable). Watcher scripts, jobs files, console logs and the v3 audit / v4 draft reports were deleted.
 
 Next for the bit-reduction test: the final test on HAR70+ (validation on nakhoul-3050 folds 0 1 and uni-2080 folds 2 3 4, merge, `--analyze-validation`, then the test phase on the same machines, merge, `--analyze`; commands in requirements.md).
@@ -90,6 +97,9 @@ Next (exact commands in environment/requirements.md, round 4 block; times in env
 - Step 6 GPU fixes: (1) `har/run_sanity_walking_aid.py` no longer sets `CUDA_VISIBLE_DEVICES=""` at import (it hid the GPU from `time_har_components`); `har/tests/test_time_har_components.py` checks the import leaves it unchanged. (2) `eg_attributions`, `shap_target_class` and `snip_scores_from_batches` (every gradient taken with the model in eval mode) run with `torch.backends.cudnn.flags(enabled=False)`: cuDNN's RNN backward only runs in training mode, so gradients through TinyHAR's LSTM in eval mode failed on CUDA. **Our method's loss (keep-score I(w), L_cons) must do the same** (go through `eg_attributions`, or wrap its own gradients in both `sdpa_kernel(SDPBackend.MATH)` and `cudnn.flags(enabled=False)`). No effect on CPU.
 
 ## Open issues
+- Gap study v6: the GPTQ, DoReFa, PACT, Li et al. 2017, Beyer et al. 2022 and Srinivas & Fleuret 2018 PDFs are not in `papers/`; verify the cited sections.
+  - Several v6 cells ran on 2–3 folds, seed 0 (time).
+  - A KL-chosen mixed-precision search at the exact 2-bit size (needs pruned tensors) was not run.
 - Gap study v5: the OBC, DSnoT, SPDY, OWL and EagleEye PDFs are not in `papers/`; verify the cited sections. The KL-chosen allocation is a coarse 7-point grid (SPDY / OWL-style criterion, not either exact method).
 - Round 4: the LAMP, Li et al. 2017 and Molchanov et al. 2019 PDFs are not in `papers/` (the folder is absent on LenovoP330-01); verify the cited sections before submission. Structured pruning at 50% removes only ≈ 15% of the parameters (the convs are 22.6% of the weights) but ≈ 49% of the MACs; batch-1 CPU latency may not drop (smoke: ≈ 1.0 ms dense and sliced).
 - Round 4's `xgp_r3` at 80% / 95% uses round 3's 90% configuration (nearest level, pre-registered); round 3 never ran there.

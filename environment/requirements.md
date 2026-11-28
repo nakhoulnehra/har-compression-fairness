@@ -475,3 +475,33 @@ python -m gap_study_v5.diagnose_v5 --folds 0 1 2 3 4 --models UNI=v5:alloc_a0-80
 ```
 Checkpoints (local, git-ignored): `data/processed/har/checkpoints/gap-study-v5/`; attributions
 `data/processed/har/gap-study-v5/attributions/`. Needs agent B's `gap-study/phase2/`, v3's and v4's checkpoints.
+
+## Gap study v6 (2026-11-28, Ansel; `gap_study_v6/`; no new method)
+Same environment (torch 2.7.1+cu118, `.venv`, repo root, `$env:PYTHONPATH = "bit-reduction-test"`). Imports
+`gap_study_v3.confirm` / `gap_study_v3.baselines`, `gap_study_v4.run_v4` and `gap_study_v5.run_v5` /
+`gap_study_v5.baselines_v5` unchanged. Run log with every launch, stop and rule: `gap_study_v6/RUNS.md`.
+- Workers were started detached with `nohup ... > gap_study_v6/logs/<name>.log`.
+- `watch.sh`, `watchd.sh` and `watchp.sh` woke the agent on new results, a Traceback or a 15-min stall; `after.sh`
+  chained runs.
+- The logs and helper scripts were deleted at cleanup.
+```
+# smoke (CPU or CUDA, seconds)
+python -m gap_study_v6.run_v6 --folds 0 --stages ref stu:12 --smoke --device cuda --out <scratch>/v6smoke
+python -m gap_study_v6.run_v6 --folds 0 --stages ref scarce:32:0 --smoke --device cpu --threads 2 --out <scratch>/v6smokeB
+python -m gap_study_v6.run_v6 --folds 0 --stages ref quant:3 quant:2 quant:2:gptq_p8 qat:2:20:1e-4:p8 --smoke --device cpu --ft-device cpu --threads 2 --out <scratch>/v6smokeQ
+# candidate A: dense students (width 12 / 20), folds 0 2 (+ 4 at width 20)
+python -u -m gap_study_v6.run_v6 --folds <k> --stages ref stu:12:30:fmkd,slice_fmkd,capfit,kd,fmjm,ce,slice_capfit --device cuda --worker s12 --machine-name Ansel --resume   # kd / fmjm / ce stopped (13:15)
+python -u -m gap_study_v6.run_v6 --folds <k> --stages ref stu:12:30:slice_capfit stu:20:30:slice_fmkd,fmkd --device cuda --worker s12 --machine-name Ansel --resume
+python -u -m gap_study_v6.run_v6 --folds 4 --stages ref stu:20:30:slice_fmkd,fmkd,fmjm,capfit --device cuda --worker s12 --machine-name Ansel --resume   # stopped after slice_fmkd (14:00)
+# candidate B: N random unlabelled calibration windows, fold 0
+python -u -m gap_study_v6.run_v6 --folds 0 --stages ref scarce:16:0 scarce:64:0 --device cpu --threads 4 --worker scarce --machine-name Ansel --resume   # stopped after akl_mix n64
+# candidate D: one-shot quantization (all folds), protected GPTQ and QAT maxima (folds 0 2 4)
+python -u -m gap_study_v6.run_v6 --folds <k> --stages ref quant:3 quant:2 --device cuda --threads 3 --worker quant --machine-name Ansel --resume
+python -u -m gap_study_v6.run_v6 --folds <k> --stages ref quant:2:gptq_p8 qat:2:20:1e-4:p8 qat:2:20:1e-4 --device cuda --threads 3 --worker q2 --machine-name Ansel --resume   # unprotected qat stopped (14:28)
+python -u -m gap_study_v6.run_v6 --folds <k> --stages ref qat:2:20:3e-5:p8 qat:2:20:3e-4:p8 --device cuda --threads 3 --worker q3 --machine-name Ansel --resume
+# analysis (seconds)
+python -m gap_study_v6.analyze_v6
+python -m pytest gap_study_v6/test_v6.py -q   # 3 checks: width-28 slice = original, width-12 count, GPTQ grid
+```
+Checkpoints (local, git-ignored): `data/processed/har/checkpoints/gap-study-v6/`; attributions
+`data/processed/har/gap-study-v6/attributions/`. Needs v5's validation CSVs (for the KL-decoupling fit).

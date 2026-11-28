@@ -407,3 +407,15 @@ Not measured yet; replace with the real times after the runs.
   - Held-out test (`gap_study_v4.test_confirm`, ≈ 690 explain windows per fold, 2 SHAP seeds + occlusion): 13–16 min
     per model per fold with 5 test workers + 8 others; 5–7.5 min with 2–3 workers.
   - Smoke runs: 1–2.5 min each. Analysis scripts: seconds.
+- Gap study v6 (`gap_study_v6.run_v6`, Ansel 3050 Ti 4 GB + Ryzen 7 5800U 16 GB, 2026-11-28 12:31 → 15:05): 2–3 worker processes
+  (≈ 1.6 GB RAM each; only 0.6–3 GB was free with the desktop apps open, so ≤ 3 workers), GPU 87–90 % busy.
+  Per model:
+  - Dense students, 30 epochs:
+    - fmkd / slice_fmkd: ≈ 13.5 s per epoch with 2 workers, ≈ 26 s with 3, so 505–930 s;
+    - capfit / slice_capfit (gradient-field term, double backward): ≈ 30 s per epoch, 960–1,000 s.
+  - One-shot builds:
+    - `scarce` KL-chosen allocation (7 OBC + refit builds on N windows): 82 s on CPU (4 threads);
+    - RTN and GPTQ quantization: 1–15 s.
+  - QAT + fmkd, 2 bits, 20 epochs: 18–32 s per epoch, 550–710 s.
+  - Scoring (SHAP seeds 0 + 1 + occlusion, 150 windows, CUDA): ≈ 70–90 s.
+  - Smoke runs: 5–15 s each. Analysis: seconds.
